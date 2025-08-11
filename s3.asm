@@ -34043,7 +34043,7 @@ Trap_Routines_List:
 		dc.l	Run_Object_Hit_Wall_Left_A0
 		dc.l	SetupSlottedObjectAttributes
 		dc.l	SetupObjectAttributes
-		dc.l	SetupObjectAttributes2
+		dc.l	SetupObjectAttributes.UsrMap
 		dc.l	SetupObjectAttributes3
 		dc.l	Swing_Left_And_Right
 		dc.l	Chase_Object
@@ -35664,7 +35664,7 @@ Offset_0x038E46:
 ;-------------------------------------------------------------------------------
 Offset_0x038E52:
 		lea	Offset_0x039740(PC), A1
-		jsr	(SetupObjectAttributes2)			; Offset_0x041D76
+		jsr	(SetupObjectAttributes.UsrMap)			; Offset_0x041D76
 		move.w	(Water_Level_Move).w, D0			; $FFFFF646
 		subq.w	#$08, D0
 		move.w	D0, Obj_Y(A0)					; $0014
@@ -35813,7 +35813,7 @@ Offset_0x039046:
 ;-------------------------------------------------------------------------------	
 Offset_0x03904A:
 		lea	Offset_0x039754(PC), A1
-		jsr	(SetupObjectAttributes2)			; Offset_0x041D76
+		jsr	(SetupObjectAttributes.UsrMap)			; Offset_0x041D76
 		move.l	#Animate_Raw_Multi_Delay_Touch, (A0)	; Offset_0x042FAA
 		move.l	#Offset_0x03982C, Obj_Child_Data(A0)			; $0030
 		move.l	#Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
@@ -36621,7 +36621,7 @@ HeyHo_Main:
 
 Offset_0x04073A:
 		lea	HeyHo_ObjData2(pc),a1
-		jsr	SetupObjectAttributes2(pc)
+		jsr	SetupObjectAttributes.UsrMap(pc)
 		move.l	#Offset_0x04074A,(a0)
 		rts
 ; ===========================================================================
@@ -37287,7 +37287,7 @@ Obj_Explosions:                                                ; Offset_0x041BCA
 SetupObjectAttributes:
 		move.l	(a1)+,Obj_Map(a0)
 ; Offset_0x041D76: Object_Settings_2:
-SetupObjectAttributes2:
+SetupObjectAttributes.UsrMap:
 		move.w	(a1)+,Obj_Art_VRAM(a0)
 ; Offset_0x041D7A: Object_Settings_3:
 SetupObjectAttributes3:
@@ -37302,7 +37302,6 @@ SetupObjectAttributes3:
 SetupObjectAttributes_End:
 		rts
 ; End of function SetupObjectAttributes
-
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
@@ -37345,7 +37344,6 @@ Offset_0x041D9E:
 Offset_0x041DE8:
 		rts
 ; End of function SetupChildObject
-
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
@@ -37393,7 +37391,6 @@ Offset_0x041DEE:
 Offset_0x041E4C:
 		rts
 ; End of function SetupChildObject_Complex
-
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------

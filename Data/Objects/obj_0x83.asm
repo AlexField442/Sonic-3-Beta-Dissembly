@@ -303,7 +303,7 @@ Offset_0x044238:
 ;-------------------------------------------------------------------------------
 Offset_0x044246:
                 lea     Offset_0x044432(PC), A1
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x04427C, (A0)
                 move.l  #Offset_0x044483, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x044290, Obj_Child(A0)                  ; $0034

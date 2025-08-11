@@ -108,7 +108,7 @@ Offset_0x049AE6:
 ;-------------------------------------------------------------------------------
 Offset_0x049AEA:
                 lea     Mushmeanie_Setup_Data_2(PC), A1        ; Offset_0x049B02
-                jmp     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jmp     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
 ;-------------------------------------------------------------------------------
 Offset_0x049AF4:
                 rts         

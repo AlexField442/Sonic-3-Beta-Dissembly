@@ -51,7 +51,7 @@ Offset_0x047A36:
 ;-------------------------------------------------------------------------------
 Offset_0x047A38:
                 lea     Ice_Cube_Setup_Data_2(PC), A1          ; Offset_0x047A7E
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Animate_Raw_Delete_Sprite_Check_X_Y, (A0) ; Offset_0x042FB2
                 move.l  #Offset_0x047184, Obj_Child_Data(A0)             ; $0030
                 cmpi.b  #$0C, Obj_Subtype(A0)                            ; $002C

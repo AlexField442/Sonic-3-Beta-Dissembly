@@ -389,7 +389,7 @@ Offset_0x03834A:
 ;-------------------------------------------------------------------------------   
 Offset_0x03834E:
                 lea     Offset_0x0389B8(PC), A1
-                jsr     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jsr     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
                 move.l  #Offset_0x038360, (A0)
                 rts
 ;-------------------------------------------------------------------------------
@@ -409,7 +409,7 @@ Offset_0x03838A:
 ;-------------------------------------------------------------------------------
 Offset_0x038390:
                 lea     Offset_0x0389C0(PC), A1
-                jsr     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jsr     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
                 move.l  #Offset_0x0383A2, (A0)
                 rts        
 ;-------------------------------------------------------------------------------

@@ -17,7 +17,7 @@ Offset_0x047D62:
 ;-------------------------------------------------------------------------------
 Offset_0x047D6E:
                 lea     Offset_0x047F74(PC), A1
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x047D9E, (A0)
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x047D88

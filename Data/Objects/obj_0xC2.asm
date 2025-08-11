@@ -102,7 +102,7 @@ Offset_0x047C3C:
 ;-------------------------------------------------------------------------------
 Offset_0x047C44:
                 lea     Snow_Pile_Setup_Data_4(PC), A1         ; Offset_0x047CF0
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x047C62, (A0)
                 move.l  #Offset_0x047C6C, Obj_Child(A0)                  ; $0034
                 bsr     Offset_0x047C7C

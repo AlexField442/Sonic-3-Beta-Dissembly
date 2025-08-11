@@ -142,7 +142,7 @@ Offset_0x048D4E:
 ;-------------------------------------------------------------------------------  
 Offset_0x048D66:
                 lea     Corkey_Setup_Data_3(PC), A1            ; Offset_0x048D98
-                jsr     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jsr     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
                 move.l  #Offset_0x048D7E, (A0)
                 move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
 Offset_0x048D7E:                

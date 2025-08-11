@@ -300,7 +300,7 @@ Offset_0x03D26E:
 ;------------------------------------------------------------------------------- 
 Offset_0x03D274:
                 lea     Barrier_Eggman_Setup_Data_5(PC), A1    ; Offset_0x03D458
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x03D294, (A0)
                 move.l  #Offset_0x03D49F, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x03D2B6, Obj_Child(A0)                  ; $0034

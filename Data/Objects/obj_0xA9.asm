@@ -541,7 +541,7 @@ Offset_0x037922:
 ;-------------------------------------------------------------------------------
 Offset_0x037932:
                 lea     Offset_0x037C8A(PC), A1
-                jsr     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jsr     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
                 move.l  #Offset_0x03795C, (A0)
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 bne.s   Offset_0x037952

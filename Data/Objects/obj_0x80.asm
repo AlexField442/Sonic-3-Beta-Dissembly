@@ -133,7 +133,7 @@ Offset_0x03674A:
 Offset_0x03675A:
                 jsr     (Refresh_Child_Position_Adjusted)      ; Offset_0x04203C
                 lea     Offset_0x037068(PC), A1
-                jsr     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jsr     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
                 move.l  #Offset_0x037184, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x03677E, (A0)
                 jmp     (Child_Display_Touch_Or_Delete_2)      ; Offset_0x0424BE
@@ -152,7 +152,7 @@ Offset_0x0367A0:
                 jsr     (Refresh_Child_Position_Adjusted)      ; Offset_0x04203C
                 move.l  #Offset_0x0367B6, (A0)
                 lea     Offset_0x037070(PC), A1
-                jmp     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jmp     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
 ;-------------------------------------------------------------------------------
 Offset_0x0367B6:
                 jsr     (Refresh_Child_Position_Adjusted)      ; Offset_0x04203C
@@ -177,7 +177,7 @@ Offset_0x0367DC:
 ;------------------------------------------------------------------------------- 
 Offset_0x0367EA:
                 lea     Offset_0x037078(PC), A1
-                jmp     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jmp     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
 ;------------------------------------------------------------------------------- 
 Offset_0x0367F4:
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
@@ -247,7 +247,7 @@ Offset_0x0368BA:
 ;-------------------------------------------------------------------------------
 Offset_0x0368BE:
                 lea     Offset_0x037080(PC), A1
-                jsr     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jsr     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
                 move.l  #Offset_0x03719D, Obj_Child_Data(A0)             ; $0030
                 move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
                 rts                 
@@ -266,7 +266,7 @@ Offset_0x0368E8:
 ;-------------------------------------------------------------------------------
 Offset_0x0368F0:
                 lea     Offset_0x037088(PC), A1
-                jsr     (SetupObjectAttributes2)                    ; Offset_0x041D76
+                jsr     (SetupObjectAttributes.UsrMap)                    ; Offset_0x041D76
                 moveq   #Sfx_61, D0                                        ; $61
                 jsr     (PlaySound)                           ; Offset_0x001176
                 move.l  #Offset_0x0371AA, Obj_Child_Data(A0)             ; $0030

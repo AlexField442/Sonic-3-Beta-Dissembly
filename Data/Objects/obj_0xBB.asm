@@ -80,7 +80,7 @@ Offset_0x046DCA:
 ;-------------------------------------------------------------------------------
 Offset_0x046DCE:
                 lea     Freezer_Setup_Data_2(PC), A1           ; Offset_0x0470F2
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x046DDE, (A0)
 Offset_0x046DDC:                
                 rts          

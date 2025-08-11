@@ -174,7 +174,7 @@ Offset_0x047514:
 ;-------------------------------------------------------------------------------
 Offset_0x04751C:
                 lea     Swinging_Platform_Setup_Data_2(PC), A1 ; Offset_0x047776
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x047564, (A0)
                 subi.w  #$0080, Obj_Y(A0)                                ; $0014
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046

@@ -215,7 +215,7 @@ Offset_0x044BB8:
 ;-------------------------------------------------------------------------------  
 Offset_0x044BC2:
                 lea     Turbo_Spiker_Setup_Data_5(PC), A1      ; Offset_0x044C44
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x044BD8, (A0)
                 move.b  Obj_Subtype(A0), Obj_Timer_2(A0)          ; $002C, $002F
                 rts

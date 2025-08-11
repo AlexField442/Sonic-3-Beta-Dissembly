@@ -201,7 +201,7 @@ Offset_0x0400F0:
 ;-------------------------------------------------------------------------------
 Offset_0x040104:
                 lea     Ball_Shooter_Setup_Data_8(PC), A1      ; Offset_0x040616
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x04013E, (A0)
                 move.l  #Offset_0x0406DE, Obj_Child_Data(A0)             ; $0030
                 move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
@@ -224,7 +224,7 @@ Offset_0x04013E:
 ;-------------------------------------------------------------------------------    
 Offset_0x040156:
                 lea     Ball_Shooter_Setup_Data_9(PC), A1      ; Offset_0x04061E
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Obj_Flicker_Move, (A0)                ; Offset_0x042AFE
                 bra     Offset_0x04047C              
 ;-------------------------------------------------------------------------------
@@ -275,7 +275,7 @@ Offset_0x0401D0:
 ;-------------------------------------------------------------------------------
 Offset_0x0401D8:
                 lea     Ball_Shooter_Setup_Data_6(PC), A1      ; Offset_0x040608
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Obj_Flicker_Move, (A0)                ; Offset_0x042AFE
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C

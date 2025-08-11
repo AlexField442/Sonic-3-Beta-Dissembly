@@ -540,7 +540,7 @@ Offset_0x03A6B4:
 ;-------------------------------------------------------------------------------
 Offset_0x03A6C2:
                 lea     Drill_Mobile_Setup_Data_7(PC), A1      ; Offset_0x03AE20
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x03A6FC, (A0)
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 move.w  Obj_Child_Ref(A1), Obj_Height_3(A0)       ; $0046, $0044

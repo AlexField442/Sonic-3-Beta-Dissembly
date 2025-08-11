@@ -223,7 +223,7 @@ Offset_0x03F3DC:
 ;-------------------------------------------------------------------------------
 Offset_0x03F3E6:
                 lea     Beam_Rocket_Setup_Data_3(PC), A1       ; Offset_0x03FA68
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x03F3F6, (A0)
                 rts                                       
 ;-------------------------------------------------------------------------------
@@ -245,7 +245,7 @@ Offset_0x03F410:
 ;-------------------------------------------------------------------------------
 Offset_0x03F416:
                 lea     Beam_Rocket_Setup_Data_4(PC), A1       ; Offset_0x03FA70
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.b  #$10, Obj_Height_2(A0)                           ; $001E
                 move.l  #Offset_0x03F440, Obj_Child(A0)                  ; $0034
                 rts   
@@ -291,7 +291,7 @@ Offset_0x03F49A:
 ;-------------------------------------------------------------------------------
 Offset_0x03F4A0:
                 lea     Beam_Rocket_Setup_Data_7(PC), A1       ; Offset_0x03FA8A
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x03F4BC, (A0)
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x03F4BA
@@ -397,7 +397,7 @@ Offset_0x03F5F0:
 ;-------------------------------------------------------------------------------
 Offset_0x03F5F6:
                 lea     Beam_Rocket_Setup_Data_D(PC), A1       ; Offset_0x03FABE
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x03F60C, (A0)
                 move.w  #$0008, Obj_Control_Var_0A(A0)                   ; $003A
                 rts                       
@@ -480,7 +480,7 @@ Offset_0x03F70E:
 ;-------------------------------------------------------------------------------
 Offset_0x03F718:
                 lea     Beam_Rocket_Setup_Data_A(PC), A1       ; Offset_0x03FAAA
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x03F730, (A0)
                 move.l  #Offset_0x03FB88, Obj_Child_Data(A0)             ; $0030
                 rts                               
@@ -492,7 +492,7 @@ Offset_0x03F730:
 ;-------------------------------------------------------------------------------
 Offset_0x03F73C:
                 lea     Beam_Rocket_Setup_Data_F(PC), A1       ; Offset_0x03FACC
-                jsr     SetupObjectAttributes2(PC)                  ; Offset_0x041D76
+                jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x03F76E, (A0)
                 move.l  #Offset_0x03FBA1, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x03F780, Obj_Child(A0)                  ; $0034
