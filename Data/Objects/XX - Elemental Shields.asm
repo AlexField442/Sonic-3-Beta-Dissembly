@@ -1,18 +1,24 @@
+; OST:
+shield_lastloadedDPLC:	equ Obj_Control_Var_04
+shield_art:		equ Obj_Control_Var_08
+shield_DPLC:		equ Obj_Control_Var_0C
+shield_VRAM:		equ Obj_Control_Var_10
+
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
 ; Object - Fire Shield
 ; ---------------------------------------------------------------------------
 ; Offset_0x0103C6: Obj_Fire_Shield:
 Obj_FireShield:
-		move.l	#MapUnc_FireShield,Obj_Map(a0)
-		move.l	#Fire_Shield_Dyn_Script,Obj_Control_Var_0C(a0)
-		move.l	#Art_Fire_Shield,Obj_Control_Var_08(a0)
-		move.b	#4,Obj_Flags(a0)
+		move.l	#MapUnc_FireShield,mappings(a0)
+		move.l	#DPLC_FireShield,shield_DPLC(a0)
+		move.l	#Art_Fire_Shield,shield_art(a0)
+		move.b	#4,render_flags(a0)
 		move.w	#$80,Obj_Priority(a0)
-		move.b	#$18,Obj_Width(a0)
-		move.b	#$18,Obj_Height(a0)
+		move.b	#$18,width_pixels(a0)
+		move.b	#$18,height_pixels(a0)
 		move.w	#$79C,Obj_Art_VRAM(a0)
-		move.w	#$F380,Obj_Control_Var_10(a0)
+		move.w	#$F380,shield_VRAM(a0)
 		btst	#7,(Obj_Player_One+Obj_Art_VRAM).w
 		beq.s	.notHighPriority
 		bset	#7,Obj_Art_VRAM(a0)
@@ -53,15 +59,15 @@ FireShield_Delete:
 ; ---------------------------------------------------------------------------
 ; Offset_0x01046C: Obj_Lightning_Shield:
 Obj_LightningShield:
-		move.l	#Lightning_Shield_Mappings,Obj_Map(a0)
-		move.l	#Lightning_Shield_Dyn_Script,Obj_Control_Var_0C(a0)
-		move.l	#Art_Lightning_Shield,Obj_Control_Var_08(a0)
-		move.b	#4,Obj_Flags(a0)
+		move.l	#MapUnc_LightningShield,mappings(a0)
+		move.l	#DPLC_LightningShield,shield_DPLC(a0)
+		move.l	#Art_Lightning_Shield,shield_art(a0)
+		move.b	#4,render_flags(a0)
 		move.w	#$80,Obj_Priority(a0)
-		move.b	#$18,Obj_Width(a0)
-		move.b	#$18,Obj_Height(a0)
+		move.b	#$18,width_pixels(a0)
+		move.b	#$18,height_pixels(a0)
 		move.w	#$79C,Obj_Art_VRAM(a0)
-		move.w	#$F380,Obj_Control_Var_10(a0)
+		move.w	#$F380,shield_VRAM(a0)
 		btst	#7,(Obj_Player_One+Obj_Art_VRAM).w
 		beq.s	.notHighPriority
 		bset	#7,Obj_Art_VRAM(a0)
@@ -102,15 +108,15 @@ LightningShield_Delete:
 ; ---------------------------------------------------------------------------
 ; Offset_0x010512: Obj_Water_Shield:
 Obj_BubbleShield:
-		move.l	#Water_Shield_Mappings,Obj_Map(a0)
-		move.l	#Water_Shield_Dyn_Script,Obj_Control_Var_0C(a0)
-		move.l	#Art_Water_Shield,Obj_Control_Var_08(a0)
-		move.b	#4,Obj_Flags(a0)
+		move.l	#MapUnc_BubbleShield,mappings(a0)
+		move.l	#DPLC_BubbleShield,shield_DPLC(a0)
+		move.l	#Art_Water_Shield,shield_art(a0)
+		move.b	#4,render_flags(a0)
 		move.w	#$80,Obj_Priority(a0)
-		move.b	#$18,Obj_Width(a0)
-		move.b	#$18,Obj_Height(a0)
+		move.b	#$18,width_pixels(a0)
+		move.b	#$18,height_pixels(a0)
 		move.w	#$79C,Obj_Art_VRAM(a0)
-		move.w	#$F380,Obj_Control_Var_10(a0)
+		move.w	#$F380,shield_VRAM(a0)
 		btst	#7,(Obj_Player_One+Obj_Art_VRAM).w
 		beq.s	.notHighPriority
 		bset	#7,Obj_Art_VRAM(a0)
@@ -153,16 +159,16 @@ BubbleShield_Delete:
 LoadShieldDynamicPLC:
 		moveq	#0,d0
 		move.b	Obj_Map_Id(a0),d0
-		cmp.b	Obj_Control_Var_04(a0),d0
+		cmp.b	shield_lastloadedDPLC(a0),d0
 		beq.s	Offset_0x010606
-		move.b	d0,Obj_Control_Var_04(a0)
-		move.l	Obj_Control_Var_0C(a0),a2
+		move.b	d0,shield_lastloadedDPLC(a0)
+		move.l	shield_DPLC(a0),a2
 		add.w	d0,d0
 		adda.w	(a2,d0.w),a2
 		move.w	(a2)+,d5
 		subq.w	#1,d5
 		bmi.s	Offset_0x010606
-		move.w	Obj_Control_Var_10(a0),d4
+		move.w	shield_VRAM(a0),d4
 ; Offset_0x0105DC: Loop_Load_Shield_Dynamic_PLC:
 .loop:
 		moveq	#0,d1
@@ -173,7 +179,7 @@ LoadShieldDynamicPLC:
 		addi.w	#$10,d3
 		andi.w	#$FFF,d1
 		lsl.l	#5,d1
-		add.l	Obj_Control_Var_08(a0),d1
+		add.l	shield_art(a0),d1
 		move.w	d4,d2
 		add.w	d3,d4
 		add.w	d3,d4
@@ -222,260 +228,27 @@ BubbleShield_AnimateData:
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Mappings - Fire Shield
+; Mappings/DPLC - Fire Shield
 ; ---------------------------------------------------------------------------
 ; Offset_0x010634: Fire_Shield_Mappings:
 MapUnc_FireShield:	include	"data/mappings/XX - Fire Shield.asm"
+; Offset_0x010728: Fire_Shield_Dyn_Script:
+DPLC_FireShield:	include	"data/mappings/XX - Fire Shield DPLC.asm"
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Dynamic Pattern Load Cues - Fire Shield
+; Mappings/DPLC - Lightning Shield
 ; ---------------------------------------------------------------------------
-; Offset_0x010728:
-Fire_Shield_Dyn_Script:
-		dc.w	Offset_0x01073C-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x010746-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x010750-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x01075A-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x010764-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x01075A-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x010750-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x010746-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x01073C-Fire_Shield_Dyn_Script
-		dc.w	Offset_0x01076A-Fire_Shield_Dyn_Script
-Offset_0x01073C:
-		dc.w	$0004
-		dc.w	$5000, $5006, $500C, $5012
-Offset_0x010746:
-		dc.w	$0004
-		dc.w	$8018, $8021, $802A, $8033
-Offset_0x010750:
-		dc.w	$0004
-		dc.w	$803C, $8045, $804E, $8057
-Offset_0x01075A:
-		dc.w	$0004
-		dc.w	$8060, $8069, $5072, $5078
-Offset_0x010764:
-		dc.w	$0002
-		dc.w	$F07E, $708E
-Offset_0x01076A:
-		dc.w	$0000
+; Offset_0x1076C: Lightning_Shield_Mappings:
+MapUnc_LightningShield:	include	"data/mappings/XX - Lightning Shield.asm"
+; Offset_0x010822: Lightning_Shield_Dyn_Script:
+DPLC_LightningShield:	include	"data/mappings/XX - Lightning Shield DPLC.asm"
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Mappings - Lightning Shield
+; Mappings/DPLC - Bubble Shield
 ; ---------------------------------------------------------------------------
-; Offset_0x1076C:
-Lightning_Shield_Mappings:
-		dc.w	Offset_0x01077C-Lightning_Shield_Mappings
-		dc.w	Offset_0x010790-Lightning_Shield_Mappings
-		dc.w	Offset_0x01079E-Lightning_Shield_Mappings
-		dc.w	Offset_0x0107B2-Lightning_Shield_Mappings
-		dc.w	Offset_0x0107C6-Lightning_Shield_Mappings
-		dc.w	Offset_0x0107D4-Lightning_Shield_Mappings
-		dc.w	Offset_0x0107EE-Lightning_Shield_Mappings
-		dc.w	Offset_0x010808-Lightning_Shield_Mappings
-Offset_0x01077C:
-		dc.w	$0003
-		dc.w	$E80C, $0000, $FFF0
-		dc.w	$F007, $0004, $0000
-		dc.w	$100C, $000C, $FFF0
-Offset_0x010790:
-		dc.w	$0002
-		dc.w	$E80A, $0000, $FFF4
-		dc.w	$000A, $0009, $FFF4
-Offset_0x01079E:
-		dc.w	$0003
-		dc.w	$E808, $0000, $FFF0
-		dc.w	$F00B, $0003, $FFF8
-		dc.w	$1008, $000F, $FFF0
-Offset_0x0107B2:
-		dc.w	$0003
-		dc.w	$E808, $0000, $FFF0
-		dc.w	$F00E, $0003, $FFF0
-		dc.w	$0809, $000F, $FFF0
-Offset_0x0107C6:
-		dc.w	$0002
-		dc.w	$E807, $0000, $FFF8
-		dc.w	$0805, $0008, $FFF8
-Offset_0x0107D4:
-		dc.w	$0004
-		dc.w	$E80A, $0000, $FFE8
-		dc.w	$E80A, $0009, $0000
-		dc.w	$000A, $1812, $FFE8
-		dc.w	$000A, $181B, $0000
-Offset_0x0107EE:
-		dc.w	$0004
-		dc.w	$E80A, $0000, $FFE8
-		dc.w	$E80A, $0009, $0000
-		dc.w	$000A, $1812, $FFE8
-		dc.w	$000A, $181B, $0000
-Offset_0x010808:
-		dc.w	$0004
-		dc.w	$E80A, $0000, $FFE8
-		dc.w	$E80A, $0809, $0000
-		dc.w	$000A, $1012, $FFE8
-		dc.w	$000A, $181B, $0000
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Dynamic Pattern Load Cues - Lightning Shield
-; ---------------------------------------------------------------------------
-; Offset_0x010822:
-Lightning_Shield_Dyn_Script:
-		dc.w	Offset_0x010832-Lightning_Shield_Dyn_Script
-		dc.w	Offset_0x01083A-Lightning_Shield_Dyn_Script
-		dc.w	Offset_0x010840-Lightning_Shield_Dyn_Script
-		dc.w	Offset_0x010848-Lightning_Shield_Dyn_Script
-		dc.w	Offset_0x010850-Lightning_Shield_Dyn_Script
-		dc.w	Offset_0x010856-Lightning_Shield_Dyn_Script
-		dc.w	Offset_0x010860-Lightning_Shield_Dyn_Script
-		dc.w	Offset_0x01086A-Lightning_Shield_Dyn_Script
-Offset_0x010832:
-		dc.w	$0003
-		dc.w	$3000, $7004, $300C
-Offset_0x01083A:
-		dc.w	$0002
-		dc.w	$8010, $8019
-Offset_0x010840:
-		dc.w	$0003
-		dc.w	$2022, $B025, $2031
-Offset_0x010848:
-		dc.w	$0003
-		dc.w	$2034, $B037, $5043
-Offset_0x010850:
-		dc.w	$0002
-		dc.w	$7049, $3051
-Offset_0x010856:
-		dc.w	$0004
-		dc.w	$8055, $805E, $805E, $8055
-Offset_0x010860:
-		dc.w	$0004
-		dc.w	$8067, $8070, $8070, $8067
-Offset_0x01086A:
-		dc.w	$0004
-		dc.w	$8079, $8079, $8079, $8079  
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Mappings - Bubble Shield
-; ---------------------------------------------------------------------------
-; Offset_0x010874:
-Water_Shield_Mappings:
-		dc.w	Offset_0x01088C-Water_Shield_Mappings
-		dc.w	Offset_0x01089A-Water_Shield_Mappings
-		dc.w	Offset_0x0108A8-Water_Shield_Mappings
-		dc.w	Offset_0x0108B6-Water_Shield_Mappings
-		dc.w	Offset_0x0108C4-Water_Shield_Mappings
-		dc.w	Offset_0x0108D2-Water_Shield_Mappings
-		dc.w	Offset_0x0108E0-Water_Shield_Mappings
-		dc.w	Offset_0x0108EE-Water_Shield_Mappings
-		dc.w	Offset_0x0108FC-Water_Shield_Mappings
-		dc.w	Offset_0x010916-Water_Shield_Mappings
-		dc.w	Offset_0x010930-Water_Shield_Mappings
-		dc.w	Offset_0x010938-Water_Shield_Mappings
-Offset_0x01088C:
-		dc.w	$0002
-		dc.w	$E808, $0000, $FFE8
-		dc.w	$E808, $0803, $0000
-Offset_0x01089A:
-		dc.w	$0002
-		dc.w	$E809, $0000, $FFE8
-		dc.w	$E809, $0806, $0000
-Offset_0x0108A8:
-		dc.w	$0002
-		dc.w	$E80A, $0000, $FFE8
-		dc.w	$E80A, $0809, $0000
-Offset_0x0108B6:
-		dc.w	$0002
-		dc.w	$E80A, $0000, $FFE8
-		dc.w	$E80A, $0809, $0000
-Offset_0x0108C4:
-		dc.w	$0002
-		dc.w	$F00B, $0000, $FFE8
-		dc.w	$F00B, $080C, $0000
-Offset_0x0108D2:
-		dc.w	$0002
-		dc.w	$000A, $0000, $FFE8
-		dc.w	$000A, $0809, $0000
-Offset_0x0108E0:
-		dc.w	$0002
-		dc.w	$000A, $0000, $FFE8
-		dc.w	$000A, $0809, $0000
-Offset_0x0108EE:
-		dc.w	$0002
-		dc.w	$0809, $0000, $FFE8
-		dc.w	$0809, $0806, $0000
-Offset_0x0108FC:
-		dc.w	$0004
-		dc.w	$E80A, $0000, $FFE8
-		dc.w	$E80A, $0809, $0000
-		dc.w	$000A, $1012, $FFE8
-		dc.w	$000A, $181B, $0000
-Offset_0x010916:
-		dc.w	$0004
-		dc.w	$E80A, $0000, $FFE8
-		dc.w	$E80A, $0809, $0000
-		dc.w	$000A, $1012, $FFE8
-		dc.w	$000A, $181B, $0000
-Offset_0x010930:
-		dc.w	$0001
-		dc.w	$FC00, $0000, $FFFC
-Offset_0x010938:
-		dc.w	$0001
-		dc.w	$FC00, $0000, $FFFC
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Dynamic Pattern Load Cues - Bubble Shield
-; ---------------------------------------------------------------------------
-; Offset_0x010940:
-Water_Shield_Dyn_Script:
-		dc.w	Offset_0x010958-Water_Shield_Dyn_Script
-		dc.w	Offset_0x01095E-Water_Shield_Dyn_Script
-		dc.w	Offset_0x010964-Water_Shield_Dyn_Script
-		dc.w	Offset_0x01096A-Water_Shield_Dyn_Script
-		dc.w	Offset_0x010970-Water_Shield_Dyn_Script
-		dc.w	Offset_0x010976-Water_Shield_Dyn_Script
-		dc.w	Offset_0x01097C-Water_Shield_Dyn_Script
-		dc.w	Offset_0x010982-Water_Shield_Dyn_Script
-		dc.w	Offset_0x010988-Water_Shield_Dyn_Script
-		dc.w	Offset_0x010992-Water_Shield_Dyn_Script
-		dc.w	Offset_0x01099C-Water_Shield_Dyn_Script
-		dc.w	Offset_0x0109A0-Water_Shield_Dyn_Script
-Offset_0x010958:
-		dc.w	$0002
-		dc.w	$2000, $2000
-Offset_0x01095E:
-		dc.w	$0002
-		dc.w	$5003, $5003
-Offset_0x010964:
-		dc.w	$0002
-		dc.w	$8009, $8009
-Offset_0x01096A:
-		dc.w	$0002
-		dc.w	$8012, $8012
-Offset_0x010970:
-		dc.w	$0002
-		dc.w	$B01B, $B01B
-Offset_0x010976:
-		dc.w	$0002
-		dc.w	$8027, $8027
-Offset_0x01097C:
-		dc.w	$0002
-		dc.w	$8030, $8030
-Offset_0x010982:
-		dc.w	$0002
-		dc.w	$5039, $5039
-Offset_0x010988:
-		dc.w	$0004
-		dc.w	$803F, $803F, $803F, $803F
-Offset_0x010992:
-		dc.w	$0004
-		dc.w	$8048, $8048, $8048, $8048
-Offset_0x01099C:
-		dc.w	$0001
-		dc.w	$0051
-Offset_0x0109A0:
-		dc.w	$0001
-		dc.w	$0052
+; Offset_0x010874: Water_Shield_Mappings:
+MapUnc_BubbleShield:	include	"data/mappings/XX - Bubble Shield.asm"
+; Offset_0x010940: Water_Shield_Dyn_Script:
+DPLC_BubbleShield:	include	"data/mappings/XX - Bubble Shield DPLC.asm"

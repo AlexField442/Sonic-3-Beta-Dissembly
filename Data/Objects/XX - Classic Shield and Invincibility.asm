@@ -5,7 +5,7 @@
 ; Offset_0x00F972: Obj_Classic_Shield:
 Obj_ClassicShield:
 		moveq	#0,d0
-		move.b	Obj_Routine(a0),d0
+		move.b	routine(a0),d0
 		move.w	ClassicShield_Index(pc,d0.w),d1
 		jmp	ClassicShield_Index(pc,d1.w)
 ; ===========================================================================
@@ -16,11 +16,11 @@ ClassicShield_Index:
 ; ===========================================================================
 ; Offset_0x00F984:
 ClassicShield_Init:
-		addq.b	#2,Obj_Routine(a0)
-		move.l	#Classic_Shield_Mappings,Obj_Map(a0)
-		move.b	#4,Obj_Flags(a0)
+		addq.b	#2,routine(a0)
+		move.l	#Classic_Shield_Mappings,mappings(a0)
+		move.b	#4,render_flags(a0)
 		move.w	#$80,Obj_Priority(a0)
-		move.b	#$18,Obj_Width(a0)
+		move.b	#$18,width_pixels(a0)
 		move.w	#$79C,Obj_Art_VRAM(a0)
 ; Offset_0x00F9A8:
 ClassicShield_Main:
@@ -56,7 +56,7 @@ ClassicShield_Delete:
 ; Offset_0x00F9FA:
 Obj_Invincibility:
 		moveq	#0,d0
-		move.b	Obj_Routine(a0),d0
+		move.b	routine(a0),d0
 		move.w	Invincibility_Index(pc,d0.w),d1
 		jmp	Invincibility_Index(pc,d1.w)
 ; ===========================================================================
@@ -90,13 +90,13 @@ Invincibility_Init:
 
 Offset_0x00FA2A:
 		move.l	(a0),(a1)
-		move.b	#4,Obj_Routine(a1)
-		move.l	#Invincibility_Mappings,Obj_Map(a1)
+		move.b	#4,routine(a1)
+		move.l	#Invincibility_Mappings,mappings(a1)
 		move.w	#$79C,Obj_Art_VRAM(a1)
 		move.w	#$80,Obj_Priority(a1)
-		move.b	#4,Obj_Flags(a1)
-		bset	#6,Obj_Flags(a1)
-		move.b	#$10,Obj_Width(a1)
+		move.b	#4,render_flags(a1)
+		bset	#6,render_flags(a1)
+		move.b	#$10,width_pixels(a1)
 		move.w	#2,Obj_Sub_Y(a1)
 		move.w	Obj_Player_Last(a0),Obj_Player_Last(a1)
 		move.b	d2,Obj_Control_Var_06(a1)
@@ -106,7 +106,7 @@ Offset_0x00FA2A:
 		lea	Obj_Size(a1),a1
 		dbf	d1,Offset_0x00FA2A
 
-		move.b	#2,Obj_Routine(a0)
+		move.b	#2,routine(a0)
 		move.b	#4,Obj_Control_Var_04(a0)
 ; Offset_0x00FA86:
 Invincibility_BigStars:
