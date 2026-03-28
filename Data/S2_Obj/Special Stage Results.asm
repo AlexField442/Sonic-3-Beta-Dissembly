@@ -7,7 +7,7 @@ S2Obj6F_SSResults:
 		rts
 		moveq   #$00, D0
 		moveq   #$00, D6
-		move.b  Obj_Routine(A0), D0
+		move.b  routine(A0), D0
 		move.w  Offset_0x024BDC(PC, D0), D1
 		jmp     Offset_0x024BDC(PC, D1)        
 ;-------------------------------------------------------------------------------
@@ -55,9 +55,9 @@ Offset_0x024C22:
 		move.w  (A2)+, Obj_Control_Var_02(A1)
 		move.w  (A2)+, Obj_Control_Var_00(A1)
 		move.w  (A2)+, Obj_Y(A1)
-		move.b  (A2)+, Obj_Routine(A1)
+		move.b  (A2)+, routine(A1)
 		move.b  (A2)+, Obj_Map_Id(A1)
-		move.l  #Special_Stage_Results_Mappings, Obj_Map(A1)
+		move.l  #Special_Stage_Results_Mappings, mappings(A1)
 		move.b  #$78, Obj_Width(A1)
 		lea     Obj_Size(A1), A1
 		dbra    D1, Offset_0x024C22
@@ -73,7 +73,7 @@ Offset_0x024C6C:
 		move.w  Obj_Control_Var_00(A0), D0
 		cmp.w   Obj_X(A0), D0
 		bne.s   Offset_0x024C82
-		move.b  #$1C, Obj_Routine(A0)
+		move.b  #$1C, routine(A0)
 		move.w  #$00B4, Obj_Ani_Time(A0)
 Offset_0x024C82:
 		bra     S2Obj6F_SSResults
@@ -141,7 +141,7 @@ Offset_0x024CF8:
 Offset_0x024CFE:
 		bne.s   Offset_0x024D24
 		move.w  #$1388, (Level_Results_Time_Bonus).w         ; $FFFFF7D2
-		move.b  #$2A, Obj_Routine(A0)		            ; $0005
+		move.b  #$2A, routine(A0)		            ; $0005
 		move.w  #$0120, Obj_Y(A0)				; $0014
 		st      (HUD_Results_Refresh_Flag).w		 ; $FFFFF7D6
 		move.w  #S2_Panel_Spinning_Sfx, D0		       ; $00CF
@@ -181,7 +181,7 @@ Offset_0x024D5A:
 Offset_0x024D64:
 		subq.w  #$01, Obj_Ani_Time(A0)		           ; $0024
 		bne.s   Offset_0x024D6E
-		addq.b  #$02, Obj_Routine(A0)		            ; $0005
+		addq.b  #$02, routine(A0)		            ; $0005
 Offset_0x024D6E:
 		jmp     (DisplaySprite)		        ; Offset_0x011148
 ;-------------------------------------------------------------------------------		  
@@ -208,7 +208,7 @@ Offset_0x024DAE:
 		bne.s   Offset_0x024DF8
 		move.w  #S2_Cha_Ching_Sfx, D0		            ; $00C5
 		jsr     (PlaySound)		           ; Offset_0x001176
-		addq.b  #$02, Obj_Routine(A0)		            ; $0005
+		addq.b  #$02, routine(A0)		            ; $0005
 		move.w  #$0078, Obj_Ani_Time(A0)		         ; $0024
 		tst.w   (Perfect_Bonus_Rings_Flag).w		 ; $FFFFFF06
 		bne.s   Offset_0x024DEA
@@ -218,10 +218,10 @@ Offset_0x024DAE:
 		beq.s   Offset_0x024DF6
 		cmpi.b  #$07, (Emeralds_Count).w		     ; $FFFFFFB1
 		bne.s   Offset_0x024DF6
-		move.b  #$30, Obj_Routine(A0)		            ; $0005
+		move.b  #$30, routine(A0)		            ; $0005
 		rts
 Offset_0x024DEA:
-		move.b  #$24, Obj_Routine(A0)		            ; $0005
+		move.b  #$24, routine(A0)		            ; $0005
 		move.w  #$005A, Obj_Ani_Time(A0)		         ; $0024
 Offset_0x024DF6:
 		rts
@@ -257,7 +257,7 @@ Offset_0x024E3C:
 Offset_0x024E5A:
 		move.w  #S2_Cha_Ching_Sfx, D0		            ; $00C5
 		jsr     (PlaySound)		           ; Offset_0x001176
-		addq.b  #$04, Obj_Routine(A0)		            ; $0005
+		addq.b  #$04, routine(A0)		            ; $0005
 		move.w  #$0078, Obj_Ani_Time(A0)		         ; $0024
 		cmpi.w  #$0002, (Player_Selected_Flag).w             ; $FFFFFF08
 		beq.s   Offset_0x024E8A
@@ -265,7 +265,7 @@ Offset_0x024E5A:
 		beq.s   Offset_0x024E8A
 		cmpi.b  #$07, (Emeralds_Count).w		     ; $FFFFFFB1
 		bne.s   Offset_0x024E8A
-		move.b  #$30, Obj_Routine(A0)		            ; $0005
+		move.b  #$30, routine(A0)		            ; $0005
 Offset_0x024E8A:
 		rts
 ;-------------------------------------------------------------------------------		  
@@ -279,23 +279,23 @@ Offset_0x024E98:
 		jmp     (DisplaySprite)		        ; Offset_0x011148
 ;-------------------------------------------------------------------------------		  
 Offset_0x024EA2:
-		move.b  #$32, Obj_Size+Obj_Routine(A0)		   ; $004F
+		move.b  #$32, Obj_Size+routine(A0)		   ; $004F
 		move.w  Obj_X(A0), D0				    ; $0010
 		cmp.w   Obj_Control_Var_02(A0), D0		       ; $0032
 		bne.s   Offset_0x024F04
-		move.b  #$14, Obj_Size+Obj_Routine(A0)		   ; $004F
+		move.b  #$14, Obj_Size+routine(A0)		   ; $004F
 		subq.w  #$08, Obj_Size+Obj_Y(A0)		         ; $005E
 		move.b  #$1A, Obj_Size+Obj_Map_Id(A0)		    ; $006C
-		move.b  #$34, Obj_Routine(A0)		            ; $0005
+		move.b  #$34, routine(A0)		            ; $0005
 		subq.w  #$08, Obj_Y(A0)				  ; $0014
 		move.b  #$1B, Obj_Map_Id(A0)		             ; $0022
 		move.l  (A0), (A1)
 		clr.w   Obj_X(A1)				        ; $0010
 		move.w  #$0120, Obj_Control_Var_00(A1)		   ; $0030
 		move.w  #$00B4, Obj_Y(A1)				; $0014
-		move.b  #$14, Obj_Routine(A1)		            ; $0005
+		move.b  #$14, routine(A1)		            ; $0005
 		move.b  #$1C, Obj_Map_Id(A1)		             ; $0022
-		move.l  #Special_Stage_Results_Mappings, Obj_Map(A1) ; Offset_0x02540C, $000C
+		move.l  #Special_Stage_Results_Mappings, mappings(A1) ; Offset_0x02540C, $000C
 		move.b  #$78, Obj_Width(A1)		              ; $0007
 		jmp     (DisplaySprite)		        ; Offset_0x011148
 ;-------------------------------------------------------------------------------		  
@@ -320,5 +320,5 @@ Offset_0x024F28:
 		cmp.w   Obj_Control_Var_00(A0), D0
 		bne     S2Obj6F_SSResults
 		move.w  #$00B4, Obj_Ani_Time(A0)
-		move.b  #$20, Obj_Routine(A0)
+		move.b  #$20, routine(A0)
 		jmp     (DisplaySprite).l

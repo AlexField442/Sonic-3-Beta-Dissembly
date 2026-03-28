@@ -12,11 +12,11 @@ Obj_0x5F_Retracting_Spring:                                    ; Offset_0x019FF6
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x01A0CC
                 move.l  #Offset_0x01A38E, (A1)
-                move.l  #Retracting_Spring_Mappings, Obj_Map(A1) ; Offset_0x01A408, $000C
+                move.l  #Retracting_Spring_Mappings, mappings(A1) ; Offset_0x01A408, $000C
                 move.w  #$0391, Obj_Art_VRAM(A1)                         ; $000A
                 cmpi.b  #EMz_Id, (Current_Zone).w                   ; $12, $FFFFFE10
                 bne.s   Offset_0x01A024
-                move.l  #EMz_Retracting_Spring_Mappings, Obj_Map(A1) ; Offset_0x01A410, $000C
+                move.l  #EMz_Retracting_Spring_Mappings, mappings(A1) ; Offset_0x01A410, $000C
 Offset_0x01A024:
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  D0, Obj_Subtype(A1)                              ; $002C
@@ -63,8 +63,8 @@ Offset_0x01A096:
                 move.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
 Offset_0x01A0AC:
                 move.b  Obj_Status(A0), Obj_Status(A1)            ; $002A, $002A
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
-                ori.b   #$04, Obj_Flags(A1)                              ; $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
+                ori.b   #$04, render_flags(A1)                              ; $0004
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.w  A0, Obj_Control_Var_0E(A1)                       ; $003E
                 move.w  A1, Obj_Control_Var_0E(A0)                       ; $003E
@@ -153,7 +153,7 @@ Offset_0x01A19A:
                 beq.s   Offset_0x01A1BC
                 subq.w  #$01, Obj_Control_Var_0A(A0)                     ; $003A
                 bne.s   Offset_0x01A1FE
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01A1FE
                 moveq   #Spike_Move_Sfx, D0                                ; $58
                 jsr     (PlaySound)                           ; Offset_0x001176
@@ -199,7 +199,7 @@ Offset_0x01A220:
                 bne.s   Offset_0x01A27A
                 addi.w  #$0016, Obj_Y(A0)                                ; $0014
                 bchg    #01, Obj_Status(A0)                              ; $002A
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
                 andi.b  #$0F, Obj_Subtype(A0)                            ; $002C
                 ori.b   #$F0, Obj_Subtype(A0)                            ; $002C
                 move.l  #Offset_0x01A0D0, (A0)
@@ -210,7 +210,7 @@ Offset_0x01A27A:
                 bne.s   Offset_0x01A2AC
                 subi.w  #$0016, Obj_Y(A0)                                ; $0014
                 bchg    #01, Obj_Status(A0)                              ; $002A
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
                 andi.b  #$0F, Obj_Subtype(A0)                            ; $002C
                 ori.b   #$E0, Obj_Subtype(A0)                            ; $002C
                 move.l  #Offset_0x01A0D0, (A0)
@@ -254,7 +254,7 @@ Offset_0x01A302:
                 bne.s   Offset_0x01A35A
                 addi.w  #$0016, Obj_Y(A0)                                ; $0014
                 bchg    #01, Obj_Status(A0)                              ; $002A
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
                 andi.b  #$0F, Obj_Subtype(A0)                            ; $002C
                 ori.b   #$F0, Obj_Subtype(A0)                            ; $002C
                 move.l  #Offset_0x01A0D0, (A0)
@@ -265,7 +265,7 @@ Offset_0x01A35A:
                 bne.s   Offset_0x01A38C
                 subi.w  #$0016, Obj_Y(A0)                                ; $0014
                 bchg    #01, Obj_Status(A0)                              ; $002A
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
                 andi.b  #$0F, Obj_Subtype(A0)                            ; $002C
                 ori.b   #$E0, Obj_Subtype(A0)                            ; $002C
                 move.l  #Offset_0x01A0D0, (A0)

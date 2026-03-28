@@ -3,10 +3,10 @@
 ; ->>>  
 ;===============================================================================
 ; Offset_0x025964:
-                move.l  #Water_Stream_Mappings, Obj_Map(A0) ; Offset_0x025AB6, $000C
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                move.l  #Water_Stream_Mappings, mappings(A0) ; Offset_0x025AB6, $000C
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$437A, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  #$40, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -17,11 +17,11 @@
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 subi.w  #$0030, Obj_X(A1)                                ; $0010
-                move.l  #Water_Stream_Block_Mappings, Obj_Map(A1) ; Offset_0x025C16, $000C
+                move.l  #Water_Stream_Block_Mappings, mappings(A1) ; Offset_0x025C16, $000C
                 move.w  #$43D4, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$20, Obj_Height(A1)                             ; $0006
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0280, Obj_Priority(A1)                         ; $0008
                 move.b  #$01, Obj_Map_Id(A1)                             ; $0022
                 move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C

@@ -7,7 +7,7 @@
                 lea     Stalactite_Setup_Data(PC), A1          ; Offset_0x0478AC
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Offset_0x0477E0, (A0)
-                move.b  #$10, Obj_Height_2(A0)                           ; $001E
+                move.b  #$10, y_radius(A0)                           ; $001E
                 rts
 ;-------------------------------------------------------------------------------
 Offset_0x0477E0:

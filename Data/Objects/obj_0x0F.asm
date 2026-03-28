@@ -19,7 +19,7 @@ Offset_0x01598C:
                 move.b  D0, Obj_Control_Var_08(A0)                       ; $0038
                 btst    #$06, Obj_Subtype(A0)                            ; $002C
                 bne.s   Offset_0x0159C4
-                move.l  #LBz_Collapsing_Platforms_Mappings, Obj_Map(A0) ; Offset_0x0161E2, $000C
+                move.l  #LBz_Collapsing_Platforms_Mappings, mappings(A0) ; Offset_0x0161E2, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$40, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
@@ -27,7 +27,7 @@ Offset_0x01598C:
                 move.l  #Offset_0x015E36, Obj_Control_Var_04(A0)         ; $0034
                 bra.s   Offset_0x0159E6
 Offset_0x0159C4:
-                move.l  #LBz_Collapsing_Platforms_Mappings_2, Obj_Map(A0) ; Offset_0x0162DE, $000C
+                move.l  #LBz_Collapsing_Platforms_Mappings_2, mappings(A0) ; Offset_0x0162DE, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$30, Obj_Height(A0)                             ; $0006
@@ -35,7 +35,7 @@ Offset_0x0159C4:
 Offset_0x0159E6:
                 cmpi.b  #Hz_Id, (Current_Zone).w                    ; $01, $FFFFFE10
                 bne     Offset_0x015A80
-                move.l  #Hz_Collapsing_Platform_Mappings, Obj_Map(A0) ; Offset_0x016366, $000C
+                move.l  #Hz_Collapsing_Platform_Mappings, mappings(A0) ; Offset_0x016366, $000C
                 move.w  #$C001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x015A18
@@ -80,7 +80,7 @@ Offset_0x015A60:
 Offset_0x015A80:
                 cmpi.b  #MGz_Id, (Current_Zone).w                   ; $02, $FFFFFE10
                 bne.s   Offset_0x015B02
-                move.l  #MGz_Collapsing_Platform_Mappings, Obj_Map(A0) ; Offset_0x0167B4, $000C
+                move.l  #MGz_Collapsing_Platform_Mappings, mappings(A0) ; Offset_0x0167B4, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  D0, D1
@@ -132,7 +132,7 @@ Offset_0x015B24:
                 lsl.w   #$04, D0
                 addq.w  #$08, D0
                 move.b  D0, Obj_Control_Var_08(A0)                       ; $0038
-                move.l  #Iz_Collapsing_Platform_Mappings, Obj_Map(A0) ; Offset_0x016D00, $000C
+                move.l  #Iz_Collapsing_Platform_Mappings, mappings(A0) ; Offset_0x016D00, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$50, Obj_Width(A0)                              ; $0007
                 move.b  #$38, Obj_Height(A0)                             ; $0006
@@ -327,7 +327,7 @@ Offset_0x015D78:
                 moveq   #$00, D0
                 move.b  Obj_Map_Id(A0), D0                               ; $0022
                 add.w   D0, D0
-                move.l  Obj_Map(A0), A3                                  ; $000C
+                move.l  mappings(A0), A3                                  ; $000C
                 adda.w  $00(A3, D0), A3
                 move.w  (A3)+, D1
                 subq.w  #$01, D1
@@ -344,7 +344,7 @@ Offset_0x015D9C:
 ;-------------------------------------------------------------------------------                
 Offset_0x015DA4:
                 move.l  D4, (A1)
-                move.l  A3, Obj_Map(A1)                                  ; $000C
+                move.l  A3, mappings(A1)                                  ; $000C
                 move.b  D5, Obj_Flags(A1)                                ; $0004
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014

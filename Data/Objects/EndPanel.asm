@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x041812:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04182E(PC, D0), D1
                 jsr     Offset_0x04182E(PC, D1)
                 lea     Offset_0x041AAA(PC), A2
@@ -22,8 +22,8 @@ Offset_0x041838:
                 lea     Offset_0x041A6C(PC), A1
                 jsr     SetupSlottedObjectAttributes(PC)            ; Offset_0x04298C
                 move.w  A0, (Obj_End_Panel_Mem_Address).w            ; $FFFFFAA6
-                move.b  #$18, Obj_Width_2(A0)                            ; $001F
-                move.b  #$1E, Obj_Height_2(A0)                           ; $001E
+                move.b  #$18, x_radius(A0)                            ; $001F
+                move.b  #$1E, y_radius(A0)                           ; $001E
                 move.l  #Offset_0x041AB2, Obj_Control_Var_00(A0)         ; $0030
                 cmpi.b  #$06, (Current_Zone).w                           ; $FFFFFE10
                 bne.s   Offset_0x041866
@@ -53,7 +53,7 @@ Offset_0x04188C:
                 tst.w   D1
                 bpl.s   Offset_0x0418CA
                 add.w   D1, Obj_Y(A0)                                    ; $0014
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 bset    #$00, Obj_Control_Var_08(A0)                     ; $0038
                 move.w  #$0040, Obj_Timer(A0)                            ; $002E
 Offset_0x0418CA:
@@ -63,12 +63,12 @@ Offset_0x0418CC:
                 jsr     AnimateRaw(PC)                        ; Offset_0x04208E
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl.s   Offset_0x0418E2
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.b  (Player_Selected_Flag+$01).w, Obj_Map_Id(A0) ; $FFFFFF09, $0022
 Offset_0x0418E2:
                 btst    #$00, Obj_Control_Var_08(A0)                     ; $0038
                 bne.s   Offset_0x0418FC
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$20, Obj_Ani_Number(A0)                         ; $0020
                 move.w  #$FE00, Obj_Speed_Y(A0)                          ; $001A
 Offset_0x0418FC:

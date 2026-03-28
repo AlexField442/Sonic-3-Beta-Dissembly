@@ -5,7 +5,7 @@
 ; Offset_0x049E50:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x049E74(PC, D0), D1
                 jsr     Offset_0x049E74(PC, D1)
                 lea     Cluckoid_PLC_Data(PC), A2              ; Offset_0x049F96
@@ -33,7 +33,7 @@ Offset_0x049E90:
 Offset_0x049EA2:
                 rts
 Offset_0x049EA4:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x049ECA, Obj_Child(A0)                  ; $0034
                 rts    
 ;-------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ Offset_0x049EC0:
                 jmp     (Animate_Raw_Multi_Delay_A1)           ; Offset_0x042160  
 ;-------------------------------------------------------------------------------
 Offset_0x049ECA:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0060, Obj_Timer(A0)                            ; $002E
                 rts 
 ;-------------------------------------------------------------------------------
@@ -55,13 +55,13 @@ Offset_0x049ED8:
                 bmi.s   Offset_0x049EE0
                 rts
 Offset_0x049EE0:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$00, Obj_Map_Id(A0)                             ; $0022
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x049EEE:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x049F02(PC, D0), D1
                 jsr     Offset_0x049F02(PC, D1)
                 jmp     (Child_Display_Or_Delete)              ; Offset_0x04245C   
@@ -96,7 +96,7 @@ Offset_0x049F34:
                 cmpi.w  #$0040, D3
                 bcc.s   Offset_0x049F6E
                 move.w  D0, D4
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 bne.s   Offset_0x049F52
                 subq.w  #$02, D4
 Offset_0x049F52:

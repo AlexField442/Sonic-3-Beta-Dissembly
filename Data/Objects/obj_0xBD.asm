@@ -15,7 +15,7 @@ Offset_0x047352:
                 btst    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 beq.s   Offset_0x04736E
                 move.l  #Offset_0x047372, (A0)
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x04736E
                 move.l  #Offset_0x0473FC, (A0)
 Offset_0x04736E:
@@ -57,9 +57,9 @@ Offset_0x0473B4:
 Offset_0x0473CE:
                 move.l  #Offset_0x04743E, (A0)
                 bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
-                move.b  #$10, Obj_Height_2(A0)                           ; $001E
+                move.b  #$10, y_radius(A0)                           ; $001E
                 move.w  #$0400, D0
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0473EE
                 neg.w   D0
 Offset_0x0473EE:
@@ -178,11 +178,11 @@ Offset_0x04751C:
                 move.l  #Offset_0x047564, (A0)
                 subi.w  #$0080, Obj_Y(A0)                                ; $0014
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                btst    #$00, Obj_Flags(A1)                              ; $0004
+                btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x047542
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x047542:
-                bset    #$06, Obj_Flags(A0)                              ; $0004
+                bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0007, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Inertia(A0), A1                              ; $001C
                 moveq   #$06, D6
@@ -206,7 +206,7 @@ Offset_0x047570:
                 neg.w   D1
                 move.w  D1, Obj_Speed_Y(A0)                              ; $001A
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                btst    #$00, Obj_Flags(A1)                              ; $0004
+                btst    #$00, render_flags(A1)                              ; $0004
                 bne.s   Offset_0x04759C
                 neg.w   D1
 Offset_0x04759C:
@@ -376,7 +376,7 @@ Offset_0x0476F8:
                 beq.s   Offset_0x0476FE
                 asr.w   #$01, D3
 Offset_0x0476FE:
-                btst    #$00, Obj_Flags(A2)                              ; $0004
+                btst    #$00, render_flags(A2)                              ; $0004
                 beq.s   Offset_0x047708
                 not.b   D4
 Offset_0x047708:

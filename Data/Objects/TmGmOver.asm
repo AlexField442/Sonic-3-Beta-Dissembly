@@ -13,7 +13,7 @@ Offset_0x024454:
                 move.w  #$01F0, Obj_X(A0)                                ; $0010
 Offset_0x024468:
                 move.w  #$00F0, Obj_Y(A0)                                ; $0014
-                move.l  #Time_Over_Game_Over_Mappings, Obj_Map(A0) ; Offset_0x024FD2, $000C
+                move.l  #Time_Over_Game_Over_Mappings, mappings(A0) ; Offset_0x024FD2, $000C
                 move.w  #$879C, Obj_Art_VRAM(A0)                         ; $000A
                 move.w  #$0000, Obj_Priority(A0)                         ; $0008
                 move.l  #Offset_0x024488, (A0)

@@ -5,7 +5,7 @@
 ; Offset_0x04A29C:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04A2B6(PC, D0), D1
                 jsr     Offset_0x04A2B6(PC, D1)
                 jmp     (Delete_Sprite_Clear_Respaw_Flag_Check_X) ; Offset_0x042B3C
@@ -25,7 +25,7 @@ Offset_0x04A2C6:
                 bcs.s   Offset_0x04A2D4
                 rts
 Offset_0x04A2D4:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x04A3A0, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x04A2F2, Obj_Child(A0)                  ; $0034
                 rts    
@@ -35,7 +35,7 @@ Offset_0x04A2EC:
 ;-------------------------------------------------------------------------------
 Offset_0x04A2F2:
                 move.l  #Obj_Explosion, (A0)                      ; Offset_0x013D7C
-                clr.b   Obj_Routine(A0)                                  ; $0005
+                clr.b   routine(A0)                                  ; $0005
                 lea     Offset_0x04A346(PC), A2
                 jmp     (SetupChildObject_Complex)         ; Offset_0x041DEA    
 ;-------------------------------------------------------------------------------

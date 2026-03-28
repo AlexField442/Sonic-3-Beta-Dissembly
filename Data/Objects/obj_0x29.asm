@@ -21,12 +21,12 @@ Offset_0x020EFA:
                 andi.w  #$000F, D1
                 lsl.w   D2, D1
                 move.w  D1, Obj_Control_Var_04(A0)                       ; $0034
-                move.l  #AIz_Disappearing_Platform_Mappings, Obj_Map(A0) ; Offset_0x021050, $000C
+                move.l  #AIz_Disappearing_Platform_Mappings, mappings(A0) ; Offset_0x021050, $000C
                 move.w  #$42F0, Obj_Art_VRAM(A0)                         ; $000A
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$18, Obj_Height(A0)                             ; $0006
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.w  (Level_Frame_Count).w, D0                    ; $FFFFFE04
                 add.w   Obj_Control_Var_04(A0), D0                       ; $0034
@@ -61,11 +61,11 @@ Offset_0x020F80:
                 move.l  #Offset_0x020FEC, (A1)
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.l  #AIz_Disappearing_Platform_Mappings_2, Obj_Map(A1) ; Offset_0x02105C, $000C
+                move.l  #AIz_Disappearing_Platform_Mappings_2, mappings(A1) ; Offset_0x02105C, $000C
                 move.w  #$62F0, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$28, Obj_Width(A1)                              ; $0007
                 move.b  #$20, Obj_Height(A1)                             ; $0006
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.w  A0, Obj_Control_Var_0C(A1)                       ; $003C
 Offset_0x020FE6:

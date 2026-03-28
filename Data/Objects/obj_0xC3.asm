@@ -21,9 +21,9 @@ Offset_0x047D6E:
                 move.l  #Offset_0x047D9E, (A0)
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x047D88
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x047D88:
-                bset    #$06, Obj_Flags(A0)                              ; $0004
+                bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0002, Obj_Sub_Y(A0)                            ; $0016
                 bsr     Offset_0x047DA6
                 move.b  #$08, Obj_Map_Id(A0)                             ; $0022
@@ -39,7 +39,7 @@ Offset_0x047DA6:
 Offset_0x047DB6:
                 move.w  D0, D4
                 move.w  Offset_0x047DD8(PC, D2), D5
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x047DC6
                 neg.w   D5
 Offset_0x047DC6:
@@ -136,7 +136,7 @@ Offset_0x047EA6:
                 bclr    #$03, Obj_Status(A1)                             ; $002A
                 clr.b   Obj_Control_Var_10(A1)                           ; $0040
                 move.b  #$10, Obj_Ani_Number(A1)                         ; $0020
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
 Offset_0x047EC6:
                 rts
 Offset_0x047EC8:

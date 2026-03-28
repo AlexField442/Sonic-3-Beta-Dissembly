@@ -5,7 +5,7 @@
 ; Offset_0x048DF8:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x048E1A(PC, D0), D1
                 jsr     Offset_0x048E1A(PC, D1)
                 lea     Flybot_767_PLC_Data(PC), A2            ; Offset_0x048F78
@@ -46,7 +46,7 @@ Offset_0x048E5C:
 Offset_0x048E78:
                 jmp     AnimateRaw(PC)                        ; Offset_0x04208E
 Offset_0x048E7C:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 clr.w   Obj_Speed_Y(A0)                                  ; $001A
                 move.w  Obj_Y(A0), Obj_Height_3(A0)               ; $0014, $0044
                 clr.b   Obj_Ani_Frame(A0)                                ; $0023
@@ -60,7 +60,7 @@ Offset_0x048EA6:
                 jmp     AnimateRaw(PC)                        ; Offset_0x04208E 
 ;-------------------------------------------------------------------------------  
 Offset_0x048EB0:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.l  #Offset_0x048F95, Obj_Child_Data(A0)             ; $0030
                 asl.w   Obj_Speed_X(A0)                                  ; $0018
                 move.w  #$0200, Obj_Speed_Y(A0)                          ; $001A
@@ -77,7 +77,7 @@ Offset_0x048ED0:
 Offset_0x048EE4:
                 jmp     AnimateRaw(PC)                        ; Offset_0x04208E
 Offset_0x048EE8:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 move.l  #Offset_0x048FA1, Obj_Child_Data(A0)             ; $0030
                 neg.w   Obj_Speed_Y(A0)                                  ; $001A
                 rts    
@@ -89,7 +89,7 @@ Offset_0x048EFC:
                 bcs.s   Offset_0x048F12
                 jmp     (AnimateRaw)                          ; Offset_0x04208E
 Offset_0x048F12:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 move.l  #Offset_0x048F80, Obj_Child_Data(A0)             ; $0030
                 move.w  #$003B, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x048F5E, Obj_Child(A0)                  ; $0034
@@ -105,7 +105,7 @@ Offset_0x048F48:
                 tst.b   D1
                 beq.s   Offset_0x048F56
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x048F56:
                 bra     Offset_0x048E42       
 ;------------------------------------------------------------------------------- 
@@ -113,7 +113,7 @@ Offset_0x048F5A:
                 jmp     Swing_Up_And_Down_Animate_Raw_Wait(PC) ; Offset_0x042F78
 ;-------------------------------------------------------------------------------
 Offset_0x048F5E:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 rts  
 ;-------------------------------------------------------------------------------  
 Flybot_767_Setup_Data:                                         ; Offset_0x048F66

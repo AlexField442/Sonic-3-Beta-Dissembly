@@ -11,7 +11,7 @@
                 move.b  (Obj_Player_Two+Obj_Player_Selected).w, D0   ; $FFFFB082
                 cmp.b   Obj_Player_Selected(A0), D0                      ; $0038
                 bne.s   Offset_0x00A574
-                bchg    #03, Obj_Flags(A0)                               ; $0004
+                bchg    #03, render_flags(A0)                               ; $0004
 Offset_0x00A574:
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 beq.s   Offset_0x00A59C
@@ -23,10 +23,10 @@ Offset_0x00A580:
                 move.b  (Obj_Player_One+Obj_Player_Selected).w, D0   ; $FFFFB038
                 cmp.b   Obj_Player_Selected(A0), D0                      ; $0038
                 bne.s   Offset_0x00A59C
-                bchg    #04, Obj_Flags(A0)                               ; $0004
+                bchg    #04, render_flags(A0)                               ; $0004
 Offset_0x00A59C:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x00A5AA(PC, D0), D1
                 jmp     Offset_0x00A5AA(PC, D1)
 ;-------------------------------------------------------------------------------
@@ -39,15 +39,15 @@ Offset_0x00A5AA:
                 dc.w    Sonic_Animate-Offset_0x00A5AA          ; Offset_0x00C2B0
 ;-------------------------------------------------------------------------------
 Offset_0x00A5B6:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
-                move.b  #$0B, Obj_Height_2(A0)                           ; $001E
-                move.b  #$05, Obj_Width_2(A0)                            ; $001F
+                addq.b  #$02, routine(A0)                            ; $0005
+                move.b  #$0B, y_radius(A0)                           ; $001E
+                move.b  #$05, x_radius(A0)                            ; $001F
                 move.b  #$0B, Obj_Height_3(A0)                           ; $0044
                 move.b  #$05, Obj_Width_3(A0)                            ; $0045
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
                 move.b  #$0C, Obj_Width(A0)                              ; $0007
                 move.b  #$0C, Obj_Height(A0)                             ; $0006
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 lea     (Player_Start_Speed_Array), A1         ; Offset_0x1F7000
                 moveq   #$00, D0
                 move.b  Obj_Player_Selected(A0), D0                      ; $0038
@@ -63,10 +63,10 @@ Offset_0x00A5B6:
                 cmpa.w  #Obj_Player_One, A0                              ; $B000
                 bne.s   Offset_0x00A66A
                 move.w  #$0680, Obj_Art_VRAM(A0)                         ; $000A
-                move.l  #Sonic_Mappings_2P, Obj_Map(A0) ; Offset_0x102C70, $000C
+                move.l  #Sonic_Mappings_2P, mappings(A0) ; Offset_0x102C70, $000C
                 tst.b   Obj_Player_Selected(A0)                          ; $0038
                 beq.s   Offset_0x00A642
-                move.l  #Knuckles_Mappings_2P, Obj_Map(A0)   ; Offset_0x1032E0, $000C
+                move.l  #Knuckles_Mappings_2P, mappings(A0)   ; Offset_0x1032E0, $000C
                 addi.w  #$2000, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x00A642:
                 cmpi.b  #EMz_Id, (Current_Zone).w                   ; $12, $FFFFFE10
@@ -80,10 +80,10 @@ Offset_0x00A650:
                 bra.s   Offset_0x00A6B2
 Offset_0x00A66A:
                 move.w  #$06A0, Obj_Art_VRAM(A0)                         ; $000A
-                move.l  #Sonic_Mappings_2P, Obj_Map(A0) ; Offset_0x102C70, $000C
+                move.l  #Sonic_Mappings_2P, mappings(A0) ; Offset_0x102C70, $000C
                 tst.b   Obj_Player_Selected(A0)                          ; $0038
                 beq.s   Offset_0x00A68C
-                move.l  #Knuckles_Mappings_2P, Obj_Map(A0)   ; Offset_0x1032E0, $000C
+                move.l  #Knuckles_Mappings_2P, mappings(A0)   ; Offset_0x1032E0, $000C
                 addi.w  #$2000, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x00A68C:
                 cmpi.b  #EMz_Id, (Current_Zone).w                   ; $12, $FFFFFE10
@@ -257,8 +257,8 @@ Offset_0x00A8A2:
                 rts
 Offset_0x00A8AC:
                 bset    #$02, Obj_Status(A0)                             ; $002A
-                move.b  #$07, Obj_Height_2(A0)                           ; $001E
-                move.b  #$03, Obj_Width_2(A0)                            ; $001F
+                move.b  #$07, y_radius(A0)                           ; $001E
+                move.b  #$03, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014
                 move.w  #Rolling_Sfx, D0                                 ; $003C
@@ -294,8 +294,8 @@ Offset_0x00A92C:
                 move.b  (Control_Ports_Logical_Data).w, D0           ; $FFFFF602
                 btst    #$01, D0
                 bne     Offset_0x00A9DA
-                move.b  #$07, Obj_Height_2(A0)                           ; $001E
-                move.b  #$03, Obj_Width_2(A0)                            ; $001F
+                move.b  #$07, y_radius(A0)                           ; $001E
+                move.b  #$03, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D

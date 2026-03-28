@@ -16,9 +16,9 @@ Obj_0x47_CNz_Barrel:                                           ; Offset_0x028430
                 add.w   D0, D0
                 andi.w  #$001E, D0
                 move.w  D0, Obj_Control_Var_0A(A0)                       ; $003A
-                move.l  #Barrel_Mappings, Obj_Map(A0)   ; Offset_0x0288E8, $000C
+                move.l  #Barrel_Mappings, mappings(A0)   ; Offset_0x0288E8, $000C
                 move.w  #$438E, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -377,8 +377,8 @@ Offset_0x028894:
                 move.w  #$0100, Obj_Priority(A1)                         ; $0008
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 move.b  #$01, Obj_Control_Var_10(A1)                     ; $0040
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 bset    #$02, Obj_Status(A1)                             ; $002A
                 move.w  Obj_Speed_Y(A0), Obj_Speed_Y(A1)          ; $001A, $001A

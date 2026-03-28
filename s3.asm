@@ -26005,7 +26005,7 @@ LevelResults_MoveElement:
 		move.w	Obj_Respaw_Ref(a0),a1
 		move.w	Obj_Control_Var_02(a1),d0		; is the object moving onto the screen?
 		beq.s	LevelResults_MoveOntoScreen		; if yes, branch
-		tst.b	render_flags(a0)				; is the object off-screen?
+		tst.b	render_flags(a0)			; is the object off-screen?
 		bmi.s	LevelResults_MoveOffScreen		; if not, branch
 		subq.w	#1,Obj_Control_Var_00(a1)
 		addq.w	#4,sp

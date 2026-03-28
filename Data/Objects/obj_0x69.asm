@@ -117,8 +117,8 @@ Offset_0x02EFC6:
                 addq.b  #$02, (A4)
                 move.b  #$01, Obj_Timer(A1)                              ; $002E
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 bset    #$02, Obj_Status(A1)                             ; $002A
                 bclr    #$05, Obj_Status(A1)                             ; $002A
@@ -146,8 +146,8 @@ Offset_0x02F006:
                 addq.b  #$02, (A4)
                 move.b  #$01, Obj_Timer(A1)                              ; $002E
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 bset    #$02, Obj_Status(A1)                             ; $002A
                 bclr    #$05, Obj_Status(A1)                             ; $002A

@@ -3,12 +3,12 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x01F892:
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  #$80, Obj_Height(A0)                             ; $0006
                 move.w  Obj_Y(A0), Obj_Control_Var_0C(A0)         ; $0014, $003C
-                move.l  #Hook_Mappings, Obj_Map(A0)     ; Offset_0x01FA5E, $000C
+                move.l  #Hook_Mappings, mappings(A0)     ; Offset_0x01FA5E, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 andi.w  #$007F, D0
@@ -69,9 +69,9 @@ Offset_0x01F940:
 Offset_0x01F964:
                 tst.b   (A2)
                 beq     Offset_0x01F9DC
-                tst.b   Obj_Flags(A1)                                    ; $0004
+                tst.b   render_flags(A1)                                    ; $0004
                 bpl.s   Offset_0x01F9C0
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01F9C0
                 andi.b  #$70, D0
                 beq     Offset_0x01F9CE
@@ -120,7 +120,7 @@ Offset_0x01F9EA:
                 bcc     Offset_0x01FA5C
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bmi.s   Offset_0x01FA5C
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01FA5C
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x01FA5C

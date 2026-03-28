@@ -48,11 +48,11 @@ Offset_0x0072FA:
                 bra     Branch_To_SS_Obj_Sphere_Test_Main_2    ; Offset_0x00733E
 ;-------------------------------------------------------------------------------                
 Offset_0x0072FE:
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
-                move.l  #Spheres_2_Mappings, Obj_Map(A1) ; Offset_0x0078EC, $000C
+                move.l  #Spheres_2_Mappings, mappings(A1) ; Offset_0x0078EC, $000C
                 move.w  #$A400, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_X(A0), Obj_Control_Var_00(A1)         ; $0010, $0030

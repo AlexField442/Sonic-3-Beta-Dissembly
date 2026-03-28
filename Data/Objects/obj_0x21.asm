@@ -3,11 +3,11 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x01FF28:
-                move.l  #Gate_Laser_Mappings, Obj_Map(A0) ; Offset_0x020036, $000C
+                move.l  #Gate_Laser_Mappings, mappings(A0) ; Offset_0x020036, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$1C, Obj_Width(A0)                              ; $0007
                 move.b  #$04, Obj_Height(A0)                             ; $0006
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0180, Obj_Priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -44,11 +44,11 @@ Offset_0x01FFC0:
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  Obj_Timer(A0), Obj_Timer(A1)              ; $002E, $002E
-                move.l  #Gate_Laser_Mappings, Obj_Map(A1) ; Offset_0x020036, $000C
+                move.l  #Gate_Laser_Mappings, mappings(A1) ; Offset_0x020036, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$1C, Obj_Width(A1)                              ; $0007
                 move.b  #$04, Obj_Height(A1)                             ; $0006
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$01, Obj_Map_Id(A1)                             ; $0022
                 move.w  #$0180, Obj_Priority(A1)                         ; $0008
                 rts    
@@ -59,7 +59,7 @@ Offset_0x02000C:
                 move.b  (Level_Frame_Count+$01).w, D0                ; $FFFFFE05
                 andi.b  #$01, D0
                 bne.s   Offset_0x02001C
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
 Offset_0x02001C:
                 move.w  Obj_Y(A0), D0                                    ; $0014
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014

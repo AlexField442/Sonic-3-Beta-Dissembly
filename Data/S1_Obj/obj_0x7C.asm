@@ -4,7 +4,7 @@
 ;===============================================================================  
 ; Offset_0x010D26:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x010D34(PC, D0), D1
                 jmp     Offset_0x010D34(PC, D1)
 ;-------------------------------------------------------------------------------
@@ -14,10 +14,10 @@ Offset_0x010D34:
                 dc.w    Offset_0x010DD6-Offset_0x010D34  
 ;-------------------------------------------------------------------------------
 Offset_0x010D3A:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
-                move.l  #Big_Ring_Flash_Mappings, Obj_Map(A0) ; Offset_0x010EFA,$000C
+                addq.b  #$02, routine(A0)                            ; $0005
+                move.l  #Big_Ring_Flash_Mappings, mappings(A0) ; Offset_0x010EFA,$000C
                 move.w  #$2462, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0000, Obj_Priority(A0)                         ; $0008
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$FF, Obj_Map_Id(A0)                             ; $0022
@@ -40,7 +40,7 @@ Offset_0x010D7E:
                 cmpi.b  #$03, Obj_Map_Id(A0)                             ; $0022
                 bne.s   Offset_0x010DC4
                 move.l  Obj_Control_Var_10(A0), A1                       ; $0040
-                move.b  #$06, Obj_Routine(A1)                            ; $0005
+                move.b  #$06, routine(A1)                            ; $0005
                 move.b  #$1C, (Obj_Player_One+Obj_Ani_Number).w      ; $FFFFB020
                 move.b  #$01, (Special_Stage_Entry_Flag).w           ; $FFFFF7CD
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
@@ -49,7 +49,7 @@ Offset_0x010D7E:
 Offset_0x010DC4:
                 rts
 Offset_0x010DC6:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
+                addq.b  #$02, routine(A0)                            ; $0005
                 move.l  #$00000000, (Obj_Player_One).w               ; $FFFFB000
                 addq.l  #$04, A7
                 rts

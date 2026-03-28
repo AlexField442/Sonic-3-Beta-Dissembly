@@ -4,7 +4,7 @@
 ;------------------------------------------------------------------------------- 
 ; Offset_0x01AA34:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x01AA42(PC, D0), D1
                 jmp     Offset_0x01AA42(PC, D1)
 ;-------------------------------------------------------------------------------
@@ -13,12 +13,12 @@ Offset_0x01AA42:
                 dc.w    Offset_0x01AA8A-Offset_0x01AA42   
 ;-------------------------------------------------------------------------------
 Offset_0x01AA46:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
+                addq.b  #$02, routine(A0)                            ; $0005
                 move.w  Obj_X(A0), Obj_Control_Var_04(A0)         ; $0010, $0034
                 move.w  Obj_Y(A0), Obj_Control_Var_06(A0)         ; $0014, $0036
-                move.l  #Scaling_Mappings, Obj_Map(A0)  ; Offset_0x01B1B8, $000C
+                move.l  #Scaling_Mappings, mappings(A0)  ; Offset_0x01B1B8, $000C
                 move.w  #$6500, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.b  #$40, Obj_Width(A0)                              ; $0007
                 move.b  #$40, Obj_Height(A0)                             ; $0006
@@ -161,7 +161,7 @@ Offset_0x01AC40:
                 sub.w   D1, (Art_Scaling_Data_Buffer).w              ; $FFFFF740
                 rts
 Offset_0x01AC46:
-                bclr    #$07, Obj_Flags(A0)                              ; $0004
+                bclr    #$07, render_flags(A0)                              ; $0004
                 rts
 Offset_0x01AC4E:
                 moveq   #$00, D0

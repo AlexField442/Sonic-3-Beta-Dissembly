@@ -6,7 +6,7 @@
 ; Offset_0x0346BC: Obj_S2_0xB1_Sonic_Sega_Logo:
 Obj_SegaTM:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0346CA(PC, D0), D1
                 jmp     Offset_0x0346CA(PC, D1)    
 ;-------------------------------------------------------------------------------                                             
@@ -17,7 +17,7 @@ Offset_0x0346CA:
 Offset_0x0346CE:
                 lea     S2_Obj_0xB1_Setup_Data(PC), A1                ; Offset_0x034864
                 jsr     (SetupObjectAttributes)                      ; Offset_0x041D72
-                move.b  #$00, Obj_Flags(A0)                              ; $0004
+                move.b  #$00, render_flags(A0)                              ; $0004
                 move.b  #$04, Obj_Map_Id(A0)                             ; $0022
                 move.w  #$0174, Obj_X(A0)                                ; $0010
                 move.w  #$00D8, Obj_Y(A0)                                ; $0014

@@ -3,9 +3,9 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02805C:
-                move.l  #CNz_Fan_Mappings, Obj_Map(A0)  ; Offset_0x0281E8, $000C
+                move.l  #CNz_Fan_Mappings, mappings(A0)  ; Offset_0x0281E8, $000C
                 move.w  #$43E8, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
@@ -92,7 +92,7 @@ Offset_0x028162:
                 bcs.s   Offset_0x0281E6
                 cmp.w   Obj_Control_Var_08(A0), D1                       ; $0038
                 bcc.s   Offset_0x0281E6
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc     Offset_0x0281E6
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x0281E6

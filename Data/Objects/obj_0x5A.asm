@@ -3,13 +3,13 @@
 ; ->>>          Marble Garden.
 ;===============================================================================
 ; Offset_0x02ACD8:
-                move.l  #Pulley_Mappings, Obj_Map(A0)   ; Offset_0x02B0CA, $000C
+                move.l  #Pulley_Mappings, mappings(A0)   ; Offset_0x02B0CA, $000C
                 move.w  #$235F, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
-                bset    #$06, Obj_Flags(A0)                              ; $0004
+                bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Speed_X(A0), A2                              ; $0018
                 move.w  Obj_X(A0), (A2)+                                 ; $0010
@@ -23,9 +23,9 @@
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02ADD2
                 move.l  #Offset_0x02B0C0, (A1)
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$60, Obj_Width(A1)                              ; $0007
                 move.b  #$C0, Obj_Height(A1)                             ; $0006
                 move.w  #$0300, Obj_Priority(A1)                         ; $0008
@@ -38,7 +38,7 @@
                 addi.w  #$00F0, Obj_X(A1)                                ; $0010
 Offset_0x02AD84:
                 addi.w  #$00D0, Obj_Y(A1)                                ; $0014
-                bset    #$06, Obj_Flags(A1)                              ; $0004
+                bset    #$06, render_flags(A1)                              ; $0004
                 move.w  #$0008, Obj_Sub_Y(A1)                            ; $0016
                 lea     Obj_Speed_X(A1), A2                              ; $0018
                 moveq   #$07, D0
@@ -124,9 +124,9 @@ Offset_0x02AE7A:
 Offset_0x02AE92:
                 tst.b   (A2)
                 beq     Offset_0x02AF32
-                tst.b   Obj_Flags(A1)                                    ; $0004
+                tst.b   render_flags(A1)                                    ; $0004
                 bpl.s   Offset_0x02AEF2
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x02AEF2
                 andi.b  #$70, D0
                 beq     Offset_0x02AF00
@@ -140,8 +140,8 @@ Offset_0x02AE92:
 Offset_0x02AECC:
                 move.w  #$FA00, Obj_Speed_Y(A1)                          ; $001A
                 bset    #$01, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 bset    #$02, Obj_Status(A1)                             ; $002A
                 rts
@@ -198,7 +198,7 @@ Offset_0x02AF66:
                 bcc     Offset_0x02AFF2
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x02AFF2
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x02AFF2
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x02AFF2

@@ -60,7 +60,7 @@ Offset_0x029BF2:
                 rts
 Offset_0x029C06:
                 moveq   #$00, D1
-                move.b  Obj_Height_2(A1), D1                             ; $001E
+                move.b  y_radius(A1), D1                             ; $001E
                 addi.w  #$0044, D1
                 move.w  Obj_X(A1), D0                                    ; $0010
                 sub.w   Obj_X(A0), D0                                    ; $0010
@@ -96,8 +96,8 @@ Offset_0x029C5E:
                 move.b  #$00, (A2)
 Offset_0x029C80:
                 bclr    #$00, Obj_Status(A1)                             ; $002A
-                bclr    #$00, Obj_Flags(A1)                              ; $0004
-                bclr    #$01, Obj_Flags(A1)                              ; $0004
+                bclr    #$00, render_flags(A1)                              ; $0004
+                bclr    #$01, render_flags(A1)                              ; $0004
                 bset    #$06, Obj_Timer(A1)                              ; $002E
                 bset    #$01, Obj_Timer(A1)                              ; $002E
 Offset_0x029C9E:
@@ -137,8 +137,8 @@ Offset_0x029CFC:
 Offset_0x029D0E:
                 move.b  #$00, Obj_Angle(A1)                              ; $0026
                 bclr    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$13, Obj_Height_2(A1)                           ; $001E
-                move.b  #$09, Obj_Width_2(A1)                            ; $001F
+                move.b  #$13, y_radius(A1)                           ; $001E
+                move.b  #$09, x_radius(A1)                            ; $001F
                 move.w  #$0001, Obj_Ani_Number(A1)                       ; $0020
                 bclr    #$03, Obj_Status(A1)                             ; $002A
                 bclr    D6, Obj_Status(A0)                               ; $002A
@@ -167,7 +167,7 @@ Offset_0x029D6A:
                 asr.w   #$02, D1
                 add.w   Obj_X(A0), D1                                    ; $0010
                 moveq   #$00, D0
-                move.b  Obj_Height_2(A1), D0                             ; $001E
+                move.b  y_radius(A1), D0                             ; $001E
                 muls.w  D3, D0
                 asr.w   #$08, D0
                 add.w   D0, D1
@@ -235,8 +235,8 @@ Offset_0x029E56:
 Offset_0x029E62:
                 move.b  #$00, Obj_Angle(A1)                              ; $0026
                 bclr    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$13, Obj_Height_2(A1)                           ; $001E
-                move.b  #$09, Obj_Width_2(A1)                            ; $001F
+                move.b  #$13, y_radius(A1)                           ; $001E
+                move.b  #$09, x_radius(A1)                            ; $001F
                 move.w  #$0001, Obj_Ani_Number(A1)                       ; $0020
                 bclr    #$03, Obj_Status(A1)                             ; $002A
                 bclr    D6, Obj_Status(A0)                               ; $002A
@@ -262,7 +262,7 @@ Offset_0x029EBA:
                 asr.w   #$02, D1
                 add.w   Obj_X(A0), D1                                    ; $0010
                 moveq   #$00, D0
-                move.b  Obj_Height_2(A1), D0                             ; $001E
+                move.b  y_radius(A1), D0                             ; $001E
                 muls.w  D3, D0
                 asr.w   #$08, D0
                 add.w   D0, D1

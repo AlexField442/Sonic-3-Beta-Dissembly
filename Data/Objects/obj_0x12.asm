@@ -6,9 +6,9 @@ Offset_0x01C69A:
                 dc.b    $10, $18, $20, $38, $40, $68
 ;-------------------------------------------------------------------------------
 Obj_0x12_LBz_Elevator:                                         ; Offset_0x01C6A0
-                move.l  #LBz_Elevator_Mappings, Obj_Map(A0)  ; Offset_0x01C868, $000C
+                move.l  #LBz_Elevator_Mappings, mappings(A0)  ; Offset_0x01C868, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.b  #$30, Obj_Width(A0)                              ; $0007
                 move.b  #$08, Obj_Height(A0)                             ; $0006
@@ -33,7 +33,7 @@ Offset_0x01C706:
                 move.w  Obj_Control_Var_06(A0), D0                       ; $0036
                 move.w  Offset_0x01C73C(PC, D0), D1
                 jsr     Offset_0x01C73C(PC, D1)
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01C736
                 moveq   #$00, D1
                 move.b  Obj_Width(A0), D1                                ; $0007

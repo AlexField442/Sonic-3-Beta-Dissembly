@@ -5,7 +5,7 @@
 ; Offset_0x044F90:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x044FA8(PC, D0), D1
                 jsr     Offset_0x044FA8(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C  
@@ -49,7 +49,7 @@ Offset_0x045020:
 ;-------------------------------------------------------------------------------
 Offset_0x045022:
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
                 move.w  Obj_Control_Var_0A(A0), Obj_Timer(A0)     ; $003A, $002E
                 rts                                               
 ;-------------------------------------------------------------------------------

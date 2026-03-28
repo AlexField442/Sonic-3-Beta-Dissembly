@@ -5,7 +5,7 @@
 ; Offset_0x0446D0:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0446EC(PC, D0), D1
                 jsr     Offset_0x0446EC(PC, D1)
                 bsr     Offset_0x044746
@@ -27,7 +27,7 @@ Offset_0x044700:
                 bcs.s   Offset_0x04470C
                 rts
 Offset_0x04470C:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x044792, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x04473E, Obj_Child(A0)                  ; $0034
 Offset_0x044722:
@@ -44,7 +44,7 @@ Offset_0x044724:
                 jmp     Load_Child_Object_Complex_Adjusted_A2(PC) ; Offset_0x041EE0  
 ;-------------------------------------------------------------------------------
 Offset_0x04473E:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 rts            
 ;-------------------------------------------------------------------------------
 Offset_0x044746:

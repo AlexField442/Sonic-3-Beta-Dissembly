@@ -6,7 +6,7 @@
                 lea     Offset_0x048FDC(PC), A1
                 jsr     Check_Camera_In_Range(PC)              ; Offset_0x043392
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x048FCC(PC, D0), D1
                 jsr     Offset_0x048FCC(PC, D1)
                 jsr     (Offset_0x04934C)
@@ -54,7 +54,7 @@ Offset_0x049040:
                 jsr     Swing_Up_And_Down(PC)                  ; Offset_0x04232E
                 jmp     (SpeedToPos)                           ; Offset_0x01111E
 Offset_0x04904A:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  #$FC00, Obj_Speed_Y(A0)                          ; $001A
                 rts      
 ;-------------------------------------------------------------------------------
@@ -63,8 +63,8 @@ Offset_0x049058:
                 bcs.s   Offset_0x049066
                 jmp     (SpeedToPos)                           ; Offset_0x01111E
 Offset_0x049066:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                move.b  #$06, routine(A0)                            ; $0005
+                bset    #$00, render_flags(A0)                              ; $0004
                 move.w  #$3EC0, Obj_X(A0)                                ; $0010
                 move.w  #$01A0, Obj_Y(A0)                                ; $0014
                 jmp     (Swing_Setup)                          ; Offset_0x03669A 
@@ -78,7 +78,7 @@ Offset_0x049084:
 Offset_0x049098:
                 rts
 Offset_0x04909A:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 st      (Boss_Attack_Started).w                      ; $FFFFFAA2
                 rts   
 ;-------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ Offset_0x0490A6:
                 bne.s   Offset_0x0490B4
                 rts
 Offset_0x0490B4:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 move.w  #$3EA0, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
                 jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A  
@@ -106,7 +106,7 @@ Offset_0x0490DA:
                 jsr     Swing_Up_And_Down(PC)                  ; Offset_0x04232E
                 jmp     (SpeedToPos)                           ; Offset_0x01111E
 Offset_0x0490EE:
-                move.b  #$0C, Obj_Routine(A0)                            ; $0005
+                move.b  #$0C, routine(A0)                            ; $0005
                 move.w  #$FC00, Obj_Speed_Y(A0)                          ; $001A
                 rts    
 ;-------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ Offset_0x0490FC:
                 bls.s   Offset_0x04910A
                 jmp     (SpeedToPos)                           ; Offset_0x01111E
 Offset_0x04910A:
-                move.b  #$0E, Obj_Routine(A0)                            ; $0005
+                move.b  #$0E, routine(A0)                            ; $0005
                 bset    #$01, Obj_Control_Var_08(A0)                     ; $0038
                 move.w  #$0200, Obj_Speed_X(A0)                          ; $0018
                 move.w  #$0200, Obj_Speed_Y(A0)                          ; $001A
@@ -163,7 +163,7 @@ Offset_0x04919C:
 ;-------------------------------------------------------------------------------
 Offset_0x0491AE:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0491C2(PC, D0), D1
                 jsr     Offset_0x0491C2(PC, D1)
                 jmp     (DisplaySprite)                        ; Offset_0x011148  
@@ -187,13 +187,13 @@ Offset_0x0491DC:
                 bne.s   Offset_0x0491EC
                 jmp     Refresh_Child_Position(PC)             ; Offset_0x042016
 Offset_0x0491EC:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x0491F4:
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl.s   Offset_0x049200
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
 Offset_0x049200:
                 rts   
 ;-------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ Offset_0x049202:
                 jmp     (AnimateRaw)                          ; Offset_0x04208E 
 ;-------------------------------------------------------------------------------
 Offset_0x049208:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 subi.w  #$000C, D0
@@ -227,7 +227,7 @@ Offset_0x04924E:
                 bmi.s   Offset_0x04925C
                 rts
 Offset_0x04925C:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 rts     
 ;-------------------------------------------------------------------------------
 Offset_0x049264:
@@ -252,7 +252,7 @@ Offset_0x04927C:
                 adda.w  D0, A1
                 move.b  (A1)+, Obj_Map_Id(A0)                            ; $0022
                 move.b  (A1)+, D1
-                or.b    D1, Obj_Flags(A0)                                ; $0004
+                or.b    D1, render_flags(A0)                                ; $0004
                 move.b  (A1)+, D1
                 move.b  D1, Obj_Control_Var_12(A0)                       ; $0042
                 ext.w   D1

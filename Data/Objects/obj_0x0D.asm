@@ -3,7 +3,7 @@
 ; ->>>
 ;===============================================================================      
 ; Offset_0x0170CA:
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.l  #Offset_0x017242, (A0)
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -14,7 +14,7 @@
 Offset_0x0170EE:
                 andi.b  #$0F, D0
                 move.b  D0, Obj_Map_Id(A0)                               ; $0022
-                move.l  #Breakable_Wall_Mappings, Obj_Map(A0) ; Offset_0x017732, $000C
+                move.l  #Breakable_Wall_Mappings, mappings(A0) ; Offset_0x017732, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$28, Obj_Height(A0)                             ; $0006
@@ -22,7 +22,7 @@ Offset_0x0170EE:
                 move.l  #Offset_0x0175EA, Obj_Control_Var_08(A0)         ; $0038
                 cmpi.b  #Hz_Id, (Current_Zone).w                    ; $01, $FFFFFE10
                 bne.s   Offset_0x017184
-                move.l  #Hz_Breakable_Wall_Mappings, Obj_Map(A0) ; Offset_0x0179B8, $000C
+                move.l  #Hz_Breakable_Wall_Mappings, mappings(A0) ; Offset_0x0179B8, $000C
                 move.w  #$6001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -40,7 +40,7 @@ Offset_0x0170EE:
 Offset_0x017184:
                 cmpi.b  #MGz_Id, (Current_Zone).w                   ; $02, $FFFFFE10
                 bne.s   Offset_0x0171C6
-                move.l  #MGz_Breakable_Wall_Mappings, Obj_Map(A0) ; Offset_0x0178F8, $000C
+                move.l  #MGz_Breakable_Wall_Mappings, mappings(A0) ; Offset_0x0178F8, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$28, Obj_Height(A0)                             ; $0006
@@ -53,7 +53,7 @@ Offset_0x017184:
 Offset_0x0171C6:
                 cmpi.b  #CNz_Id, (Current_Zone).w                   ; $03, $FFFFFE10
                 bne.s   Offset_0x017208
-                move.l  #CNz_Breakable_Wall_Mappings, Obj_Map(A0) ; Offset_0x017858, $000C
+                move.l  #CNz_Breakable_Wall_Mappings, mappings(A0) ; Offset_0x017858, $000C
                 move.w  #$4420, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -66,7 +66,7 @@ Offset_0x0171C6:
 Offset_0x017208:
                 cmpi.b  #LBz_Id, (Current_Zone).w                   ; $06, $FFFFFE10
                 bne.s   Offset_0x017242
-                move.l  #LBz_Breakable_Wall_Mappings, Obj_Map(A0) ; Offset_0x017A3E, $000C
+                move.l  #LBz_Breakable_Wall_Mappings, mappings(A0) ; Offset_0x017A3E, $000C
                 move.w  #$22EA, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -157,7 +157,7 @@ Offset_0x01733C:
 Offset_0x017354:                
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 addi.w  #$0070, Obj_Speed_Y(A0)                          ; $001A
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01736C
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x01736C:
@@ -166,13 +166,13 @@ Offset_0x017372:
                 moveq   #$00, D0
                 move.b  Obj_Map_Id(A0), D0                               ; $0022
                 add.w   D0, D0
-                move.l  Obj_Map(A0), A3                                  ; $000C
+                move.l  mappings(A0), A3                                  ; $000C
                 adda.w  $00(A3, D0), A3
                 move.w  (A3)+, D1
                 subq.w  #$01, D1
-                bset    #$05, Obj_Flags(A0)                              ; $0004
+                bset    #$05, render_flags(A0)                              ; $0004
                 move.l  (A0), D4
-                move.b  Obj_Flags(A0), D5                                ; $0004
+                move.b  render_flags(A0), D5                                ; $0004
                 move.l  A0, A1
                 bra.s   Offset_0x0173A0     
 ;-------------------------------------------------------------------------------
@@ -182,8 +182,8 @@ Offset_0x017396:
                 addq.w  #$06, A3
 Offset_0x0173A0:
                 move.l  D4, (A1)
-                move.l  A3, Obj_Map(A1)                                  ; $000C
-                move.b  D5, Obj_Flags(A1)                                ; $0004
+                move.l  A3, mappings(A1)                                  ; $000C
+                move.b  D5, render_flags(A1)                                ; $0004
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A

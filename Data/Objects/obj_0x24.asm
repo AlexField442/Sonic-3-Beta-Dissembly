@@ -10,7 +10,7 @@ Offset_0x0201C0:
                 move.b  #$00, Obj_Ani_Time(A0) 
 ;-------------------------------------------------------------------------------                
 Obj_0x24_Automatic_Tunnel:                                     ; Offset_0x0201C6
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.l  #Offset_0x0201DE, (A0)
@@ -233,11 +233,11 @@ Offset_0x020448:
                 rts 
 ;-------------------------------------------------------------------------------
 Obj_Tunnel_Exhaust_Control: ; usado também pelo objeto 0x1B    ; Offset_0x02044E
-                move.l  #Tunnel_Exhaust_Mappings, Obj_Map(A0) ; Offset_0x020842, $000C
+                move.l  #Tunnel_Exhaust_Mappings, mappings(A0) ; Offset_0x020842, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0180, Obj_Priority(A0)                         ; $0008
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x020484
@@ -272,7 +272,7 @@ Obj_Tunnel_Exhaust_Control_Main:                               ; Offset_0x0204C2
                 move.l  #Obj_Tunnel_Exhaust_Up, (A1)           ; Offset_0x02057E
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.l  #Tunnel_Exhaust_Mappings, Obj_Map(A1) ; Offset_0x020842, $000C
+                move.l  #Tunnel_Exhaust_Mappings, mappings(A1) ; Offset_0x020842, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
@@ -285,7 +285,7 @@ Offset_0x02051A:
                 lea     Offset_0x02054A(PC, D0), A2
                 move.w  (A2)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A2)+, Obj_Speed_Y(A1)                           ; $001A
-                move.b  (A2)+, Obj_Flags(A1)                             ; $0004
+                move.b  (A2)+, render_flags(A1)                             ; $0004
                 move.b  (A2)+, Obj_Map_Id(A1)                            ; $0022
                 bne.s   Offset_0x020538
                 move.l  #Obj_Tunnel_Exhaust_Horizontal, (A1)   ; Offset_0x0205DC
@@ -318,10 +318,10 @@ Obj_Tunnel_Exhaust_Up:                                         ; Offset_0x02057E
                 move.b  (Level_Frame_Count+$01).w, D0                ; $FFFFFE05
                 andi.b  #$01, D0
                 bne.s   Offset_0x02058E
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x02058E:
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x0205A6
                 tst.w   Obj_Speed_Y(A0)                                  ; $001A
                 bmi.s   Offset_0x0205A6
@@ -333,10 +333,10 @@ Obj_Tunnel_Exhaust_Down:                                       ; Offset_0x0205AC
                 move.b  (Level_Frame_Count+$01).w, D0                ; $FFFFFE05
                 andi.b  #$01, D0
                 bne.s   Offset_0x0205BC
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x0205BC:
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x0205D6
                 cmpi.w  #$0C00, Obj_Speed_Y(A0)                          ; $001A
                 blt.s   Offset_0x0205D6
@@ -348,10 +348,10 @@ Obj_Tunnel_Exhaust_Horizontal:                                 ; Offset_0x0205DC
                 move.b  (Level_Frame_Count+$01).w, D0                ; $FFFFFE05
                 andi.b  #$01, D0
                 bne.s   Offset_0x0205EC
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
 Offset_0x0205EC:
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x020606
                 cmpi.w  #$0600, Obj_Speed_Y(A0)                          ; $001A
                 blt.s   Offset_0x020606
@@ -368,14 +368,14 @@ Obj_Tunnel_Exhaust_Continuous:                                 ; Offset_0x02060C
                 move.l  #Obj_Tunnel_Exhaust_Timed, (A1)        ; Offset_0x020676
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.l  #Tunnel_Exhaust_Mappings, Obj_Map(A1) ; Offset_0x020842, $000C
+                move.l  #Tunnel_Exhaust_Mappings, mappings(A1) ; Offset_0x020842, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
                 move.w  #$0380, Obj_Priority(A1)                         ; $0008
                 move.w  #$0000, Obj_Speed_X(A1)                          ; $0018
                 move.w  #$0400, Obj_Speed_Y(A1)                          ; $001A
-                move.b  #$84, Obj_Flags(A1)                              ; $0004
+                move.b  #$84, render_flags(A1)                              ; $0004
                 move.b  #$01, Obj_Map_Id(A1)                             ; $0022
                 move.w  #$000B, Obj_Timer(A1)                            ; $002E
 Offset_0x020670:
@@ -390,10 +390,10 @@ Offset_0x020688:
                 move.b  (Level_Frame_Count+$01).w, D0                ; $FFFFFE05
                 andi.b  #$01, D0
                 bne.s   Offset_0x020698
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x020698:
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x0206AA
                 move.w  #$7FF0, Obj_X(A0)                                ; $0010
 Offset_0x0206AA:
@@ -418,11 +418,11 @@ Offset_0x0206EE:
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E  
 ;-------------------------------------------------------------------------------  
 ; Offset_0x0206F4: ; Left over ??? Não usado.
-                move.l  #Tunnel_Exhaust_Mappings, Obj_Map(A0)  ; Offset_0x020842, $000C
+                move.l  #Tunnel_Exhaust_Mappings, mappings(A0)  ; Offset_0x020842, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0180, Obj_Priority(A0)                         ; $0008
                 move.w  #$0078, Obj_Control_Var_00(A0)                   ; $0030
                 move.l  #Offset_0x020726, (A0)
@@ -437,13 +437,13 @@ Offset_0x020726:
                 move.l  #Offset_0x0207B8, (A1)
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.l  #Tunnel_Exhaust_Mappings, Obj_Map(A1) ; Offset_0x020842, $000C
+                move.l  #Tunnel_Exhaust_Mappings, mappings(A1) ; Offset_0x020842, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
                 move.w  #$0380, Obj_Priority(A1)                         ; $0008
-                ori.b   #$04, Obj_Flags(A1)                              ; $0004
-                bset    #$00, Obj_Flags(A1)                              ; $0004
+                ori.b   #$04, render_flags(A1)                              ; $0004
+                bset    #$00, render_flags(A1)                              ; $0004
                 move.w  #$F800, Obj_Speed_X(A1)                          ; $0018
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -464,7 +464,7 @@ Offset_0x0207B8:
                 move.b  (Level_Frame_Count+$01).w, D0                ; $FFFFFE05
                 andi.b  #$01, D0
                 bne.s   Offset_0x0207C8
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
 Offset_0x0207C8:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E

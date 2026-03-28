@@ -3,11 +3,11 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x01F5FC:
-                move.l  #Spin_Launcher_Mappings, Obj_Map(A0) ; Offset_0x01F864, $000C
+                move.l  #Spin_Launcher_Mappings, mappings(A0) ; Offset_0x01F864, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.l  #Offset_0x01F628, (A0)
 Offset_0x01F628:                
@@ -81,8 +81,8 @@ Offset_0x01F6BA:
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
                 bset    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 move.b  #$10, (A4)
 Offset_0x01F720:
@@ -104,8 +104,8 @@ Offset_0x01F722:
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
                 bset    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 move.b  #$10, (A4)
                 rts

@@ -9,13 +9,13 @@ Obj_0x27_Lava_Attributes:                                      ; Offset_0x0141F2
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  Offset_0x0141EE(PC, D0), Obj_Col_Flags(A0)       ; $0028
-                move.l  #Lava_Attributes_Mappings_No_Display, Obj_Map(A0) ; Offset_0x014278, $000C
+                move.l  #Lava_Attributes_Mappings_No_Display, mappings(A0) ; Offset_0x014278, $000C
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 beq.s   Offset_0x014214
-                move.l  #Lava_Attributes_Mappings, Obj_Map(A0) ; Offset_0x014280, $000C
+                move.l  #Lava_Attributes_Mappings, mappings(A0) ; Offset_0x014280, $000C
 Offset_0x014214:
                 move.w  #$86BC, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$84, Obj_Flags(A0)                              ; $0004
+                move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$80, Obj_Width(A0)                              ; $0007
                 move.b  #$80, Obj_Height(A0)                             ; $0006
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008

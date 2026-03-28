@@ -48,24 +48,21 @@ id_PLC_GameOver		equ (PLCptr_GameOver-ArtLoadCues)/2+id_PLC__First
 ; ---------------------------------------------------------------------------
 ; Sprite Status Table
 ; ---------------------------------------------------------------------------
+id:			equ 0		; 4 bytes ; 0/1/2/3
 render_flags:		equ 4		; 1 byte
 routine:		equ 5		; 1 byte
 height_pixels:		equ 6		; 1 byte
 width_pixels:		equ 7		; 1 byte
-mappings:		equ $C		; 4 bytes ; $C/$D/$E/$F
+mappings:		equ $C		; 4 bytes ; $C/$D/$E/$F obj_0x0D
 
 y_radius:		equ $1E		; 1 byte
 x_radius:		equ $1F		; 1 byte
 
 ; OLD! To deprecate!
-Obj_Pointer           equ $00     ; Longword      ; 00          ; 00..03
-Obj_Flags             equ render_flags
-Obj_Routine           equ routine
 Obj_Height            equ height_pixels
 Obj_Width             equ width_pixels
 Obj_Priority          equ $08     ; Word          ; 18          ; 08..09
 Obj_Art_VRAM          equ $0A     ; Word          ; 02..03      ; 0A..0B
-Obj_Map               equ mappings
 Obj_X                 equ $10     ; Word          ; 08..09      ; 10..11
 Obj_Sub_X             equ $12     ; Word          ; 0A..0B      ; 12..13  ; Fixed position
 Obj_Y                 equ $14     ; Word          ; 0C..0D      ; 14..15
@@ -73,8 +70,6 @@ Obj_Sub_Y             equ $16     ; Word          ; 0E..0F      ; 16..17
 Obj_Speed_X           equ $18     ; Longword      ; 10..13      ; 18..1B
 Obj_Speed_Y           equ $1A     ; complemento do $18 as vezes referenciado em word ; 12..13 ; 1A..1B
 Obj_Inertia           equ $1C     ; Word          ; 14..15      ; 1C..1D
-Obj_Height_2          equ y_radius
-Obj_Width_2           equ x_radius
 Obj_Ani_Number        equ $20     ; Byte          ; 1C          ; 20
 Obj_Ani_Flag          equ $21     ; Byte          ; 1D          ; 21
 Obj_Map_Id            equ $22     ; Byte          ; 1A          ; 22

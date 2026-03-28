@@ -4,20 +4,20 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x01FDB6:
-                move.l  #Smashing_Spike_Mappins, Obj_Map(A0) ; Offset_0x01FED8, $000C
+                move.l  #Smashing_Spike_Mappins, mappings(A0) ; Offset_0x01FED8, $000C
                 move.w  #$4455, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 cmpi.b  #MGz_Id, (Current_Zone).w                   ; $02, $FFFFFE10
                 bne.s   Offset_0x01FDFE
-                move.l  #Smashing_Pillar_Mappings, Obj_Map(A0) ; Offset_0x01FEE8, $000C
+                move.l  #Smashing_Pillar_Mappings, mappings(A0) ; Offset_0x01FEE8, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$28, Obj_Height(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
 Offset_0x01FDFE:
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  Obj_Y(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -38,7 +38,7 @@ Offset_0x01FE1C:
                 clr.w   Obj_Speed_Y(A0)                                  ; $001A
                 move.w  Obj_Control_Var_08(A0), Obj_Control_Var_04(A0) ; $0038, $0034
                 move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01FE7C
                 moveq   #Crash_Sfx, D0                                     ; $6C
                 cmpi.b  #MGz_Id, (Current_Zone).w                   ; $02, $FFFFFE10

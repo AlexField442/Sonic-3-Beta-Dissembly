@@ -3,9 +3,9 @@
 ; ->>>  
 ;===============================================================================  
 ; Offset_0x026A80:
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
-                move.l  #Hand_Launcher_Mappings, Obj_Map(A0) ; Offset_0x026DB8, $000C
+                move.l  #Hand_Launcher_Mappings, mappings(A0) ; Offset_0x026DB8, $000C
                 move.w  #$23E4, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$40, Obj_Height(A0)                             ; $0006
@@ -16,9 +16,9 @@
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x026B02
                 move.l  #Offset_0x026D8C, (A1)
-                move.l  #Hand_Launcher_Mappings, Obj_Map(A1) ; Offset_0x026DB8, $000C
+                move.l  #Hand_Launcher_Mappings, mappings(A1) ; Offset_0x026DB8, $000C
                 move.w  #$23E4, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$20, Obj_Width(A1)                              ; $0007
                 move.b  #$30, Obj_Width(A1)                              ; $0007
                 move.w  #$0280, Obj_Priority(A1)                         ; $0008
@@ -191,12 +191,12 @@ Offset_0x026D16:
                 bset    D6, Obj_Control_Var_05(A0)                       ; $0035
 Offset_0x026D26:
                 move.b  #$00, Obj_Ani_Number(A1)                         ; $0020
-                move.b  #$13, Obj_Height_2(A1)                           ; $001E
-                move.b  #$09, Obj_Width_2(A1)                            ; $001F
+                move.b  #$13, y_radius(A1)                           ; $001E
+                move.b  #$09, x_radius(A1)                            ; $001F
                 bclr    #$02, Obj_Status(A1)                             ; $002A
                 cmpi.l  #Obj_Sonic, (A1)                       ; Offset_0x00AA36
                 beq.s   Offset_0x026D4C
-                move.b  #$0F, Obj_Height_2(A1)                           ; $001E
+                move.b  #$0F, y_radius(A1)                           ; $001E
 Offset_0x026D4C:
                 move.b  #$01, Obj_Timer(A1)                              ; $002E
                 bclr    #$05, Obj_Status(A1)                             ; $002A

@@ -7,9 +7,9 @@ Offset_0x0143A6:
                 dc.b    $34, $6C, $40, $02
 ;-------------------------------------------------------------------------------                  
 Obj_0x36_Hz_Breakable_Bar:                                     ; Offset_0x0143B2
-                move.l  #Hz_Breakable_Bar_Mappings, Obj_Map(A0) ; Offset_0x01488E, $000C
+                move.l  #Hz_Breakable_Bar_Mappings, mappings(A0) ; Offset_0x01488E, $000C
                 move.w  #$43CA, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -121,7 +121,7 @@ Offset_0x0144E6:
                 addi.w  #$0010, D0
                 cmp.w   Obj_X(A1), D0                                    ; $0010
                 bcs.s   Offset_0x014576
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x014576
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x014576
@@ -179,7 +179,7 @@ Offset_0x0145D6:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 addi.w  #$0008, Obj_Speed_Y(A0)                          ; $001A
 Offset_0x0145E2:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl     Offset_0x014266
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0145F0:
@@ -258,7 +258,7 @@ Offset_0x01469A:
                 addi.w  #$0010, D0
                 cmp.w   Obj_Y(A1), D0                                    ; $0014
                 bcs.s   Offset_0x014724
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x014724
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x014724
@@ -337,9 +337,9 @@ Offset_0x014824:
                 bne.s   Offset_0x014886
 Offset_0x01482C:
                 move.l  (A0), (A1)
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.b  #$84, Obj_Flags(A1)                              ; $0004
+                move.b  #$84, render_flags(A1)                              ; $0004
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  (A4)+, D0

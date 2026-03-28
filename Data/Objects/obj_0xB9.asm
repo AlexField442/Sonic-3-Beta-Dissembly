@@ -6,7 +6,7 @@
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
 Obj_0xB9_Iz_Platform_2:                                        ; Offset_0x046644               
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04666E(PC, D0), D1
                 move.w  Obj_X(A0), -(A7)                                 ; $0010
                 jsr     Offset_0x04666E(PC, D1)
@@ -34,12 +34,12 @@ Offset_0x046682:
                 lea     Platform_Setup_Data(PC), A1            ; Offset_0x046AA6
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.w  A0, (Obj_Knuckles_Mem_Address).w             ; $FFFFFAA4
-                move.b  #$20, Obj_Width_2(A0)                            ; $001F
-                move.b  #$12, Obj_Height_2(A0)                           ; $001E
+                move.b  #$20, x_radius(A0)                            ; $001F
+                move.b  #$12, y_radius(A0)                           ; $001E
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 lsr.w   #$01, D0
-                move.b  Offset_0x0466B6(PC, D0), Obj_Routine(A0)         ; $0005
+                move.b  Offset_0x0466B6(PC, D0), routine(A0)         ; $0005
                 tst.w   D0
                 bne     Offset_0x046738
                 lea     Offset_0x046AFA(PC), A2
@@ -53,7 +53,7 @@ Offset_0x0466BA:
                 bne.s   Offset_0x0466C4
                 rts
 Offset_0x0466C4:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x0466EE, Obj_Child(A0)                  ; $0034
                 rts   
@@ -68,7 +68,7 @@ Offset_0x0466E6:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2 
 ;-------------------------------------------------------------------------------
 Offset_0x0466EE:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x0466F6:
@@ -84,7 +84,7 @@ Offset_0x04670E:
                 addq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
                 cmpi.b  #$10, Obj_Control_Var_09(A0)                     ; $0039
                 bcs     Offset_0x046738
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 move.w  #$0080, D1
@@ -130,11 +130,11 @@ Offset_0x046784:
                 bmi.s   Offset_0x04679E
                 rts
 Offset_0x046792:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 bsr     Offset_0x046A56
                 rts
 Offset_0x04679E:
-                move.b  #$0C, Obj_Routine(A0)                            ; $0005
+                move.b  #$0C, routine(A0)                            ; $0005
                 add.w   D1, Obj_X(A0)                                    ; $0010
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq     Offset_0x046738
@@ -178,7 +178,7 @@ Offset_0x046834:
 Offset_0x04683C:
                 rts
 Offset_0x04683E:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 move.w  Obj_Speed_Y(A0), D0                              ; $001A
                 btst    #$06, D3
                 beq.s   Offset_0x046850
@@ -196,7 +196,7 @@ Offset_0x046858:
                 bne.s   Offset_0x046864
                 rts
 Offset_0x046864:
-                move.b  #$10, Obj_Routine(A0)                            ; $0005
+                move.b  #$10, routine(A0)                            ; $0005
                 move.w  Obj_Y(A0), Obj_Control_Var_0A(A0)         ; $0014, $003A
                 rts   
 ;-------------------------------------------------------------------------------  
@@ -207,7 +207,7 @@ Offset_0x046872:
                 addq.w  #$01, Obj_Y(A0)                                  ; $0014
                 rts
 Offset_0x046882:
-                move.b  #$12, Obj_Routine(A0)                            ; $0005
+                move.b  #$12, routine(A0)                            ; $0005
                 clr.w   Obj_Speed_Y(A0)                                  ; $001A
                 rts  
 ;-------------------------------------------------------------------------------  
@@ -219,7 +219,7 @@ Offset_0x04688E:
                 bls.s   Offset_0x0468A6
                 rts
 Offset_0x0468A6:
-                move.b  #$0E, Obj_Routine(A0)                            ; $0005
+                move.b  #$0E, routine(A0)                            ; $0005
                 move.w  Obj_Control_Var_0A(A0), Obj_Y(A0)         ; $003A, $0014
                 rts    
 ;-------------------------------------------------------------------------------

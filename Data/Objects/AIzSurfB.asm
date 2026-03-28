@@ -3,10 +3,10 @@
 ; ->>>
 ;------------------------------------------------------------------------------- 
 ; Offset_0x0185D6:
-                move.l  #Intro_Surfboard_Mappings, Obj_Map(A0) ; Offset_0x0188FC, $000C
+                move.l  #Intro_Surfboard_Mappings, mappings(A0) ; Offset_0x0188FC, $000C
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
                 move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0680, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$FF, (Sonic_Previous_Frame).w               ; $FFFFF766
                 move.l  #Intro_Surfboard_Main, (A0)            ; Offset_0x018654
@@ -327,10 +327,10 @@ Offset_0x018A34:
                 dc.w    $5102, $F108, $2118         
 ;-------------------------------------------------------------------------------                
 Surfboard_Waves:                                               ; Offset_0x018A3C
-                move.l  #Surfboard_Waves_Mappings, Obj_Map(A0) ; Offset_0x018C62, $000C
+                move.l  #Surfboard_Waves_Mappings, mappings(A0) ; Offset_0x018C62, $000C
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
                 move.b  #$00, Obj_Width(A0)                              ; $0007
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$03D1, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #Offset_0x018A96, (A0)
                 move.w  #$0001, Obj_Ani_Number(A0)                       ; $0020
@@ -345,7 +345,7 @@ Surfboard_Waves:                                               ; Offset_0x018A3C
 Offset_0x018A96:                
                 lea     (Surfboard_Waves_Animate_Data), A1     ; Offset_0x018AB4
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x018AAE
                 move.w  #$7FFF, Obj_X(A0)                                ; $0010
 Offset_0x018AAE:
@@ -376,9 +376,9 @@ Offset_0x018AF4:
                 move.w  #$0008, Obj_P_Horiz_Ctrl_Lock(A1)                ; $0032
                 move.w  #$0018, Obj_P_Invunerblt_Time(A1)                ; $0034
 Offset_0x018B0C:
-                move.l  #Intro_Surfboard_Splash_Mappings, Obj_Map(A1) ; Offset_0x018D0A,  $000C
+                move.l  #Intro_Surfboard_Splash_Mappings, mappings(A1) ; Offset_0x018D0A,  $000C
                 move.b  #$1C, Obj_Width(A1)                              ; $0007
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0529, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  #$0001, Obj_Ani_Number(A1)                       ; $0020
                 bset    #$00, Obj_Status(A1)                             ; $002A
@@ -563,10 +563,10 @@ Offset_0x018D6C:
                 dc.w    $F808, $0059, $0020              
 ;-------------------------------------------------------------------------------
 Surfboard:                                                     ; Offset_0x018D7A
-                move.l  #Surfboard_Mappings, Obj_Map(A0) ; Offset_0x018E26, $000C
+                move.l  #Surfboard_Mappings, mappings(A0) ; Offset_0x018E26, $000C
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0585, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #Offset_0x018DB2, (A0)
                 move.w  #$0001, Obj_Ani_Number(A0)                       ; $0020
@@ -590,7 +590,7 @@ Offset_0x018DC6:
                 bcs.s   Offset_0x018DF8
                 move.b  #$03, Obj_Status(A0)                             ; $002A
 Offset_0x018DF8:
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x018E04
                 move.w  #$7FFF, Obj_X(A0)                                ; $0010
 Offset_0x018E04:

@@ -4,7 +4,7 @@
 ;===============================================================================                   
 ; Offset_0x0238DA:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0238E8(PC, D0), D1
                 jmp     Offset_0x0238E8(PC, D1)
 ;-------------------------------------------------------------------------------
@@ -116,25 +116,25 @@ Offset_0x023A1A:
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 add.w   D0, D0
-                move.b  D0, Obj_Routine(A0)                              ; $0005
+                move.b  D0, routine(A0)                              ; $0005
                 subi.w  #$0014, D0
                 move.w  Offset_0x023A04(PC, D0), Obj_Art_VRAM(A0)        ; $000A
                 add.w   D0, D0
-                move.l  Offset_0x0239D8(PC, D0), Obj_Map(A0)             ; $000C
+                move.l  Offset_0x0239D8(PC, D0), mappings(A0)             ; $000C
                 lea     Offset_0x0239AC(PC), A1
                 move.w  $00(A1, D0), Obj_Control_Var_02(A0)              ; $0032
                 move.w  $00(A1, D0), Obj_Speed_X(A0)                     ; $0018
                 move.w  $02(A1, D0), Obj_Control_Var_04(A0)              ; $0034
                 move.w  $02(A1, D0), Obj_Speed_Y(A0)                     ; $001A
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                move.b  #$0C, y_radius(A0)                           ; $001E
+                move.b  #$04, render_flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.b  #$07, Obj_Ani_Time(A0)                           ; $0024
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x023A86:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
+                addq.b  #$02, routine(A0)                            ; $0005
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
                 move.w  #$0580, Obj_Art_VRAM(A0)                         ; $000A
                 andi.w  #$0001, D0
@@ -153,10 +153,10 @@ Offset_0x023AA2:
                 adda.w  D0, A1
                 move.w  (A1)+, Obj_Control_Var_02(A0)                    ; $0032
                 move.w  (A1)+, Obj_Control_Var_04(A0)                    ; $0034
-                move.l  (A1)+, Obj_Map(A0)                               ; $000C
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                move.l  (A1)+, mappings(A0)                               ; $000C
+                move.b  #$0C, y_radius(A0)                           ; $001E
+                move.b  #$04, render_flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.b  #$07, Obj_Ani_Time(A0)                           ; $0024
@@ -175,7 +175,7 @@ Offset_0x023AA2:
 Offset_0x023B26:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x023B2C:
-                move.b  #$1C, Obj_Routine(A0)                            ; $0005
+                move.b  #$1C, routine(A0)                            ; $0005
                 clr.w   Obj_Speed_X(A0)                                  ; $0018
                 jmp     (DisplaySprite)                        ; Offset_0x011148   
 ;-------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ Flickies_DeleteObject:                                         ; Offset_0x023B3C
                 jmp     (DeleteObject)                         ; Offset_0x011138
 ;-------------------------------------------------------------------------------                
 Offset_0x023B42:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Flickies_DeleteObject                  ; Offset_0x023B3C
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
                 tst.w   Obj_Speed_Y(A0)                                  ; $001A
@@ -198,13 +198,13 @@ Offset_0x023B42:
                 move.b  Obj_Control_Var_00(A0), D0                       ; $0030
                 add.b   D0, D0
                 addq.b  #$04, D0
-                move.b  D0, Obj_Routine(A0)                              ; $0005
+                move.b  D0, routine(A0)                              ; $0005
                 tst.b   Obj_Control_Var_08(A0)                           ; $0038
                 beq.s   Offset_0x023B98
                 btst    #$04, (Vint_runcount+$03).w       ; $FFFFFE0F
                 beq.s   Offset_0x023B98
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x023B98:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 ;-------------------------------------------------------------------------------                
@@ -222,7 +222,7 @@ Offset_0x023B9E:
 Offset_0x023BCA:
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 bne.s   Offset_0x023C46
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl     Flickies_DeleteObject                  ; Offset_0x023B3C
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 ;-------------------------------------------------------------------------------                
@@ -241,7 +241,7 @@ Offset_0x023BDE:
                 cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
                 beq.s   Offset_0x023C1C
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x023C1C:
                 subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
                 bpl.s   Offset_0x023C32
@@ -251,7 +251,7 @@ Offset_0x023C1C:
 Offset_0x023C32:
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 bne.s   Offset_0x023C46
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl     Flickies_DeleteObject                  ; Offset_0x023B3C
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x023C46:
@@ -260,17 +260,17 @@ Offset_0x023C46:
                 bcs.s   Offset_0x023C5E
                 subi.w  #$0180, D0
                 bpl.s   Offset_0x023C5E
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl     Flickies_DeleteObject                  ; Offset_0x023B3C
 Offset_0x023C5E:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 ;-------------------------------------------------------------------------------                
 Offset_0x023C64:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl     Flickies_DeleteObject                  ; Offset_0x023B3C
                 subq.w  #$01, Obj_Control_Var_06(A0)                     ; $0036
                 bne     Offset_0x023C80
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
 Offset_0x023C80:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
@@ -280,7 +280,7 @@ Offset_0x023C86:
                 bcc.s   Offset_0x023CA2
                 move.w  Obj_Control_Var_02(A0), Obj_Speed_X(A0)   ; $0018, $0032
                 move.w  Obj_Control_Var_04(A0), Obj_Speed_Y(A0)   ; $001A, $0034
-                move.b  #$0E, Obj_Routine(A0)                            ; $0005
+                move.b  #$0E, routine(A0)                            ; $0005
                 bra     Offset_0x023BDE
 Offset_0x023CA2:
                 bra     Offset_0x023C46
@@ -307,7 +307,7 @@ Offset_0x023CE2:
                 bpl.s   Offset_0x023D3A
                 move.w  Obj_Control_Var_02(A0), Obj_Speed_X(A0)   ; $0018, $0032
                 move.w  Obj_Control_Var_04(A0), Obj_Speed_Y(A0)   ; $001A, $0034
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 bra     Offset_0x023B9E
 ;-------------------------------------------------------------------------------                
 Offset_0x023CFE:
@@ -322,7 +322,7 @@ Offset_0x023CFE:
                 not.b   Obj_Flags_2(A0)                                  ; $002D
                 bne.s   Offset_0x023D30
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x023D30:
                 add.w   D1, Obj_Y(A0)                                    ; $0014
                 move.w  Obj_Control_Var_04(A0), Obj_Speed_Y(A0)   ; $001A, $0034
@@ -352,7 +352,7 @@ Offset_0x023D5E:
                 tst.w   D1
                 bpl.s   Offset_0x023D9A
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
                 add.w   D1, Obj_Y(A0)                                    ; $0014
                 move.w  Obj_Control_Var_04(A0), Obj_Speed_Y(A0)   ; $001A, $0034
 Offset_0x023D9A:
@@ -371,7 +371,7 @@ Offset_0x023D9E:
                 not.b   Obj_Flags_2(A0)                                  ; $002D
                 bne.s   Offset_0x023DD0
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x023DD0:
                 add.w   D1, Obj_Y(A0)                                    ; $0014
                 move.w  Obj_Control_Var_04(A0), Obj_Speed_Y(A0)   ; $001A, $0034
@@ -396,11 +396,11 @@ Offset_0x023DF4:
 Offset_0x023E1A:
                 rts
 Offset_0x023E1C:
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
                 move.w  Obj_X(A0), D0                                    ; $0010
                 sub.w   (Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
                 bcc.s   Offset_0x023E32
-                bclr    #$00, Obj_Flags(A0)                              ; $0004
+                bclr    #$00, render_flags(A0)                              ; $0004
 Offset_0x023E32:
                 rts
 Offset_0x023E34:

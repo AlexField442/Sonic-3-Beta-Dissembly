@@ -45,11 +45,11 @@ Offset_0x017AF0:
 Offset_0x017B1E:
                 bra.s   Offset_0x017B48
 Offset_0x017B20:
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$08, Obj_Width(A1)                              ; $0007
                 move.b  #$08, Obj_Height(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
-                move.l  #Ride_Vine_Mappings, Obj_Map(A1) ; Offset_0x018482, $000C
+                move.l  #Ride_Vine_Mappings, mappings(A1) ; Offset_0x018482, $000C
                 move.w  #$0422, Obj_Art_VRAM(A1)                         ; $000A
                 rts
 Offset_0x017B48:
@@ -74,7 +74,7 @@ Offset_0x017B6C:
                 move.l  #Offset_0x017C12, (A0)
                 move.w  #$0800, Obj_Speed_X(A0)                          ; $0018
                 move.w  #$0200, Obj_Speed_Y(A0)                          ; $001A
-                move.l  #Animated_Still_Sprite_Mappings, Obj_Map(A0) ; Offset_0x02322A, $000C
+                move.l  #Animated_Still_Sprite_Mappings, mappings(A0) ; Offset_0x02322A, $000C
                 move.w  #$62F0, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.b  #$0C, Obj_Height(A0)                             ; $0006
@@ -106,7 +106,7 @@ Offset_0x017C0E:
 ;-------------------------------------------------------------------------------
 Offset_0x017C12:
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x017C24
                 move.w  #$7FF0, Obj_X(A0)                                ; $0010
 Offset_0x017C24:
@@ -320,9 +320,9 @@ Offset_0x017ECA:
                 tst.b   (A2)
                 beq     Offset_0x018088
                 bmi     Offset_0x017F6C
-                tst.b   Obj_Flags(A1)                                    ; $0004
+                tst.b   render_flags(A1)                                    ; $0004
                 bpl     Offset_0x017F7E
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc     Offset_0x017F7E
                 andi.b  #$70, D0
                 beq     Offset_0x017F8C
@@ -466,7 +466,7 @@ Offset_0x018096:
                 bcc     Offset_0x0180FC
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x0180FC
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x0180FC
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x0180FC

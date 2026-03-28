@@ -3,10 +3,10 @@
 ; ->>>
 ;------------------------------------------------------------------------------- 
 ; Offset_0x018EA0:
-                move.l  #Knuckles_Mappings, Obj_Map(A0) ; Offset_0x018FCA, $000C
+                move.l  #Knuckles_Mappings, mappings(A0) ; Offset_0x018FCA, $000C
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
                 move.b  #$18, Obj_Width(A0)                              ; $0007
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$26A0, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$FF, Obj_Player_Control(A0)                     ; $002E
                 move.l  #Offset_0x018EDE, (A0)
@@ -29,7 +29,7 @@ Offset_0x018EF8:
 Offset_0x018F10:
                 lea     (Knuckles_Animate_Data), A1            ; Offset_0x018F48
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x018F34
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 move.w  #$0800, Obj_Speed_X(A0)                          ; $0018

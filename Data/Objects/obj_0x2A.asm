@@ -3,22 +3,22 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x0211D6:
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
-                move.l  #Breakable_Floor_Mappings, Obj_Map(A0) ; Offset_0x0216FC, $000C
+                move.l  #Breakable_Floor_Mappings, mappings(A0) ; Offset_0x0216FC, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$28, Obj_Height(A0)                             ; $0006
                 move.l  #Offset_0x02168C, Obj_Control_Var_0C(A0)         ; $003C
                 cmpi.w  #AIz_Act_2, (Current_ZoneAndAct).w              ; $0001, $FFFFFE10
                 bne.s   Offset_0x021220
-                move.l  #AIz_2_Breakable_Floor_Mappings, Obj_Map(A0) ; Offset_0x021770, $000C
+                move.l  #AIz_2_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x021770, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$2C, Obj_Height(A0)                             ; $0006
 Offset_0x021220:
                 cmpi.b  #CNz_Id, (Current_Zone).w                   ; $03, $FFFFFE10
                 bne.s   Offset_0x02124A
-                move.l  #CNz_Breakable_Floor_Mappings, Obj_Map(A0) ; Offset_0x0217E4, $000C
+                move.l  #CNz_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x0217E4, $000C
                 move.w  #$4430, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -26,7 +26,7 @@ Offset_0x021220:
 Offset_0x02124A:
                 cmpi.b  #Iz_Id, (Current_Zone).w                    ; $05, $FFFFFE10
                 bne.s   Offset_0x02129E
-                move.l  #Iz_Breakable_Floor_Mappings, Obj_Map(A0) ; Offset_0x02187C, $000C
+                move.l  #Iz_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x02187C, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$24, Obj_Height(A0)                             ; $0006
@@ -45,7 +45,7 @@ Offset_0x02128A:
 Offset_0x02129E:                                
                 cmpi.b  #LBz_Id, (Current_Zone).w                   ; $06, $FFFFFE10
                 bne.s   Offset_0x0212C8
-                move.l  #LBz_Breakable_Floor_Mappings, Obj_Map(A0) ; Offset_0x021A84, $000C
+                move.l  #LBz_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x021A84, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -104,14 +104,14 @@ Offset_0x021364:
                 bne.s   Offset_0x021388
 Offset_0x02136A:
                 bset    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 move.w  #$FD00, Obj_Speed_Y(A1)                          ; $001A
 Offset_0x021388:
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 bclr    #$03, Obj_Status(A1)                             ; $002A
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 rts
 Offset_0x02139C:
                 andi.b  #$10, D0
@@ -130,7 +130,7 @@ Offset_0x0213B4:
 Offset_0x0213D4:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 addi.w  #$0018, Obj_Speed_Y(A0)                          ; $001A
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl     Offset_0x0213EE
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0213EE:
@@ -258,13 +258,13 @@ Offset_0x02158C:
                 bne.s   Offset_0x0215AA
 Offset_0x021592:
                 bset    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
 Offset_0x0215AA:
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 bclr    #$03, Obj_Status(A1)                             ; $002A
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 rts
 Offset_0x0215BE:
                 andi.b  #$10, D0

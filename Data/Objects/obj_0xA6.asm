@@ -5,7 +5,7 @@
 ; Offset_0x045B26:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x045B3E(PC, D0), D1
                 jsr     Offset_0x045B3E(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -20,22 +20,22 @@ Offset_0x045B3E:
 Offset_0x045B48:
                 lea     Mantis_Setup_Data(PC), A1              ; Offset_0x045C50
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                move.b  #$29, Obj_Height_2(A0)                           ; $001E
+                move.b  #$29, y_radius(A0)                           ; $001E
                 lea     Offset_0x045C62(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A 
 ;-------------------------------------------------------------------------------
 Offset_0x045B5E:
                 jsr     Find_Player(PC)                        ; Offset_0x042634
-                bclr    #$00, Obj_Flags(A0)                              ; $0004
+                bclr    #$00, render_flags(A0)                              ; $0004
                 tst.w   D0
                 beq.s   Offset_0x045B72
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x045B72:
                 cmpi.w  #$0040, D2
                 bcs.s   Offset_0x045B7A
                 rts
 Offset_0x045B7A:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x045BAE, Obj_Child(A0)                  ; $0034
                 rts 
 ;-------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ Offset_0x045BA8:
                 dc.w    $0000, $FFFB, $FFED   
 ;-------------------------------------------------------------------------------
 Offset_0x045BAE:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$FA00, Obj_Speed_Y(A0)                          ; $001A
                 move.l  #Offset_0x045BD4, Obj_Child(A0)                  ; $0034
 Offset_0x045BC2:
@@ -69,7 +69,7 @@ Offset_0x045BC4:
                 jmp     Run_Object_Hit_Floor_A0(PC)            ; Offset_0x0423E0  
 ;-------------------------------------------------------------------------------
 Offset_0x045BD4:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 clr.w   Obj_Speed_Y(A0)                                  ; $001A
                 move.l  #Offset_0x045C0E, Obj_Child(A0)                  ; $0034
                 rts   
@@ -91,13 +91,13 @@ Offset_0x045C06:
                 dc.w    $0000, $0012, $0006, $FFFF       
 ;-------------------------------------------------------------------------------
 Offset_0x045C0E:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x045C16:
                 jsr     Refresh_Child_Position_Adjusted(PC)    ; Offset_0x04203C
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x045C2C(PC, D0), D1
                 jsr     Offset_0x045C2C(PC, D1)
                 jmp     Child_Display_Or_Delete(PC)            ; Offset_0x04245C 

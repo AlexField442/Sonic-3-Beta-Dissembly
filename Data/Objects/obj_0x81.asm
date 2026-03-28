@@ -5,7 +5,7 @@
 ; Offset_0x043B3E:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x043B58(PC, D0), D1
                 jsr     Offset_0x043B58(PC, D1)
                 jmp     (Delete_Sprite_Clear_Respaw_Flag_Check_X) ; Offset_0x042B3C
@@ -24,12 +24,12 @@ Offset_0x043B74:
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x043B76:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl     Offset_0x043B74
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2    
 ;-------------------------------------------------------------------------------
 Offset_0x043B82:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x043C16, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x043BD0, Obj_Child(A0)                  ; $0034
                 rts
@@ -55,7 +55,7 @@ Offset_0x043BCE:
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x043BD0:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.w  #$0078, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x043B82, Obj_Child(A0)                  ; $0034
                 rts   

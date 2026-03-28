@@ -10,7 +10,7 @@
                 bne.s   Offset_0x0478FE
                 move.l  #Offset_0x04790C, (A0)
                 lea     Offset_0x04797A(PC), A2
-                btst    #$01, Obj_Flags(A0)                              ; $0004
+                btst    #$01, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0478FA
                 lea     Offset_0x047982(PC), A2
 Offset_0x0478FA:

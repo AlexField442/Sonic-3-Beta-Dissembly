@@ -7,7 +7,7 @@
                 lea     Star_Pointer_Setup_Data(PC), A1        ; Offset_0x048416
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Offset_0x048318, (A0)
-                bclr    #$01, Obj_Flags(A0)                              ; $0004
+                bclr    #$01, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0482F4
                 bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
 Offset_0x0482F4:
@@ -27,7 +27,7 @@ Offset_0x048318:
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 cmpi.w  #$0080, D2
                 bcc.s   Offset_0x048336
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x048332
                 subq.w  #$02, D0
 Offset_0x048332:
@@ -47,7 +47,7 @@ Offset_0x04834A:
 Offset_0x048354:
                 lea     Star_Pointer_Setup_Data_2(PC), A1      ; Offset_0x048422
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.b  #$08, Obj_Width_2(A0)                            ; $001F
+                move.b  #$08, x_radius(A0)                            ; $001F
                 move.l  #Offset_0x04837C, (A0)
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -62,7 +62,7 @@ Offset_0x04837C:
                 btst    #$00, (Vint_runcount+$03).w       ; $FFFFFE0F
                 bne.s   Offset_0x0483DC
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                btst    #$00, Obj_Flags(A1)                              ; $0004
+                btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x048398
                 addq.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
                 bra     Offset_0x04839C

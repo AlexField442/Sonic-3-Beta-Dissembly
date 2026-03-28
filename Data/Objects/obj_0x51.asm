@@ -8,15 +8,15 @@ Offset_0x01C3BA:
 Obj_0x51_Floating_Platform:                                    ; Offset_0x01C3C2
                 cmpi.b  #Hz_Id, (Current_Zone).w                    ; $01, $FFFFFE10
                 bne.s   Offset_0x01C3D8
-                move.l  #Hz_Floating_Platform_Mappings, Obj_Map(A0) ; Offset_0x01C518, $000C
+                move.l  #Hz_Floating_Platform_Mappings, mappings(A0) ; Offset_0x01C518, $000C
                 move.w  #$441D, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x01C3D8:
                 cmpi.b  #MGz_Id, (Current_Zone).w                   ; $02, $FFFFFE10
                 bne.s   Offset_0x01C3EE
-                move.l  #MGz_Floating_Platform_Mappings, Obj_Map(A0) ; Offset_0x01C4E4, $000C
+                move.l  #MGz_Floating_Platform_Mappings, mappings(A0) ; Offset_0x01C4E4, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x01C3EE:
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0180, Obj_Priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -63,7 +63,7 @@ Offset_0x01C484:
                 move.w  $00(A1, D0), D1
                 jsr     $00(A1, D1)
                 move.w  (A7)+, D4
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01C4B8
                 moveq   #$00, D1
                 move.b  Obj_Width(A0), D1                                ; $0007

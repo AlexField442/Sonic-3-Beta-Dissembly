@@ -6,7 +6,7 @@
                 lea     Offset_0x04529A(PC), A1
                 jsr     (Check_Camera_In_Range)                ; Offset_0x043392
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x045286(PC, D0), D1
                 jsr     Offset_0x045286(PC, D1)
                 bsr     Offset_0x0456FC
@@ -32,7 +32,7 @@ Offset_0x0452A2:
                 lea     Tunnelbot_Setup_Data(PC), A1           ; Offset_0x0457C4
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.b  #$08, Obj_Boss_Hit(A0)                           ; $0029
-                move.b  #$28, Obj_Height_2(A0)                           ; $001E
+                move.b  #$28, y_radius(A0)                           ; $001E
                 move.w  #$2E00, (Sonic_Level_Limits_Max_X).w         ; $FFFFEE16
                 move.w  #$0E10, (Level_Limits_Max_Y).w               ; $FFFFEE12
                 move.w  #$2E00, Obj_Control_Var_0A(A0)                   ; $003A
@@ -53,26 +53,26 @@ Offset_0x0452FC:
                 jmp     (Update_Sonic_Level_Limits_X_Y)        ; Offset_0x0433B8  
 ;-------------------------------------------------------------------------------
 Offset_0x04530E:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x045841, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x045326, Obj_Child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x045326:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.l  #Offset_0x045847, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x04533E, Obj_Child(A0)                  ; $0034
                 rts         
 ;-------------------------------------------------------------------------------
 Offset_0x04533E:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 st      (Earthquake_Flag).w                          ; $FFFFEECC
                 move.w  #$007F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x045358, Obj_Child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x045358:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 clr.w   (Earthquake_Flag).w                          ; $FFFFEECC
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x045376, Obj_Child(A0)                  ; $0034
@@ -82,8 +82,8 @@ Offset_0x045372:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2  
 ;-------------------------------------------------------------------------------
 Offset_0x045376:
-                move.b  #$0C, Obj_Routine(A0)                            ; $0005
-                bset    #$01, Obj_Flags(A0)                              ; $0004
+                move.b  #$0C, routine(A0)                            ; $0005
+                bset    #$01, render_flags(A0)                              ; $0004
                 st      (Earthquake_Flag).w                          ; $FFFFEECC
                 move.w  #$007F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x045404, Obj_Child(A0)                  ; $0034
@@ -100,7 +100,7 @@ Offset_0x045376:
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 cmpi.w  #$0008, D3
                 bcc.s   Offset_0x0453CE
-                bset    #$00, Obj_Flags(A1)                              ; $0004
+                bset    #$00, render_flags(A1)                              ; $0004
 Offset_0x0453CE:
                 rts 
 ;-------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ Offset_0x045400:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2 
 ;-------------------------------------------------------------------------------
 Offset_0x045404:
-                move.b  #$0E, Obj_Routine(A0)                            ; $0005
+                move.b  #$0E, routine(A0)                            ; $0005
                 clr.w   (Earthquake_Flag).w                          ; $FFFFEECC
                 tst.b   (Boss_Data_Buffer+$01).w                     ; $FFFFFA81
                 bne.s   Offset_0x045424
@@ -141,7 +141,7 @@ Offset_0x045434:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2 
 ;-------------------------------------------------------------------------------
 Offset_0x045440:
-                move.b  #$10, Obj_Routine(A0)                            ; $0005
+                move.b  #$10, routine(A0)                            ; $0005
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x045462, Obj_Child(A0)                  ; $0034
                 rts        
@@ -152,7 +152,7 @@ Offset_0x045456:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2  
 ;-------------------------------------------------------------------------------
 Offset_0x045462:
-                move.b  #$12, Obj_Routine(A0)                            ; $0005
+                move.b  #$12, routine(A0)                            ; $0005
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x045490, Obj_Child(A0)                  ; $0034
                 jmp     (Swing_Setup)                          ; Offset_0x03669A  
@@ -164,13 +164,13 @@ Offset_0x04547C:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2    
 ;-------------------------------------------------------------------------------
 Offset_0x045490:
-                bclr    #$01, Obj_Flags(A0)                              ; $0004
+                bclr    #$01, render_flags(A0)                              ; $0004
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x0454A6, Obj_Child(A0)                  ; $0034
                 rts          
 ;-------------------------------------------------------------------------------
 Offset_0x0454A6:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.l  #Offset_0x04533E, Obj_Child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
@@ -217,7 +217,7 @@ Offset_0x04552E:
                 move.l  #Offset_0x045570, (A0)
                 move.w  (Camera_X).w, D0                             ; $FFFFEE78
                 addi.w  #$0030, D0
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x045550
                 addi.w  #$00E0, D0
 Offset_0x045550:
@@ -226,7 +226,7 @@ Offset_0x045550:
                 addi.w  #$00F0, D0
                 move.w  D0, Obj_Y(A0)                                    ; $0014
                 move.w  D0, Obj_Control_Var_0A(A0)                       ; $003A
-                clr.b   Obj_Routine(A0)                                  ; $0005
+                clr.b   routine(A0)                                  ; $0005
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 rts   
 ;-------------------------------------------------------------------------------
@@ -295,7 +295,7 @@ Offset_0x04563A:
 ;-------------------------------------------------------------------------------
 Offset_0x045640:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04564E(PC, D0), D1
                 jmp     Offset_0x04564E(PC, D1)       
 ;-------------------------------------------------------------------------------
@@ -310,16 +310,16 @@ Offset_0x045658:
                 subq.w  #$04, Obj_Y(A0)                                  ; $0014
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl     Offset_0x0451D2
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x045672:
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl     Offset_0x0451D2
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  #$0100, D0
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x04568E
                 neg.w   D0
 Offset_0x04568E:
@@ -337,14 +337,14 @@ Offset_0x0456B2:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl     Offset_0x0451D2
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x0456D2:
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl     Offset_0x0451D2
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x0456E2:

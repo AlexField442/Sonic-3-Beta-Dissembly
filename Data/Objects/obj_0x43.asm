@@ -3,13 +3,13 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x027DBA:
-                move.l  #CNz_Platform_Mappings, Obj_Map(A0) ; Offset_0x027EBA, $000C
+                move.l  #CNz_Platform_Mappings, mappings(A0) ; Offset_0x027EBA, $000C
                 move.w  #$43BE, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$30, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
-                move.b  #$06, Obj_Height_2(A0)                           ; $001E
+                move.b  #$06, y_radius(A0)                           ; $001E
                 move.l  #Offset_0x027DEC, (A0)
 Offset_0x027DEC:                
                 bsr.s   Offset_0x027E26

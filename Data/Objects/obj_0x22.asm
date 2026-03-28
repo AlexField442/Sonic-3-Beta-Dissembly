@@ -3,7 +3,7 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02005A:
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008

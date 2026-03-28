@@ -3,8 +3,8 @@
 ; ->>>  
 ;===============================================================================
 ; Offset_0x0102AA:
-                move.l  #Super_Sonic_Stars_Mappings, Obj_Map(A0) ; Offset_0x01036A, $000C
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.l  #Super_Sonic_Stars_Mappings, mappings(A0) ; Offset_0x01036A, $000C
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  #$18, Obj_Width(A0)                              ; $0007
                 move.b  #$18, Obj_Height(A0)                             ; $0006

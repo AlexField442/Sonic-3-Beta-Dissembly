@@ -3,14 +3,14 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02C8A8:
-                move.l  #Bubble_Container_Mappings, Obj_Map(A0) ; Offset_0x02CFEA, $000C
+                move.l  #Bubble_Container_Mappings, mappings(A0) ; Offset_0x02CFEA, $000C
                 move.w  #$03C6, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.b  #$08, Obj_Height(A0)                             ; $0006
-                move.b  #$04, Obj_Width_2(A0)                            ; $001F
-                move.b  #$08, Obj_Height_2(A0)                           ; $001E
+                move.b  #$04, x_radius(A0)                            ; $001F
+                move.b  #$08, y_radius(A0)                           ; $001E
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
                 move.b  Obj_Subtype(A0), Obj_Angle(A0)            ; $002C, $0026
@@ -300,7 +300,7 @@ Offset_0x02CC72:
 Offset_0x02CC76:
                 lea     (Bubble_Container_Animate_Data), A1    ; Offset_0x02CF9C
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x02CC8E
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x02CC8E:
@@ -371,7 +371,7 @@ Offset_0x02CD6C:
                 move.w  #$0005, Obj_Control_Var_02(A1)                   ; $0032
                 andi.b  #$7F, Obj_Player_Status(A1)                      ; $002F
 Offset_0x02CD78:
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x02CD84
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x02CD84:
@@ -523,7 +523,7 @@ Offset_0x02CF5C:
 Offset_0x02CF5E:
                 lea     (Bubble_Container_Animate_Data), A1    ; Offset_0x02CF9C
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x02CF76
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x02CF76:

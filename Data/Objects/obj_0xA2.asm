@@ -5,7 +5,7 @@
 ; Offset_0x046004:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04601C(PC, D0), D1
                 jsr     Offset_0x04601C(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -27,7 +27,7 @@ Offset_0x046032:
                 bcs.s   Offset_0x04603E
                 rts
 Offset_0x04603E:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 bset    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 move.w  #$0200, D0
                 tst.w   D0
@@ -49,7 +49,7 @@ Offset_0x04605A:
 Offset_0x046076:
                 jsr     Refresh_Child_Position(PC)             ; Offset_0x042016
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04608C(PC, D0), D1
                 jsr     Offset_0x04608C(PC, D1)
                 jmp     Child_Display_Or_Delete(PC)            ; Offset_0x04245C   
@@ -69,7 +69,7 @@ Offset_0x04609A:
                 bne.s   Offset_0x0460A8
                 rts
 Offset_0x0460A8:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
                 rts              
 ;-------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ Offset_0x0460B4:
 Offset_0x0460BC:
                 jsr     Refresh_Child_Position(PC)             ; Offset_0x042016
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0460D2(PC, D0), D1
                 jsr     Offset_0x0460D2(PC, D1)
                 jmp     Child_Display_Or_Delete(PC)            ; Offset_0x04245C  

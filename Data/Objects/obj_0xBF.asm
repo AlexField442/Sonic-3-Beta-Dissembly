@@ -34,13 +34,13 @@ Offset_0x0479DE:
                 bne.s   Offset_0x047A36
 Offset_0x0479F0:
                 bset    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 move.w  #$FD00, Obj_Speed_Y(A1)                          ; $001A
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 bclr    #$03, Obj_Status(A1)                             ; $002A
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 lea     Offset_0x047A86(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 moveq   #Boss_Hit_Sfx, D0                                  ; $7C

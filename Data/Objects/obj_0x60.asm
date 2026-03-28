@@ -3,14 +3,14 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02C13C:
-                move.l  #Elephant_Block_Mappings, Obj_Map(A0) ; Offset_0x02C29E, $000C
+                move.l  #Elephant_Block_Mappings, mappings(A0) ; Offset_0x02C29E, $000C
                 move.w  #$0300, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$30, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
-                bset    #$06, Obj_Flags(A0)                              ; $0004
+                bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Speed_X(A0), A2                              ; $0018
                 move.w  Obj_X(A0), (A2)+                                 ; $0010
@@ -42,10 +42,10 @@ Offset_0x02C1B6:
                 move.w  D0, Obj_X(A0)                                    ; $0010
                 addq.w  #$08, D1
                 move.b  D1, Obj_Width(A0)                                ; $0007
-                move.w  #$0000, Obj_Flags(A2)                            ; $0004
+                move.w  #$0000, render_flags(A2)                            ; $0004
                 cmpi.w  #$0020, D1
                 bcs.s   Offset_0x02C1F0
-                move.w  #$0001, Obj_Flags(A2)                            ; $0004
+                move.w  #$0001, render_flags(A2)                            ; $0004
 Offset_0x02C1F0:
                 addi.w  #$0007, D1
                 moveq   #$00, D2
@@ -69,10 +69,10 @@ Offset_0x02C20E:
                 move.w  D0, Obj_X(A0)                                    ; $0010
                 addq.w  #$08, D1
                 move.b  D1, Obj_Width(A0)                                ; $0007
-                move.w  #$0000, Obj_Flags(A2)                            ; $0004
+                move.w  #$0000, render_flags(A2)                            ; $0004
                 cmpi.w  #$0020, D1
                 bcs.s   Offset_0x02C248
-                move.w  #$0001, Obj_Flags(A2)                            ; $0004
+                move.w  #$0001, render_flags(A2)                            ; $0004
 Offset_0x02C248:
                 addi.w  #$0007, D1
                 moveq   #$00, D2

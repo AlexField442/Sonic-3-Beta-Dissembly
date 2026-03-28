@@ -18,7 +18,7 @@ LBz_Hooked_Ride_Range:                                         ; Offset_0x01D4C8
                 dc.w    $39E8, $3C98
 ;-------------------------------------------------------------------------------
 Obj_0x17_LBz_Hooked_Ride:                                      ; Offset_0x01D4FC
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  #$20, Obj_Height(A0)                             ; $0006
@@ -27,18 +27,18 @@ Obj_0x17_LBz_Hooked_Ride:                                      ; Offset_0x01D4FC
                 andi.w  #$007F, D0
                 lsl.w   #$02, D0
                 move.l  LBz_Hooked_Ride_Range(PC, D0), Obj_Control_Var_04(A0) ; Offset_0x01D4C8, $0034
-                move.l  #Hooked_Ride_Mappings, Obj_Map(A0) ; Offset_0x01D8F8, $000C
+                move.l  #Hooked_Ride_Mappings, mappings(A0) ; Offset_0x01D8F8, $000C
                 move.w  #$2433, Obj_Art_VRAM(A0)                         ; $000A
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x01D5A2
                 move.l  #Offset_0x01D6CA, (A1)
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
-                bset    #$06, Obj_Flags(A1)                              ; $0004
+                bset    #$06, render_flags(A1)                              ; $0004
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$20, Obj_Height(A1)                             ; $0006
                 moveq   #$06, D1
@@ -161,9 +161,9 @@ Offset_0x01D6D0:
 Offset_0x01D6EC:
                 tst.b   (A2)
                 beq     Offset_0x01D776
-                tst.b   Obj_Flags(A1)                                    ; $0004
+                tst.b   render_flags(A1)                                    ; $0004
                 bpl.s   Offset_0x01D736
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01D736
                 andi.b  #$70, D0
                 beq     Offset_0x01D744
@@ -215,7 +215,7 @@ Offset_0x01D784:
                 bcc     Offset_0x01D7F4
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x01D7F4
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01D7F4
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x01D7F4

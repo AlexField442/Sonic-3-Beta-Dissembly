@@ -120,7 +120,7 @@ Offset_0x0272E4:
                 addi.w  #$0010, D0
                 cmp.w   Obj_Y(A1), D0                                    ; $0014
                 bcs.s   Offset_0x027344
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x027344
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x027344

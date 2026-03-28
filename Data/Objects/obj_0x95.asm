@@ -5,7 +5,7 @@
 ; Offset_0x049B24:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x049B3C(PC, D0), D1
                 jsr     Offset_0x049B3C(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -45,7 +45,7 @@ Offset_0x049B9A:
                 beq.s   Offset_0x049BBA
                 rts
 Offset_0x049BBA:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x049BE8, Obj_Child(A0)                  ; $0034
                 bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
@@ -57,7 +57,7 @@ Offset_0x049BD6:
                 jmp     (Run_Object_Wait_Timer_A0)             ; Offset_0x0423D2   
 ;-------------------------------------------------------------------------------
 Offset_0x049BE8:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 bclr    #$02, Obj_Control_Var_08(A0)                     ; $0038
                 clr.b   Obj_Ani_Frame(A0)                                ; $0023
                 clr.b   Obj_Ani_Time(A0)                                 ; $0024
@@ -70,7 +70,7 @@ Offset_0x049C14:
 ;-------------------------------------------------------------------------------
 Offset_0x049C16:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x049C2A(PC, D0), D1
                 jsr     Offset_0x049C2A(PC, D1)
                 jmp     (Child_Display_Touch_Or_Delete)        ; Offset_0x042472  
@@ -85,7 +85,7 @@ Offset_0x049C2A:
 Offset_0x049C34:
                 lea     Dragonfly_Setup_Data_3(PC), A1         ; Offset_0x049D98
                 jsr     (SetupObjectAttributes3)                    ; Offset_0x041D7A
-                bset    #$01, Obj_Flags(A0)                              ; $0004
+                bset    #$01, render_flags(A0)                              ; $0004
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 cmpi.b  #$0C, D0
@@ -102,7 +102,7 @@ Offset_0x049C64:
                 bmi.s   Offset_0x049C70
                 rts
 Offset_0x049C70:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 bra     Offset_0x049B80  
 ;-------------------------------------------------------------------------------
 Offset_0x049C7A:
@@ -114,7 +114,7 @@ Offset_0x049C7A:
                 bne.s   Offset_0x049C98
                 rts
 Offset_0x049C98:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
                 rts   
 ;-------------------------------------------------------------------------------
@@ -132,7 +132,7 @@ Offset_0x049CA6:
                 rts
 Offset_0x049CCE:
                 move.w  Obj_Y(A1), Obj_Y(A0)                      ; $0014, $0014
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 neg.b   Obj_Control_Var_12(A0)                           ; $0042
                 neg.b   Obj_Control_Var_13(A0)                           ; $0043
                 rts  
@@ -155,9 +155,9 @@ Offset_0x049D0A:
                 bcc.s   Offset_0x049D14
                 rts
 Offset_0x049D14:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  D0, Obj_Y(A0)                                    ; $0014
-                bchg    #01, Obj_Flags(A0)                               ; $0004
+                bchg    #01, render_flags(A0)                               ; $0004
                 bclr    #$02, Obj_Control_Var_08(A0)                     ; $0038
                 rts     
 ;-------------------------------------------------------------------------------

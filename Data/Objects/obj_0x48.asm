@@ -33,7 +33,7 @@ Offset_0x0282BC:
                 bcs.s   Offset_0x02833A
                 cmpi.w  #$0040, D1
                 bcc.s   Offset_0x02833A
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x02833A
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x02833A
@@ -87,7 +87,7 @@ Offset_0x028358:
                 addi.w  #$0030, D1
                 cmpi.w  #$0050, D1
                 bcc.s   Offset_0x0283D8
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x0283D8
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x0283D8

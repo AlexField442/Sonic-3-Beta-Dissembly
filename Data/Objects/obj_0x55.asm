@@ -3,16 +3,16 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02A5BC:
-                move.l  #Head_Trigger_Mappings, Obj_Map(A0) ; Offset_0x02A822, $000C
+                move.l  #Head_Trigger_Mappings, mappings(A0) ; Offset_0x02A822, $000C
                 move.w  #$A3FF, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$38, Obj_Height(A0)                             ; $0006
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022
                 move.b  #$17, Obj_Col_Flags(A0)                          ; $0028
                 move.b  #$03, Obj_Col_Prop(A0)                           ; $0029
-                bset    #$06, Obj_Flags(A0)                              ; $0004
+                bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Speed_X(A0), A2                              ; $0018
                 move.w  Obj_X(A0), (A2)+                                 ; $0010
@@ -66,7 +66,7 @@ Offset_0x02A6A0:
                 bne.s   Offset_0x02A6EC
                 move.l  #Obj_Explosion, (A1)                      ; Offset_0x013D7C
                 move.w  #$8000, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 move.b  #$01, Obj_Control_Var_04(A0)                     ; $0034
                 move.b  #$00, Obj_Map_Id(A0)                             ; $0022
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -76,10 +76,10 @@ Offset_0x02A6A0:
 Offset_0x02A6EC:
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
-                andi.b  #$BF, Obj_Flags(A1)                              ; $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
+                andi.b  #$BF, render_flags(A1)                              ; $0004
                 move.b  Obj_Status(A0), Obj_Status(A1)            ; $002A, $002A
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.b  #$08, Obj_Width(A1)                              ; $0007
@@ -91,9 +91,9 @@ Offset_0x02A72E:
 Offset_0x02A736:
                 lea     (Head_Trigger_Animate_Data), A1        ; Offset_0x02A802
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq     Offset_0x02A7CC
-                clr.b   Obj_Routine(A0)                                  ; $0005
+                clr.b   routine(A0)                                  ; $0005
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02A7CC
                 move.l  #Offset_0x02A7D2, (A1)
@@ -101,9 +101,9 @@ Offset_0x02A736:
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 addi.w  #$0010, Obj_X(A1)                                ; $0010
                 addi.w  #$0020, Obj_Y(A1)                                ; $0014
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
-                andi.b  #$BF, Obj_Flags(A1)                              ; $0004
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
+                andi.b  #$BF, render_flags(A1)                              ; $0004
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 andi.w  #$7FFF, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  #$0300, Obj_Priority(A1)                         ; $0008
@@ -122,7 +122,7 @@ Offset_0x02A7CC:
                 jmp     (MarkObjGone_5)                        ; Offset_0x011BCC
 ;-------------------------------------------------------------------------------
 Offset_0x02A7D2:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x02A7EA
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 jsr     (Add_SpriteToCollisionResponseList)       ; Offset_0x00A540

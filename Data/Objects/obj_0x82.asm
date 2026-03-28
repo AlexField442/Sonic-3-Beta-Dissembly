@@ -5,7 +5,7 @@
 ; Offset_0x043C2A:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x043C4A(PC, D0), D1
                 jsr     Offset_0x043C4A(PC, D1)
                 lea     Rhinobot_PLC_Data(PC), A2              ; Offset_0x043EF8
@@ -21,11 +21,11 @@ Offset_0x043C4A:
 Offset_0x043C52:
                 lea     Rhinobot_Setup_Data(PC), A1            ; Offset_0x043EC4
                 jsr     SetupSlottedObjectAttributes(PC)            ; Offset_0x04298C
-                move.b  #$08, Obj_Width_2(A0)                            ; $001F
-                move.b  #$10, Obj_Height_2(A0)                           ; $001E
+                move.b  #$08, x_radius(A0)                            ; $001F
+                move.b  #$10, y_radius(A0)                           ; $001E
                 move.w  #$FFF0, D0
                 move.w  #$FD00, D1
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x043C86
                 neg.w   D0
                 neg.w   D1
@@ -59,7 +59,7 @@ Offset_0x043CC2:
 Offset_0x043CD0:
                 jsr     Refresh_Child_Position_Adjusted(PC)    ; Offset_0x04203C
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x043CEE(PC, D0), D1
                 jsr     Offset_0x043CEE(PC, D1)
                 lea     Rhinobot_PLC_Data(PC), A2              ; Offset_0x043EF8
@@ -86,7 +86,7 @@ Offset_0x043D06:
 ;-------------------------------------------------------------------------------
 Offset_0x043D1E:
                 bchg    #03, Obj_Control_Var_08(A0)                      ; $0038
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
                 bclr    #$01, Obj_Control_Var_08(A0)                     ; $0038
                 move.l  #Offset_0x043D06, Obj_Child(A0)                  ; $0034
                 rts  
@@ -102,7 +102,7 @@ Offset_0x043D4E:
                 bra.s   Offset_0x043D1E
 ;------------------------------------------------------------------------------- 
 Offset_0x043D58:   
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.b  #$00, Obj_Map_Id(A0)                             ; $0022
                 move.w  #$0020, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x043D94, Obj_Child(A0)                  ; $0034
@@ -117,7 +117,7 @@ Offset_0x043D92:
                 rts           
 ;-------------------------------------------------------------------------------
 Offset_0x043D94:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0400, D0
                 btst    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 bne.s   Offset_0x043DA8
@@ -127,7 +127,7 @@ Offset_0x043DA8:
                 rts 
 ;-------------------------------------------------------------------------------  
 Offset_0x043DAE:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$00, Obj_Map_Id(A0)                             ; $0022
                 bra     Offset_0x043D3A        
 ;-------------------------------------------------------------------------------  

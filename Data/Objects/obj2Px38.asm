@@ -3,9 +3,9 @@
 ; ->>>  
 ;===============================================================================
 ; Offset_0x026960:
-                move.l  #Fan_Mappings_2P, Obj_Map(A0)   ; Offset_0x026A50, $000C
+                move.l  #Fan_Mappings_2P, mappings(A0)   ; Offset_0x026A50, $000C
                 move.w  #$6300, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$04, Obj_Height(A0)                             ; $0006
@@ -29,7 +29,7 @@ Offset_0x0269A4:
 Offset_0x0269C6:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0269CC:
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc     Offset_0x026A4E
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x026A4E

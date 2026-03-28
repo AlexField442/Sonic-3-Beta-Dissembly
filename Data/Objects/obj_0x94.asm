@@ -5,7 +5,7 @@
 ; Offset_0x0499BC:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0499D4(PC, D0), D1
                 jsr     Offset_0x0499D4(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -20,7 +20,7 @@ Offset_0x0499D4:
 Offset_0x0499DE:
                 lea     Mushmeanie_Setup_Data(PC), A1          ; Offset_0x049AF6
                 jsr     (SetupObjectAttributes)                      ; Offset_0x041D72
-                move.b  #$12, Obj_Height_2(A0)                           ; $001E
+                move.b  #$12, y_radius(A0)                           ; $001E
                 lea     Offset_0x049B0A(PC), A2
                 jmp     (SetupChildObject)                 ; Offset_0x041D9A   
 ;-------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ Offset_0x0499F8:
                 bcs.s   Offset_0x049A06
                 rts
 Offset_0x049A06:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x049B12, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x049A30, Obj_Child(A0)                  ; $0034
 Offset_0x049A1C:                
@@ -46,7 +46,7 @@ Offset_0x049A2A:
                 rts  
 ;-------------------------------------------------------------------------------   
 Offset_0x049A30:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$FD00, Obj_Speed_Y(A0)                          ; $001A
                 move.l  #Offset_0x049A8C, Obj_Child(A0)                  ; $0034
                 move.w  #$FF00, D4
@@ -67,14 +67,14 @@ Offset_0x049A6C:
                 bpl.s   Offset_0x049A7E
                 add.w   D1, Obj_X(A0)                                    ; $0010
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x049A7E:
                 tst.w   Obj_Speed_Y(A0)                                  ; $001A
                 bmi     Offset_0x049A1C
                 jmp     (Run_Object_Hit_Floor_A0)              ; Offset_0x0423E0   
 ;-------------------------------------------------------------------------------
 Offset_0x049A8C:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 move.l  #Offset_0x049B19, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x049A30, Obj_Child(A0)                  ; $0034
                 rts    
@@ -97,7 +97,7 @@ Offset_0x049AC0:
 Offset_0x049ACC:
                 jsr     (Refresh_Child_Position_Adjusted)      ; Offset_0x04203C
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x049AE6(PC, D0), D1
                 jsr     Offset_0x049AE6(PC, D1)
                 jmp     (Child_Display_Touch_Or_Delete)        ; Offset_0x042472  

@@ -114,11 +114,11 @@ Offset_0x01B4B8:
                 bra     Obj_Sphere_Test_Main                   ; Offset_0x01B696
 ;-------------------------------------------------------------------------------                
 Offset_0x01B4CA:
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
-                move.l  #Sphere_Test_Mappings, Obj_Map(A1) ; Offset_0x01BB9A, $000C
+                move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
                 move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_X(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
@@ -215,11 +215,11 @@ Offset_0x01B624:
                 bra     Obj_Sphere_Test_Main                   ; Offset_0x01B696
 ;-------------------------------------------------------------------------------                
 Offset_0x01B636:
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
-                move.l  #Sphere_Test_Mappings, Obj_Map(A1) ; Offset_0x01BB9A, $000C
+                move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
                 move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_X(A0), Obj_Control_Var_00(A1)         ; $0010, $0030

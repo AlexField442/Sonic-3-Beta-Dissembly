@@ -5,7 +5,7 @@
 ; Offset_0x049DCA:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x049DEE(PC, D0), D1
                 jsr     Offset_0x049DEE(PC, D1)
                 lea     Butterdroid_PLC_Data(PC), A2           ; Offset_0x049E46
@@ -24,10 +24,10 @@ Offset_0x049DF2:
 ;-------------------------------------------------------------------------------
 Offset_0x049E06:
                 jsr     (Find_Player)                          ; Offset_0x042634
-                bclr    #$00, Obj_Flags(A0)                              ; $0004
+                bclr    #$00, render_flags(A0)                              ; $0004
                 tst.w   D0
                 beq.s   Offset_0x049E1C
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x049E1C:
                 move.w  #$0100, D0
                 move.w  #$0004, D1

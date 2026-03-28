@@ -7,7 +7,7 @@
                 jsr     (SetupObjectAttributes)                      ; Offset_0x041D72
                 move.l  #Offset_0x0493E8, (A0)
                 move.w  Obj_Y(A0), Obj_Control_Var_0A(A0)         ; $0014, $003A
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x0493E8:                
                 moveq   #$00, D0
                 move.b  Obj_Boss_Hit(A0), D0                             ; $0029

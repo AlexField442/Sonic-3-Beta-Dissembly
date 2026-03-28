@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x046B0E:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x046B32(PC, D0), D1
                 move.w  Obj_X(A0), -(A7)                                 ; $0010
                 jsr     Offset_0x046B32(PC, D1)
@@ -32,7 +32,7 @@ Offset_0x046B32:
 Offset_0x046B4A:
                 lea     Crushing_Column_Setup_Data(PC), A1     ; Offset_0x046CD8
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                move.b  #$70, Obj_Height_2(A0)                           ; $001E
+                move.b  #$70, y_radius(A0)                           ; $001E
                 move.w  Obj_Y(A0), Obj_Control_Var_0E(A0)         ; $0014, $003E
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 cmpi.b  #$03, Obj_Subtype(A0)                            ; $002C
@@ -43,7 +43,7 @@ Offset_0x046B4A:
 Offset_0x046B7A:
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 add.b   D0, D0
-                move.b  D0, Obj_Routine(A0)                              ; $0005
+                move.b  D0, routine(A0)                              ; $0005
 Offset_0x046B84:
                 rts     
 ;-------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ Offset_0x046B86:
                 andi.b  #$18, D0
                 beq.s   Offset_0x046B84
 Offset_0x046B90:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x046B98:
@@ -65,14 +65,14 @@ Offset_0x046BA0:
                 jsr     Find_Other_Object(PC)                  ; Offset_0x04269E
                 cmpi.w  #$0028, D2
                 bcs     Offset_0x046B84
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x046BBA
                 subq.w  #$02, D0
 Offset_0x046BBA:
                 tst.w   D0
                 beq.s   Offset_0x046B84
 Offset_0x046BBE:
-                move.b  #$0E, Obj_Routine(A0)                            ; $0005
+                move.b  #$0E, routine(A0)                            ; $0005
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x046BC6:
@@ -93,7 +93,7 @@ Offset_0x046BE0:
                 bpl     Offset_0x046B84
 Offset_0x046BF2:
                 add.w   D1, Obj_Y(A0)                                    ; $0014
-                move.b  #$10, Obj_Routine(A0)                            ; $0005
+                move.b  #$10, routine(A0)                            ; $0005
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x046C4C, Obj_Child(A0)                  ; $0034
                 moveq   #Slide_Thunk_Sfx, D0                              ; -$50
@@ -126,7 +126,7 @@ Offset_0x046C48:
 Offset_0x046C4C:
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
-                move.b  (Offset_0x046C5A-$01)(PC, D0), Obj_Routine(A0)   ; $0005
+                move.b  (Offset_0x046C5A-$01)(PC, D0), routine(A0)   ; $0005
                 rts                             
 ;-------------------------------------------------------------------------------
 Offset_0x046C5A:
@@ -157,13 +157,13 @@ Offset_0x046C8C:
 Offset_0x046C96:
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 jsr     Find_Other_Object(PC)                  ; Offset_0x04269E
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x046CA8
                 subq.w  #$02, D0
 Offset_0x046CA8:
                 tst.w   D0
                 bne     Offset_0x046B84
-                move.b  #$12, Obj_Routine(A0)                            ; $0005
+                move.b  #$12, routine(A0)                            ; $0005
                 rts
 ;-------------------------------------------------------------------------------  
 Offset_0x046CB6:

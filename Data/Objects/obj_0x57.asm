@@ -20,9 +20,9 @@ Obj_0x57_MGz_Trigger_Platform:                                 ; Offset_0x02A884
                 move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
                 lsr.w   #$02, D1
                 move.w  D1, Obj_Control_Var_04(A0)                       ; $0034
-                move.l  #Trigger_Platform_Mappings, Obj_Map(A0) ; Offset_0x02A9C2, $000C
+                move.l  #Trigger_Platform_Mappings, mappings(A0) ; Offset_0x02A9C2, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.w  Obj_X(A0), Obj_Control_Var_06(A0)         ; $0010, $0036
                 tst.w   D1

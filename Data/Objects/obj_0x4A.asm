@@ -3,9 +3,9 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x029188:
-                move.l  #Bumper_Mappings, Obj_Map(A0)   ; Offset_0x0293D4, $000C
+                move.l  #Bumper_Mappings, mappings(A0)   ; Offset_0x0293D4, $000C
                 move.w  #$4364, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
@@ -14,7 +14,7 @@
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
                 tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
                 beq.s   Offset_0x0291DE
-                move.l  #Bumper_Mappings_2P, Obj_Map(A0) ; Offset_0x00293F4, $000C
+                move.l  #Bumper_Mappings_2P, mappings(A0) ; Offset_0x00293F4, $000C
                 move.w  #$2300, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #Offset_0x029322, (A0)
                 bra     Offset_0x029322

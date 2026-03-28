@@ -5,7 +5,7 @@
 ; Offset_0x034488: Obj_S2_0xB0_Sonic_Sega_Logo:
 Obj_SegaSonic:
 		moveq	#0,d0
-		move.b	Obj_Routine(a0),d0
+		move.b	routine(a0),d0
 		move.w	SegaSonic_Index(pc,d0.w),d1
 		jmp	SegaSonic_Index(pc,d1.w)
 ; ===========================================================================
@@ -22,12 +22,12 @@ SegaSonic_Index:
 SegaSonic_Init:
 		lea	S2_Obj_0xB0_Setup_Data(pc),a1
 		jsr	(SetupObjectAttributes).l
-		move.b	#0,Obj_Flags(a0)
+		move.b	#0,render_flags(a0)
 		move.w  #$1E8,Obj_X(a0)
 		move.w  #$F0,Obj_Y(a0)
 		move.w  #$B,Obj_Timer(a0)
 		move.w  #2,(VBlank_Subroutine).w
-		bset	#0,Obj_Flags(a0)
+		bset	#0,render_flags(a0)
 		bset	#0,Obj_Status(a0)
 
 		; Initialize streak horizontal offsets for Sonic going left.
@@ -125,7 +125,7 @@ SegaSonic_RunLeft:
 		jmp	(DisplaySprite).l
 
 Offset_0x0345CE:
-		addq.b	#2,Obj_Routine(a0)
+		addq.b	#2,routine(a0)
 		move.w	#$C,Obj_Timer(a0)
 		move.b	#1,Obj_Control_Var_00(a0)
 		move.b	#-1,Obj_Control_Var_01(a0)
@@ -146,12 +146,12 @@ Offset_0x0345F8:
 ; ---------------------------------------------------------------------------
 
 Offset_0x034604:
-		addq.b	#2,Obj_Routine(a0)
-		bchg	#0,Obj_Flags(a0)
+		addq.b	#2,routine(a0)
+		bchg	#0,render_flags(a0)
 		move.w	#$B,Obj_Timer(a0)
 		move.w	#4,(VBlank_Subroutine).w
 		subi.w	#$28,Obj_X(a0)
-		bchg	#0,Obj_Flags(a0)
+		bchg	#0,render_flags(a0)
 		bchg	#0,Obj_Status(a0)
 
 		; The loop counter here is erroniously set to $400 instead of ($400/4)-1; this didn't cause issues
@@ -183,7 +183,7 @@ SegaSonic_RunRight:
 		jmp	(DisplaySprite).l
 
 Offset_0x034676:
-		addq.b	#2,Obj_Routine(a0)
+		addq.b	#2,routine(a0)
 		move.w	#$C,Obj_Timer(a0)
 		move.b	#1,Obj_Control_Var_00(a0)
 		move.b	#-1,Obj_Control_Var_01(a0)
@@ -204,7 +204,7 @@ Offset_0x03469C:
 ; ---------------------------------------------------------------------------
 ; Offset_0x0346A8:
 SegaSonic_PlayChant:
-		addq.b	#2,Obj_Routine(a0)
+		addq.b	#2,routine(a0)
 		st	(PalCycle_Done_Flag).w
 		move.b	#$FA,d0
 		jsr	(PlaySound).l

@@ -4,7 +4,7 @@
 ;------------------------------------------------------------------------------- 
 ; Offset_0x0100DA:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0100E8(PC, D0), D1
                 jmp     Offset_0x0100E8(PC, D1)
 ;-------------------------------------------------------------------------------                
@@ -15,9 +15,9 @@ Offset_0x0100E8:
                 dc.w    Offset_0x0101B8-Offset_0x0100E8
 ;-------------------------------------------------------------------------------                
 Offset_0x0100F0:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
-                move.l  #Dust_Water_Splash_2P_Mappings, Obj_Map(A0) ; Offset_0x010260, $000C
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                addq.b  #$02, routine(A0)                            ; $0005
+                move.l  #Dust_Water_Splash_2P_Mappings, mappings(A0) ; Offset_0x010260, $000C
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.w  #$07E0, Obj_Art_VRAM(A0)                         ; $000A
@@ -47,7 +47,7 @@ Offset_0x010142:
 Offset_0x01014A:
                 cmpi.b  #$0C, Obj_Subtype(A2)                            ; $002C
                 bcs.s   Offset_0x0101AC
-                cmpi.b  #$04, Obj_Routine(A2)                            ; $0005
+                cmpi.b  #$04, routine(A2)                            ; $0005
                 bcc.s   Offset_0x0101AC
                 tst.b   Obj_Player_Spdsh_Flag(A2)                        ; $003D
                 beq.s   Offset_0x0101AC
@@ -79,7 +79,7 @@ Offset_0x0101B8:
                 move.w  Obj_Player_Last(A0), A2                          ; $0042
                 cmpi.b  #$0D, Obj_Ani_Number(A2)                         ; $0020
                 beq.s   Offset_0x0101D2
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$00, Obj_Control_Var_06(A0)                     ; $0036
                 rts
 Offset_0x0101D2:
@@ -95,9 +95,9 @@ Offset_0x0101D2:
                 addi.w  #$000C, Obj_Y(A1)                                ; $0014
                 move.b  #$00, Obj_Status(A1)                             ; $002A
                 move.b  #$03, Obj_Ani_Number(A1)                         ; $0020
-                addq.b  #$02, Obj_Routine(A1)                            ; $0005
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
+                addq.b  #$02, routine(A1)                            ; $0005
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.w  #$0080, Obj_Priority(A1)                         ; $0008
                 move.b  #$04, Obj_Width(A1)                              ; $0007
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A

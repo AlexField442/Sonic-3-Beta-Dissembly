@@ -39,7 +39,7 @@ Offset_0x023546:
                 tst.w   Obj_Speed_Y(A1)                                  ; $001A
                 bmi.s   Offset_0x0235BA
 Offset_0x023580:
-                cmpi.b  #$06, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$06, routine(A1)                            ; $0005
                 bcc.s   Offset_0x0235BA
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x0235BA
@@ -91,7 +91,7 @@ Offset_0x023610:
                 move.b  (A2), D0
                 jsr     (CalcSine)                             ; Offset_0x001B20
                 moveq   #$00, D2
-                move.b  Obj_Height_2(A1), D2                             ; $001E
+                move.b  y_radius(A1), D2                             ; $001E
                 lsl.w   #$08, D2
                 addi.w  #$4000, D2
                 muls.w  D2, D1

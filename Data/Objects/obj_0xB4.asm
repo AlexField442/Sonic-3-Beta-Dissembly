@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x03D4DE:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x03D4F4(PC, D0), D1
                 jsr     Offset_0x03D4F4(PC, D1)
                 bsr     Offset_0x03DB30
@@ -46,7 +46,7 @@ Offset_0x03D564:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2   
 ;-------------------------------------------------------------------------------
 Offset_0x03D56E:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 moveq   #Boss_Snd, D0                                      ; $19
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x03D57C:                
@@ -61,7 +61,7 @@ Offset_0x03D57E:
 Offset_0x03D590:
                 move.w  D0, (Sonic_Level_Limits_Min_X).w             ; $FFFFEE14
 Offset_0x03D594:                
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 move.b  #$09, Obj_Control_Var_09(A0)                     ; $0039
                 rts   
@@ -83,14 +83,14 @@ Offset_0x03D5CC:
                 subq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
                 bmi.s   Offset_0x03D5F6
                 bset    #$03, Obj_Control_Var_08(A0)                     ; $0038
-                bclr    #$00, Obj_Flags(A0)                              ; $0004
+                bclr    #$00, render_flags(A0)                              ; $0004
                 tst.w   D0
                 bne.s   Offset_0x03D5F4
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x03D5F4:
                 rts
 Offset_0x03D5F6:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
                 move.b  #$02, Obj_Control_Var_10(A0)                     ; $0040
                 move.w  #$01FF, Obj_Timer(A0)                            ; $002E
@@ -165,7 +165,7 @@ Offset_0x03D6F2:
 ;-------------------------------------------------------------------------------
 Offset_0x03D712:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x03D724(PC, D0), D1
                 jsr     Offset_0x03D724(PC, D1)
                 jmp     Add_To_Response_List_And_Display(PC)   ; Offset_0x042450  
@@ -198,11 +198,11 @@ Offset_0x03D752:
                 bne.s   Offset_0x03D768
                 rts
 Offset_0x03D768:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 add.w   D0, D0
-                btst    #$00, Obj_Flags(A1)                              ; $0004
+                btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x03D780
                 addq.w  #$08, D0
 Offset_0x03D780:
@@ -223,7 +223,7 @@ Offset_0x03D7B2:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2  
 ;-------------------------------------------------------------------------------
 Offset_0x03D7B6:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0007, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03D7D6, Obj_Child(A0)                  ; $0034
                 rts                
@@ -233,14 +233,14 @@ Offset_0x03D7CC:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2 
 ;-------------------------------------------------------------------------------
 Offset_0x03D7D6:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 bclr    #$03, Obj_Control_Var_08(A1)                     ; $0038
                 rts                        
 ;-------------------------------------------------------------------------------
 Offset_0x03D7E8:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x03D7FC(PC, D0), D1
                 jsr     Offset_0x03D7FC(PC, D1)
                 moveq   #$00, D0
@@ -257,7 +257,7 @@ Offset_0x03D802:
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 tst.b   Obj_Subtype(A1)                                  ; $002C
                 beq.s   Offset_0x03D81A
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x03D81A:
                 move.w  Obj_Child_Ref(A1), Obj_Height_3(A0)       ; $0046, $0044
                 lea     Offset_0x03DC0E(PC), A2
@@ -270,7 +270,7 @@ Offset_0x03D828:
                 bne.s   Offset_0x03D83A
                 rts
 Offset_0x03D83A:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.b  #$02, Obj_Control_Var_10(A0)                     ; $0040
                 move.w  #$01FF, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03D872, Obj_Child(A0)                  ; $0034
@@ -285,12 +285,12 @@ Offset_0x03D856:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2     
 ;-------------------------------------------------------------------------------
 Offset_0x03D872:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x03D87A:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x03D88E(PC, D0), D1
                 jsr     Offset_0x03D88E(PC, D1)
                 moveq   #$08, D0
@@ -305,9 +305,9 @@ Offset_0x03D892:
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 moveq   #-$1C, D0
-                btst    #$00, Obj_Flags(A1)                              ; $0004
+                btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x03D8B0
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
                 neg.w   D0
 Offset_0x03D8B0:
                 move.w  Obj_Child_Ref(A1), A1                            ; $0046

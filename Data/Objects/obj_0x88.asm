@@ -5,7 +5,7 @@
 ; Offset_0x048756:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04876E(PC, D0), D1
                 jsr     Offset_0x04876E(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -52,7 +52,7 @@ Offset_0x0487DC:
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 move.b  Obj_Subtype(A1), D2                              ; $002C
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0487F8(PC, D0), D1
                 jsr     Offset_0x0487F8(PC, D1)
                 jmp     Child_Display_Touch_Or_Delete(PC)      ; Offset_0x042472 
@@ -67,7 +67,7 @@ Offset_0x0487F8:
 Offset_0x048802:
                 lea     Ribot_Setup_Data_2(PC), A1             ; Offset_0x048A38
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.b  #$08, Obj_Height_2(A0)                           ; $001E
+                move.b  #$08, y_radius(A0)                           ; $001E
                 move.b  #$F0, Obj_Control_Var_13(A0)                     ; $0043
                 move.w  Obj_X(A0), Obj_Control_Var_0E(A0)         ; $0010, $003E
                 move.w  Obj_Y(A0), Obj_Control_Var_10(A0)         ; $0014, $0040
@@ -92,7 +92,7 @@ Offset_0x04883E:
                 bne.s   Offset_0x048846
                 rts
 Offset_0x048846:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x0488C0, Obj_Child(A0)                  ; $0034
                 rts    
 ;-------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ Offset_0x048866:
                 bne.s   Offset_0x04886E
                 rts
 Offset_0x04886E:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  D1, Obj_Speed_X(A0)                              ; $0018
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x0488D4, Obj_Child(A0)                  ; $0034
@@ -147,7 +147,7 @@ Offset_0x0488C0:
                 move.w  D0, Obj_Speed_Y(A0)                              ; $001A
                 rts
 Offset_0x0488D4:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0010, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x04890A, Obj_Child(A0)                  ; $0034
                 clr.w   Obj_Speed_Y(A0)                                  ; $001A
@@ -171,7 +171,7 @@ Offset_0x048906:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2    
 ;-------------------------------------------------------------------------------  
 Offset_0x04890A:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x048944, Obj_Child(A0)                  ; $0034
@@ -194,7 +194,7 @@ Offset_0x048932:
                 move.w  D0, Obj_Y(A0)                                    ; $0014
                 rts
 Offset_0x048944:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.w  Obj_Control_Var_0E(A0), Obj_X(A0)         ; $003E, $0010
                 move.w  Obj_Control_Var_10(A0), Obj_Y(A0)         ; $0040, $0014
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046

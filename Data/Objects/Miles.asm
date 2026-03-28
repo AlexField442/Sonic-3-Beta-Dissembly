@@ -13,7 +13,7 @@
                 move.w  (Sonic_Level_Limits_Max_Y).w, (Miles_Level_Limits_Max_Y).w ; $FFFFEE1A, $FFFFEE22
 Offset_0x00D144:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Miles_Index(PC, D0), D1                ; Offset_0x00D152
                 jmp     Miles_Index(PC, D1)                    ; Offset_0x00D152
 ;-------------------------------------------------------------------------------                
@@ -26,16 +26,16 @@ Miles_Index:                                                   ; Offset_0x00D152
                 dc.w    Miles_Respawning-Miles_Index           ; Offset_0x00E936
 ;-------------------------------------------------------------------------------
 Miles_Main:                                                    ; Offset_0x00D15E
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
-                move.b  #$0F, Obj_Height_2(A0)                           ; $001E
-                move.b  #$09, Obj_Width_2(A0)                            ; $001F
+                addq.b  #$02, routine(A0)                            ; $0005
+                move.b  #$0F, y_radius(A0)                           ; $001E
+                move.b  #$09, x_radius(A0)                            ; $001F
                 move.b  #$0F, Obj_Height_3(A0)                           ; $0044
                 move.b  #$09, Obj_Width_3(A0)                            ; $0045
-                move.l  #Miles_Mappings, Obj_Map(A0)    ; Offset_0x101FF4, $000C
+                move.l  #Miles_Mappings, mappings(A0)    ; Offset_0x101FF4, $000C
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
                 move.b  #$18, Obj_Width(A0)                              ; $0007
                 move.b  #$18, Obj_Height(A0)                             ; $0006
-                move.b  #$84, Obj_Flags(A0)                              ; $0004
+                move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$01, Obj_Player_Selected(A0)                    ; $0038
                 move.w  #$0600, (A4)
                 move.w  #$000C, Acceleration(A4)                         ; $0002
@@ -262,7 +262,7 @@ Offset_0x00D49A:
                 rts     
 ;-------------------------------------------------------------------------------
 Miles_CPU_Flying:                                              ; Offset_0x00D49C
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x00D4DA
                 addq.w  #$01, (Miles_CPU_Respawn_Timer).w            ; $FFFFF704
                 cmpi.w  #$012C, (Miles_CPU_Respawn_Timer).w          ; $FFFFF704
@@ -366,7 +366,7 @@ Offset_0x00D5DA:
                 rts  
 ;-------------------------------------------------------------------------------
 Miles_CPU_Normal:                                              ; Offset_0x00D5DC
-                cmpi.b  #$06, (Obj_Player_One+Obj_Routine).w         ; $FFFFB005
+                cmpi.b  #$06, (Obj_Player_One+routine).w         ; $FFFFB005
                 bcs.s   Offset_0x00D60A
                 move.w  #$0004, (Miles_CPU_Routine).w                ; $FFFFF708
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D
@@ -488,7 +488,7 @@ Miles_CPU_Despawn:                                             ; Offset_0x00D730
                 rts     
 ;-------------------------------------------------------------------------------  
 Miles_CPU_Check_Despawn:                                       ; Offset_0x00D768
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x00D794
                 btst    #$03, Obj_Status(A0)                             ; $002A
                 beq.s   Offset_0x00D784
@@ -590,7 +590,7 @@ Offset_0x00D896:
                 rts    
 ;-------------------------------------------------------------------------------
 Miles_CPU_0E:                                                  ; Offset_0x00D8A8:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x00D8B4
                 move.w  #$0000, (Miles_CPU_Routine).w                ; $FFFFF708
 Offset_0x00D8B4:
@@ -602,9 +602,9 @@ Offset_0x00D8B4:
 Offset_0x00D8C6:
                 tst.b   (A2)
                 beq     Offset_0x00D9D6
-                tst.b   Obj_Flags(A1)                                    ; $0004
+                tst.b   render_flags(A1)                                    ; $0004
                 bpl.s   Offset_0x00D930
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x00D930
                 btst    #$01, Obj_Status(A1)                             ; $002A
                 beq.s   Offset_0x00D930
@@ -641,11 +641,11 @@ Offset_0x00D944:
                 addi.w  #$001C, Obj_Y(A1)                                ; $0014
                 move.w  Obj_Speed_X(A0), Obj_Speed_X(A1)          ; $0018, $0018
                 move.w  Obj_Speed_Y(A0), Obj_Speed_Y(A1)          ; $001A, $001A
-                andi.b  #$FC, Obj_Flags(A1)                              ; $0004
+                andi.b  #$FC, render_flags(A1)                              ; $0004
                 andi.b  #$FE, Obj_Status(A1)                             ; $002A
                 move.b  Obj_Status(A0), D0                               ; $002A
                 andi.b  #$01, D0
-                or.b    D0, Obj_Flags(A1)                                ; $0004
+                or.b    D0, render_flags(A1)                                ; $0004
                 or.b    D0, Obj_Status(A1)                               ; $002A
                 subq.b  #$01, Obj_Ani_Time(A1)                           ; $0024
                 bpl.s   Offset_0x00D9BC
@@ -694,7 +694,7 @@ Offset_0x00D9E4:
                 bcc     Offset_0x00DA86
                 tst.b   Obj_Player_Control(A1)                           ; $002E
                 bne.s   Offset_0x00DA86
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x00DA86
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x00DA86
@@ -711,11 +711,11 @@ Offset_0x00D9E4:
                 move.b  #$03, Obj_Player_Control(A1)                     ; $002E
                 ori.w   #$8000, Obj_Art_VRAM(A1)                         ; $000A
                 bset    #$01, Obj_Status(A1)                             ; $002A
-                andi.b  #$FC, Obj_Flags(A1)                              ; $0004
+                andi.b  #$FC, render_flags(A1)                              ; $0004
                 andi.b  #$FE, Obj_Status(A1)                             ; $002A
                 move.b  Obj_Status(A0), D0                               ; $002A
                 andi.b  #$01, D0
-                or.b    D0, Obj_Flags(A1)                                ; $0004
+                or.b    D0, render_flags(A1)                                ; $0004
                 or.b    D0, Obj_Status(A1)                               ; $002A
                 move.b  #$01, (A2)
 Offset_0x00DA86:
@@ -759,7 +759,7 @@ Miles_NotInWater:                                              ; Offset_0x00DAEC
                 move.w  #$0600, (A4)
                 move.w  #$000C, Acceleration(A4)                         ; $0002
                 move.w  #$0080, Deceleration(A4)                         ; $0004
-                cmpi.b  #$04, Obj_Routine(A0)                            ; $0005
+                cmpi.b  #$04, routine(A0)                            ; $0005
                 beq.s   Offset_0x00DB24
                 move.w  Obj_Speed_Y(A0), D0                              ; $001A
                 cmpi.w  #$FC00, D0
@@ -1126,7 +1126,7 @@ Offset_0x00DF02:
                 jsr     (PlaySound)                           ; Offset_0x001176
                 cmpi.b  #$0C, Obj_Subtype(A0)                            ; $002C
                 bcs.s   Offset_0x00DF44
-                move.b  #$06, Obj_Routine(A6)                            ; $0005
+                move.b  #$06, routine(A6)                            ; $0005
                 move.b  #$15, Obj_Map_Id(A6)                             ; $0022
 Offset_0x00DF44:
                 rts
@@ -1167,7 +1167,7 @@ Offset_0x00DF82:
                 jsr     (PlaySound)                           ; Offset_0x001176
                 cmpi.b  #$0C, Obj_Subtype(A0)                            ; $002C
                 bcs.s   Offset_0x00DFC4
-                move.b  #$06, Obj_Routine(A6)                            ; $0005
+                move.b  #$06, routine(A6)                            ; $0005
                 move.b  #$15, Obj_Map_Id(A6)                             ; $0022
 Offset_0x00DFC4:
                 rts 
@@ -1212,9 +1212,9 @@ Offset_0x00E01E:
                 tst.b   Obj_Player_Spdsh_Flag(A0)                        ; $003D
                 bne.s   Offset_0x00E052
                 bclr    #$02, Obj_Status(A0)                             ; $002A
-                move.b  Obj_Height_2(A0), D0                             ; $001E
-                move.b  Obj_Height_3(A0), Obj_Height_2(A0)        ; $001E, $0044
-                move.b  Obj_Width_3(A0), Obj_Width_2(A0)          ; $001F, $0045
+                move.b  y_radius(A0), D0                             ; $001E
+                move.b  Obj_Height_3(A0), y_radius(A0)        ; $001E, $0044
+                move.b  Obj_Width_3(A0), x_radius(A0)          ; $001F, $0045
                 move.b  #$05, Obj_Ani_Number(A0)                         ; $0020
                 sub.b   Obj_Height_3(A0), D0                             ; $0044
                 ext.w   D0
@@ -1393,8 +1393,8 @@ Offset_0x00E1FA:
                 rts
 Offset_0x00E204:
                 bset    #$02, Obj_Status(A0)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A0)                           ; $001E
-                move.b  #$07, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0E, y_radius(A0)                           ; $001E
+                move.b  #$07, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 addq.w  #$01, Obj_Y(A0)                                  ; $0014
                 move.w  #$003C, D0
@@ -1439,15 +1439,15 @@ Offset_0x00E272:
                 clr.b   Obj_Player_St_Convex(A0)                         ; $003C
                 move.w  #$0070, D0
                 jsr     (PlaySound)                           ; Offset_0x001176
-                move.b  Obj_Height_3(A0), Obj_Height_2(A0)        ; $001E, $0044
-                move.b  Obj_Width_3(A0), Obj_Width_2(A0)          ; $001F, $0045
+                move.b  Obj_Height_3(A0), y_radius(A0)        ; $001E, $0044
+                move.b  Obj_Width_3(A0), x_radius(A0)          ; $001F, $0045
                 btst    #$02, Obj_Status(A0)                             ; $002A
                 bne.s   Offset_0x00E2F0
-                move.b  #$0E, Obj_Height_2(A0)                           ; $001E
-                move.b  #$07, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0E, y_radius(A0)                           ; $001E
+                move.b  #$07, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 bset    #$02, Obj_Status(A0)                             ; $002A
-                move.b  Obj_Height_2(A0), D0                             ; $001E
+                move.b  y_radius(A0), D0                             ; $001E
                 sub.b   Obj_Height_3(A0), D0                             ; $0044
                 ext.w   D0
                 sub.w   D0, Obj_Y(A0)                                    ; $0014
@@ -1501,9 +1501,9 @@ Tails_TestForFlight:
 		btst	#2,Obj_Status(a0)
 		beq.s	Offset_0x00E382
 		bclr	#2,Obj_Status(a0)
-		move.b	Obj_Height_2(a0),d1
-		move.b	Obj_Height_3(a0),Obj_Height_2(a0)
-		move.b	Obj_Width_3(a0),Obj_Width_2(a0)
+		move.b	y_radius(a0),d1
+		move.b	Obj_Height_3(a0),y_radius(a0)
+		move.b	Obj_Width_3(a0),x_radius(a0)
 		sub.b	Obj_Height_3(a0),d1
 		ext.w	d1
 		add.w	d1,Obj_Y(a0)
@@ -1549,8 +1549,8 @@ Offset_0x00E3EC:
                 move.b  (Control_Ports_Logical_Data_2).w, D0         ; $FFFFF66A
                 btst    #$01, D0
                 bne     Offset_0x00E47C
-                move.b  #$0E, Obj_Height_2(A0)                           ; $001E
-                move.b  #$07, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0E, y_radius(A0)                           ; $001E
+                move.b  #$07, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 addq.w  #$01, Obj_Y(A0)                                  ; $0014
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D
@@ -1905,9 +1905,9 @@ Miles_ResetMilesOnFloor:                                       ; Offset_0x00E7E2
                 move.b  #$00, Obj_Ani_Number(A0)                         ; $0020
 ;-------------------------------------------------------------------------------
 Miles_ResetOnFloor:                                            ; Offset_0x00E7EE                 
-                move.b  Obj_Height_2(A0), D0                             ; $001E
-                move.b  Obj_Height_3(A0), Obj_Height_2(A0)        ; $0044, $001E 
-                move.b  Obj_Width_3(A0), Obj_Width_2(A0)          ; $0045, $001F 
+                move.b  y_radius(A0), D0                             ; $001E
+                move.b  Obj_Height_3(A0), y_radius(A0)        ; $0044, $001E 
+                move.b  Obj_Width_3(A0), x_radius(A0)          ; $0045, $001F 
                 btst    #$02, Obj_Status(A0)                             ; $002A
                 beq.s   Offset_0x00E81C
                 bclr    #$02, Obj_Status(A0)                             ; $002A
@@ -1968,7 +1968,7 @@ Miles_HurtStop:                                                ; Offset_0x00E8AE
                 move.b  D0, Obj_Player_Control(A0)                       ; $002E
                 move.b  #$00, Obj_Ani_Number(A0)                         ; $0020
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$78, Obj_P_Invunerblt_Time(A0)                  ; $0034
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D
 Offset_0x00E902:
@@ -1998,7 +1998,7 @@ Miles_Respawning:                                              ; Offset_0x00E936
                 bne.s   Offset_0x00E948
                 tst.w   (Vertical_Scrolling_P2).w                    ; $FFFFEE06
                 bne.s   Offset_0x00E948
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
 Offset_0x00E948:
                 bsr     Miles_Animate                          ; Offset_0x00E952
                 jmp     (DisplaySprite)                        ; Offset_0x011148
@@ -2029,8 +2029,8 @@ Offset_0x00E98E:
                 bmi.s   Offset_0x00E9FE
                 move.b  Obj_Status(A0), D1                               ; $002A
                 andi.b  #$01, D1
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
-                or.b    D1, Obj_Flags(A0)                                ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
+                or.b    D1, render_flags(A0)                                ; $0004
                 subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
                 bpl.s   Offset_0x00E9CC
                 move.b  D0, Obj_Ani_Time(A0)                             ; $0024
@@ -2086,9 +2086,9 @@ Offset_0x00EA26:
                 bpl.s   Offset_0x00EA2E
                 moveq   #$03, D1
 Offset_0x00EA2E:
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 eor.b   D1, D2
-                or.b    D2, Obj_Flags(A0)                                ; $0004
+                or.b    D2, render_flags(A0)                                ; $0004
                 btst    #$05, Obj_Status(A0)                             ; $002A
                 bne     Offset_0x00EB7A
                 lsr.b   #$04, D0
@@ -2145,7 +2145,7 @@ Offset_0x00EAC8:
                 move.b  Obj_Status(A0), D2                               ; $002A
                 andi.b  #$01, D2
                 bne.s   Offset_0x00EAF6
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 addi.b  #$0B, D0
                 divu.w  #$0016, D0
                 addi.b  #$75, D0
@@ -2153,14 +2153,14 @@ Offset_0x00EAC8:
                 move.b  #$00, Obj_Ani_Time(A0)                           ; $0024
                 rts
 Offset_0x00EAF6:
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 tst.b   Obj_Player_Flip_Flag(A0)                         ; $002D
                 beq.s   Offset_0x00EB0E
-                ori.b   #$01, Obj_Flags(A0)                              ; $0004
+                ori.b   #$01, render_flags(A0)                              ; $0004
                 addi.b  #$0B, D0
                 bra.s   Offset_0x00EB1A
 Offset_0x00EB0E:
-                ori.b   #$03, Obj_Flags(A0)                              ; $0004
+                ori.b   #$03, render_flags(A0)                              ; $0004
                 neg.b   D0
                 addi.b  #$8F, D0
 Offset_0x00EB1A:
@@ -2192,8 +2192,8 @@ Offset_0x00EB5E:
                 move.b  D2, Obj_Ani_Time(A0)                             ; $0024
                 move.b  Obj_Status(A0), D1                               ; $002A
                 andi.b  #$01, D1
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
-                or.b    D1, Obj_Flags(A0)                                ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
+                or.b    D1, render_flags(A0)                                ; $0004
                 bra     Offset_0x00E9B4
 Offset_0x00EB7A:
                 subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
@@ -2211,8 +2211,8 @@ Offset_0x00EB92:
                 lea     (Offset_0x00EC68), A1
                 move.b  Obj_Status(A0), D1                               ; $002A
                 andi.b  #$01, D1
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
-                or.b    D1, Obj_Flags(A0)                                ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
+                or.b    D1, render_flags(A0)                                ; $0004
                 bra     Offset_0x00E9B4
 Offset_0x00EBB4:
                 move.w  Obj_Speed_X(A2), D1                              ; $0018
@@ -2231,9 +2231,9 @@ Offset_0x00EBD6:
                 bpl.s   Offset_0x00EBDE
                 moveq   #$03, D1
 Offset_0x00EBDE:
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 eor.b   D1, D2
-                or.b    D2, Obj_Flags(A0)                                ; $0004
+                or.b    D2, render_flags(A0)                                ; $0004
                 lsr.b   #$03, D0
                 andi.b  #$0C, D0
                 move.b  D0, D3
@@ -2424,8 +2424,8 @@ Offset_0x00EDF8:
                 bmi.s   Offset_0x00EE68
                 move.b  Obj_Status(A0), D1                               ; $002A
                 andi.b  #$01, D1
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
-                or.b    D1, Obj_Flags(A0)                                ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
+                or.b    D1, render_flags(A0)                                ; $0004
                 subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
                 bpl.s   Offset_0x00EE36
                 move.b  D0, Obj_Ani_Time(A0)                             ; $0024
@@ -2481,9 +2481,9 @@ Offset_0x00EE90:
                 bpl.s   Offset_0x00EE98
                 moveq   #$03, D1
 Offset_0x00EE98:
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 eor.b   D1, D2
-                or.b    D2, Obj_Flags(A0)                                ; $0004
+                or.b    D2, render_flags(A0)                                ; $0004
                 btst    #$05, Obj_Status(A0)                             ; $002A
                 bne     Offset_0x00EFCE
                 lsr.b   #$05, D0
@@ -2532,7 +2532,7 @@ Offset_0x00EF1C:
                 move.b  Obj_Status(A0), D2                               ; $002A
                 andi.b  #$01, D2
                 bne.s   Offset_0x00EF4A
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 addi.b  #$16, D0
                 divu.w  #$002C, D0
                 addi.b  #$15, D0
@@ -2540,14 +2540,14 @@ Offset_0x00EF1C:
                 move.b  #$00, Obj_Ani_Time(A0)                           ; $0024
                 rts
 Offset_0x00EF4A:
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 tst.b   Obj_Player_Flip_Flag(A0)                         ; $002D
                 beq.s   Offset_0x00EF62
-                ori.b   #$01, Obj_Flags(A0)                              ; $0004
+                ori.b   #$01, render_flags(A0)                              ; $0004
                 addi.b  #$16, D0
                 bra.s   Offset_0x00EF6E
 Offset_0x00EF62:
-                ori.b   #$03, Obj_Flags(A0)                              ; $0004
+                ori.b   #$03, render_flags(A0)                              ; $0004
                 neg.b   D0
                 addi.b  #$9A, D0
 Offset_0x00EF6E:
@@ -2579,8 +2579,8 @@ Offset_0x00EFB2:
                 move.b  D2, Obj_Ani_Time(A0)                             ; $0024
                 move.b  Obj_Status(A0), D1                               ; $002A
                 andi.b  #$01, D1
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
-                or.b    D1, Obj_Flags(A0)                                ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
+                or.b    D1, render_flags(A0)                                ; $0004
                 bra     Offset_0x00EE1E
 Offset_0x00EFCE:
                 subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
@@ -2598,8 +2598,8 @@ Offset_0x00EFE6:
                 lea     (Offset_0x00F0B8), A1
                 move.b  Obj_Status(A0), D1                               ; $002A
                 andi.b  #$01, D1
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
-                or.b    D1, Obj_Flags(A0)                                ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
+                or.b    D1, render_flags(A0)                                ; $0004
                 bra     Offset_0x00EE1E
 Offset_0x00F008:
                 move.w  Obj_Speed_X(A2), D1                              ; $0018
@@ -2618,9 +2618,9 @@ Offset_0x00F02A:
                 bpl.s   Offset_0x00F032
                 moveq   #$03, D1
 Offset_0x00F032:
-                andi.b  #$FC, Obj_Flags(A0)                              ; $0004
+                andi.b  #$FC, render_flags(A0)                              ; $0004
                 eor.b   D1, D2
-                or.b    D2, Obj_Flags(A0)                                ; $0004
+                or.b    D2, render_flags(A0)                                ; $0004
                 lsr.b   #$05, D0
                 andi.b  #$03, D0
                 move.b  D0, D3

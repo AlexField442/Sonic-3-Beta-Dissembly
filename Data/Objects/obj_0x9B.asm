@@ -6,7 +6,7 @@
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
 Offset_0x0447AC:                
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0447BE(PC, D0), D1
                 jsr     Offset_0x0447BE(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -24,7 +24,7 @@ Offset_0x0447C4:
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 addq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
 Offset_0x0447E0:                
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x0447FE, Obj_Child(A0)                  ; $0034
                 rts 
@@ -34,14 +34,14 @@ Offset_0x0447F6:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2  
 ;-------------------------------------------------------------------------------
 Offset_0x0447FE:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  #$007F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x0447E0, Obj_Child(A0)                  ; $0034
 Offset_0x044812:
                 rts       
 ;-------------------------------------------------------------------------------
 Offset_0x044814:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x044812
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 jsr     Change_Flip_X(PC)                      ; Offset_0x042678
@@ -55,7 +55,7 @@ Offset_0x044814:
 ;-------------------------------------------------------------------------------
 Offset_0x04483E:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x044850(PC, D0), D1
                 jsr     Offset_0x044850(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_Y(PC) ; Offset_0x042B96 
@@ -79,10 +79,10 @@ Offset_0x044868:
                 bsr     Offset_0x0448D8
                 beq.s   Offset_0x0448A6
 Offset_0x04487E:
-                bclr    #$00, Obj_Flags(A0)                              ; $0004
-                btst    #$00, Obj_Flags(A1)                              ; $0004
+                bclr    #$00, render_flags(A0)                              ; $0004
+                btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x044892
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
 Offset_0x044892:
                 move.w  #$0200, D0
                 moveq   #$20, D1
@@ -90,14 +90,14 @@ Offset_0x044892:
                 bsr     Offset_0x04490A
                 jmp     (SpeedToPos)                           ; Offset_0x01111E
 Offset_0x0448A6:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.w  Obj_X(A0), D0                                    ; $0010
                 move.w  #$0200, D1
-                bset    #$00, Obj_Flags(A0)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
                 cmp.w   (Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
                 bcc.s   Offset_0x0448C8
                 neg.w   D1
-                bclr    #$00, Obj_Flags(A0)                              ; $0004
+                bclr    #$00, render_flags(A0)                              ; $0004
 Offset_0x0448C8:
                 move.w  D1, Obj_Speed_X(A0)                              ; $0018
                 rts    

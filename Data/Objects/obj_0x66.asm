@@ -3,14 +3,14 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02DF26:
-                move.l  #Dripper_Mappings, Obj_Map(A0)  ; Offset_0x02E080, $000C
+                move.l  #Dripper_Mappings, mappings(A0)  ; Offset_0x02E080, $000C
                 move.w  #$6300, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.b  #$08, Obj_Height(A0)                             ; $0006
-                move.b  #$04, Obj_Width_2(A0)                            ; $001F
-                move.b  #$04, Obj_Height_2(A0)                           ; $001E
+                move.b  #$04, x_radius(A0)                            ; $001F
+                move.b  #$04, y_radius(A0)                           ; $001E
                 btst    #$00, Obj_Status(A0)                             ; $002A
                 beq.s   Offset_0x02DF78
                 move.w  #$C300, Obj_Art_VRAM(A0)                         ; $000A

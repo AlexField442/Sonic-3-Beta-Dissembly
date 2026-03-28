@@ -11,7 +11,7 @@
                 move.b  (Obj_Player_Two+Obj_Player_Selected).w, D0   ; $FFFFB082
                 cmp.b   Obj_Player_Selected(A0), D0                      ; $0038
                 bne.s   Offset_0x00CC2C
-                bchg    #03, Obj_Flags(A0)                               ; $0004
+                bchg    #03, render_flags(A0)                               ; $0004
 Offset_0x00CC2C:
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 beq.s   Offset_0x00CC54
@@ -23,10 +23,10 @@ Offset_0x00CC38:
                 move.b  (Obj_Player_One+Obj_Player_Selected).w, D0   ; $FFFFB038
                 cmp.b   Obj_Player_Selected(A0), D0                      ; $0038
                 bne.s   Offset_0x00CC54
-                bchg    #04, Obj_Flags(A0)                               ; $0004
+                bchg    #04, render_flags(A0)                               ; $0004
 Offset_0x00CC54:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x00CC62(PC, D0), D1
                 jmp     Offset_0x00CC62(PC, D1)   
 ;-------------------------------------------------------------------------------      
@@ -39,16 +39,16 @@ Offset_0x00CC62:
                 dc.w    Miles_Respawning-Offset_0x00CC62       ; Offset_0x00E936  
 ;-------------------------------------------------------------------------------       
 Offset_0x00CC6E:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
-                move.b  #$0B, Obj_Height_2(A0)                           ; $001E
-                move.b  #$05, Obj_Width_2(A0)                            ; $001F
+                addq.b  #$02, routine(A0)                            ; $0005
+                move.b  #$0B, y_radius(A0)                           ; $001E
+                move.b  #$05, x_radius(A0)                            ; $001F
                 move.b  #$0B, Obj_Height_3(A0)                           ; $0044
                 move.b  #$05, Obj_Width_3(A0)                            ; $0045
-                move.l  #Miles_2P_Mappings, Obj_Map(A0) ; Offset_0x102F1C, $000C
+                move.l  #Miles_2P_Mappings, mappings(A0) ; Offset_0x102F1C, $000C
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
                 move.b  #$0C, Obj_Width(A0)                              ; $0007
                 move.b  #$0C, Obj_Height(A0)                             ; $0006
-                move.b  #$84, Obj_Flags(A0)                              ; $0004
+                move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$01, Obj_Player_Selected(A0)                    ; $0038
                 lea     (Player_Start_Speed_Array), A1         ; Offset_0x1F7000
                 moveq   #$00, D0
@@ -57,7 +57,7 @@ Offset_0x00CC6E:
                 lea     $00(A1, D0), A1
                 move.w  (A1)+, (A4)
                 move.w  (A1)+, $0002(A4)
-                move.w  (A1)+, Obj_Flags(A4)                             ; $0004
+                move.w  (A1)+, render_flags(A4)                             ; $0004
                 tst.b   (Saved_Level_Flag).w                         ; $FFFFFE30
                 bne     Offset_0x00CD58
                 move.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $0046
@@ -279,8 +279,8 @@ Offset_0x00CFA4:
                 rts
 Offset_0x00CFAE:
                 bset    #$02, Obj_Status(A0)                             ; $002A
-                move.b  #$07, Obj_Height_2(A0)                           ; $001E
-                move.b  #$03, Obj_Width_2(A0)                            ; $001F
+                move.b  #$07, y_radius(A0)                           ; $001E
+                move.b  #$03, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014
                 move.w  #Rolling_Sfx, D0                                 ; $003C
@@ -316,8 +316,8 @@ Offset_0x00D032:
                 move.b  (Control_Ports_Logical_Data_2).w, D0         ; $FFFFF66A
                 btst    #$01, D0
                 bne     Offset_0x00D0C2
-                move.b  #$07, Obj_Height_2(A0)                           ; $001E
-                move.b  #$03, Obj_Width_2(A0)                            ; $001F
+                move.b  #$07, y_radius(A0)                           ; $001E
+                move.b  #$03, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D

@@ -5,7 +5,7 @@
 ; Offset_0x044490:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0444A8(PC, D0), D1
                 jsr     Offset_0x0444A8(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C 
@@ -24,7 +24,7 @@ Offset_0x0444B2:
                 lea     Offset_0x044642(PC), A2
                 jsr     SetupChildObject_Repeat(PC)        ; Offset_0x041E4E
 Offset_0x0444C8:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.b  #$03, Obj_Control_Var_09(A0)                     ; $0039
                 jmp     Offset_0x04A096(PC) ; Código no objeto 0x90 - Fireworm
 ;-------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ Offset_0x0444D8:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 bra     Offset_0x0445E8
 Offset_0x0444E8:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0100, D0
                 move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
                 move.w  D0, Obj_Speed_Y(A0)                              ; $001A
@@ -46,9 +46,9 @@ Offset_0x044508:
                 jsr     Swing_Up_And_Down(PC)                  ; Offset_0x04232E
                 tst.w   D3
                 beq.s   Offset_0x044520
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x044520:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 bra     Offset_0x0445E8    
@@ -62,7 +62,7 @@ Offset_0x04452A:
 ;-------------------------------------------------------------------------------
 Offset_0x04453C:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x044552(PC, D0), D1
                 jsr     Offset_0x044552(PC, D1)
                 moveq   #$00, D0
@@ -100,7 +100,7 @@ Offset_0x044588:
                 bmi.s   Offset_0x044590
                 rts
 Offset_0x044590:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 moveq   #$40, D1
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C

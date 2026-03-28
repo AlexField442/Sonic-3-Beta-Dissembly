@@ -5,7 +5,7 @@
 ; Offset_0x04515C:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x045178(PC, D0), D1
                 jsr     Offset_0x045178(PC, D1)
                 bsr     Offset_0x04573C
@@ -22,7 +22,7 @@ Offset_0x045182:
                 lea     Tunnelbot_Setup_Data(PC), A1           ; Offset_0x0457C4
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.b  #$FE, Obj_Boss_Hit(A0)                           ; $0029
-                move.b  #$28, Obj_Height_2(A0)                           ; $001E
+                move.b  #$28, y_radius(A0)                           ; $001E
                 jsr     (Swing_Setup)                          ; Offset_0x03669A
                 lea     Offset_0x0457FA(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A   
@@ -33,7 +33,7 @@ Offset_0x0451A4:
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 cmpi.w  #$0060, D2
                 bcc     Offset_0x0451D2
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x045841, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x0451E4, Obj_Child(A0)                  ; $0034
 Offset_0x0451D2:
@@ -45,7 +45,7 @@ Offset_0x0451D4:
                 jmp     Animate_Raw_Get_Faster(PC)             ; Offset_0x042248  
 ;-------------------------------------------------------------------------------
 Offset_0x0451E4:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.l  #Offset_0x045847, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x045216, Obj_Child(A0)                  ; $0034
                 rts  
@@ -62,7 +62,7 @@ Offset_0x045214:
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x045216:
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 st      (Earthquake_Flag).w                          ; $FFFFEECC
                 move.w  #$00BF, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x045254, Obj_Child(A0)                  ; $0034

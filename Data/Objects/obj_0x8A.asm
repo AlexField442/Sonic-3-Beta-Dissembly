@@ -5,7 +5,7 @@
 ; Offset_0x048BCE:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x048BE6(PC, D0), D1
                 jsr     Offset_0x048BE6(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -19,7 +19,7 @@ Offset_0x048BEC:
                 lea     Corkey_Setup_Data(PC), A1              ; Offset_0x048D86
                 jsr     (SetupObjectAttributes)                      ; Offset_0x041D72
                 moveq   #-$01, D0
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x048C02
                 neg.w   D0
 Offset_0x048C02:
@@ -49,7 +49,7 @@ Offset_0x048C42:
                 add.w   D0, Obj_X(A0)                                    ; $0010
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
 Offset_0x048C54:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 bset    #$01, Obj_Control_Var_08(A0)                     ; $0038
                 rts   
 ;-------------------------------------------------------------------------------
@@ -64,12 +64,12 @@ Offset_0x048C72:
                 beq.s   Offset_0x048C7C
                 rts
 Offset_0x048C7C:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 bra.s   Offset_0x048C26  
 ;-------------------------------------------------------------------------------  
 Offset_0x048C84:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x048C96(PC, D0), D1
                 jsr     Offset_0x048C96(PC, D1)
                 jmp     Child_Display_Or_Delete(PC)            ; Offset_0x04245C   
@@ -89,7 +89,7 @@ Offset_0x048CA8:
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 btst    #$01, Obj_Control_Var_08(A1)                     ; $0038
                 beq.s   Offset_0x048CCE
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x048D2E, Obj_Child(A0)                  ; $0034
                 move.l  #Offset_0x048DC0, Obj_Child_Data(A0)             ; $0030
 Offset_0x048CCE:
@@ -124,7 +124,7 @@ Offset_0x048D1A:
                 rts
 ;-------------------------------------------------------------------------------  
 Offset_0x048D2E:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022
                 move.w  #$0007, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x048D4E, Obj_Child(A0)                  ; $0034
@@ -134,7 +134,7 @@ Offset_0x048D4A:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2  
 ;-------------------------------------------------------------------------------      
 Offset_0x048D4E:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$01, Obj_Map_Id(A0)                             ; $0022
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 bclr    #$01, Obj_Control_Var_08(A1)                     ; $0038

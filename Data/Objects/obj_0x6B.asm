@@ -3,9 +3,9 @@
 ; ->>>
 ;------------------------------------------------------------------------------- 
 ; Offset_0x014CE8:
-                move.l  #Invisible_Block_Mappings, Obj_Map(A0) ; Offset_0x014352, $000C
+                move.l  #Invisible_Block_Mappings, mappings(A0) ; Offset_0x014352, $000C
                 move.w  #$86BC, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  D0, D1

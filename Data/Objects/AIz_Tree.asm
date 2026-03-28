@@ -3,8 +3,8 @@
 ; ->>>
 ;------------------------------------------------------------------------------- 
 ; Offset_0x0234AA
-                move.l  #Tree_Mappings, Obj_Map(A0)     ; Offset_0x0234F0, $000C
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                move.l  #Tree_Mappings, mappings(A0)     ; Offset_0x0234F0, $000C
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  D0, Obj_Map_Id(A0)                               ; $0022

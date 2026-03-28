@@ -128,10 +128,10 @@ Offset_0x047C7C:
                 move.w  D0, Obj_Timer(A0)                                ; $002E
                 add.w   D0, D0
                 move.l  $00(A3, D0), Obj_Speed_X(A0)                     ; $0018
-                btst    #$00, Obj_Flags(A2)                              ; $0004
+                btst    #$00, render_flags(A2)                              ; $0004
                 beq.s   Offset_0x047CB2
-                bset    #$00, Obj_Flags(A0)                              ; $0004
-                bset    #$00, Obj_Flags(A1)                              ; $0004
+                bset    #$00, render_flags(A0)                              ; $0004
+                bset    #$00, render_flags(A1)                              ; $0004
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
 Offset_0x047CB2:
                 rts  

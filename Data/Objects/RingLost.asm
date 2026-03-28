@@ -4,7 +4,7 @@
 ;===============================================================================                   
 ; Offset_0x010AD6:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x010AE4(PC, D0), D1
                 jmp     Offset_0x010AE4(PC, D1)    
 ;-------------------------------------------------------------------------------
@@ -37,14 +37,14 @@ Offset_0x010B10:
                 bne     Offset_0x010B9E
 Offset_0x010B18:
                 move.l  #Rings_Lost, (A1)                      ; Offset_0x010AD6
-                addq.b  #$02, Obj_Routine(A1)                            ; $0005
-                move.b  #$08, Obj_Height_2(A1)                           ; $001E
-                move.b  #$08, Obj_Width_2(A1)                            ; $001F
+                addq.b  #$02, routine(A1)                            ; $0005
+                move.b  #$08, y_radius(A1)                           ; $001E
+                move.b  #$08, x_radius(A1)                            ; $001F
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.l  #Rings_Mappings, Obj_Map(A1)    ; Offset_0x010DE2, $000C
+                move.l  #Rings_Mappings, mappings(A1)    ; Offset_0x010DE2, $000C
                 move.w  #$A6BC, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  #$84, Obj_Flags(A1)                              ; $0004
+                move.b  #$84, render_flags(A1)                              ; $0004
                 move.w  #$0180, Obj_Priority(A1)                         ; $0008
                 move.b  #$47, Obj_Col_Flags(A1)                          ; $0028
                 move.b  #$08, Obj_Width(A1)                              ; $0007
@@ -93,7 +93,7 @@ Offset_0x010BD4:
                 add.b   D7, D0
                 andi.b  #$07, D0
                 bne.s   Offset_0x010C14
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x010C30
                 jsr     (Ring_FindFloor)                       ; Offset_0x009DE0
                 tst.w   D1
@@ -118,7 +118,7 @@ Offset_0x010C30:
                 bra.s   Offset_0x010C14
 ;-------------------------------------------------------------------------------                
 Offset_0x010C3A:
-                addq.b  #$02, Obj_Routine(A0)                            ; $0005
+                addq.b  #$02, routine(A0)                            ; $0005
                 move.b  #$00, Obj_Col_Flags(A0)                          ; $0028
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 bsr     CollectRing            ; Offset_0x010A20

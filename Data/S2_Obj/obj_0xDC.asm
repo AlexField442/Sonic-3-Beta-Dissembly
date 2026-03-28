@@ -4,7 +4,7 @@
 ;===============================================================================     
 ; Offset_0x010FC2:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x010FD0(PC, D0), D1
                 jmp     Offset_0x010FD0(PC, D1)     
 ;-------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ Offset_0x010FD6:
                 move.l  Obj_Timer(A0), A1                                ; $002E
                 subq.w  #$01, (A1)
                 bsr     CollectRing            ; Offset_0x010A20
-                addi.b  #$02, Obj_Routine(A0)                            ; $0005
+                addi.b  #$02, routine(A0)                            ; $0005
 ;-------------------------------------------------------------------------------                
 Offset_0x01102A:
                 lea     Rings_Animate_Data(PC), A1             ; Offset_0x010DDA

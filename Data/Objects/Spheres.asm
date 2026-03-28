@@ -93,11 +93,11 @@ Offset_0x0069C6:
                 bra     SS_Obj_Sphere_Test_Main                ; Offset_0x006A40
 ;-------------------------------------------------------------------------------                
 Offset_0x0069CA:
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
-                move.l  #Spheres_Mappings, Obj_Map(A1)  ; Offset_0x00703C, $000C
+                move.l  #Spheres_Mappings, mappings(A1)  ; Offset_0x00703C, $000C
                 move.w  #$A400, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_X(A0), Obj_Control_Var_00(A1)         ; $0010, $0030

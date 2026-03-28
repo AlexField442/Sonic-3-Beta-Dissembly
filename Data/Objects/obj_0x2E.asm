@@ -3,18 +3,18 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x022A7E:
-                move.l  #Spiked_Rotating_Log_Mappings, Obj_Map(A0) ; Offset_0x022C4E, $000C
+                move.l  #Spiked_Rotating_Log_Mappings, mappings(A0) ; Offset_0x022C4E, $000C
                 move.w  #$42F0, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$18, Obj_Width(A0)                              ; $0007
                 move.b  #$08, Obj_Height(A0)                             ; $0006
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.w  Obj_Y(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
                 move.b  (Water_Entered_Counter).w, Obj_Control_Var_06(A0) ; $FFFFF64D, $0036
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x022AD4
                 move.l  #Offset_0x022C14, (A1)
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$9C, Obj_Col_Flags(A1)                          ; $0028
                 move.w  A0, Obj_Control_Var_0C(A1)                       ; $003C
                 move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C

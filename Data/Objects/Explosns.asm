@@ -4,7 +4,7 @@
 ;-------------------------------------------------------------------------------
 ; Offset_0x041BCA: 
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x041BD8(PC, D0), D1
                 jmp     Offset_0x041BD8(PC, D1)
 ;-------------------------------------------------------------------------------                 
@@ -71,7 +71,7 @@ Offset_0x041C7A:
                 lea     Offset_0x041D6A(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 bne     Offset_0x041D0E
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 bra.s   Offset_0x041C50
 Offset_0x041C9A:
                 moveq   #$00, D0
@@ -80,7 +80,7 @@ Offset_0x041C9A:
                 adda.w  $00(A1, D0), A1
                 move.b  (A1)+, Obj_Control_Var_09(A0)                    ; $0039
                 move.b  (A1)+, Obj_Control_Var_0A(A0)                    ; $003A
-                move.b  (A1)+, Obj_Routine(A0)                           ; $0005
+                move.b  (A1)+, routine(A0)                           ; $0005
                 rts
 ;-------------------------------------------------------------------------------
 Offset_0x041CB6:
@@ -105,7 +105,7 @@ Offset_0x041CD1:
 ;-------------------------------------------------------------------------------    
 Offset_0x041CD4:  
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x041CE2(PC, D0), D1
                 jmp     Offset_0x041CE2(PC, D1)  
 ;-------------------------------------------------------------------------------  

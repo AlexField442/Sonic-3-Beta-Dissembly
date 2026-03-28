@@ -26,7 +26,7 @@ Offset_0x028D56:
                 addi.w  #$0014, D1
                 cmpi.w  #$0028, D1
                 bcc.s   Offset_0x028D82
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcs.s   Offset_0x028D84
 Offset_0x028D82:
                 rts

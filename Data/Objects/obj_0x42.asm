@@ -3,14 +3,14 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02794E:
-                move.l  #Cannon_Mappings, Obj_Map(A0)   ; Offset_0x027C10, $000C
+                move.l  #Cannon_Mappings, mappings(A0)   ; Offset_0x027C10, $000C
                 move.w  #$4374, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$30, Obj_Width(A0)                              ; $0007
                 move.b  #$30, Obj_Height(A0)                             ; $0006
                 move.b  #$09, Obj_Map_Id(A0)                             ; $0022
-                bset    #$06, Obj_Flags(A0)                              ; $0004
+                bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Speed_X(A0), A2                              ; $0018
                 move.w  Obj_X(A0), (A2)+                                 ; $0010
@@ -106,8 +106,8 @@ Offset_0x027A92:
                 move.b  #$81, Obj_Timer(A1)                              ; $002E
                 bset    #$02, Obj_Status(A1)                             ; $002A
                 bset    #$01, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 move.b  #$01, (A2)
 Offset_0x027AE8:
@@ -173,7 +173,7 @@ Offset_0x027BA4:
 Offset_0x027BB4:
                 rts
 Offset_0x027BB6:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x027C0E
                 moveq   #$00, D0
                 move.b  $001D(A0), D0

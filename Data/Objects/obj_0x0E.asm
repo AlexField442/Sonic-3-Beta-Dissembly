@@ -42,7 +42,7 @@ Offset_0x01BC6C:
                 move.w  #$F900, Obj_Speed_Y(A1)                          ; $001A
                 addi.w  #$0400, Obj_Speed_X(A1)                          ; $0018
                 bset    #$01, Obj_Status(A1)                             ; $002A
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 move.w  #$0001, Obj_Inertia(A1)                          ; $001C
                 move.b  #$01, Obj_Flip_Angle(A1)                         ; $0027
                 move.b  #$00, Obj_Ani_Number(A1)                         ; $0020

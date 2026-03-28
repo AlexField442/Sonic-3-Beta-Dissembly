@@ -3,14 +3,14 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02B19A:
-                move.l  #Blue_Spinning_Platform_Mappings, Obj_Map(A0) ; Offset_0x02BEA8, $000C
+                move.l  #Blue_Spinning_Platform_Mappings, mappings(A0) ; Offset_0x02BEA8, $000C
                 move.w  #$235F, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$18, Obj_Width(A0)                              ; $0007
                 move.b  #$0C, Obj_Height(A0)                             ; $0006
-                move.b  #$1F, Obj_Height_2(A0)                           ; $001E
-                move.b  #$18, Obj_Width_2(A0)                            ; $001F
+                move.b  #$1F, y_radius(A0)                           ; $001E
+                move.b  #$18, x_radius(A0)                            ; $001F
                 move.b  #$1F, Obj_Height_3(A0)                           ; $0044
                 move.b  #$18, Obj_Width_3(A0)                            ; $0045
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
@@ -119,7 +119,7 @@ Offset_0x02B32E:
                 asr.w   #$03, D0
                 andi.w  #$0001, D0
                 move.b  D0, Obj_Map_Id(A0)                               ; $0022
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bmi.s   Offset_0x02B352
                 move.w  #$7F00, Obj_X(A0)                                ; $0010
 Offset_0x02B352:
@@ -135,8 +135,8 @@ Offset_0x02B366:
                 move.b  Obj_Angle(A0), D0                                ; $0026
                 add.b   D1, D0
                 move.w  D0, -(A7)
-                move.b  #$13, Obj_Height_2(A0)                           ; $001E
-                move.b  #$18, Obj_Width_2(A0)                            ; $001F
+                move.b  #$13, y_radius(A0)                           ; $001E
+                move.b  #$18, x_radius(A0)                            ; $001F
                 subi.w  #$000C, Obj_Y(A0)                                ; $0014
                 jsr     (Player_WalkSpeed)                     ; Offset_0x009B1A
                 addi.w  #$000C, Obj_Y(A0)                                ; $0014
@@ -180,8 +180,8 @@ Offset_0x02B404:
                 add.w   D1, Obj_Speed_Y(A0)                              ; $001A
                 rts
 Offset_0x02B40A:
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
-                move.b  #$0A, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0C, y_radius(A0)                           ; $001E
+                move.b  #$0A, x_radius(A0)                            ; $001F
                 moveq   #$03, D0
                 move.b  D0, (Primary_Angle).w                        ; $FFFFF768
                 move.b  D0, (Secondary_Angle).w                      ; $FFFFF76A
@@ -289,7 +289,7 @@ Offset_0x02B51A:
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.b  Obj_Height_3(A1), D0                             ; $0044
                 addi.b  #$18, D0
-                move.b  D0, Obj_Height_2(A1)                             ; $001E
+                move.b  D0, y_radius(A1)                             ; $001E
                 bset    #$00, Obj_Timer(A1)                              ; $002E
                 move.b  #$80, Obj_Control_Var_07(A1)                     ; $0037
                 bclr    D6, Obj_Status(A0)                               ; $002A
@@ -300,7 +300,7 @@ Offset_0x02B550:
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x02B552:
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc     Offset_0x02B6FA
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x02B59A
@@ -309,8 +309,8 @@ Offset_0x02B552:
                 beq     Offset_0x02B5B0
                 move.w  #$F980, Obj_Speed_Y(A1)                          ; $001A
                 move.b  #$01, Obj_Control_Var_10(A1)                     ; $0040
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 bset    #$02, Obj_Status(A1)                             ; $002A
                 move.w  #Jump_Sfx, D0                                    ; $0070
@@ -327,7 +327,7 @@ Offset_0x02B5B0:
                 move.l  A1, A0
                 move.b  Obj_Height_3(A0), D0                             ; $0044
                 addi.b  #$18, D0
-                move.b  D0, Obj_Height_2(A0)                             ; $001E
+                move.b  D0, y_radius(A0)                             ; $001E
                 move.w  D5, D3
                 cmpi.b  #$10, Obj_Ani_Number(A0)                         ; $0020
                 beq.s   Offset_0x02B5D0
@@ -493,8 +493,8 @@ Offset_0x02B7C2:
                 beq     Offset_0x02B93C
                 cmpi.b  #$C0, D0
                 beq     Offset_0x02B9BE
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
-                move.b  #$18, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0C, y_radius(A0)                           ; $001E
+                move.b  #$18, x_radius(A0)                            ; $001F
                 jsr     (Offset_0x00A054)
                 tst.w   D1
                 bpl.s   Offset_0x02B814
@@ -507,8 +507,8 @@ Offset_0x02B814:
                 add.w   D1, Obj_X(A0)                                    ; $0010
                 move.w  #$0000, Obj_Speed_X(A0)                          ; $0018
 Offset_0x02B828:
-                move.b  #$1F, Obj_Height_2(A0)                           ; $001E
-                move.b  #$0A, Obj_Width_2(A0)                            ; $001F
+                move.b  #$1F, y_radius(A0)                           ; $001E
+                move.b  #$0A, x_radius(A0)                            ; $001F
                 jsr     (Player_Check_Floor)                   ; Offset_0x009BD4
                 tst.w   D1
                 bpl.s   Offset_0x02B8B0
@@ -551,8 +551,8 @@ Offset_0x02B8A2:
 Offset_0x02B8B0:
                 rts
 Offset_0x02B8B2:
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
-                move.b  #$18, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0C, y_radius(A0)                           ; $001E
+                move.b  #$18, x_radius(A0)                            ; $001F
                 jsr     (Offset_0x00A054)
                 tst.w   D1
                 bpl.s   Offset_0x02B8E2
@@ -563,8 +563,8 @@ Offset_0x02B8B2:
                 move.w  #$0000, Obj_Speed_X(A0)                          ; $0018
                 move.w  Obj_Speed_Y(A0), Obj_Inertia(A0)          ; $001A, $001C
 Offset_0x02B8E2:
-                move.b  #$1F, Obj_Height_2(A0)                           ; $001E
-                move.b  #$0A, Obj_Width_2(A0)                            ; $001F
+                move.b  #$1F, y_radius(A0)                           ; $001E
+                move.b  #$0A, x_radius(A0)                            ; $001F
                 jsr     (Player_DontRunOnWalls)                ; Offset_0x009F1C
                 tst.w   D1
                 bpl.s   Offset_0x02B90A
@@ -589,8 +589,8 @@ Offset_0x02B90A:
 Offset_0x02B93A:
                 rts
 Offset_0x02B93C:
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
-                move.b  #$18, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0C, y_radius(A0)                           ; $001E
+                move.b  #$18, x_radius(A0)                            ; $001F
                 jsr     (Offset_0x00A054)
                 tst.w   D1
                 bpl.s   Offset_0x02B95C
@@ -603,8 +603,8 @@ Offset_0x02B95C:
                 add.w   D1, Obj_X(A0)                                    ; $0010
                 move.w  #$0000, Obj_Speed_X(A0)                          ; $0018
 Offset_0x02B970:
-                move.b  #$1F, Obj_Height_2(A0)                           ; $001E
-                move.b  #$0A, Obj_Width_2(A0)                            ; $001F
+                move.b  #$1F, y_radius(A0)                           ; $001E
+                move.b  #$0A, x_radius(A0)                            ; $001F
                 jsr     (Player_DontRunOnWalls)                ; Offset_0x009F1C
                 tst.w   D1
                 bpl.s   Offset_0x02B9BC
@@ -626,8 +626,8 @@ Offset_0x02B99E:
 Offset_0x02B9BC:
                 rts
 Offset_0x02B9BE:
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
-                move.b  #$18, Obj_Width_2(A0)                            ; $001F
+                move.b  #$0C, y_radius(A0)                           ; $001E
+                move.b  #$18, x_radius(A0)                            ; $001F
                 jsr     (Offset_0x009E66)
                 tst.w   D1
                 bpl.s   Offset_0x02B9EE
@@ -638,8 +638,8 @@ Offset_0x02B9BE:
                 move.w  #$0000, Obj_Speed_X(A0)                          ; $0018
                 move.w  Obj_Speed_Y(A0), Obj_Inertia(A0)          ; $001A, $001C
 Offset_0x02B9EE:
-                move.b  #$1F, Obj_Height_2(A0)                           ; $001E
-                move.b  #$0A, Obj_Width_2(A0)                            ; $001F
+                move.b  #$1F, y_radius(A0)                           ; $001E
+                move.b  #$0A, x_radius(A0)                            ; $001F
                 jsr     (Player_DontRunOnWalls)                ; Offset_0x009F1C
                 tst.w   D1
                 bpl.s   Offset_0x02BA16
@@ -740,7 +740,7 @@ Offset_0x02BAE2:
                 move.l  A0, A2
                 suba.w  #Obj_Player_One, A2                              ; $B000
                 adda.w  #Obj_P1_Dust_Water_Splash, A2                    ; $CC54
-                move.b  #$06, Obj_Routine(A2)                            ; $0005
+                move.b  #$06, routine(A2)                            ; $0005
                 move.b  #$15, Obj_Map_Id(A2)                             ; $0022
 Offset_0x02BB26:
                 rts
@@ -782,7 +782,7 @@ Offset_0x02BB64:
                 move.l  A0, A2
                 suba.w  #Obj_Player_One, A2                              ; $B000
                 adda.w  #Obj_P1_Dust_Water_Splash, A2                    ; $CC54
-                move.b  #$06, Obj_Routine(A2)                            ; $0005
+                move.b  #$06, routine(A2)                            ; $0005
                 move.b  #$15, Obj_Map_Id(A2)                             ; $0022
 Offset_0x02BBA8:
                 rts
@@ -811,7 +811,7 @@ Offset_0x02BBD2:
                 cmpi.w  #$0020, D1
                 bcc.s   Offset_0x02BC04
                 move.w  Obj_Inertia(A0), D0                              ; $001C
-                move.b  Obj_Flags(A1), D2                                ; $0004
+                move.b  render_flags(A1), D2                                ; $0004
                 andi.b  #$7F, D2
                 beq.s   Offset_0x02BC00
                 neg.w   D0
@@ -825,7 +825,7 @@ Offset_0x02BC0C:
                 rts
 Offset_0x02BC0E:
                 move.b  #$01, Obj_Control_Var_05(A0)                     ; $0035
-                move.w  Obj_Flags(A1), Obj_Control_Var_0E(A0)     ; $0004, $003E
+                move.w  render_flags(A1), Obj_Control_Var_0E(A0)     ; $0004, $003E
                 addq.w  #$06, A1
                 move.w  (A1)+, D4
                 move.w  D4, Obj_Control_Var_00(A0)                       ; $0030

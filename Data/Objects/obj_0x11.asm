@@ -6,9 +6,9 @@ Offset_0x01BCF4:
                 dc.b    $20, $08, $00, $00, $20, $08, $01, $00         
 ;-------------------------------------------------------------------------------
 Obj_0x11_LBz_Platform:                                         ; Offset_0x01BCFC
-                move.l  #LBz_Platform_Mappings, Obj_Map(A0) ; Offset_0x01C1F8, $000C
+                move.l  #LBz_Platform_Mappings, mappings(A0) ; Offset_0x01C1F8, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0180, Obj_Priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -61,7 +61,7 @@ Offset_0x01BDB2:
                 move.w  Offset_0x01BE18(PC, D0), D1
                 jsr     Offset_0x01BE18(PC, D1)
                 move.w  (A7)+, D4
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01BDDC
                 moveq   #$00, D1
                 move.b  Obj_Width(A0), D1                                ; $0007
@@ -322,7 +322,7 @@ Offset_0x01C052:
 Offset_0x01C054:
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 bclr    #$03, Obj_Status(A1)                             ; $002A
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 move.w  Obj_Speed_Y(A0), Obj_Speed_Y(A1)          ; $001A, $001A
                 rts    
 ;-------------------------------------------------------------------------------
@@ -350,7 +350,7 @@ Offset_0x01C0A4:
                 andi.b  #$18, D0
                 beq.s   Offset_0x01C0C0
                 move.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
-                move.b  #$0C, Obj_Height_2(A0)                           ; $001E
+                move.b  #$0C, y_radius(A0)                           ; $001E
 Offset_0x01C0C0:
                 rts
 Offset_0x01C0C2:

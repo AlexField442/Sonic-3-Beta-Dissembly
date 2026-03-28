@@ -58,7 +58,7 @@ Offset_0x0290A6:
 Offset_0x0290AE:
                 rts
 Offset_0x0290B0:
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcs.s   Offset_0x0290BA
                 rts
 Offset_0x0290BA:

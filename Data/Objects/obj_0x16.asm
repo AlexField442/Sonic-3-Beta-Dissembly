@@ -3,11 +3,11 @@
 ; ->>>
 ;===============================================================================
 Offset_0x01D2EA:
-                move.l  #Flame_Thrower_Mappings, Obj_Map(A1) ; Offset_0x01D3C6, $000C
+                move.l  #Flame_Thrower_Mappings, mappings(A1) ; Offset_0x01D3C6, $000C
                 move.w  #$43AC, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
-                ori.b   #$04, Obj_Flags(A1)                              ; $0004
+                ori.b   #$04, render_flags(A1)                              ; $0004
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 rts
 ;-------------------------------------------------------------------------------                
@@ -33,7 +33,7 @@ Offset_0x01D31C:
                 beq.s   Offset_0x01D368
                 subi.w  #$0080, Obj_X(A1)                                ; $0010
 Offset_0x01D368:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01D376
                 moveq   #Fire_Shield_Sfx, D0                               ; $43
                 jsr     (PlaySound)                           ; Offset_0x001176
@@ -52,7 +52,7 @@ Offset_0x01D376:
 Offset_0x01D39A:
                 lea     (Flame_Thrower_Animate_Data), A1       ; Offset_0x01D3B8
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x01D3B2
                 move.w  #$7FFF, Obj_X(A0)                                ; $0010
 Offset_0x01D3B2:

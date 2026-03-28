@@ -8,9 +8,9 @@
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.b  Obj_Status(A0), Obj_Status(A1)            ; $002A, $002A
-                move.l  #LBz_Platform_Mappings_2, Obj_Map(A1) ; Offset_0x01C3AA, $000C
+                move.l  #LBz_Platform_Mappings_2, mappings(A1) ; Offset_0x01C3AA, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0180, Obj_Priority(A1)                         ; $0008
                 move.b  #$20, Obj_Width(A1)                              ; $0007
                 move.b  #$10, Obj_Height(A1)                             ; $0006
@@ -40,9 +40,9 @@ Offset_0x01C2A2:
 Offset_0x01C2BA:
                 tst.b   (A2)
                 beq     Offset_0x01C336
-                tst.b   Obj_Flags(A1)                                    ; $0004
+                tst.b   render_flags(A1)                                    ; $0004
                 bpl.s   Offset_0x01C316
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01C316
                 andi.b  #$70, D0
                 beq     Offset_0x01C324
@@ -92,7 +92,7 @@ Offset_0x01C344:
                 bcc     Offset_0x01C3A8
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x01C3A8
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01C3A8
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x01C3A8

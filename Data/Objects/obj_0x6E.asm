@@ -3,14 +3,14 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02E0A8:
-                move.l  #Waterfall_Mappings, Obj_Map(A0) ; Offset_0x02E1E8, $000C
+                move.l  #Waterfall_Mappings, mappings(A0) ; Offset_0x02E1E8, $000C
                 move.w  #$235C, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0000, Obj_Priority(A0)                         ; $0008
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.b  #$08, Obj_Height(A0)                             ; $0006
-                move.b  #$08, Obj_Width_2(A0)                            ; $001F
-                move.b  #$07, Obj_Height_2(A0)                           ; $001E
+                move.b  #$08, x_radius(A0)                            ; $001F
+                move.b  #$07, y_radius(A0)                           ; $001E
                 move.b  #$06, Obj_Map_Id(A0)                             ; $0022
                 move.l  #Offset_0x02E0E6, (A0)
 Offset_0x02E0E6:                
@@ -20,7 +20,7 @@ Offset_0x02E0E6:
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 lsl.w   #$02, D0
                 move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x02E122
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02E122
@@ -36,7 +36,7 @@ Offset_0x02E122:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2  
 ;-------------------------------------------------------------------------------
 Offset_0x02E128:
-                tst.b   Obj_Routine(A0)                                  ; $0005
+                tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x02E162
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 addi.w  #$0008, Obj_Speed_Y(A0)                          ; $001A
@@ -52,7 +52,7 @@ Offset_0x02E128:
 Offset_0x02E162:
                 lea     (Waterfall_Animate_Data), A1           ; Offset_0x02E1D6
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
-                cmpi.b  #$04, Obj_Routine(A0)                            ; $0005
+                cmpi.b  #$04, routine(A0)                            ; $0005
                 bne.s   Offset_0x02E17C
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x02E17C:
@@ -80,7 +80,7 @@ Offset_0x02E1BC:
                 move.b  #$01, Obj_Ani_Number(A0)                         ; $0020
                 move.l  #Offset_0x02E162, (A0)
                 move.b  #$00, Obj_Col_Flags(A0)                          ; $0028
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 rts        
 ;------------------------------------------------------------------------------- 
 Waterfall_Animate_Data:                                        ; Offset_0x02E1D6

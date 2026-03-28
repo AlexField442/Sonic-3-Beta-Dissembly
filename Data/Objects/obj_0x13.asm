@@ -3,9 +3,9 @@
 ; ->>>           
 ;===============================================================================
 Offset_0x01C890:
-                move.l  #LBz_Exploding_Trigger_Mappings, Obj_Map(A0) ; Offset_0x01C926, $000C
+                move.l  #LBz_Exploding_Trigger_Mappings, mappings(A0) ; Offset_0x01C926, $000C
                 move.w  #$4433, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
@@ -37,7 +37,7 @@ Offset_0x01C8FE:
                 neg.w   Obj_Speed_Y(A1)                                  ; $001A
                 bchg    D3, (A3)
                 move.l  #Obj_Explosion, (A0)                      ; Offset_0x013D7C
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 clr.b   Obj_Col_Flags(A0)                                ; $0028
                 clr.b   Obj_Col_Prop(A0)                                 ; $0029
 Offset_0x01C924:

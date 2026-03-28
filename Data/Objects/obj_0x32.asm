@@ -3,9 +3,9 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02235C:
-                move.l  #Draw_Bridge_Mappings, Obj_Map(A0) ; Offset_0x02277E, $000C
+                move.l  #Draw_Bridge_Mappings, mappings(A0) ; Offset_0x02277E, $000C
                 move.w  #$C2F0, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.b  #$60, Obj_Height(A0)                             ; $0006
@@ -30,11 +30,11 @@ Offset_0x0223C6:
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x022498
                 move.l  #Offset_0x0225B2, (A1)
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
-                bset    #$06, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
+                bset    #$06, render_flags(A1)                              ; $0004
                 move.b  #$40, Obj_Width(A1)                              ; $0007
                 move.b  #$40, Obj_Height(A1)                             ; $0006
                 move.w  Obj_Control_Var_00(A0), D2                       ; $0030
@@ -55,11 +55,11 @@ Offset_0x022418:
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x022498
                 move.l  #Offset_0x0225B2, (A1)
-                move.l  Obj_Map(A0), Obj_Map(A1)                  ; $000C, $000C
+                move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
-                move.b  #$04, Obj_Flags(A1)                              ; $0004
-                bset    #$06, Obj_Flags(A1)                              ; $0004
+                move.b  #$04, render_flags(A1)                              ; $0004
+                bset    #$06, render_flags(A1)                              ; $0004
                 move.b  #$40, Obj_Width(A1)                              ; $0007
                 move.b  #$40, Obj_Height(A1)                             ; $0006
                 moveq   #$04, D1
@@ -233,7 +233,7 @@ Offset_0x02265C:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x02266C:
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x02267E
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x02267E:
@@ -273,7 +273,7 @@ Offset_0x0226D4:
                 lea     Obj_Speed_X(A3), A2                              ; $0018
                 move.w  Obj_Sub_Y(A3), D6                                ; $0016
                 subq.w  #$01, D6
-                bclr    #$06, Obj_Flags(A3)                              ; $0004
+                bclr    #$06, render_flags(A3)                              ; $0004
                 move.l  A3, A1
                 bra.s   Offset_0x0226F6        
 ;-------------------------------------------------------------------------------
@@ -282,8 +282,8 @@ Offset_0x0226EE:
                 bne.s   Offset_0x02275A
 Offset_0x0226F6:
                 move.l  D4, (A1)
-                move.l  Obj_Map(A3), Obj_Map(A1)                  ; $000C, $000C
-                move.b  Obj_Flags(A3), Obj_Flags(A1)              ; $0004, $0004
+                move.l  mappings(A3), mappings(A1)                  ; $000C, $000C
+                move.b  render_flags(A3), render_flags(A1)              ; $0004, $0004
                 move.w  Obj_Art_VRAM(A3), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  Obj_Priority(A3), Obj_Priority(A1)        ; $0008, $0008
                 move.b  Obj_Width(A3), Obj_Width(A1)              ; $0007, $0007

@@ -5,7 +5,7 @@
 ; Offset_0x048A94:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x048AAC(PC, D0), D1
                 jsr     Offset_0x048AAC(PC, D1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
@@ -18,7 +18,7 @@ Offset_0x048AB0:
                 lea     Orbinaut_Setup_Data(PC), A1            ; Offset_0x048B98
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.w  #$FF80, D0
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x048AC6
                 neg.w   D0
 Offset_0x048AC6:
@@ -43,7 +43,7 @@ Offset_0x048AE8:
                 move.b  D0, Obj_Control_Var_0C(A0)                       ; $003C
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 moveq   #$08, D0
-                btst    #$00, Obj_Flags(A1)                              ; $0004
+                btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x048B10
                 moveq   #-$08, D0
 Offset_0x048B10:

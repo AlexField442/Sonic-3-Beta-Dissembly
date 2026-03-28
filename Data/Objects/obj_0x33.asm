@@ -5,19 +5,19 @@
 ; Offset_0x023662:
                 tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
                 bne     Obj_0x33_Switch_2P                     ; Offset_0x0237AA
-                move.l  #Switch_Mappings, Obj_Map(A0)   ; Offset_0x023832, $000C
+                move.l  #Switch_Mappings, mappings(A0)   ; Offset_0x023832, $000C
                 move.w  #$0456, Obj_Art_VRAM(A0)                         ; $000A
                 cmpi.b  #Hz_Id, (Current_Zone).w                    ; $01, $FFFFFE10
                 bne.s   Offset_0x02368E
-                move.l  #Hz_Switch_Mappings, Obj_Map(A0) ; Offset_0x02385C, $000C
+                move.l  #Hz_Switch_Mappings, mappings(A0) ; Offset_0x02385C, $000C
                 move.w  #$2426, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x02368E:
                 cmpi.b  #CNz_Id, (Current_Zone).w                   ; $03, $FFFFFE10
                 bne.s   Offset_0x0236A4
-                move.l  #CNz_Switch_Mappings, Obj_Map(A0) ; Offset_0x02388C, $000C
+                move.l  #CNz_Switch_Mappings, mappings(A0) ; Offset_0x02388C, $000C
                 move.w  #$441A, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x0236A4:
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014
@@ -29,7 +29,7 @@ Offset_0x0236A4:
 Offset_0x0236CC:
                 move.l  #Offset_0x0236D2, (A0)
 Offset_0x0236D2:                
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x02373A
                 move.w  #$001B, D1
                 move.w  #$0004, D2
@@ -65,7 +65,7 @@ Offset_0x02373A:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 ;-------------------------------------------------------------------------------                
 Offset_0x023740:
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x0237A4
                 move.w  #$0010, D1
                 move.w  #$0006, D3
@@ -100,9 +100,9 @@ Offset_0x0237A4:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 ;-------------------------------------------------------------------------------                
 Obj_0x33_Switch_2P:                                            ; Offset_0x0237AA
-                move.l  #Switch_Mappings_2P, Obj_Map(A0) ; Offset_0x0238BC, $000C
+                move.l  #Switch_Mappings_2P, mappings(A0) ; Offset_0x0238BC, $000C
                 move.w  #$03AD, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$0C, Obj_Width(A0)                              ; $0007
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014

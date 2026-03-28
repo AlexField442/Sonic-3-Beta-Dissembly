@@ -3,9 +3,9 @@
 ; ->>>
 ;===============================================================================      
 ; Offset_0x013FA8:
-                move.l  #Layer_Switch_Mappings, Obj_Map(A0) ; Offset_0x012E98, $000C
+                move.l  #Layer_Switch_Mappings, mappings(A0) ; Offset_0x012E98, $000C
                 move.w  #$06BC, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$80, Obj_Width(A0)                              ; $0007
                 move.b  #$80, Obj_Height(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
@@ -77,7 +77,7 @@ Offset_0x01407E:
                 bcs.s   Offset_0x0140FC
                 cmp.w   D3, D4
                 bcc.s   Offset_0x0140FC
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 bne.s   Offset_0x0140B8
                 move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
                 bra.s   Offset_0x01410A
@@ -98,7 +98,7 @@ Offset_0x0140C0:
                 bcs.s   Offset_0x0140FC
                 cmp.w   D3, D4
                 bcc.s   Offset_0x0140FC
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0140F6
                 move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
                 bra.s   Offset_0x01410A
@@ -114,8 +114,8 @@ Offset_0x01410A:
                 rts
 Offset_0x014114:
                 bset    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$0E, Obj_Height_2(A1)                           ; $001E
-                move.b  #$07, Obj_Width_2(A1)                            ; $001F
+                move.b  #$0E, y_radius(A1)                           ; $001E
+                move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
                 addq.w  #$05, Obj_Y(A1)                                  ; $0014
                 moveq   #Rolling_Sfx, D0                                   ; $3C
@@ -147,7 +147,7 @@ Offset_0x01415E:
                 bcs.s   Offset_0x0141E0
                 cmp.w   D3, D4
                 bcc.s   Offset_0x0141E0
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 bne.s   Offset_0x01419A
                 move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
                 bra     Offset_0x01410A
@@ -168,7 +168,7 @@ Offset_0x0141A2:
                 bcs.s   Offset_0x0141E0
                 cmp.w   D3, D4
                 bcc.s   Offset_0x0141E0
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0141DA
                 move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
                 bra     Offset_0x01410A

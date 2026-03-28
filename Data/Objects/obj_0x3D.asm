@@ -85,7 +85,7 @@ Offset_0x019F76:
                 beq.s   Offset_0x019F92
                 subq.w  #$01, Obj_Control_Var_0A(A0)                     ; $003A
                 bne.s   Offset_0x019FD4
-                tst.b   Obj_Flags(A0)                                    ; $0004
+                tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x019FD4
                 moveq   #Spike_Move_Sfx, D0                                ; $58
                 jsr     (PlaySound)                           ; Offset_0x001176

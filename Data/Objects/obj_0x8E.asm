@@ -35,7 +35,7 @@ Offset_0x03B08C:
 ;-------------------------------------------------------------------------------
 Offset_0x03B08E:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x03B0B2(PC, D0), D1
                 jsr     Offset_0x03B0B2(PC, D1)
                 bsr     Offset_0x03B788
@@ -71,7 +71,7 @@ Offset_0x03B0F8:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2 
 ;-------------------------------------------------------------------------------     
 Offset_0x03B102:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 clr.w   Obj_Speed_Y(A0)                                  ; $001A
                 bset    #$01, Obj_Control_Var_08(A0)                     ; $0038
                 move.w  #$0090, Obj_Timer(A0)                            ; $002E
@@ -87,7 +87,7 @@ Offset_0x03B132:
                 move.w  #$0100, Obj_Speed_X(A0)                          ; $0018
                 move.w  #$009F, Obj_Timer(A0)                            ; $002E
 Offset_0x03B13E:                
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.l  #Offset_0x03B16C, Obj_Child(A0)                  ; $0034
                 bclr    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 lea     (Bowling_Spin_Palette_Rotation_Script), A1 ; Offset_0x10FD6E
@@ -107,7 +107,7 @@ Offset_0x03B178:
                 jmp     Animate_Raw_Multi_Delay(PC)            ; Offset_0x04215C
 ;-------------------------------------------------------------------------------
 Offset_0x03B17C:
-                move.b  #$0A, Obj_Routine(A0)                            ; $0005
+                move.b  #$0A, routine(A0)                            ; $0005
                 move.l  #Offset_0x03B16C, Obj_Child(A0)                  ; $0034
                 bset    #$06, Obj_Control_Var_08(A0)                     ; $0038
                 move.b  #$7F, Obj_Control_Var_0B(A0)                     ; $003B
@@ -119,7 +119,7 @@ Offset_0x03B19E:
                 beq.s   Offset_0x03B1A6
                 rts
 Offset_0x03B1A6:
-                move.b  #$0C, Obj_Routine(A0)                            ; $0005
+                move.b  #$0C, routine(A0)                            ; $0005
                 bclr    #$06, Obj_Control_Var_08(A0)                     ; $0038
                 move.l  #Offset_0x03B92F, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x03B13E, Obj_Child(A0)                  ; $0034
@@ -134,7 +134,7 @@ Offset_0x03B1C8:
                 bmi.s   Offset_0x03B1D4
                 rts
 Offset_0x03B1D4:
-                move.b  Obj_Control_Var_12(A0), Obj_Routine(A0)   ; $0042, $0005
+                move.b  Obj_Control_Var_12(A0), routine(A0)   ; $0042, $0005
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x03B1DC:
@@ -159,7 +159,7 @@ Offset_0x03B20E:
 ;-------------------------------------------------------------------------------
 Offset_0x03B220:
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x03B232(PC, D0), D1
                 jsr     Offset_0x03B232(PC, D1)
                 jmp     Add_To_Response_List_And_Display(PC)   ; Offset_0x042450   
@@ -173,8 +173,8 @@ Offset_0x03B232:
 Offset_0x03B23A:
                 lea     Bowling_Spin_Setup_Data_2(PC), A1      ; Offset_0x03B8B4
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.b  #$10, Obj_Width_2(A0)                            ; $001F
-                move.b  #$08, Obj_Height_2(A0)                           ; $001E
+                move.b  #$10, x_radius(A0)                            ; $001F
+                move.b  #$08, y_radius(A0)                           ; $001E
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x03B250:
@@ -183,7 +183,7 @@ Offset_0x03B250:
                 bne.s   Offset_0x03B260
                 jmp     Refresh_Child_Position(PC)             ; Offset_0x042016
 Offset_0x03B260:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x03B93E, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x03B280, Obj_Child(A0)                  ; $0034
                 rts  
@@ -193,7 +193,7 @@ Offset_0x03B278:
                 jmp     Animate_Raw_Get_Faster(PC)             ; Offset_0x042248  
 ;-------------------------------------------------------------------------------  
 Offset_0x03B280:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.l  #Offset_0x03B944, Obj_Child_Data(A0)             ; $0030
                 move.w  #$0200, Obj_Speed_X(A0)                          ; $0018
                 move.w  #$0200, Obj_Speed_Y(A0)                          ; $001A
@@ -277,7 +277,7 @@ Offset_0x03B396:
                 bne.s   Offset_0x03B3AC
                 tst.w   Obj_Speed_X(A0)                                  ; $0018
                 bmi.s   Offset_0x03B3AC
-                bset    #$00, Obj_Flags(A1)                              ; $0004
+                bset    #$00, render_flags(A1)                              ; $0004
 Offset_0x03B3AC:
                 moveq   #$10, D0
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
@@ -453,7 +453,7 @@ Offset_0x03B5CC:
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.l  #Animate_Raw_Multi_Delay_Touch, (A0)   ; Offset_0x042FAA
                 move.w  #$3208, Obj_X(A0)                                ; $0010
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x03B5EE
                 move.w  #$3378, Obj_X(A0)                                ; $0010
 Offset_0x03B5EE:
@@ -499,7 +499,7 @@ Offset_0x03B662:
                 move.b  #$10, Obj_Control_Var_0A(A0)                     ; $003A
                 bset    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 bne.s   Offset_0x03B6A6
-                move.b  #$08, Obj_Routine(A0)                            ; $0005
+                move.b  #$08, routine(A0)                            ; $0005
                 move.l  #Offset_0x03B920, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x03B17C, Obj_Child(A0)                  ; $0034
                 lea     (Bowling_Spin_Open_Palette_Rotation_Script), A1 ; Offset_0x10FE18
@@ -587,8 +587,8 @@ Offset_0x03B788:
                 cmp.w   Obj_Control_Var_0C(A0), D0                       ; $003C
                 beq.s   Offset_0x03B7A8
                 move.w  D0, Obj_Control_Var_0C(A0)                       ; $003C
-                move.b  Obj_Routine(A0), Obj_Control_Var_12(A0)   ; $0005, $0042
-                move.b  #$0E, Obj_Routine(A0)                            ; $0005
+                move.b  routine(A0), Obj_Control_Var_12(A0)   ; $0005, $0042
+                move.b  #$0E, routine(A0)                            ; $0005
                 move.b  #$1F, Obj_Control_Var_13(A0)                     ; $0043
 Offset_0x03B7A8:
                 rts                                                          

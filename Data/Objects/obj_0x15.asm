@@ -6,9 +6,9 @@ Offset_0x01D04C:
                 dc.w    $1000, $0A00
 ;-------------------------------------------------------------------------------                
 Obj_0x15_LBz_Player_Launcher:                                  ; Offset_0x01D050
-                move.l  #Player_Launcher_Mappings, Obj_Map(A0) ; Offset_0x01D2CA, $000C
+                move.l  #Player_Launcher_Mappings, mappings(A0) ; Offset_0x01D2CA, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -68,7 +68,7 @@ Offset_0x01D112:
                 move.l  #Offset_0x01D1BC, (A1)
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.w  A2, Obj_Control_Var_0C(A1)                       ; $003C
 Offset_0x01D13E:
                 move.l  (A7)+, A1
@@ -77,7 +77,7 @@ Offset_0x01D140:
                 cmpi.w  #$0004, (A2)
                 beq.s   Offset_0x01D164
                 move.w  Obj_Speed_X(A1), D0                              ; $0018
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x01D156
                 neg.w   D0
 Offset_0x01D156:
@@ -112,9 +112,9 @@ Offset_0x01D1B4:
                 jmp     (PlaySound)                           ; Offset_0x001176
 ;-------------------------------------------------------------------------------
 Offset_0x01D1BC:
-                move.l  #Player_Launcher_Mappings, Obj_Map(A0) ; Offset_0x01D2CA, $000C
+                move.l  #Player_Launcher_Mappings, mappings(A0) ; Offset_0x01D2CA, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$08, Obj_Width(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
@@ -122,7 +122,7 @@ Offset_0x01D1BC:
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
                 move.b  #$01, Obj_Map_Id(A0)                             ; $0022
                 move.b  #$80, Obj_Control_Var_10(A0)                     ; $0040
-                bset    #$06, Obj_Flags(A0)                              ; $0004
+                bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0004, Obj_Sub_Y(A0)                            ; $0016
                 move.l  #Offset_0x01D20C, (A0)
 Offset_0x01D20C:                
@@ -155,7 +155,7 @@ Offset_0x01D256:
                 rts
 Offset_0x01D258:
                 move.b  Obj_Control_Var_10(A0), D0                       ; $0040
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x01D26A
                 neg.b   D0
                 addi.b  #$80, D0

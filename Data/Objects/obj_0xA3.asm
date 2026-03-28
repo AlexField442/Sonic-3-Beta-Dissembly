@@ -5,7 +5,7 @@
 ; Offset_0x04504A:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x04507E(PC, D0), D1
                 jsr     Offset_0x04507E(PC, D1)
                 move.b  #$12, Obj_Col_Flags(A0)                          ; $0028
@@ -26,7 +26,7 @@ Offset_0x045084:
                 lea     Bubbles_Setup_Data(PC), A1             ; Offset_0x045126
                 jsr     SetupSlottedObjectAttributes(PC)            ; Offset_0x04298C
                 move.w  #$FF80, Obj_Speed_X(A0)                          ; $0018
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x04509E
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
 Offset_0x04509E:
@@ -46,7 +46,7 @@ Offset_0x0450C0:
                 bne.s   Offset_0x0450F4
                 tst.w   D4
                 bmi.s   Offset_0x0450F4
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 move.l  #Offset_0x045140, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x045116, Obj_Child(A0)                  ; $0034
                 clr.b   Obj_Ani_Frame(A0)                                ; $0023
@@ -60,12 +60,12 @@ Offset_0x0450FA:
                 tst.w   D3
                 beq.s   Offset_0x045110
                 neg.w   Obj_Speed_X(A0)                                  ; $0018
-                bchg    #00, Obj_Flags(A0)                               ; $0004
+                bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x045110:
                 jmp     (SpeedToPos)                           ; Offset_0x01111E 
 ;-------------------------------------------------------------------------------
 Offset_0x045116:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.l  #Offset_0x04514F, Obj_Child_Data(A0)             ; $0030
                 rts      
 ;-------------------------------------------------------------------------------   

@@ -3,9 +3,9 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x02A390:
-                move.l  #Swinging_Spiked_Ball_Mappings, Obj_Map(A0) ; Offset_0x02A582, $000C
+                move.l  #Swinging_Spiked_Ball_Mappings, mappings(A0) ; Offset_0x02A582, $000C
                 move.w  #$235F, Obj_Art_VRAM(A0)                         ; $000A
-                ori.b   #$04, Obj_Flags(A0)                              ; $0004
+                ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$20, Obj_Width(A0)                              ; $0007
                 move.b  #$20, Obj_Height(A0)                             ; $0006
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
@@ -16,15 +16,15 @@
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02A444
                 move.l  #Offset_0x02A4C4, (A1)
-                move.l  #Swinging_Spiked_Ball_Mappings, Obj_Map(A1) ; Offset_0x02A582, $000C
+                move.l  #Swinging_Spiked_Ball_Mappings, mappings(A1) ; Offset_0x02A582, $000C
                 move.w  #$235F, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  Obj_Flags(A0), Obj_Flags(A1)              ; $0004, $0004
+                move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$50, Obj_Width(A1)                              ; $0007
                 move.b  #$50, Obj_Height(A1)                             ; $0006
                 move.w  #$0280, Obj_Priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                bset    #$06, Obj_Flags(A1)                              ; $0004
+                bset    #$06, render_flags(A1)                              ; $0004
                 move.w  #$0004, Obj_Sub_Y(A1)                            ; $0016
                 lea     Obj_Speed_X(A1), A2                              ; $0018
                 move.w  Obj_Sub_Y(A1), D0                                ; $0016

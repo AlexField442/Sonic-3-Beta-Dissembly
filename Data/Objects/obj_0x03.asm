@@ -100,8 +100,8 @@ Offset_0x014F9A:
 Offset_0x014FBC:
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 bclr    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$13, Obj_Height_2(A1)                           ; $001E
-                move.b  #$09, Obj_Width_2(A1)                            ; $001F
+                move.b  #$13, y_radius(A1)                           ; $001E
+                move.b  #$09, x_radius(A1)                            ; $001F
                 move.w  #$0001, Obj_Ani_Number(A1)                       ; $0020
                 bclr    #$03, Obj_Status(A1)                             ; $002A
                 bclr    D6, Obj_Status(A0)                               ; $002A

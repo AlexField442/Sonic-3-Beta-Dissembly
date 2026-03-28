@@ -5,7 +5,7 @@
 ; Offset_0x045C7A:
                 jsr     (Object_Check_Range)                   ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Routine(A0), D0                              ; $0005
+                move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x045C9A(PC, D0), D1
                 jsr     Offset_0x045C9A(PC, D1)
                 lea     Clamer_PLC_Data(PC), A2                ; Offset_0x045E1A
@@ -30,7 +30,7 @@ Offset_0x045CB2:
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 cmpi.w  #$0060, D2
                 bcc.s   Offset_0x045CD2
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x045CCE
                 subq.w  #$02, D0
 Offset_0x045CCE:
@@ -40,7 +40,7 @@ Offset_0x045CD2:
                 lea     Offset_0x045E22(PC), A1
                 jmp     Animate_Raw_Multi_Delay_A1(PC)         ; Offset_0x042160
 Offset_0x045CDA:
-                move.b  #$04, Obj_Routine(A0)                            ; $0005
+                move.b  #$04, routine(A0)                            ; $0005
                 clr.b   Obj_Col_Flags(A0)                                ; $0028
                 bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
                 move.l  #Offset_0x045D1C, Obj_Child(A0)                  ; $0034
@@ -48,7 +48,7 @@ Offset_0x045CDA:
                 clr.b   Obj_Ani_Time(A0)                                 ; $0024
                 rts
 Offset_0x045CFC:
-                move.b  #$06, Obj_Routine(A0)                            ; $0005
+                move.b  #$06, routine(A0)                            ; $0005
                 move.l  #Offset_0x045D1C, Obj_Child(A0)                  ; $0034
                 clr.b   Obj_Ani_Frame(A0)                                ; $0023
                 clr.b   Obj_Ani_Time(A0)                                 ; $0024
@@ -60,7 +60,7 @@ Offset_0x045D14:
                 jmp     Animate_Raw_A1(PC)                     ; Offset_0x042092  
 ;-------------------------------------------------------------------------------   
 Offset_0x045D1C:
-                move.b  #$02, Obj_Routine(A0)                            ; $0005
+                move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$0A, Obj_Col_Flags(A0)                          ; $0028
                 rts  
 ;-------------------------------------------------------------------------------  
@@ -78,7 +78,7 @@ Offset_0x045D4A:
                 lea     Clamer_Setup_Data_2(PC), A1            ; Offset_0x045DE8
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.b  Obj_Flags(A1), Obj_Flags(A0)              ; $0004, $0004
+                move.b  render_flags(A1), render_flags(A0)              ; $0004, $0004
                 clr.w   Obj_Art_VRAM(A0)                                 ; $000A
                 move.l  #Offset_0x045D68, (A0)
                 rts                                  
@@ -101,7 +101,7 @@ Offset_0x045D84:
 Offset_0x045D8C:
                 move.w  #$0800, D0
                 bclr    #$00, Obj_Status(A1)                             ; $002A
-                btst    #$00, Obj_Flags(A0)                              ; $0004
+                btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x045DA6
                 neg.w   D0
                 bset    #$00, Obj_Status(A1)                             ; $002A
@@ -112,7 +112,7 @@ Offset_0x045DA6:
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 addq.w  #$06, Obj_Y(A1)                                  ; $0014
                 move.b  #$10, Obj_Ani_Number(A1)                         ; $0020
-                move.b  #$02, Obj_Routine(A1)                            ; $0005
+                move.b  #$02, routine(A1)                            ; $0005
                 clr.b   Obj_Control_Var_10(A1)                           ; $0040
                 moveq   #Spring_Sfx, D0                                   ; -$2E
                 jmp     (Play_Music)                           ; Offset_0x001176

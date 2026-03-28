@@ -15,11 +15,11 @@
                 move.w  Obj_X(A0), Obj_Control_Var_10(A0)         ; $0010, $0040
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 addi.w  #$001C, Obj_Y(A0)                                ; $0014
-                move.l  #Water_Stream_Block_Mappings, Obj_Map(A0) ; Offset_0x025C16, $000C
+                move.l  #Water_Stream_Block_Mappings, mappings(A0) ; Offset_0x025C16, $000C
                 move.w  #$43D4, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, Obj_Width(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
-                move.b  #$04, Obj_Flags(A0)                              ; $0004
+                move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -30,9 +30,9 @@
                 bclr    #$05, Obj_Subtype(A1)                            ; $002C
                 bset    #$04, Obj_Subtype(A1)                            ; $002C
 Offset_0x02648A:
-                move.l  #Fan_Mappings, Obj_Map(A1)      ; Offset_0x0267EE, $000C
+                move.l  #Fan_Mappings, mappings(A1)      ; Offset_0x0267EE, $000C
                 move.w  #$240B, Obj_Art_VRAM(A1)                         ; $000A
-                ori.b   #$04, Obj_Flags(A1)                              ; $0004
+                ori.b   #$04, render_flags(A1)                              ; $0004
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.b  #$10, Obj_Width(A1)                              ; $0007
                 move.b  #$0C, Obj_Height(A1)                             ; $0006
@@ -101,9 +101,9 @@ Offset_0x02657A:
                 jsr     (AllocateObject)                     ; Offset_0x011DD8
                 bne.s   Offset_0x0265E2
                 move.l  #Offset_0x026680, (A1)
-                move.l  #Sonic_Underwater_Mappings, Obj_Map(A1) ; Offset_0x025872, $000C
+                move.l  #Sonic_Underwater_Mappings, mappings(A1) ; Offset_0x025872, $000C
                 move.w  #$045C, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  #$84, Obj_Flags(A1)                              ; $0004
+                move.b  #$84, render_flags(A1)                              ; $0004
                 move.b  #$04, Obj_Width(A1)                              ; $0007
                 move.b  #$04, Obj_Width(A1)                              ; $0007
                 move.w  #$0300, Obj_Priority(A1)                         ; $0008
@@ -118,7 +118,7 @@ Offset_0x0265E2:
                 move.w  Obj_Control_Var_10(A0), D0                       ; $0040
                 jmp     (MarkObjGone_2)                        ; Offset_0x011B1A
 Offset_0x0265EC:
-                cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
+                cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc     Offset_0x026676
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x026676
