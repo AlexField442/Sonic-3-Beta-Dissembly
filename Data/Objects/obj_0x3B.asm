@@ -26,8 +26,8 @@ Offset_0x025C6C:
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
                 move.l  #Water_Wall_Mappings, mappings(A0) ; Offset_0x0262BA, $000C
                 move.w  #$4500, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$80, Obj_Width(A0)                              ; $0007
-                move.b  #$20, Obj_Height(A0)                             ; $0006
+                move.b  #$80, width_pixels(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
                 bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Speed_X(A0), A2                              ; $0018
@@ -64,8 +64,8 @@ Offset_0x025CE8:
                 add.w   D3, D0
                 move.w  D0, Obj_Y(A1)                                    ; $0014
                 move.w  #$0380, Obj_Priority(A1)                         ; $0008
-                move.b  #$18, Obj_Width(A1)                              ; $0007
-                move.b  #$18, Obj_Height(A1)                             ; $0006
+                move.b  #$18, width_pixels(A1)                              ; $0007
+                move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  (A3)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A3)+, Obj_Speed_Y(A1)                           ; $001A
                 move.b  D1, Obj_Map_Id(A1)                               ; $0022
@@ -120,8 +120,8 @@ Offset_0x025D84:
 Offset_0x025DE0:
                 move.b  D1, Obj_Ani_Number(A1)                           ; $0020
                 move.w  #$0380, Obj_Priority(A1)                         ; $0008
-                move.b  #$18, Obj_Width(A1)                              ; $0007
-                move.b  #$18, Obj_Height(A1)                             ; $0006
+                move.b  #$18, width_pixels(A1)                              ; $0007
+                move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  #$0400, Obj_Speed_X(A1)                          ; $0018
                 move.w  #$0000, Obj_Speed_Y(A1)                          ; $001A
 Offset_0x025E02:
@@ -174,8 +174,8 @@ Offset_0x025E6A:
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  (Water_Level_Move).w, Obj_Y(A1)       ; $FFFFF646, $0014
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
-                move.b  #$18, Obj_Width(A1)                              ; $0007
-                move.b  #$18, Obj_Height(A1)                             ; $0006
+                move.b  #$18, width_pixels(A1)                              ; $0007
+                move.b  #$18, height_pixels(A1)                             ; $0006
                 move.b  #$08, Obj_Ani_Number(A1)                         ; $0020
 Offset_0x025EDC:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
@@ -286,8 +286,8 @@ Offset_0x026034:
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
                 move.l  #Water_Wall_Mappings, mappings(A0) ; Offset_0x0262BA, $000C
                 move.w  #$4500, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$60, Obj_Height(A0)                             ; $0006
+                move.b  #$20, width_pixels(A0)                              ; $0007
+                move.b  #$60, height_pixels(A0)                             ; $0006
                 move.w  #$0060, Obj_Control_Var_00(A0)                   ; $0030
                 move.b  #$1C, (Obj_Player_One+Obj_Ani_Number).w      ; $FFFFB020
                 move.b  #$1C, (Obj_Player_Two+Obj_Ani_Number).w      ; $FFFFB06A
@@ -329,8 +329,8 @@ Offset_0x0260CA:
                 add.w   D3, D0
                 move.w  D0, Obj_Y(A1)                                    ; $0014
                 move.w  #$0280, Obj_Priority(A1)                         ; $0008
-                move.b  #$18, Obj_Width(A1)                              ; $0007
-                move.b  #$18, Obj_Height(A1)                             ; $0006
+                move.b  #$18, width_pixels(A1)                              ; $0007
+                move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  (A3)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A3)+, Obj_Speed_Y(A1)                           ; $001A
                 move.b  D1, Obj_Map_Id(A1)                               ; $0022
@@ -395,8 +395,8 @@ Offset_0x026214:
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 subi.w  #$0050, Obj_Y(A1)                                ; $0014
                 move.w  #$0380, Obj_Priority(A1)                         ; $0008
-                move.b  #$18, Obj_Width(A1)                              ; $0007
-                move.b  #$18, Obj_Height(A1)                             ; $0006
+                move.b  #$18, width_pixels(A1)                              ; $0007
+                move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  #$4530, Obj_Art_VRAM(A1)                         ; $000A
                 lsr.w   #$04, D2
                 andi.w  #$0003, D2

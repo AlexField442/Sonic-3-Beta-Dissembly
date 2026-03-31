@@ -6,8 +6,8 @@ Offset_0x01C890:
                 move.l  #LBz_Exploding_Trigger_Mappings, mappings(A0) ; Offset_0x01C926, $000C
                 move.w  #$4433, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  #$C6, Obj_Col_Flags(A0)                          ; $0028
                 move.l  #Offset_0x01C8C2, (A0)

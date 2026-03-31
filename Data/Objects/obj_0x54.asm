@@ -21,7 +21,7 @@ Offset_0x02551A:
                 move.l  #Sonic_Underwater_Mappings, mappings(A0) ; Offset_0x025872, $000C
                 move.w  #$045C, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$84, render_flags(A0)                              ; $0004
-                move.b  #$10, Obj_Width(A0)                              ; $0007
+                move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x02555E

@@ -4,9 +4,9 @@
 ;===============================================================================
 ; Offset_0x01F892:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$10, Obj_Width(A0)                              ; $0007
+                move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
-                move.b  #$80, Obj_Height(A0)                             ; $0006
+                move.b  #$80, height_pixels(A0)                             ; $0006
                 move.w  Obj_Y(A0), Obj_Control_Var_0C(A0)         ; $0014, $003C
                 move.l  #Hook_Mappings, mappings(A0)     ; Offset_0x01FA5E, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A0)                         ; $000A

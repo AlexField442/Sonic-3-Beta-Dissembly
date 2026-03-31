@@ -29,8 +29,8 @@ Offset_0x026780:
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.l  #Large_Fan_Mappings, mappings(A0) ; Offset_0x02685C, $000C
                 move.w  #$2500, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$18, Obj_Width(A0)                              ; $0007
-                move.b  #$20, Obj_Height(A0)                             ; $0006
+                move.b  #$18, width_pixels(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
                 move.w  #$0008, Obj_Control_Var_00(A0)                   ; $0030
                 move.l  #Offset_0x0267B2, (A0)
 Offset_0x0267B2:                

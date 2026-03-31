@@ -23,8 +23,8 @@ Offset_0x02E54C:
                 andi.b  #$7F, Obj_Subtype(A0)                            ; $002C
 Offset_0x02E55E:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$80, Obj_Width(A0)                              ; $0007
-                move.b  #$08, Obj_Height(A0)                             ; $0006
+                move.b  #$80, width_pixels(A0)                              ; $0007
+                move.b  #$08, height_pixels(A0)                             ; $0006
                 move.w  Obj_Y(A0), D2                                    ; $0014
                 move.w  D2, Obj_Control_Var_0C(A0)                       ; $003C
                 move.w  Obj_X(A0), D3                                    ; $0010
@@ -67,8 +67,8 @@ Offset_0x02E5C4:
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
                 bset    #$06, render_flags(A1)                              ; $0004
-                move.b  #$40, Obj_Width(A1)                              ; $0007
-                move.b  #$08, Obj_Height(A1)                             ; $0006
+                move.b  #$40, width_pixels(A1)                              ; $0007
+                move.b  #$08, height_pixels(A1)                             ; $0006
                 move.w  D1, Obj_Sub_Y(A1)                                ; $0016
                 subq.b  #$01, D1
                 lea     Obj_Speed_X(A1), A2                              ; $0018
@@ -296,8 +296,8 @@ Offset_0x02E86E:
                 move.b  render_flags(A3), render_flags(A1)              ; $0004, $0004
                 move.w  Obj_Art_VRAM(A3), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  Obj_Priority(A3), Obj_Priority(A1)        ; $0008, $0008
-                move.b  Obj_Width(A3), Obj_Width(A1)              ; $0007, $0007
-                move.b  Obj_Height(A3), Obj_Height(A1)            ; $0006, $0006
+                move.b  width_pixels(A3), width_pixels(A1)              ; $0007, $0007
+                move.b  height_pixels(A3), height_pixels(A1)            ; $0006, $0006
                 move.w  Obj_Priority(A3), Obj_Priority(A1)        ; $0008, $0008
                 move.w  (A2)+, Obj_X(A1)                                 ; $0010
                 move.w  (A2)+, Obj_Y(A1)                                 ; $0014

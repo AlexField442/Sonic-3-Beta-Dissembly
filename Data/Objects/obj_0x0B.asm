@@ -115,8 +115,8 @@ Offset_0x01B4B8:
 ;-------------------------------------------------------------------------------                
 Offset_0x01B4CA:
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.b  #$10, Obj_Width(A1)                              ; $0007
-                move.b  #$10, Obj_Height(A1)                             ; $0006
+                move.b  #$10, width_pixels(A1)                              ; $0007
+                move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
                 move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A
@@ -216,8 +216,8 @@ Offset_0x01B624:
 ;-------------------------------------------------------------------------------                
 Offset_0x01B636:
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.b  #$10, Obj_Width(A1)                              ; $0007
-                move.b  #$10, Obj_Height(A1)                             ; $0006
+                move.b  #$10, width_pixels(A1)                              ; $0007
+                move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
                 move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A

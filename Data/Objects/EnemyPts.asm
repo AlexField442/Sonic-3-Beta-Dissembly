@@ -7,7 +7,7 @@
                 move.w  #$85E4, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
-                move.b  #$08, Obj_Width(A0)                              ; $0007
+                move.b  #$08, width_pixels(A0)                              ; $0007
                 move.w  #$FD00, Obj_Speed_Y(A0)                          ; $001A
                 move.l  #Offset_0x023E6E, (A0)
 Offset_0x023E6E:                

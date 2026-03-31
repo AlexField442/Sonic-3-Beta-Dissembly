@@ -11982,7 +11982,7 @@ Offset_0x0112CA:
 		btst	#$02, D6
 		beq.s	Offset_0x011328
 		moveq	#$00, D2
-		move.b	Obj_Width(A0), D2                                ; $0007
+		move.b	width_pixels(A0), D2                                ; $0007
 		sub.w	(A3), D0
 		move.w	D0, D3
 		add.w	D2, D3
@@ -12063,7 +12063,7 @@ Offset_0x0113C2:
 		btst	#$02, D6
 		bne.s	Offset_0x01140C
 		moveq	#$00, D2
-		move.b	Obj_Width(A0), D2                                ; $0007
+		move.b	width_pixels(A0), D2                                ; $0007
 		subi.w	#$0080, D0
 		move.w	D0, D3
 		add.w	D2, D3
@@ -12086,7 +12086,7 @@ Offset_0x0113C2:
 		bra.s	Offset_0x01144E
 Offset_0x01140C:
 		moveq	#$00, D2
-		move.b	Obj_Width(A0), D2                                ; $0007
+		move.b	width_pixels(A0), D2                                ; $0007
 		sub.w	(A3), D0
 		move.w	D0, D3
 		add.w	D2, D3
@@ -12475,7 +12475,7 @@ Offset_0x011792:
 		beq.s	Offset_0x0117FE
 		moveq	#$00, D2
 		sub.w	(A3), D0
-		move.b	Obj_Width(A0), D2                                ; $0007
+		move.b	width_pixels(A0), D2                                ; $0007
 		add.w	D2, D0
 		and.w	(Screen_Wrap_X).w, D0                        ; $FFFFEEA8
 		move.w	D2, D3
@@ -12563,7 +12563,7 @@ Offset_0x011894:
 		beq.s	Offset_0x0118FA
 		moveq	#$00, D2
 		sub.w	(A3), D0
-		move.b	Obj_Width(A0), D2                                ; $0007
+		move.b	width_pixels(A0), D2                                ; $0007
 		add.w	D2, D0
 		and.w	(Screen_Wrap_X).w, D0                        ; $FFFFEEA8
 		move.w	D2, D3
@@ -12623,7 +12623,7 @@ Offset_0x011950:
 Offset_0x011956:
 		moveq	#$00, D2
 		sub.w	(A3), D0
-		move.b	Obj_Width(A0), D2                                ; $0007
+		move.b	width_pixels(A0), D2                                ; $0007
 		add.w	D2, D0
 		and.w	(Screen_Wrap_X).w, D0                        ; $FFFFEEA8
 		move.w	D2, D3
@@ -12697,7 +12697,7 @@ Offset_0x011A18:
 Offset_0x011A22:
 		moveq	#$00, D2
 		sub.w	(A3), D0
-		move.b	Obj_Width(A0), D2                                ; $0007
+		move.b	width_pixels(A0), D2                                ; $0007
 		add.w	D2, D0
 		and.w	(Screen_Wrap_X).w, D0                        ; $FFFFEEA8
 		move.w	D2, D3

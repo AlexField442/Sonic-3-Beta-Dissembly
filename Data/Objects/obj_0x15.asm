@@ -9,7 +9,7 @@ Obj_0x15_LBz_Player_Launcher:                                  ; Offset_0x01D050
                 move.l  #Player_Launcher_Mappings, mappings(A0) ; Offset_0x01D2CA, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$20, Obj_Width(A0)                              ; $0007
+                move.b  #$20, width_pixels(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 andi.w  #$0002, D0
@@ -115,7 +115,7 @@ Offset_0x01D1BC:
                 move.l  #Player_Launcher_Mappings, mappings(A0) ; Offset_0x01D2CA, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$08, Obj_Width(A0)                              ; $0007
+                move.b  #$08, width_pixels(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 addi.w  #$0010, Obj_Y(A0)                                ; $0014

@@ -6,8 +6,8 @@
                 move.l  #Pulley_Mappings, mappings(A0)   ; Offset_0x02B0CA, $000C
                 move.w  #$235F, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$20, Obj_Height(A0)                             ; $0006
+                move.b  #$20, width_pixels(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
@@ -26,8 +26,8 @@
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
-                move.b  #$60, Obj_Width(A1)                              ; $0007
-                move.b  #$C0, Obj_Height(A1)                             ; $0006
+                move.b  #$60, width_pixels(A1)                              ; $0007
+                move.b  #$C0, height_pixels(A1)                             ; $0006
                 move.w  #$0300, Obj_Priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_Sub_X(A1)                  ; $0010, $0012
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010

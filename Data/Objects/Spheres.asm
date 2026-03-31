@@ -94,8 +94,8 @@ Offset_0x0069C6:
 ;-------------------------------------------------------------------------------                
 Offset_0x0069CA:
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.b  #$10, Obj_Width(A1)                              ; $0007
-                move.b  #$10, Obj_Height(A1)                             ; $0006
+                move.b  #$10, width_pixels(A1)                              ; $0007
+                move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.l  #Spheres_Mappings, mappings(A1)  ; Offset_0x00703C, $000C
                 move.w  #$A400, Obj_Art_VRAM(A1)                         ; $000A

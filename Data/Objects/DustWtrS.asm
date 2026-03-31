@@ -19,7 +19,7 @@ Offset_0x00FD78:
                 move.l  #Dust_Water_Splash_Mappings, mappings(A0) ; Offset_0x00FF98, $000C
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
-                move.b  #$10, Obj_Width(A0)                              ; $0007
+                move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$07E0, Obj_Art_VRAM(A0)                         ; $000A
                 move.w  #Obj_Player_One, Obj_Player_Last(A0)      ; $B000, $0042
                 move.w  #$FC00, Obj_Control_Var_10(A0)                   ; $0040
@@ -121,7 +121,7 @@ Offset_0x00FED4:
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.w  #$0080, Obj_Priority(A1)                         ; $0008
-                move.b  #$04, Obj_Width(A1)                              ; $0007
+                move.b  #$04, width_pixels(A1)                              ; $0007
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  Obj_Player_Last(A0), Obj_Player_Last(A1)  ; $0042, $0042
                 andi.w  #$7FFF, Obj_Art_VRAM(A1)                         ; $000A

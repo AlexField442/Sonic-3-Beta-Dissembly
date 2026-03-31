@@ -7,8 +7,8 @@
                 move.w  #$0300, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
-                move.b  #$30, Obj_Width(A0)                              ; $0007
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$30, width_pixels(A0)                              ; $0007
+                move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
@@ -41,7 +41,7 @@ Offset_0x02C1B6:
                 sub.w   D1, D0
                 move.w  D0, Obj_X(A0)                                    ; $0010
                 addq.w  #$08, D1
-                move.b  D1, Obj_Width(A0)                                ; $0007
+                move.b  D1, width_pixels(A0)                                ; $0007
                 move.w  #$0000, render_flags(A2)                            ; $0004
                 cmpi.w  #$0020, D1
                 bcs.s   Offset_0x02C1F0
@@ -49,7 +49,7 @@ Offset_0x02C1B6:
 Offset_0x02C1F0:
                 addi.w  #$0007, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -68,7 +68,7 @@ Offset_0x02C20E:
                 add.w   D1, D0
                 move.w  D0, Obj_X(A0)                                    ; $0010
                 addq.w  #$08, D1
-                move.b  D1, Obj_Width(A0)                                ; $0007
+                move.b  D1, width_pixels(A0)                                ; $0007
                 move.w  #$0000, render_flags(A2)                            ; $0004
                 cmpi.w  #$0020, D1
                 bcs.s   Offset_0x02C248
@@ -76,7 +76,7 @@ Offset_0x02C20E:
 Offset_0x02C248:
                 addi.w  #$0007, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010

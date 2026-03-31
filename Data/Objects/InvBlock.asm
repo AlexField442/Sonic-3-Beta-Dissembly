@@ -10,7 +10,7 @@ Offset_0x0336B4:
                 move.w  #$3BC0, D4
                 move.w  D4, Obj_X(A0)                                    ; $0010
                 move.w  #$0100, Obj_Y(A0)                                ; $0014
-                move.b  #$40, Obj_Width(A0)                              ; $0007
+                move.b  #$40, width_pixels(A0)                              ; $0007
                 bset    #$07, Obj_Status(A0)                             ; $002A
                 moveq   #$4B, D1
                 move.w  #$0100, D2

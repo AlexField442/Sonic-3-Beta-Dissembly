@@ -16,8 +16,8 @@ Obj_0x27_Lava_Attributes:                                      ; Offset_0x0141F2
 Offset_0x014214:
                 move.w  #$86BC, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$84, render_flags(A0)                              ; $0004
-                move.b  #$80, Obj_Width(A0)                              ; $0007
-                move.b  #$80, Obj_Height(A0)                             ; $0006
+                move.b  #$80, width_pixels(A0)                              ; $0007
+                move.b  #$80, height_pixels(A0)                             ; $0006
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), Obj_Map_Id(A0)           ; $002C, $0022
                 move.l  #Offset_0x01423E, (A0)

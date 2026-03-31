@@ -12,8 +12,8 @@
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0180, Obj_Priority(A1)                         ; $0008
-                move.b  #$20, Obj_Width(A1)                              ; $0007
-                move.b  #$10, Obj_Height(A1)                             ; $0006
+                move.b  #$20, width_pixels(A1)                              ; $0007
+                move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  A0, Obj_Control_Var_0E(A1)                       ; $003E
                 move.l  #Offset_0x01C282, (A1)
                 move.w  A1, Obj_Control_Var_0E(A0)                       ; $003E

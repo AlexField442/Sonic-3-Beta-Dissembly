@@ -12,11 +12,11 @@
                 andi.w  #$00F0, D0
                 addi.w  #$0010, D0
                 lsr.w   #$01, D0
-                move.b  D0, Obj_Width(A0)                                ; $0007
+                move.b  D0, width_pixels(A0)                                ; $0007
                 andi.w  #$000F, D1
                 addq.w  #$01, D1
                 lsl.w   #$03, D1
-                move.b  D1, Obj_Height(A0)                               ; $0006
+                move.b  D1, height_pixels(A0)                               ; $0006
                 btst    #$00, Obj_Status(A0)                             ; $002A
                 beq.s   Offset_0x014BA4
                 move.l  #Offset_0x014C20, (A0)
@@ -31,10 +31,10 @@ Offset_0x014BB4:
 ;-------------------------------------------------------------------------------
 Offset_0x014BBA:                
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -66,10 +66,10 @@ Offset_0x014C1E:
 ;-------------------------------------------------------------------------------
 Offset_0x014C20:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -101,10 +101,10 @@ Offset_0x014C82:
 ;-------------------------------------------------------------------------------
 Offset_0x014C84:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010

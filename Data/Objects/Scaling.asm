@@ -20,8 +20,8 @@ Offset_0x01AA46:
                 move.w  #$6500, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
-                move.b  #$40, Obj_Width(A0)                              ; $0007
-                move.b  #$40, Obj_Height(A0)                             ; $0006
+                move.b  #$40, width_pixels(A0)                              ; $0007
+                move.b  #$40, height_pixels(A0)                             ; $0006
                 move.b  #$04, Obj_Control_Var_10(A0)                     ; $0040
                 move.l  #M68K_Dev_RAM_Start, Obj_Control_Var_12(A0) ; $FFFE0000,  $0042
 ;-------------------------------------------------------------------------------                

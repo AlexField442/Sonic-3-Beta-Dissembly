@@ -5,8 +5,8 @@
 ; Offset_0x020856:
                 move.l  #Tube_Elevator_Mappings, mappings(A0) ; Offset_0x020D4E, $000C
                 move.w  #$2455, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$18, Obj_Width(A0)                              ; $0007
-                move.b  #$30, Obj_Height(A0)                             ; $0006
+                move.b  #$18, width_pixels(A0)                              ; $0007
+                move.b  #$30, height_pixels(A0)                             ; $0006
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.w  Obj_X(A0), Obj_Height_3(A0)               ; $0010, $0044
@@ -24,8 +24,8 @@ Offset_0x02089E:
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.l  #Tube_Elevator_Mappings, mappings(A1) ; Offset_0x020D4E, $000C
                 move.w  #$2455, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  #$18, Obj_Width(A1)                              ; $0007
-                move.b  #$18, Obj_Height(A1)                             ; $0006
+                move.b  #$18, width_pixels(A1)                              ; $0007
+                move.b  #$18, height_pixels(A1)                             ; $0006
                 ori.b   #$04, render_flags(A1)                              ; $0004
                 move.w  #$0280, Obj_Priority(A1)                         ; $0008
                 move.b  #$06, Obj_Map_Id(A1)                             ; $0022
@@ -73,10 +73,10 @@ Offset_0x020968:
                 sub.w   D0, D2
                 move.w  D2, Obj_Y(A0)                                    ; $0014
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -148,7 +148,7 @@ Offset_0x020A34:
                 sub.w   D0, D2
                 move.w  D2, Obj_Y(A0)                                    ; $0014
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 move.w  #$0008, D2
                 move.w  #$0020, D3
@@ -175,10 +175,10 @@ Offset_0x020A7C:
                 sub.w   D0, D2
                 move.w  D2, Obj_Y(A0)                                    ; $0014
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -278,7 +278,7 @@ Offset_0x020BB8:
                 sub.w   D0, D2
                 move.w  D2, Obj_Y(A0)                                    ; $0014
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 move.w  #$0008, D2
                 move.w  #$0020, D3
@@ -322,10 +322,10 @@ Offset_0x020C3E:
                 sub.w   D0, D2
                 move.w  D2, Obj_Y(A0)                                    ; $0014
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010

@@ -6,8 +6,8 @@
                 move.l  #Wave_Splash_Mappings, mappings(A0) ; Offset_0x0149F2, $000C
                 move.w  #$842E, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$80, Obj_Width(A0)                              ; $0007
-                move.b  #$08, Obj_Height(A0)                             ; $0006
+                move.b  #$80, width_pixels(A0)                              ; $0007
+                move.b  #$08, height_pixels(A0)                             ; $0006
                 bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Speed_X(A0), A2                              ; $0018

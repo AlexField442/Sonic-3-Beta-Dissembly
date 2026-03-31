@@ -6,8 +6,8 @@
                 move.l  #Layer_Switch_Mappings, mappings(A0) ; Offset_0x012E98, $000C
                 move.w  #$06BC, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$80, Obj_Width(A0)                              ; $0007
-                move.b  #$80, Obj_Height(A0)                             ; $0006
+                move.b  #$80, width_pixels(A0)                              ; $0007
+                move.b  #$80, height_pixels(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 btst    #$02, D0

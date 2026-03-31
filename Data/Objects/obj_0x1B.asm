@@ -6,8 +6,8 @@
                 move.b  #$10, y_radius(A0)                           ; $001E
                 move.l  #LBz_Pipe_Plug_Mappings, mappings(A0) ; Offset_0x01E61C, $000C
                 move.w  #$42E6, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$20, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
                 move.l  #Offset_0x01E59C, Obj_Control_Var_0C(A0)               ; $003C
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
@@ -148,7 +148,7 @@ Offset_0x01E4DC:
                 move.b  D5, render_flags(A1)                                ; $0004
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.b  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
-                move.b  Obj_Width(A0), Obj_Width(A1)              ; $0007, $0007
+                move.b  width_pixels(A0), width_pixels(A1)              ; $0007, $0007
                 move.w  (A4)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A4)+, Obj_Speed_Y(A1)                           ; $001A
                 move.b  (A5)+, Obj_Map_Id(A1)                            ; $0022
@@ -188,7 +188,7 @@ Offset_0x01E560:
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.b  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
-                move.b  Obj_Width(A0), Obj_Width(A1)              ; $0007, $0007
+                move.b  width_pixels(A0), width_pixels(A1)              ; $0007, $0007
                 move.w  (A4)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A4)+, Obj_Speed_Y(A1)                           ; $001A
                 dbra    D1, Offset_0x01E556

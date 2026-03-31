@@ -28,7 +28,7 @@ Offset_0x00F3AC:
 Offset_0x00F3C6:
                 move.w  #$045C, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$84, render_flags(A0)                              ; $0004
-                move.b  #$10, Obj_Width(A0)                              ; $0007
+                move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x00F3F4

@@ -6,7 +6,7 @@
                 move.l  #Miles_Mappings, mappings(A0)    ; Offset_0x101FF4, $000C
                 move.w  #$06B0, Obj_Art_VRAM(A0)                         ; $000A
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
-                move.b  #$18, Obj_Width(A0)                              ; $0007
+                move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.l  #Offset_0x00F1CC, (A0)
 Offset_0x00F1CC:                

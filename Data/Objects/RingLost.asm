@@ -47,7 +47,7 @@ Offset_0x010B18:
                 move.b  #$84, render_flags(A1)                              ; $0004
                 move.w  #$0180, Obj_Priority(A1)                         ; $0008
                 move.b  #$47, Obj_Col_Flags(A1)                          ; $0028
-                move.b  #$08, Obj_Width(A1)                              ; $0007
+                move.b  #$08, width_pixels(A1)                              ; $0007
                 move.b  #$FF, (Object_Frame_Anim_Counter).w          ; $FFFFFEA6
                 tst.w   D4
                 bmi.s   Offset_0x010B8E

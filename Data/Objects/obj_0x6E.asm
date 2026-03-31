@@ -7,8 +7,8 @@
                 move.w  #$235C, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0000, Obj_Priority(A0)                         ; $0008
-                move.b  #$08, Obj_Width(A0)                              ; $0007
-                move.b  #$08, Obj_Height(A0)                             ; $0006
+                move.b  #$08, width_pixels(A0)                              ; $0007
+                move.b  #$08, height_pixels(A0)                             ; $0006
                 move.b  #$08, x_radius(A0)                            ; $001F
                 move.b  #$07, y_radius(A0)                           ; $001E
                 move.b  #$06, Obj_Map_Id(A0)                             ; $0022

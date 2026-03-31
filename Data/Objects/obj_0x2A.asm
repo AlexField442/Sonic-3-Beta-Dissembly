@@ -7,29 +7,29 @@
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.l  #Breakable_Floor_Mappings, mappings(A0) ; Offset_0x0216FC, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$28, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$28, height_pixels(A0)                             ; $0006
                 move.l  #Offset_0x02168C, Obj_Control_Var_0C(A0)         ; $003C
                 cmpi.w  #AIz_Act_2, (Current_ZoneAndAct).w              ; $0001, $FFFFFE10
                 bne.s   Offset_0x021220
                 move.l  #AIz_2_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x021770, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$2C, Obj_Height(A0)                             ; $0006
+                move.b  #$2C, height_pixels(A0)                             ; $0006
 Offset_0x021220:
                 cmpi.b  #CNz_Id, (Current_Zone).w                   ; $03, $FFFFFE10
                 bne.s   Offset_0x02124A
                 move.l  #CNz_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x0217E4, $000C
                 move.w  #$4430, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$20, Obj_Height(A0)                             ; $0006
+                move.b  #$20, width_pixels(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
                 move.l  #Offset_0x0216BC, Obj_Control_Var_0C(A0)         ; $003C
 Offset_0x02124A:
                 cmpi.b  #Iz_Id, (Current_Zone).w                    ; $05, $FFFFFE10
                 bne.s   Offset_0x02129E
                 move.l  #Iz_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x02187C, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$24, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$24, height_pixels(A0)                             ; $0006
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  D0, D1
                 andi.b  #$0F, D0
@@ -41,14 +41,14 @@ Offset_0x02124A:
 Offset_0x02128A:
                 move.l  #Offset_0x021660, Obj_Control_Var_0C(A0)               ; $003C
                 move.w  #$43B6, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$10, height_pixels(A0)                             ; $0006
 Offset_0x02129E:                                
                 cmpi.b  #LBz_Id, (Current_Zone).w                   ; $06, $FFFFFE10
                 bne.s   Offset_0x0212C8
                 move.l  #LBz_Breakable_Floor_Mappings, mappings(A0) ; Offset_0x021A84, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$20, Obj_Height(A0)                             ; $0006
+                move.b  #$20, width_pixels(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
                 move.l  #Offset_0x0216BC, Obj_Control_Var_0C(A0)         ; $003C
 Offset_0x0212C8:
                 tst.b   Obj_Subtype(A0)                                  ; $002C
@@ -62,10 +62,10 @@ Offset_0x0212DE:
                 move.b  (Obj_Player_One+Obj_Ani_Number).w, Obj_Control_Var_04(A0) ; $FFFFB020, $0034
                 move.b  (Obj_Player_Two+Obj_Ani_Number).w, Obj_Control_Var_06(A0) ; $FFFFB06A, $0036
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -139,10 +139,10 @@ Offset_0x0213F4:
                 move.w  (Obj_Player_One+Obj_Speed_Y).w, Obj_Control_Var_00(A0) ; $FFFFB01A, $0030
                 move.w  (Obj_Player_Two+Obj_Speed_Y).w, Obj_Control_Var_02(A0) ; $FFFFB064, $0032
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -194,10 +194,10 @@ Offset_0x0214B0:
                 move.b  (Obj_Player_Two+Obj_Ani_Number).w, Obj_Control_Var_06(A0) ; $FFFFB06A, $0036
                 lea     (Offset_0x021670), A2
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  Obj_X(A0), D4                                    ; $0010
                 jsr     (Solid_Object_4)                       ; Offset_0x0136C6
                 move.b  Obj_Status(A0), D0                               ; $002A

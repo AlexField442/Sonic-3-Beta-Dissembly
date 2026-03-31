@@ -7,12 +7,12 @@
                 move.w  #$4280, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
-                move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$20, width_pixels(A0)                              ; $0007
+                move.b  #$10, height_pixels(A0)                             ; $0006
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x02C4BE
                 move.l  #Dissolving_Sand_Bar_Mappings_2, mappings(A0) ; Offset_0x02C61A, $000C
-                move.b  #$30, Obj_Width(A0)                              ; $0007
+                move.b  #$30, width_pixels(A0)                              ; $0007
                 move.b  #$0F, Obj_Control_Var_0D(A0)                     ; $003D
 Offset_0x02C4BE:
                 move.b  Obj_Control_Var_0D(A0), Obj_Control_Var_0C(A0) ; $003D, $003C
@@ -57,7 +57,7 @@ Offset_0x02C552:
                 bra.s   Offset_0x02C564
 Offset_0x02C554:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 move.w  Obj_X(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
 Offset_0x02C564:

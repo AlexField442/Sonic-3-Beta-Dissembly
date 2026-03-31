@@ -6,8 +6,8 @@
                 move.l  #Unknow_Controled_By_P2_Mappings, mappings(A0) ; Offset_0x01E2AC, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$40, Obj_Width(A0)                              ; $0007
-                move.b  #$40, Obj_Height(A0)                             ; $0006
+                move.b  #$40, width_pixels(A0)                              ; $0007
+                move.b  #$40, height_pixels(A0)                             ; $0006
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.b  #$80, Obj_Control_Var_12(A0)                     ; $0042
                 move.b  #$01, Obj_Map_Id(A0)                             ; $0022
@@ -17,8 +17,8 @@
                 move.l  #Unknow_Controled_By_P2_Mappings, mappings(A1) ; Offset_0x01E2AC, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A1)                         ; $000A
                 ori.b   #$04, render_flags(A1)                              ; $0004
-                move.b  #$40, Obj_Width(A1)                              ; $0007
-                move.b  #$40, Obj_Height(A1)                             ; $0006
+                move.b  #$40, width_pixels(A1)                              ; $0007
+                move.b  #$40, height_pixels(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
@@ -43,7 +43,7 @@ Offset_0x01E080:
                 subi.b  #$01, Obj_Control_Var_12(A0)                     ; $0042
 Offset_0x01E08E:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 moveq   #$08, D2
                 move.w  D2, D3
                 addq.w  #$01, D3

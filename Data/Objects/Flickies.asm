@@ -130,7 +130,7 @@ Offset_0x023A1A:
                 move.b  #$04, render_flags(A0)                              ; $0004
                 bset    #$00, render_flags(A0)                              ; $0004
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
-                move.b  #$08, Obj_Width(A0)                              ; $0007
+                move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$07, Obj_Ani_Time(A0)                           ; $0024
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x023A86:
@@ -158,7 +158,7 @@ Offset_0x023AA2:
                 move.b  #$04, render_flags(A0)                              ; $0004
                 bset    #$00, render_flags(A0)                              ; $0004
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
-                move.b  #$08, Obj_Width(A0)                              ; $0007
+                move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$07, Obj_Ani_Time(A0)                           ; $0024
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022
                 move.w  #$FC00, Obj_Speed_Y(A0)                          ; $001A

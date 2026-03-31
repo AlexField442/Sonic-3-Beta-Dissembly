@@ -5,7 +5,7 @@
 ; Offset_0x028E12:
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 lsl.w   #$03, D0
-                move.b  D0, Obj_Width(A0)                                ; $0007
+                move.b  D0, width_pixels(A0)                                ; $0007
                 move.w  Obj_Y(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
                 move.b  #$30, Obj_Control_Var_08(A0)                     ; $0038
                 move.b  #$30, Obj_Control_Var_0A(A0)                     ; $003A
@@ -37,7 +37,7 @@ Offset_0x028E84:
                 subq.b  #$01, Obj_Control_Var_08(A0)                     ; $0038
 Offset_0x028E8E:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 moveq   #$00, D3
                 move.b  Obj_Control_Var_08(A0), D3                       ; $0038
                 moveq   #$03, D6
@@ -63,7 +63,7 @@ Offset_0x028EDA:
                 subq.b  #$01, Obj_Control_Var_0A(A0)                     ; $003A
 Offset_0x028EE4:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 moveq   #$00, D3
                 move.b  Obj_Control_Var_0A(A0), D3                       ; $003A
                 moveq   #$04, D6
@@ -108,7 +108,7 @@ Offset_0x028F62:
                 subq.b  #$01, Obj_Control_Var_08(A0)                     ; $0038
 Offset_0x028F6C:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 moveq   #$00, D3
                 move.b  Obj_Control_Var_08(A0), D3                       ; $0038
                 lsr.w   #$01, D3
@@ -135,7 +135,7 @@ Offset_0x028FBA:
                 subq.b  #$01, Obj_Control_Var_0A(A0)                     ; $003A
 Offset_0x028FC4:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 moveq   #$00, D3
                 move.b  Obj_Control_Var_0A(A0), D3                       ; $003A
                 lsr.w   #$01, D3

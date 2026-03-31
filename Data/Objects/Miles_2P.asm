@@ -46,8 +46,8 @@ Offset_0x00CC6E:
                 move.b  #$05, Obj_Width_3(A0)                            ; $0045
                 move.l  #Miles_2P_Mappings, mappings(A0) ; Offset_0x102F1C, $000C
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
-                move.b  #$0C, Obj_Width(A0)                              ; $0007
-                move.b  #$0C, Obj_Height(A0)                             ; $0006
+                move.b  #$0C, width_pixels(A0)                              ; $0007
+                move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$01, Obj_Player_Selected(A0)                    ; $0038
                 lea     (Player_Start_Speed_Array), A1         ; Offset_0x1F7000

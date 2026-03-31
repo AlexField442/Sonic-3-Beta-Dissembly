@@ -27,8 +27,8 @@ Obj_0x36_Hz_Breakable_Bar:                                     ; Offset_0x0143B2
                 move.w  D0, Obj_Control_Var_06(A0)                       ; $0036
                 move.b  (A1)+, D0
                 move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
-                move.b  (A1)+, Obj_Width(A0)                             ; $0007
-                move.b  #$04, Obj_Height(A0)                             ; $0006
+                move.b  (A1)+, width_pixels(A0)                             ; $0007
+                move.b  #$04, height_pixels(A0)                             ; $0006
                 move.b  (A1)+, D0
                 addq.b  #$04, D0
                 move.b  D0, Obj_Map_Id(A0)                               ; $0022
@@ -40,8 +40,8 @@ Offset_0x01441A:
                 move.w  D0, Obj_Control_Var_06(A0)                       ; $0036
                 move.b  (A1)+, D0
                 move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
-                move.b  #$04, Obj_Width(A0)                              ; $0007
-                move.b  (A1)+, Obj_Height(A0)                            ; $0006
+                move.b  #$04, width_pixels(A0)                              ; $0007
+                move.b  (A1)+, height_pixels(A0)                            ; $0006
                 move.b  (A1)+, Obj_Map_Id(A0)                            ; $0022
                 move.l  #Offset_0x01443C, (A0)
 ;-------------------------------------------------------------------------------                
@@ -104,7 +104,7 @@ Offset_0x0144DA:
                 rts
 Offset_0x0144E6:
                 moveq   #$00, D1
-                move.b  Obj_Height(A0), D1                               ; $0006
+                move.b  height_pixels(A0), D1                               ; $0006
                 move.w  Obj_Y(A0), D0                                    ; $0014
                 sub.w   D1, D0
                 move.w  Obj_Y(A1), D2                                    ; $0014
@@ -166,7 +166,7 @@ Offset_0x014590:
                 lea     (Offset_0x014794), A4
                 lea     (Offset_0x01477C), A2
                 moveq   #$00, D1
-                move.b  Obj_Height(A0), D1                               ; $0006
+                move.b  height_pixels(A0), D1                               ; $0006
                 lsr.w   #$02, D1
                 subq.w  #$01, D1
                 bsr     Offset_0x014814
@@ -241,7 +241,7 @@ Offset_0x01468E:
                 rts
 Offset_0x01469A:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 move.w  Obj_X(A0), D0                                    ; $0010
                 sub.w   D1, D0
                 move.w  Obj_X(A1), D2                                    ; $0010
@@ -302,7 +302,7 @@ Offset_0x01473E:
                 lea     (Offset_0x0147D4), A4
                 lea     (Offset_0x01477C), A2
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 lsr.w   #$02, D1
                 subq.w  #$01, D1
                 bsr     Offset_0x014814
@@ -349,8 +349,8 @@ Offset_0x01482C:
                 add.w   D3, D0
                 move.w  D0, Obj_Y(A1)                                    ; $0014
                 move.w  D4, Obj_Priority(A1)                             ; $0008
-                move.b  #$04, Obj_Width(A1)                              ; $0007
-                move.b  #$04, Obj_Height(A1)                             ; $0006
+                move.b  #$04, width_pixels(A1)                              ; $0007
+                move.b  #$04, height_pixels(A1)                             ; $0006
                 move.b  Obj_Map_Id(A0), Obj_Map_Id(A1)            ; $0022, $0022
                 move.w  Obj_Speed_X(A0), Obj_Speed_X(A1)          ; $0018, $0018
                 move.w  Obj_Speed_Y(A0), Obj_Speed_Y(A1)          ; $001A, $001A

@@ -9,8 +9,8 @@
                 move.w  #$0447, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
-                move.b  #$A0, Obj_Width(A0)                              ; $0007
-                move.b  #$80, Obj_Height(A0)                             ; $0006
+                move.b  #$A0, width_pixels(A0)                              ; $0007
+                move.b  #$80, height_pixels(A0)                             ; $0006
                 move.b  #$FF, Obj_Control_Var_01(A0)                     ; $0031
                 move.b  #$00, Obj_Status(A0)                             ; $002A
                 bset    #$06, render_flags(A0)                              ; $0004
@@ -29,8 +29,8 @@ Offset_0x02E298:
                 move.w  #$43B2, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0300, Obj_Priority(A0)                         ; $0008
-                move.b  #$28, Obj_Width(A0)                              ; $0007
-                move.b  #$20, Obj_Height(A0)                             ; $0006
+                move.b  #$28, width_pixels(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
                 move.b  #$FF, Obj_Control_Var_00(A0)                     ; $0030
                 move.l  #Offset_0x02E2CA, (A0)
 Offset_0x02E2CA:                

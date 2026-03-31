@@ -46,8 +46,8 @@ Offset_0x017B1E:
                 bra.s   Offset_0x017B48
 Offset_0x017B20:
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.b  #$08, Obj_Width(A1)                              ; $0007
-                move.b  #$08, Obj_Height(A1)                             ; $0006
+                move.b  #$08, width_pixels(A1)                              ; $0007
+                move.b  #$08, height_pixels(A1)                             ; $0006
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.l  #Ride_Vine_Mappings, mappings(A1) ; Offset_0x018482, $000C
                 move.w  #$0422, Obj_Art_VRAM(A1)                         ; $000A
@@ -76,8 +76,8 @@ Offset_0x017B6C:
                 move.w  #$0200, Obj_Speed_Y(A0)                          ; $001A
                 move.l  #Animated_Still_Sprite_Mappings, mappings(A0) ; Offset_0x02322A, $000C
                 move.w  #$62F0, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$08, Obj_Width(A0)                              ; $0007
-                move.b  #$0C, Obj_Height(A0)                             ; $0006
+                move.b  #$08, width_pixels(A0)                              ; $0007
+                move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.b  #$00, Obj_Map_Id(A0)                             ; $0022
                 move.w  #$0001, Obj_Ani_Number(A0)                       ; $0020
                 move.w  Obj_Control_Var_10(A0), A1                       ; $0040

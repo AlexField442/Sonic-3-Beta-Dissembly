@@ -21,7 +21,7 @@ Offset_0x01598C:
                 bne.s   Offset_0x0159C4
                 move.l  #LBz_Collapsing_Platforms_Mappings, mappings(A0) ; Offset_0x0161E2, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$40, Obj_Width(A0)                              ; $0007
+                move.b  #$40, width_pixels(A0)                              ; $0007
                 move.b  #$10, Obj_Height(A0)                             ; $0006
                 move.l  #Offset_0x015E26, Obj_Control_Var_00(A0)         ; $0030
                 move.l  #Offset_0x015E36, Obj_Control_Var_04(A0)         ; $0034
@@ -29,7 +29,7 @@ Offset_0x01598C:
 Offset_0x0159C4:
                 move.l  #LBz_Collapsing_Platforms_Mappings_2, mappings(A0) ; Offset_0x0162DE, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$20, Obj_Width(A0)                              ; $0007
+                move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$30, Obj_Height(A0)                             ; $0006
                 move.l  #Offset_0x015E46, Obj_Control_Var_00(A0)         ; $0030
 Offset_0x0159E6:
@@ -53,7 +53,7 @@ Offset_0x015A18:
                 andi.w  #$00F0, D1
                 lsr.w   #$02, D1
                 lea     Offset_0x015A50(PC, D1), A1
-                move.b  (A1)+, Obj_Width(A0)                             ; $0007
+                move.b  (A1)+, width_pixels(A0)                             ; $0007
                 move.b  (A1)+, Obj_Height(A0)                            ; $0006
                 move.b  (A1)+, Obj_Map_Id(A0)                            ; $0022
                 move.b  (A1)+, Obj_Subtype(A0)                           ; $002C
@@ -91,7 +91,7 @@ Offset_0x015A80:
                 andi.w  #$00F0, D1
                 lsr.w   #$02, D1
                 lea     Offset_0x015ADE(PC, D1), A1
-                move.b  (A1)+, Obj_Width(A0)                             ; $0007
+                move.b  (A1)+, width_pixels(A0)                             ; $0007
                 move.b  (A1)+, Obj_Height(A0)                            ; $0006
                 move.b  (A1)+, Obj_Map_Id(A0)                            ; $0022
                 move.b  (A1)+, Obj_Subtype(A0)                           ; $002C
@@ -134,7 +134,7 @@ Offset_0x015B24:
                 move.b  D0, Obj_Control_Var_08(A0)                       ; $0038
                 move.l  #Iz_Collapsing_Platform_Mappings, mappings(A0) ; Offset_0x016D00, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$50, Obj_Width(A0)                              ; $0007
+                move.b  #$50, width_pixels(A0)                              ; $0007
                 move.b  #$38, Obj_Height(A0)                             ; $0006
                 move.l  #Offset_0x015F4B, Obj_Control_Var_00(A0)               ; $0030
                 move.l  #Offset_0x015F77, Obj_Control_Var_04(A0)               ; $0034
@@ -171,7 +171,7 @@ Offset_0x015BAC:
                 move.b  #$01, Obj_Control_Var_0A(A0)                     ; $003A
 Offset_0x015BBC:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 move.w  #$0010, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
@@ -273,7 +273,7 @@ Offset_0x015CE0:
                 move.b  Obj_Control_Var_08(A0), D3                       ; $0038
                 move.l  Obj_Control_Var_00(A0), A2                       ; $0030
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 moveq   #$03, D6
                 bsr.s   Offset_0x015D06
@@ -350,7 +350,7 @@ Offset_0x015DA4:
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
-                move.b  Obj_Width(A0), Obj_Width(A1)              ; $0007, $0007
+                move.b  width_pixels(A0), width_pixels(A1)              ; $0007, $0007
                 move.b  Obj_Height(A0), Obj_Height(A1)            ; $0006, $0006
                 move.b  (A4)+, Obj_Control_Var_08(A1)                    ; $0038
                 dbra    D1, Offset_0x015D9C

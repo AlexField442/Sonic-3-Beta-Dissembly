@@ -23,8 +23,8 @@ Offset_0x01A024:
                 lsr.b   #$02, D0
                 andi.w  #$001C, D0
                 lea     Offset_0x019FD6(PC, D0), A2
-                move.b  (A2)+, Obj_Width(A1)                             ; $0007
-                move.b  (A2)+, Obj_Height(A1)                            ; $0006
+                move.b  (A2)+, width_pixels(A1)                             ; $0007
+                move.b  (A2)+, height_pixels(A1)                            ; $0006
                 move.b  (A2)+, D0
                 move.b  D0, Obj_Map_Id(A1)                               ; $0022
                 bne.s   Offset_0x01A04C
@@ -291,10 +291,10 @@ Offset_0x01A38E:
                 move.w  #$0001, Obj_Control_Var_08(A1)                   ; $0038
 Offset_0x01A3C4:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$0007, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010

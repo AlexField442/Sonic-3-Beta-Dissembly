@@ -46,8 +46,8 @@ Offset_0x00A5B6:
                 move.b  #$0B, Obj_Height_3(A0)                           ; $0044
                 move.b  #$05, Obj_Width_3(A0)                            ; $0045
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
-                move.b  #$0C, Obj_Width(A0)                              ; $0007
-                move.b  #$0C, Obj_Height(A0)                             ; $0006
+                move.b  #$0C, width_pixels(A0)                              ; $0007
+                move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
                 lea     (Player_Start_Speed_Array), A1         ; Offset_0x1F7000
                 moveq   #$00, D0

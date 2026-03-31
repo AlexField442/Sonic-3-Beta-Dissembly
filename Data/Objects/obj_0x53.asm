@@ -6,8 +6,8 @@
                 move.l  #Swinging_Platform_Mappings, mappings(A0) ; Offset_0x02A36C, $000C
                 move.w  #$435F, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$18, Obj_Width(A0)                              ; $0007
-                move.b  #$0C, Obj_Height(A0)                             ; $0006
+                move.b  #$18, width_pixels(A0)                              ; $0007
+                move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.w  #$0200, Obj_Priority(A0)                         ; $0008
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
@@ -18,8 +18,8 @@
                 move.l  #Swinging_Platform_Mappings, mappings(A1) ; Offset_0x02A36C, $000C
                 move.w  #$435F, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.b  #$50, Obj_Width(A1)                              ; $0007
-                move.b  #$50, Obj_Height(A1)                             ; $0006
+                move.b  #$50, width_pixels(A1)                              ; $0007
+                move.b  #$50, height_pixels(A1)                             ; $0006
                 move.w  #$0280, Obj_Priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
@@ -47,9 +47,9 @@ Offset_0x02A2DA:
                 move.b  Obj_Control_Var_06(A0), D0                       ; $0036
                 add.b   D0, Obj_Control_Var_04(A0)                       ; $0034
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 moveq   #$00, D3
-                move.b  Obj_Height(A0), D3                               ; $0006
+                move.b  height_pixels(A0), D3                               ; $0006
                 addq.w  #$01, D3
                 move.w  (A7)+, D4
                 jsr     (Platform_Object)                      ; Offset_0x013AF6

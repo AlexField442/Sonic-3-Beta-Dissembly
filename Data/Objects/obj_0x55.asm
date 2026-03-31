@@ -7,8 +7,8 @@
                 move.w  #$A3FF, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$38, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$38, height_pixels(A0)                             ; $0006
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022
                 move.b  #$17, Obj_Col_Flags(A0)                          ; $0028
                 move.b  #$03, Obj_Col_Prop(A0)                           ; $0029
@@ -82,8 +82,8 @@ Offset_0x02A6EC:
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
-                move.b  #$08, Obj_Width(A1)                              ; $0007
-                move.b  #$08, Obj_Height(A1)                             ; $0006
+                move.b  #$08, width_pixels(A1)                              ; $0007
+                move.b  #$08, height_pixels(A1)                             ; $0006
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
 Offset_0x02A72E:
                 moveq   #Boss_Hit_Sfx, D0                                  ; $7C
@@ -107,8 +107,8 @@ Offset_0x02A736:
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 andi.w  #$7FFF, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  #$0300, Obj_Priority(A1)                         ; $0008
-                move.b  #$10, Obj_Width(A1)                              ; $0007
-                move.b  #$04, Obj_Height(A1)                             ; $0006
+                move.b  #$10, width_pixels(A1)                              ; $0007
+                move.b  #$04, height_pixels(A1)                             ; $0006
                 move.b  #$9B, Obj_Col_Flags(A1)                          ; $0028
                 move.w  #$FC00, Obj_Speed_X(A1)                          ; $0018
                 btst    #$00, Obj_Status(A0)                             ; $002A

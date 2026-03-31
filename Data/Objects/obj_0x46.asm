@@ -7,8 +7,8 @@
                 move.w  #$43E8, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  D0, D1
@@ -33,7 +33,7 @@ Offset_0x0280C4:
                 lsr.w   #$04, D0
                 move.b  D0, Obj_Map_Id(A0)                               ; $0022
                 addi.b  #$10, D1
-                move.b  D1, Obj_Width(A0)                                ; $0007
+                move.b  D1, width_pixels(A0)                                ; $0007
                 btst    #$00, Obj_Status(A0)                             ; $002A
                 bne.s   Offset_0x0280EA
                 move.l  #Offset_0x028102, (A0)

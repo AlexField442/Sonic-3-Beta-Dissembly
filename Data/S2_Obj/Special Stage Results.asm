@@ -58,7 +58,7 @@ Offset_0x024C22:
 		move.b  (A2)+, routine(A1)
 		move.b  (A2)+, Obj_Map_Id(A1)
 		move.l  #Special_Stage_Results_Mappings, mappings(A1)
-		move.b  #$78, Obj_Width(A1)
+		move.b  #$78, width_pixels(A1)
 		lea     Obj_Size(A1), A1
 		dbra    D1, Offset_0x024C22
 Offset_0x024C52:
@@ -296,7 +296,7 @@ Offset_0x024EA2:
 		move.b  #$14, routine(A1)		            ; $0005
 		move.b  #$1C, Obj_Map_Id(A1)		             ; $0022
 		move.l  #Special_Stage_Results_Mappings, mappings(A1) ; Offset_0x02540C, $000C
-		move.b  #$78, Obj_Width(A1)		              ; $0007
+		move.b  #$78, width_pixels(A1)		              ; $0007
 		jmp     (DisplaySprite)		        ; Offset_0x011148
 ;-------------------------------------------------------------------------------		  
 Offset_0x024F04:

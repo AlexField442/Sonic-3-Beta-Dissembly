@@ -4,8 +4,8 @@
 ;===============================================================================
 ; Offset_0x02010E:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$80, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$80, height_pixels(A0)                             ; $0006
                 move.b  #$00, Obj_Priority(A0)                           ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C

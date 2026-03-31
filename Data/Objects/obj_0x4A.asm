@@ -6,8 +6,8 @@
                 move.l  #Bumper_Mappings, mappings(A0)   ; Offset_0x0293D4, $000C
                 move.w  #$4364, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.b  #$D7, Obj_Col_Flags(A0)                          ; $0028
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030

@@ -7,8 +7,8 @@
                 move.w  #$4404, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$10, height_pixels(A0)                             ; $0006
                 tst.b   (Water_Level_Flag).w                         ; $FFFFF730
                 bne.s   Offset_0x02800E
                 move.l  #Offset_0x02802A, (A0)

@@ -380,7 +380,7 @@ Offset_0x035062:
 		move.w  Obj_Child_Ref(A0), A1		            ; $0046
 		btst    #$07, Obj_Status(A1)		             ; $002A
 		bne.s   Offset_0x035088
-		move.b  #$08, Obj_Width(A0)		              ; $0007
+		move.b  #$08, width_pixels(A0)		              ; $0007
 		moveq   #$13, D1
 		move.w  #$0100, D2
 		move.w  #$0200, D3

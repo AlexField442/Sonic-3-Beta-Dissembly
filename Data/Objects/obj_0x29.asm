@@ -24,8 +24,8 @@ Offset_0x020EFA:
                 move.l  #AIz_Disappearing_Platform_Mappings, mappings(A0) ; Offset_0x021050, $000C
                 move.w  #$42F0, Obj_Art_VRAM(A0)                         ; $000A
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$20, Obj_Width(A0)                              ; $0007
-                move.b  #$18, Obj_Height(A0)                             ; $0006
+                move.b  #$20, width_pixels(A0)                              ; $0007
+                move.b  #$18, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 move.w  (Level_Frame_Count).w, D0                    ; $FFFFFE04
@@ -63,8 +63,8 @@ Offset_0x020F80:
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.l  #AIz_Disappearing_Platform_Mappings_2, mappings(A1) ; Offset_0x02105C, $000C
                 move.w  #$62F0, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  #$28, Obj_Width(A1)                              ; $0007
-                move.b  #$20, Obj_Height(A1)                             ; $0006
+                move.b  #$28, width_pixels(A1)                              ; $0007
+                move.b  #$20, height_pixels(A1)                             ; $0006
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0200, Obj_Priority(A1)                         ; $0008
                 move.w  A0, Obj_Control_Var_0C(A1)                       ; $003C

@@ -6,8 +6,8 @@
                 move.l  #Dash_Trigger_Mappings, mappings(A0) ; Offset_0x01CB06,$000C
                 move.w  #$235F, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$10, Obj_Width(A0)                              ; $0007
-                move.b  #$10, Obj_Height(A0)                             ; $0006
+                move.b  #$10, width_pixels(A0)                              ; $0007
+                move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$0280, Obj_Priority(A0)                         ; $0008
                 bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016

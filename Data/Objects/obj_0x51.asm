@@ -23,8 +23,8 @@ Offset_0x01C3EE:
                 lsr.w   #$02, D0
                 andi.w  #$001C, D0
                 lea     Offset_0x01C3BA(PC, D0), A2
-                move.b  (A2)+, Obj_Width(A0)                             ; $0007
-                move.b  (A2)+, Obj_Height(A0)                            ; $0006
+                move.b  (A2)+, width_pixels(A0)                             ; $0007
+                move.b  (A2)+, height_pixels(A0)                            ; $0006
                 move.b  (A2)+, Obj_Map_Id(A0)                            ; $0022
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 move.w  Obj_X(A0), Obj_Control_Var_02(A0)         ; $0010, $0032
@@ -66,9 +66,9 @@ Offset_0x01C484:
                 tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01C4B8
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 moveq   #$00, D3
-                move.b  Obj_Height(A0), D3                               ; $0006
+                move.b  height_pixels(A0), D3                               ; $0006
                 addq.w  #$01, D3
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
 Offset_0x01C4B8:

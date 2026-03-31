@@ -236,10 +236,10 @@ Offset_0x045570:
                 move.w  Obj_X(A0), -(A7)                                 ; $0010
                 bsr     Offset_0x045640
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  (A7)+, D4

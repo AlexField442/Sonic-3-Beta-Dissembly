@@ -12,8 +12,8 @@ Obj_0x57_MGz_Trigger_Platform:                                 ; Offset_0x02A884
                 andi.w  #$00F0, D1
                 lsr.w   #$02, D1
                 lea     Offset_0x02A878(PC, D1), A1
-                move.b  (A1)+, Obj_Width(A0)                             ; $0007
-                move.b  (A1)+, Obj_Height(A0)                            ; $0006
+                move.b  (A1)+, width_pixels(A0)                             ; $0007
+                move.b  (A1)+, height_pixels(A0)                            ; $0006
                 move.b  (A1)+, Obj_Map_Id(A0)                            ; $0022
                 moveq   #$00, D0
                 move.b  (A1)+, D0
@@ -52,10 +52,10 @@ Offset_0x02A8FE:
                 move.w  #$0000, (Earthquake_Flag).w                  ; $FFFFEECC
 Offset_0x02A926:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010
@@ -88,10 +88,10 @@ Offset_0x02A982:
                 move.w  #$0000, (Earthquake_Flag).w                  ; $FFFFEECC
 Offset_0x02A99E:
                 moveq   #$00, D1
-                move.b  Obj_Width(A0), D1                                ; $0007
+                move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010

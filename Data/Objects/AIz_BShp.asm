@@ -70,8 +70,8 @@ Offset_0x031286:
 Obj_AIz_Battleship_Propeller:                                  ; Offset_0x031288
                 move.l  #Obj_AIz_Battleship_Propeller_Main, (A0) ; Offset_0x0312BA
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$20, Obj_Height(A0)                             ; $0006
-                move.b  #$08, Obj_Width(A0)                              ; $0007
+                move.b  #$20, height_pixels(A0)                             ; $0006
+                move.b  #$08, width_pixels(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #AIz_Battleship_Propeller_Mappings, mappings(A0) ; Offset_0x031B48, $000C
@@ -90,7 +90,7 @@ Offset_0x0312C8:
 Obj_AIz_FBz_Ship_Bomb:                                         ; Offset_0x0312DC
                 move.l  #Obj_AIz_FBz_Ship_Bomb_Main, (A0)      ; Offset_0x031314
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$18, Obj_Width(A0)                              ; $0007
+                move.b  #$18, width_pixels(A0)                              ; $0007
                 move.w  #$0080, Obj_Priority(A0)                         ; $0008
                 move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #AIz_FBz_Ship_Bomb_Main_Mappings, mappings(A0) ; Offset_0x031B78, $000C
@@ -183,7 +183,7 @@ Obj_AIz_FBz_Bomb_Explosion:                                    ; Offset_0x031402
 Offset_0x031412:
                 move.l  #Offset_0x03143A, (A0)
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.b  #$20, Obj_Width(A0)                              ; $0007
+                move.b  #$20, width_pixels(A0)                              ; $0007
                 move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #AIz_FBz_Ship_Bomb_Main_Mappings, mappings(A0) ; Offset_0x031B78, $000C
                 move.b  #$8B, Obj_Col_Flags(A0)                          ; $0028

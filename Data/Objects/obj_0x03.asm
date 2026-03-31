@@ -3,7 +3,7 @@
 ; ->>>
 ;===============================================================================      
 ; Offset_0x014E88:
-                move.b  #$D0, Obj_Width(A0)                              ; $0007
+                move.b  #$D0, width_pixels(A0)                              ; $0007
                 move.l  #Offset_0x014E94, (A0)
 Offset_0x014E94:                
                 bsr.s   Offset_0x014EF8

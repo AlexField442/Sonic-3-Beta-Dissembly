@@ -33,8 +33,8 @@ Miles_Main:                                                    ; Offset_0x00D15E
                 move.b  #$09, Obj_Width_3(A0)                            ; $0045
                 move.l  #Miles_Mappings, mappings(A0)    ; Offset_0x101FF4, $000C
                 move.w  #$0100, Obj_Priority(A0)                         ; $0008
-                move.b  #$18, Obj_Width(A0)                              ; $0007
-                move.b  #$18, Obj_Height(A0)                             ; $0006
+                move.b  #$18, width_pixels(A0)                              ; $0007
+                move.b  #$18, height_pixels(A0)                             ; $0006
                 move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$01, Obj_Player_Selected(A0)                    ; $0038
                 move.w  #$0600, (A4)
@@ -950,7 +950,7 @@ Offset_0x00DD06:
                 tst.b   Obj_Status(A1)                                   ; $002A
                 bmi.s   Offset_0x00DD8E
                 moveq   #$00, D1
-                move.b  Obj_Width(A1), D1                                ; $0007
+                move.b  width_pixels(A1), D1                                ; $0007
                 move.w  D1, D2
                 add.w   D2, D2
                 subq.w  #$04, D2

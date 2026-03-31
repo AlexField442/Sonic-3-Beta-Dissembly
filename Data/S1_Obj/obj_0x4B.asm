@@ -18,7 +18,7 @@ Offset_0x010C76:
                 move.l  #Big_Ring_Mappings, mappings(A0) ; Offset_0x010E36, $000C
                 move.w  #$2400, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.b  #$40, Obj_Width(A0)                              ; $0007
+                move.b  #$40, width_pixels(A0)                              ; $0007
                 tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x010CC0
                 cmpi.b  #$06, (SS_Completed_Flag).w                  ; $FFFFFFB0

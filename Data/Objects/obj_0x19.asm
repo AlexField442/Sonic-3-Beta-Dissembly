@@ -7,14 +7,14 @@
                 move.w  #$440D, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0180, Obj_Priority(A0)                         ; $0008
-                move.b  #$08, Obj_Width(A0)                              ; $0007
-                move.b  #$30, Obj_Height(A0)                             ; $0006
+                move.b  #$08, width_pixels(A0)                              ; $0007
+                move.b  #$30, height_pixels(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
                 move.b  #$03, Obj_Map_Id(A0)                             ; $0022
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x01DF5A
-                move.b  #$60, Obj_Height(A0)                             ; $0006
+                move.b  #$60, height_pixels(A0)                             ; $0006
                 move.b  #$04, Obj_Map_Id(A0)                             ; $0022
 Offset_0x01DF5A:
                 move.l  #Offset_0x01DF60, (A0)

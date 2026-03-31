@@ -3,20 +3,20 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x029004:
-                move.b  #$08, Obj_Width(A0)                              ; $0007
-                move.b  #$40, Obj_Height(A0)                             ; $0006
+                move.b  #$08, width_pixels(A0)                              ; $0007
+                move.b  #$40, height_pixels(A0)                             ; $0006
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 lsr.b   #$04, D0
                 andi.b  #$07, D0
                 move.b  D0, Obj_Map_Id(A0)                               ; $0022
                 beq.s   Offset_0x029026
-                move.b  #$80, Obj_Height(A0)                             ; $0006
+                move.b  #$80, height_pixels(A0)                             ; $0006
 Offset_0x029026:
                 move.l  #Offset_0x02902C, (A0)
 Offset_0x02902C:                
                 move.w  #$0010, D1
                 moveq   #$00, D2
-                move.b  Obj_Height(A0), D2                               ; $0006
+                move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  Obj_X(A0), D4                                    ; $0010

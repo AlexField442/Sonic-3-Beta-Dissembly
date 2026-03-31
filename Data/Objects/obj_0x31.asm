@@ -8,7 +8,7 @@
                 move.w  D0, Obj_Control_Var_02(A0)                       ; $0032
                 neg.w   D0
                 move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
-                move.b  #$80, Obj_Width(A0)                              ; $0007
+                move.b  #$80, width_pixels(A0)                              ; $0007
                 move.l  #Offset_0x023528, (A0)
 Offset_0x023528:                
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000

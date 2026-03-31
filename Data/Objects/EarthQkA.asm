@@ -11,7 +11,7 @@ Offset_0x0325DC:
                 move.w  Obj_Timer(A0), D0                                ; $002E
                 add.w   (A1), D0
                 move.w  D0, Obj_Y(A0)                                    ; $0014
-                move.b  #$10, Obj_Width(A0)                              ; $0007
+                move.b  #$10, width_pixels(A0)                              ; $0007
                 bset    #$07, Obj_Status(A0)                             ; $002A
                 moveq   #$1B, D1
                 moveq   #$40, D2
