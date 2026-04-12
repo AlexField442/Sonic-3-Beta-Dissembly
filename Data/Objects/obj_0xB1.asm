@@ -102,7 +102,7 @@ Offset_0x03A0D2:
                 jsr     (Play_Music)                           ; Offset_0x001176
                 move.w  #$007F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03A102, Obj_Child(A0)                  ; $0034
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 lea     Offset_0x03AEA8(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A
 ;-------------------------------------------------------------------------------
@@ -343,7 +343,7 @@ Offset_0x03A416:
 Offset_0x03A42E:
                 lea     Drill_Mobile_Setup_Data_4(PC), A1      ; Offset_0x03AE0E
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.l  #Offset_0x03A474, (A0)
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 move.w  Obj_Angle(A1), D0                                ; $0026
@@ -515,7 +515,7 @@ Offset_0x03A65A:
                 subi.b  #$04, D0
                 move.b  D0, Obj_Subtype(A0)                              ; $002C
                 beq.s   Offset_0x03A68E
-                move.w  #$0380, Obj_Priority(A0)                         ; $0008
+                move.w  #$0380, priority(A0)                         ; $0008
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 cmpi.l  #Obj_0xB0_MGz_Drill_Mobile, (A1)       ; Offset_0x039C7E
                 bne.s   Offset_0x03A68E
@@ -546,7 +546,7 @@ Offset_0x03A6C2:
                 move.w  Obj_Child_Ref(A1), Obj_Height_3(A0)       ; $0046, $0044
                 tst.b   Obj_Subtype(A1)                                  ; $002C
                 beq.s   Offset_0x03A6E6
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
 Offset_0x03A6E6:
                 bclr    #$07, Obj_Art_VRAM(A0)                           ; $000A
                 btst    #$07, Obj_Art_VRAM(A1)                           ; $000A
@@ -619,7 +619,7 @@ Offset_0x03A7BA:
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 beq.s   Offset_0x03A7DA
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
 Offset_0x03A7DA:
                 lsr.w   #$01, D0
                 addi.b  #$2E, D0
@@ -730,7 +730,7 @@ Offset_0x03A924:
                 move.b  (A3)+, D0
                 beq.s   Offset_0x03A944
                 lsl.w   #$04, D0
-                move.w  D0, Obj_Priority(A0)                             ; $0008
+                move.w  D0, priority(A0)                             ; $0008
 Offset_0x03A944:
                 rts  
 ;------------------------------------------------------------------------------- 

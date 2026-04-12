@@ -10,7 +10,7 @@
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.l  #Offset_0x01E59C, Obj_Control_Var_0C(A0)               ; $003C
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$07, Obj_Map_Id(A0)                             ; $0022
                 move.l  #Offset_0x01E306, (A0)
 Offset_0x01E306:                
@@ -147,7 +147,7 @@ Offset_0x01E4DC:
                 move.l  A3, mappings(A1)                                  ; $000C
                 move.b  D5, render_flags(A1)                                ; $0004
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.b  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
+                move.b  priority(A0), priority(A1)        ; $0008, $0008
                 move.b  width_pixels(A0), width_pixels(A1)              ; $0007, $0007
                 move.w  (A4)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A4)+, Obj_Speed_Y(A1)                           ; $001A
@@ -187,7 +187,7 @@ Offset_0x01E560:
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.b  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
+                move.b  priority(A0), priority(A1)        ; $0008, $0008
                 move.b  width_pixels(A0), width_pixels(A1)              ; $0007, $0007
                 move.w  (A4)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A4)+, Obj_Speed_Y(A1)                           ; $001A

@@ -9,7 +9,7 @@ Obj_0x12_LBz_Elevator:                                         ; Offset_0x01C6A0
                 move.l  #LBz_Elevator_Mappings, mappings(A0)  ; Offset_0x01C868, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$30, width_pixels(A0)                              ; $0007
                 move.b  #$08, height_pixels(A0)                             ; $0006
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032

@@ -9,7 +9,7 @@ Obj_0x11_LBz_Platform:                                         ; Offset_0x01BCFC
                 move.l  #LBz_Platform_Mappings, mappings(A0) ; Offset_0x01C1F8, $000C
                 move.w  #$43C3, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x01BD2E

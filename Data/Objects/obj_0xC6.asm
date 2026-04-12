@@ -229,7 +229,7 @@ Offset_0x04371E:
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl.s   Offset_0x043730
                 move.l  #Offset_0x043734, (A0)
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
 Offset_0x043730:
                 jmp     MarkObjectGone(PC)              ; Offset_0x042A58 
 ;-------------------------------------------------------------------------------
@@ -264,7 +264,7 @@ Offset_0x04377C:
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl.s   Offset_0x043792
                 move.l  #Offset_0x043796, (A0)
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
 Offset_0x043792:
                 jmp     MarkObjectGone(PC)              ; Offset_0x042A58 
 ;-------------------------------------------------------------------------------

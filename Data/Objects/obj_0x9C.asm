@@ -125,7 +125,7 @@ Offset_0x044AA2:
                 rts
 Offset_0x044AAA:
                 move.b  #$0E, routine(A0)                            ; $0005
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 rts      
 ;-------------------------------------------------------------------------------

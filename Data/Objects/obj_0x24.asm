@@ -12,7 +12,7 @@ Offset_0x0201C0:
 Obj_0x24_Automatic_Tunnel:                                     ; Offset_0x0201C6
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.l  #Offset_0x0201DE, (A0)
 Offset_0x0201DE:                
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
@@ -238,7 +238,7 @@ Obj_Tunnel_Exhaust_Control: ; usado também pelo objeto 0x1B    ; Offset_0x02044E
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x020484
                 move.l  #Obj_Tunnel_Exhaust_Continuous, (A0)   ; Offset_0x02060C
@@ -276,7 +276,7 @@ Obj_Tunnel_Exhaust_Control_Main:                               ; Offset_0x0204C2
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
-                move.w  #$0380, Obj_Priority(A1)                         ; $0008
+                move.w  #$0380, priority(A1)                         ; $0008
                 move.w  Obj_Angle(A0), D0                                ; $0026
                 cmpi.w  #$0006, D0
                 bne.s   Offset_0x02051A
@@ -372,7 +372,7 @@ Obj_Tunnel_Exhaust_Continuous:                                 ; Offset_0x02060C
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
-                move.w  #$0380, Obj_Priority(A1)                         ; $0008
+                move.w  #$0380, priority(A1)                         ; $0008
                 move.w  #$0000, Obj_Speed_X(A1)                          ; $0018
                 move.w  #$0400, Obj_Speed_Y(A1)                          ; $001A
                 move.b  #$84, render_flags(A1)                              ; $0004
@@ -423,7 +423,7 @@ Offset_0x0206EE:
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 move.w  #$0078, Obj_Control_Var_00(A0)                   ; $0030
                 move.l  #Offset_0x020726, (A0)
 Offset_0x020726:                
@@ -441,7 +441,7 @@ Offset_0x020726:
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
-                move.w  #$0380, Obj_Priority(A1)                         ; $0008
+                move.w  #$0380, priority(A1)                         ; $0008
                 ori.b   #$04, render_flags(A1)                              ; $0004
                 bset    #$00, render_flags(A1)                              ; $0004
                 move.w  #$F800, Obj_Speed_X(A1)                          ; $0018

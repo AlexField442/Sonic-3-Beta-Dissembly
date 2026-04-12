@@ -332,10 +332,10 @@ Offset_0x044298:
                 beq.s   Offset_0x0442B2
                 bchg    #00, D0
 Offset_0x0442B2:
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 btst    #$00, D0
                 beq.s   Offset_0x0442C4
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
 Offset_0x0442C4:
                 rts
 ;-------------------------------------------------------------------------------   
@@ -352,7 +352,7 @@ Offset_0x0442D8:
 ;-------------------------------------------------------------------------------  
 Offset_0x0442DE:
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.w  Obj_Priority(A1), Obj_Priority(A0)        ; $0008, $0008
+                move.w  priority(A1), priority(A0)        ; $0008, $0008
                 rts   
 ;-------------------------------------------------------------------------------  
 Offset_0x0442EA:

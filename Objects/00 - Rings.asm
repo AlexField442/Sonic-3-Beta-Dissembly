@@ -25,7 +25,7 @@ Rings_Init:
 		move.l	#Rings_Mappings,mappings(a0)
 		move.w	#$A6BC,Obj_Art_VRAM(a0)
 		move.b	#4,render_flags(a0)
-		move.w	#$100,Obj_Priority(a0)
+		move.w	#$100,priority(a0)
 		move.b	#$47,Obj_Col_Flags(a0)
 		move.b	#8,width_pixels(a0)
 		tst.w	(Two_Player_Flag).w
@@ -40,7 +40,7 @@ Rings_Main:
 Rings_Collect:
 		addq.b	#2,routine(a0)
 		move.b	#0,Obj_Col_Flags(a0)
-		move.w	#$80,Obj_Priority(a0)
+		move.w	#$80,priority(a0)
 		bsr.s	CollectRing
 ; Offset_0x010A0E:
 Rings_Display:

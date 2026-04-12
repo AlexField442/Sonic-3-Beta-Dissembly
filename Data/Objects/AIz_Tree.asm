@@ -14,7 +14,7 @@
                 add.w   D1, D0
                 lea     Offset_0x0234EA(PC, D0), A1
                 move.w  (A1)+, Obj_Art_VRAM(A0)                          ; $000A
-                move.w  (A1)+, Obj_Priority(A0)                          ; $0008
+                move.w  (A1)+, priority(A0)                          ; $0008
                 move.b  (A1)+, width_pixels(A0)                             ; $0007
                 move.b  (A1)+, height_pixels(A0)                            ; $0006
                 move.l  #Offset_0x0234E4, (A0)

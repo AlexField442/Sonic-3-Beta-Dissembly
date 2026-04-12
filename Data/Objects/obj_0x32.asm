@@ -6,7 +6,7 @@
                 move.l  #Draw_Bridge_Mappings, mappings(A0) ; Offset_0x02277E, $000C
                 move.w  #$C2F0, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$60, height_pixels(A0)                             ; $0006
                 ori.b   #$80, Obj_Status(A0)                             ; $002A
@@ -32,7 +32,7 @@ Offset_0x0223C6:
                 move.l  #Offset_0x0225B2, (A1)
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A0), priority(A1)        ; $0008, $0008
                 move.b  #$04, render_flags(A1)                              ; $0004
                 bset    #$06, render_flags(A1)                              ; $0004
                 move.b  #$40, width_pixels(A1)                              ; $0007
@@ -57,7 +57,7 @@ Offset_0x022418:
                 move.l  #Offset_0x0225B2, (A1)
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A0), priority(A1)        ; $0008, $0008
                 move.b  #$04, render_flags(A1)                              ; $0004
                 bset    #$06, render_flags(A1)                              ; $0004
                 move.b  #$40, width_pixels(A1)                              ; $0007
@@ -285,10 +285,10 @@ Offset_0x0226F6:
                 move.l  mappings(A3), mappings(A1)                  ; $000C, $000C
                 move.b  render_flags(A3), render_flags(A1)              ; $0004, $0004
                 move.w  Obj_Art_VRAM(A3), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.w  Obj_Priority(A3), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A3), priority(A1)        ; $0008, $0008
                 move.b  width_pixels(A3), width_pixels(A1)              ; $0007, $0007
                 move.b  height_pixels(A3), height_pixels(A1)            ; $0006, $0006
-                move.w  Obj_Priority(A3), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A3), priority(A1)        ; $0008, $0008
                 move.w  (A2)+, Obj_X(A1)                                 ; $0010
                 move.w  (A2)+, Obj_Y(A1)                                 ; $0014
                 move.w  (A2)+, D0

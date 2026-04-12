@@ -511,10 +511,10 @@ Offset_0x03BFC2:
 ;-------------------------------------------------------------------------------
 Offset_0x03BFEA:
                 move.b  Obj_Control_Var_0C(A0), D0                       ; $003C
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 addi.b  #$40, D0
                 bpl.s   Offset_0x03C000
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
 Offset_0x03C000:
                 rts  
 ;-------------------------------------------------------------------------------

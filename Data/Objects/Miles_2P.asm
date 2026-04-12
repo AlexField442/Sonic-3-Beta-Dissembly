@@ -45,7 +45,7 @@ Offset_0x00CC6E:
                 move.b  #$0B, Obj_Height_3(A0)                           ; $0044
                 move.b  #$05, Obj_Width_3(A0)                            ; $0045
                 move.l  #Miles_2P_Mappings, mappings(A0) ; Offset_0x102F1C, $000C
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$0C, width_pixels(A0)                              ; $0007
                 move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.b  #$84, render_flags(A0)                              ; $0004

@@ -45,7 +45,7 @@ Offset_0x00A5B6:
                 move.b  #$05, x_radius(A0)                            ; $001F
                 move.b  #$0B, Obj_Height_3(A0)                           ; $0044
                 move.b  #$05, Obj_Width_3(A0)                            ; $0045
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$0C, width_pixels(A0)                              ; $0007
                 move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
@@ -410,7 +410,7 @@ Sonic_Init:
 		move.b	#$13,Obj_Height_3(a0)
 		move.b	#9,Obj_Width_3(a0)
 		move.l	#Sonic_Mappings,mappings(a0)
-		move.w	#$100,Obj_Priority(a0)
+		move.w	#$100,priority(a0)
 		move.b	#$18,width_pixels(a0)
 		move.b	#$18,height_pixels(a0)
 		move.b	#4,render_flags(a0)
@@ -1904,7 +1904,7 @@ Obj_ThrownRing:
 		move.l	#Rings_Mappings,mappings(a1)
 		move.w	#$26BC,Obj_Art_VRAM(a1)
 		move.b	#$84,render_flags(a1)
-		move.w	#$180,Obj_Priority(a1)
+		move.w	#$180,priority(a1)
 		move.b	#8,width_pixels(a1)
 		rts
 ; ---------------------------------------------------------------------------
@@ -2565,7 +2565,7 @@ Sonic_HurtStop:
 		move.w	d0,Obj_Inertia(a0)
 		move.b	d0,Obj_Player_Control(a0)
 		move.b	#0,Obj_Ani_Number(a0)
-		move.w	#$100,Obj_Priority(a0)
+		move.w	#$100,priority(a0)
 		move.b	#2,routine(a0)
 		move.b	#$78,Obj_P_Invunerblt_Time(a0)
 		move.b	#0,Obj_Player_Spdsh_Flag(a0)

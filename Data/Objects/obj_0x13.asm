@@ -8,7 +8,7 @@ Offset_0x01C890:
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$C6, Obj_Col_Flags(A0)                          ; $0028
                 move.l  #Offset_0x01C8C2, (A0)
 Offset_0x01C8C2:                

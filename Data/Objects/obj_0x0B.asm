@@ -117,7 +117,7 @@ Offset_0x01B4CA:
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
                 move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
@@ -218,7 +218,7 @@ Offset_0x01B636:
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
                 move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
@@ -342,7 +342,7 @@ Offset_0x01B7E0:
                 move.b  D0, Obj_Map_Id(A0)                               ; $0022
                 lsl.w   #$06, D0
                 andi.w  #$0380, D0
-                move.w  D0, Obj_Priority(A0)                             ; $0008
+                move.w  D0, priority(A0)                             ; $0008
                 jsr     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x01B7F4:
                 rts      

@@ -8,7 +8,7 @@
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$30, height_pixels(A0)                             ; $0006
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.w  Obj_X(A0), Obj_Height_3(A0)               ; $0010, $0044
                 move.w  Obj_Y(A0), Obj_Control_Var_16(A0)         ; $0014, $0046
                 btst    #$06, Obj_Subtype(A0)                            ; $002C
@@ -27,7 +27,7 @@ Offset_0x02089E:
                 move.b  #$18, width_pixels(A1)                              ; $0007
                 move.b  #$18, height_pixels(A1)                             ; $0006
                 ori.b   #$04, render_flags(A1)                              ; $0004
-                move.w  #$0280, Obj_Priority(A1)                         ; $0008
+                move.w  #$0280, priority(A1)                         ; $0008
                 move.b  #$06, Obj_Map_Id(A1)                             ; $0022
                 move.w  A0, Obj_Control_Var_12(A1)                       ; $0042
 Offset_0x0208EA:

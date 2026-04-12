@@ -6,7 +6,7 @@
                 move.l  #Head_Trigger_Mappings, mappings(A0) ; Offset_0x02A822, $000C
                 move.w  #$A3FF, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$38, height_pixels(A0)                             ; $0006
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022
@@ -81,7 +81,7 @@ Offset_0x02A6EC:
                 move.b  Obj_Status(A0), Obj_Status(A1)            ; $002A, $002A
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.b  #$08, width_pixels(A1)                              ; $0007
                 move.b  #$08, height_pixels(A1)                             ; $0006
                 move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
@@ -106,7 +106,7 @@ Offset_0x02A736:
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 andi.w  #$7FFF, Obj_Art_VRAM(A1)                         ; $000A
-                move.w  #$0300, Obj_Priority(A1)                         ; $0008
+                move.w  #$0300, priority(A1)                         ; $0008
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$04, height_pixels(A1)                             ; $0006
                 move.b  #$9B, Obj_Col_Flags(A1)                          ; $0028

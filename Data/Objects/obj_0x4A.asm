@@ -8,7 +8,7 @@
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$D7, Obj_Col_Flags(A0)                          ; $0028
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032

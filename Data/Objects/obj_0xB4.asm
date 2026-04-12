@@ -120,7 +120,7 @@ Offset_0x03D63C:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x03D65E:
                 move.l  #Display_Sprite_Wait, (A0)             ; Offset_0x042F8E
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03D67A, Obj_Child(A0)                  ; $0034
                 rts 
@@ -415,7 +415,7 @@ Offset_0x03D9B8:
                 tst.b   Obj_Control_Var_0C(A2)                           ; $003C
                 beq.s   Offset_0x03DA04
                 bmi.s   Offset_0x03DA04
-                move.w  Offset_0x03DA06(PC, D4), Obj_Priority(A0)        ; $0008
+                move.w  Offset_0x03DA06(PC, D4), priority(A0)        ; $0008
 Offset_0x03DA04:
                 rts
 ;-------------------------------------------------------------------------------
@@ -506,15 +506,15 @@ Offset_0x03DAE8:
                 beq.s   Offset_0x03DB0C
                 bmi.s   Offset_0x03DAFE
                 bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 rts
 Offset_0x03DAFE:
                 bclr    #$07, Obj_Art_VRAM(A0)                           ; $000A
-                move.w  #$0380, Obj_Priority(A0)                         ; $0008
+                move.w  #$0380, priority(A0)                         ; $0008
                 rts
 Offset_0x03DB0C:
                 bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
-                move.w  #$0380, Obj_Priority(A0)                         ; $0008
+                move.w  #$0380, priority(A0)                         ; $0008
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x03DB1A:
@@ -522,7 +522,7 @@ Offset_0x03DB1A:
                 beq.s   Offset_0x03DB0C
                 bmi.s   Offset_0x03DAFE
                 bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x03DB30:

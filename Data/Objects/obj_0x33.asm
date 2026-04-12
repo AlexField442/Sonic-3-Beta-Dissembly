@@ -19,7 +19,7 @@ Offset_0x02368E:
 Offset_0x0236A4:
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014
                 btst    #$05, Obj_Subtype(A0)                            ; $002C
                 beq.s   Offset_0x0236CC
@@ -104,7 +104,7 @@ Obj_0x33_Switch_2P:                                            ; Offset_0x0237AA
                 move.w  #$03AD, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$0C, width_pixels(A0)                              ; $0007
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 addq.w  #$04, Obj_Y(A0)                                  ; $0014
                 move.l  #Offset_0x0237D4, (A0)
 Offset_0x0237D4:                

@@ -5,7 +5,7 @@
 ; Offset_0x0102AA:
                 move.l  #Super_Sonic_Stars_Mappings, mappings(A0) ; Offset_0x01036A, $000C
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$18, height_pixels(A0)                             ; $0006
                 move.w  #$079C, Obj_Art_VRAM(A0)                         ; $000A

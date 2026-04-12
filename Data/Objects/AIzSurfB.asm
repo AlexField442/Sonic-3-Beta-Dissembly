@@ -4,7 +4,7 @@
 ;------------------------------------------------------------------------------- 
 ; Offset_0x0185D6:
                 move.l  #Intro_Surfboard_Mappings, mappings(A0) ; Offset_0x0188FC, $000C
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0680, Obj_Art_VRAM(A0)                         ; $000A
@@ -328,7 +328,7 @@ Offset_0x018A34:
 ;-------------------------------------------------------------------------------                
 Surfboard_Waves:                                               ; Offset_0x018A3C
                 move.l  #Surfboard_Waves_Mappings, mappings(A0) ; Offset_0x018C62, $000C
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$00, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$03D1, Obj_Art_VRAM(A0)                         ; $000A
@@ -364,7 +364,7 @@ Intro_Surfboard_Splash:                                        ; Offset_0x018AC4
                 bne     Offset_0x018AF2
                 bsr.s   Offset_0x018B0C
                 move.l  #Offset_0x018BA8, (A1)
-                move.w  #$0080, Obj_Priority(A1)                         ; $0008
+                move.w  #$0080, priority(A1)                         ; $0008
                 move.w  #$FFEC, Obj_P_Horiz_Ctrl_Lock(A1)                ; $0032
                 move.w  #$0010, Obj_P_Invunerblt_Time(A1)                ; $0034
                 move.w  Obj_P_Flips_Remaining(A0), Obj_P_Flips_Remaining(A1) ; $0030, $0030
@@ -372,7 +372,7 @@ Offset_0x018AF2:
                 bra.s   Offset_0x018B34
 Offset_0x018AF4:
                 move.l  #Offset_0x018B34, (A1)
-                move.w  #$0180, Obj_Priority(A1)                         ; $0008
+                move.w  #$0180, priority(A1)                         ; $0008
                 move.w  #$0008, Obj_P_Horiz_Ctrl_Lock(A1)                ; $0032
                 move.w  #$0018, Obj_P_Invunerblt_Time(A1)                ; $0034
 Offset_0x018B0C:
@@ -564,7 +564,7 @@ Offset_0x018D6C:
 ;-------------------------------------------------------------------------------
 Surfboard:                                                     ; Offset_0x018D7A
                 move.l  #Surfboard_Mappings, mappings(A0) ; Offset_0x018E26, $000C
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0585, Obj_Art_VRAM(A0)                         ; $000A

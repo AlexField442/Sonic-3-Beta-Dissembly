@@ -26,7 +26,7 @@ Offset_0x026778:
                 rts
 Offset_0x026780:
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.l  #Large_Fan_Mappings, mappings(A0) ; Offset_0x02685C, $000C
                 move.w  #$2500, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$18, width_pixels(A0)                              ; $0007

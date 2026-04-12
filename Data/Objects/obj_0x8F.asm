@@ -493,10 +493,10 @@ Offset_0x03C860:
                 bclr    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 clr.w   Obj_Speed_X(A0)                                  ; $0018
                 clr.w   Obj_Speed_Y(A0)                                  ; $001A
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
                 beq.s   Offset_0x03C888
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
 Offset_0x03C888:
                 rts    
 ;-------------------------------------------------------------------------------

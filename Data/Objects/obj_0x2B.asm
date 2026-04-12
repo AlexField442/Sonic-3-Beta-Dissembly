@@ -8,7 +8,7 @@
                 move.b  #$80, width_pixels(A0)                              ; $0007
                 move.b  #$04, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.w  Obj_Y(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
                 move.l  #Offset_0x021C8E, Obj_Control_Var_02(A0)         ; $0032
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -37,7 +37,7 @@ Offset_0x021B86:
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$80, width_pixels(A1)                              ; $0007
                 move.b  #$40, height_pixels(A1)                             ; $0006
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 bset    #$06, render_flags(A1)                              ; $0004

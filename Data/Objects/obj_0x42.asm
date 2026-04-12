@@ -6,7 +6,7 @@
                 move.l  #Cannon_Mappings, mappings(A0)   ; Offset_0x027C10, $000C
                 move.w  #$4374, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$30, width_pixels(A0)                              ; $0007
                 move.b  #$30, height_pixels(A0)                             ; $0006
                 move.b  #$09, Obj_Map_Id(A0)                             ; $0022
@@ -99,7 +99,7 @@ Offset_0x027A92:
                 beq.s   Offset_0x027AE8
                 bclr    #$03, Obj_Status(A1)                             ; $002A
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  #$0380, Obj_Priority(A1)                         ; $0008
+                move.w  #$0380, priority(A1)                         ; $0008
                 move.w  #$0000, Obj_Speed_X(A1)                          ; $0018
                 move.w  #$0000, Obj_Speed_Y(A1)                          ; $001A
                 move.w  #$0000, Obj_Inertia(A1)                          ; $001C
@@ -168,7 +168,7 @@ Offset_0x027BA2:
 Offset_0x027BA4:
                 subq.b  #$01, $0002(A2)
                 bne.s   Offset_0x027BB4
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
                 move.b  #$00, (A2)
 Offset_0x027BB4:
                 rts

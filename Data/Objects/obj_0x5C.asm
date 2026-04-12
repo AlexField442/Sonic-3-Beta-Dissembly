@@ -6,7 +6,7 @@
                 move.l  #Blue_Spinning_Platform_Mappings, mappings(A0) ; Offset_0x02BEA8, $000C
                 move.w  #$43FF, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$0C, width_pixels(A0)                              ; $0007
                 move.b  #$08, height_pixels(A0)                             ; $0006
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022

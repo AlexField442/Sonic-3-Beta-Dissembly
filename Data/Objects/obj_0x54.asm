@@ -22,7 +22,7 @@ Offset_0x02551A:
                 move.w  #$045C, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x02555E
                 addq.b  #$08, routine(A0)                            ; $0005

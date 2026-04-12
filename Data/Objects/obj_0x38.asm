@@ -20,7 +20,7 @@
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 andi.w  #$0030, D0
@@ -33,7 +33,7 @@ Offset_0x02648A:
                 move.l  #Fan_Mappings, mappings(A1)      ; Offset_0x0267EE, $000C
                 move.w  #$240B, Obj_Art_VRAM(A1)                         ; $000A
                 ori.b   #$04, render_flags(A1)                              ; $0004
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$0C, height_pixels(A1)                             ; $0006
                 move.w  Obj_X(A1), Obj_Control_Var_10(A1)         ; $0010, $0040
@@ -106,7 +106,7 @@ Offset_0x02657A:
                 move.b  #$84, render_flags(A1)                              ; $0004
                 move.b  #$04, width_pixels(A1)                              ; $0007
                 move.b  #$04, width_pixels(A1)                              ; $0007
-                move.w  #$0300, Obj_Priority(A1)                         ; $0008
+                move.w  #$0300, priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
                 andi.w  #$000F, D0

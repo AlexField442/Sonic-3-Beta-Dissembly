@@ -72,7 +72,7 @@ Obj_AIz_Battleship_Propeller:                                  ; Offset_0x031288
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.b  #$08, width_pixels(A0)                              ; $0007
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #AIz_Battleship_Propeller_Mappings, mappings(A0) ; Offset_0x031B48, $000C
                 move.w  #$0A71, Obj_Control_Var_00(A0)                   ; $0030
@@ -91,7 +91,7 @@ Obj_AIz_FBz_Ship_Bomb:                                         ; Offset_0x0312DC
                 move.l  #Obj_AIz_FBz_Ship_Bomb_Main, (A0)      ; Offset_0x031314
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$18, width_pixels(A0)                              ; $0007
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #AIz_FBz_Ship_Bomb_Main_Mappings, mappings(A0) ; Offset_0x031B78, $000C
                 move.b  #$10, y_radius(A0)                           ; $001E
@@ -228,7 +228,7 @@ Offset_0x03149C:
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x0314BE
                 move.l  #Obj_AIz_Background_Tree, (A1)         ; Offset_0x0314C0
-                move.w  (A2)+, Obj_Priority(A1)                          ; $0008
+                move.w  (A2)+, priority(A1)                          ; $0008
                 move.l  A2, Obj_Control_Var_00(A0)                       ; $0030
 Offset_0x0314BE:
                 rts         
@@ -262,7 +262,7 @@ Offset_0x031518:
 ;-------------------------------------------------------------------------------
 Obj_AIz_Boss_Small:                                            ; Offset_0x03151A
                 move.l  #Obj_AIz_Boss_Small_Main, (A0)         ; Offset_0x03155A
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
                 move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
                 move.l  #AIz_Boss_Small_Mappings, mappings(A0) ; Offset_0x031C2A, $000C
                 move.w  #$0030, Obj_X(A0)                                ; $0010

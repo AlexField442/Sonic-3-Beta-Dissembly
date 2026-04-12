@@ -5,7 +5,7 @@
 ; Offset_0x01F892:
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$80, height_pixels(A0)                             ; $0006
                 move.w  Obj_Y(A0), Obj_Control_Var_0C(A0)         ; $0014, $003C
                 move.l  #Hook_Mappings, mappings(A0)     ; Offset_0x01FA5E, $000C

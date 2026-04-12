@@ -6,7 +6,7 @@
                 move.l  #Cup_Elevator_Mappings, mappings(A0) ; Offset_0x01DF66, $000C
                 move.w  #$440D, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
@@ -17,7 +17,7 @@
                 move.l  #Cup_Elevator_Mappings, mappings(A1) ; Offset_0x01DF66, $000C
                 move.w  #$440D, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
                 move.b  #$20, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
@@ -31,7 +31,7 @@
                 move.l  #Cup_Elevator_Mappings, mappings(A1) ; Offset_0x01DF66, $000C
                 move.w  #$440D, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.w  #$0080, Obj_Priority(A1)                         ; $0008
+                move.w  #$0080, priority(A1)                         ; $0008
                 move.b  #$20, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
@@ -133,7 +133,7 @@ Offset_0x01DAF2:
                 move.w  #$0600, Obj_Timer(A0)                            ; $002E
                 bra     Offset_0x01DC02
 Offset_0x01DB12:
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.w  #$0000, Obj_Control_Var_04(A0)                   ; $0034
                 addq.w  #$02, Obj_Control_Var_06(A0)                     ; $0036
                 rts
@@ -148,11 +148,11 @@ Offset_0x01DB24:
                 move.w  Obj_Control_Var_02(A0), D0                       ; $0032
                 sub.w   D1, D0
                 move.w  D0, Obj_Y(A0)                                    ; $0014
-                cmpi.w  #$0200, Obj_Priority(A0)                         ; $0008
+                cmpi.w  #$0200, priority(A0)                         ; $0008
                 bne.s   Offset_0x01DB64
                 tst.b   Obj_Angle(A0)                                    ; $0026
                 bpl.s   Offset_0x01DB62
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 moveq   #Hoverpad_Sfx, D0                                 ; -$80
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x01DB62:
@@ -160,7 +160,7 @@ Offset_0x01DB62:
 Offset_0x01DB64:
                 tst.b   Obj_Angle(A0)                                    ; $0026
                 bmi.s   Offset_0x01DB78
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 moveq   #Hoverpad_Sfx, D0                                 ; -$80
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x01DB78:
@@ -176,7 +176,7 @@ Offset_0x01DB84:
 Offset_0x01DB86:
                 tst.w   Obj_Control_Var_0A(A0)                           ; $003A
                 bne.s   Offset_0x01DB9E
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.w  #$0000, Obj_Control_Var_04(A0)                   ; $0034
                 addq.w  #$02, Obj_Control_Var_06(A0)                     ; $0036
                 rts
@@ -191,11 +191,11 @@ Offset_0x01DB9E:
                 move.w  Obj_Control_Var_02(A0), D0                       ; $0032
                 sub.w   D1, D0
                 move.w  D0, Obj_Y(A0)                                    ; $0014
-                cmpi.w  #$0200, Obj_Priority(A0)                         ; $0008
+                cmpi.w  #$0200, priority(A0)                         ; $0008
                 bne.s   Offset_0x01DBDE
                 tst.b   Obj_Angle(A0)                                    ; $0026
                 bpl.s   Offset_0x01DBDC
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 moveq   #Hoverpad_Sfx, D0                                 ; -$80
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x01DBDC:
@@ -203,7 +203,7 @@ Offset_0x01DBDC:
 Offset_0x01DBDE:
                 tst.b   Obj_Angle(A0)                                    ; $0026
                 bmi.s   Offset_0x01DBF2
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 moveq   #Hoverpad_Sfx, D0                                 ; -$80
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x01DBF2:
@@ -233,11 +233,11 @@ Offset_0x01DC2E:
 Offset_0x01DC34:
                 move.b  Obj_Timer(A0), D0                                ; $002E
                 add.b   D0, Obj_Angle(A0)                                ; $0026
-                cmpi.w  #$0200, Obj_Priority(A0)                         ; $0008
+                cmpi.w  #$0200, priority(A0)                         ; $0008
                 bne.s   Offset_0x01DC5A
                 tst.b   Obj_Angle(A0)                                    ; $0026
                 bpl.s   Offset_0x01DC58
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 moveq   #Hoverpad_Sfx, D0                                 ; -$80
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x01DC58:
@@ -245,7 +245,7 @@ Offset_0x01DC58:
 Offset_0x01DC5A:
                 tst.b   Obj_Angle(A0)                                    ; $0026
                 bmi.s   Offset_0x01DC6E
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 moveq   #Hoverpad_Sfx, D0                                 ; -$80
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x01DC6E:
@@ -320,7 +320,7 @@ Offset_0x01DD3E:
 Offset_0x01DD54:
                 bclr    D6, Obj_Status(A0)                               ; $002A
                 beq     Offset_0x01DD78
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
                 clr.b   Obj_Timer(A1)                                    ; $002E
                 bclr    #$03, Obj_Status(A1)                             ; $002A
                 bclr    #$05, Obj_Status(A1)                             ; $002A
@@ -364,7 +364,7 @@ Offset_0x01DDE0:
                 beq     Offset_0x01DE7A
                 tst.b   (Knuckles_Control_Lock_Flag).w               ; $FFFFFAA9
                 bne     Offset_0x01DE7A
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
                 clr.b   Obj_Timer(A1)                                    ; $002E
                 bclr    D6, Obj_Status(A0)                               ; $002A
                 bclr    #$03, Obj_Status(A1)                             ; $002A
@@ -389,7 +389,7 @@ Offset_0x01DE58:
                 rts
 Offset_0x01DE60:
                 bclr    D6, Obj_Status(A0)                               ; $002A
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
                 clr.b   Obj_Timer(A1)                                    ; $002E
                 move.b  #$00, (A2)
                 move.b  #$3C, $0002(A2)
@@ -399,12 +399,12 @@ Offset_0x01DE7A:
                 move.w  Obj_Y(A0), D0                                    ; $0014
                 subi.w  #$0010, D0
                 move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  #$0280, Obj_Priority(A1)                         ; $0008
+                move.w  #$0280, priority(A1)                         ; $0008
                 move.b  Obj_Angle(A0), D0                                ; $0026
                 addi.b  #$20, D0
                 cmpi.b  #$C0, D0
                 bcs.s   Offset_0x01DEA6
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
 Offset_0x01DEA6:
                 rts     
 ;-------------------------------------------------------------------------------
@@ -417,10 +417,10 @@ Offset_0x01DEB8:
                 move.w  Obj_Control_Var_10(A0), A1                       ; $0040
                 move.w  Obj_Y(A1), Obj_Y(A0)                      ; $0014, $0014
                 move.b  Obj_Angle(A1), Obj_Angle(A0)              ; $0026, $0026
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 move.b  Obj_Angle(A0), D0                                ; $0026
                 bpl.s   Offset_0x01DEDA
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
 Offset_0x01DEDA:
                 andi.b  #$FE, render_flags(A0)                              ; $0004
                 subi.b  #$40, D0

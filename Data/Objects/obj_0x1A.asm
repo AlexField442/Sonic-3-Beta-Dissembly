@@ -8,7 +8,7 @@
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$40, width_pixels(A0)                              ; $0007
                 move.b  #$40, height_pixels(A0)                             ; $0006
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$80, Obj_Control_Var_12(A0)                     ; $0042
                 move.b  #$01, Obj_Map_Id(A0)                             ; $0022
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
@@ -19,7 +19,7 @@
                 ori.b   #$04, render_flags(A1)                              ; $0004
                 move.b  #$40, width_pixels(A1)                              ; $0007
                 move.b  #$40, height_pixels(A1)                             ; $0006
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.b  #$80, Obj_Control_Var_12(A1)                     ; $0042

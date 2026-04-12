@@ -23,7 +23,7 @@ Offset_0x025C64:
                 rts
 Offset_0x025C6C:
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
                 move.l  #Water_Wall_Mappings, mappings(A0) ; Offset_0x0262BA, $000C
                 move.w  #$4500, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$80, width_pixels(A0)                              ; $0007
@@ -63,7 +63,7 @@ Offset_0x025CE8:
                 ext.w   D0
                 add.w   D3, D0
                 move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  #$0380, Obj_Priority(A1)                         ; $0008
+                move.w  #$0380, priority(A1)                         ; $0008
                 move.b  #$18, width_pixels(A1)                              ; $0007
                 move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  (A3)+, Obj_Speed_X(A1)                           ; $0018
@@ -119,7 +119,7 @@ Offset_0x025D84:
                 move.w  #$045C, Obj_Art_VRAM(A1)                         ; $000A
 Offset_0x025DE0:
                 move.b  D1, Obj_Ani_Number(A1)                           ; $0020
-                move.w  #$0380, Obj_Priority(A1)                         ; $0008
+                move.w  #$0380, priority(A1)                         ; $0008
                 move.b  #$18, width_pixels(A1)                              ; $0007
                 move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  #$0400, Obj_Speed_X(A1)                          ; $0018
@@ -173,7 +173,7 @@ Offset_0x025E6A:
                 move.b  #$84, render_flags(A1)                              ; $0004
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  (Water_Level_Move).w, Obj_Y(A1)       ; $FFFFF646, $0014
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.b  #$18, width_pixels(A1)                              ; $0007
                 move.b  #$18, height_pixels(A1)                             ; $0006
                 move.b  #$08, Obj_Ani_Number(A1)                         ; $0020
@@ -283,7 +283,7 @@ Offset_0x026020:
                 rts
 Offset_0x026034:
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
                 move.l  #Water_Wall_Mappings, mappings(A0) ; Offset_0x0262BA, $000C
                 move.w  #$4500, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, width_pixels(A0)                              ; $0007
@@ -328,7 +328,7 @@ Offset_0x0260CA:
                 ext.w   D0
                 add.w   D3, D0
                 move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  #$0280, Obj_Priority(A1)                         ; $0008
+                move.w  #$0280, priority(A1)                         ; $0008
                 move.b  #$18, width_pixels(A1)                              ; $0007
                 move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  (A3)+, Obj_Speed_X(A1)                           ; $0018
@@ -394,7 +394,7 @@ Offset_0x026214:
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 subi.w  #$0050, Obj_Y(A1)                                ; $0014
-                move.w  #$0380, Obj_Priority(A1)                         ; $0008
+                move.w  #$0380, priority(A1)                         ; $0008
                 move.b  #$18, width_pixels(A1)                              ; $0007
                 move.b  #$18, height_pixels(A1)                             ; $0006
                 move.w  #$4530, Obj_Art_VRAM(A1)                         ; $000A

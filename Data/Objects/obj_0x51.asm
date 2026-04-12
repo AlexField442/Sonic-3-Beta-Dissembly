@@ -17,7 +17,7 @@ Offset_0x01C3D8:
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x01C3EE:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 lsr.w   #$02, D0

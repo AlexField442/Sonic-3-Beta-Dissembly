@@ -122,7 +122,7 @@ Offset_0x04197E:
                 bpl.s   Offset_0x04198C
                 move.w  #$0180, D1
 Offset_0x04198C:
-                move.w  D1, Obj_Priority(A0)                             ; $0008
+                move.w  D1, priority(A0)                             ; $0008
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 lea     Offset_0x041AC4(PC), A1
                 jsr     Animate_Raw_A1(PC)                     ; Offset_0x042092

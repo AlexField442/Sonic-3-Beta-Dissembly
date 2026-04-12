@@ -16,7 +16,7 @@ Obj_0x40_Hz_Block:                                             ; Offset_0x014AB6
                 move.l  #Hz_Block_Mappings, mappings(A0) ; Offset_0x014B0E, $000C
                 move.w  #$43D4, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.l  #Offset_0x014AEE, (A0)
 ;-------------------------------------------------------------------------------                
 Offset_0x014AEE:                

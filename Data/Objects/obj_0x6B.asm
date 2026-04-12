@@ -6,7 +6,7 @@
                 move.l  #Invisible_Block_Mappings, mappings(A0) ; Offset_0x014352, $000C
                 move.w  #$86BC, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.b  D0, D1
                 andi.w  #$00F0, D0

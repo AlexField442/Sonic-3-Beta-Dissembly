@@ -32,7 +32,7 @@ Miles_Main:                                                    ; Offset_0x00D15E
                 move.b  #$0F, Obj_Height_3(A0)                           ; $0044
                 move.b  #$09, Obj_Width_3(A0)                            ; $0045
                 move.l  #Miles_Mappings, mappings(A0)    ; Offset_0x101FF4, $000C
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$18, height_pixels(A0)                             ; $0006
                 move.b  #$84, render_flags(A0)                              ; $0004
@@ -561,7 +561,7 @@ Miles_CPU_0A:                                                  ; Offset_0x00D824
                 ori.w   #$8000, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D
                 move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$81, Obj_Player_Control(A0)                     ; $002E
                 move.w  #$0000, Obj_Speed_Y(A0)                          ; $001A
 Offset_0x00D866:
@@ -1967,7 +1967,7 @@ Miles_HurtStop:                                                ; Offset_0x00E8AE
                 move.w  D0, Obj_Inertia(A0)                              ; $001C
                 move.b  D0, Obj_Player_Control(A0)                       ; $002E
                 move.b  #$00, Obj_Ani_Number(A0)                         ; $0020
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$78, Obj_P_Invunerblt_Time(A0)                  ; $0034
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D

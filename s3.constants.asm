@@ -53,13 +53,13 @@ render_flags:		equ 4		; 1 byte
 routine:		equ 5		; 1 byte
 height_pixels:		equ 6		; 1 byte
 width_pixels:		equ 7		; 1 byte
+priority:		equ 8		; 2 bytes ; 8/9
 mappings:		equ $C		; 4 bytes ; $C/$D/$E/$F
 
 y_radius:		equ $1E		; 1 byte
 x_radius:		equ $1F		; 1 byte
 
 ; OLD! To deprecate!
-Obj_Priority          equ $08     ; Word          ; 18          ; 08..09
 Obj_Art_VRAM          equ $0A     ; Word          ; 02..03      ; 0A..0B
 Obj_X                 equ $10     ; Word          ; 08..09      ; 10..11
 Obj_Sub_X             equ $12     ; Word          ; 0A..0B      ; 12..13  ; Fixed position

@@ -8,7 +8,7 @@
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.l  #Offset_0x01F628, (A0)
 Offset_0x01F628:                
                 move.w  #$002B, D1

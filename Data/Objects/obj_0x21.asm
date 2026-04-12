@@ -8,7 +8,7 @@
                 move.b  #$1C, width_pixels(A0)                              ; $0007
                 move.b  #$04, height_pixels(A0)                             ; $0006
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.w  D0, D1
@@ -31,7 +31,7 @@ Offset_0x01FF76:
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x01FFBA
                 bsr.s   Offset_0x01FFC0
-                move.w  #$0080, Obj_Priority(A1)                         ; $0008
+                move.w  #$0080, priority(A1)                         ; $0008
                 move.b  #$02, Obj_Map_Id(A1)                             ; $0022
                 move.b  #$98, Obj_Col_Flags(A1)                          ; $0028
                 move.l  #Offset_0x020006, (A1)
@@ -50,7 +50,7 @@ Offset_0x01FFC0:
                 move.b  #$04, height_pixels(A1)                             ; $0006
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$01, Obj_Map_Id(A1)                             ; $0022
-                move.w  #$0180, Obj_Priority(A1)                         ; $0008
+                move.w  #$0180, priority(A1)                         ; $0008
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x020006:

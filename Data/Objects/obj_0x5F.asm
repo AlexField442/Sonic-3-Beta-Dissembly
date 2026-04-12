@@ -65,7 +65,7 @@ Offset_0x01A0AC:
                 move.b  Obj_Status(A0), Obj_Status(A1)            ; $002A, $002A
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 ori.b   #$04, render_flags(A1)                              ; $0004
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.w  A0, Obj_Control_Var_0E(A1)                       ; $003E
                 move.w  A1, Obj_Control_Var_0E(A0)                       ; $003E
 Offset_0x01A0CC:

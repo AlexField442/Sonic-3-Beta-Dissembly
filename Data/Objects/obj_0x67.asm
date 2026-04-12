@@ -6,7 +6,7 @@
                 move.l  #Hz_Floating_Platform_Mappings, mappings(A0) ; Offset_0x01C518, $000C
                 move.w  #$0028, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.b  #$01, Obj_Map_Id(A0)                             ; $0022

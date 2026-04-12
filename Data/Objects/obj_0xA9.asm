@@ -293,7 +293,7 @@ Offset_0x0375F6:
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq.s   Offset_0x037614
                 move.b  #$2A, Obj_Map_Id(A0)                             ; $0022
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
 Offset_0x037614:
                 lea     Offset_0x037CB2(PC), A2
                 jmp     (SetupChildObject)                 ; Offset_0x041D9A   

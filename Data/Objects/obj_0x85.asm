@@ -270,7 +270,7 @@ Offset_0x03EF1A:
 Offset_0x03EF2A:
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
-                move.w  Offset_0x03EF5A(PC, D0), Obj_Priority(A0)        ; $0008
+                move.w  Offset_0x03EF5A(PC, D0), priority(A0)        ; $0008
                 lsr.w   #$01, D0
                 move.b  Offset_0x03EF66(PC, D0), Obj_Map_Id(A0)          ; $0022
                 move.b  Offset_0x03EF6C(PC, D0), Obj_Control_Var_0C(A0)  ; $003C

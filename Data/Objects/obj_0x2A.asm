@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x0211D6:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.l  #Breakable_Floor_Mappings, mappings(A0) ; Offset_0x0216FC, $000C
                 move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$10, width_pixels(A0)                              ; $0007

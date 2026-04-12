@@ -6,7 +6,7 @@
                 move.l  #Fan_Mappings_2P, mappings(A0)   ; Offset_0x026A50, $000C
                 move.w  #$6300, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$04, height_pixels(A0)                             ; $0006
                 move.b  Obj_Subtype(A0), D0                              ; $002C

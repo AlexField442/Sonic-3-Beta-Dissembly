@@ -19,7 +19,7 @@ Obj_0x47_CNz_Barrel:                                           ; Offset_0x028430
                 move.l  #Barrel_Mappings, mappings(A0)   ; Offset_0x0288E8, $000C
                 move.w  #$438E, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Timer(A0)                  ; $0010, $002E
@@ -355,11 +355,11 @@ Offset_0x028828:
                 add.w   Obj_X(A0), D1                                    ; $0010
                 move.w  D1, Obj_X(A1)                                    ; $0010
                 addq.b  #$02, $0001(A2)
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
                 move.b  Obj_Control_Var_05(A0), D0                       ; $0035
                 cmp.b   $0003(A2), D0
                 bls.s   Offset_0x028872
-                move.w  #$0080, Obj_Priority(A1)                         ; $0008
+                move.w  #$0080, priority(A1)                         ; $0008
 Offset_0x028872:
                 move.w  #$0000, Obj_Inertia(A1)                          ; $001C
                 move.w  Obj_Speed_Y(A0), D0                              ; $001A
@@ -374,7 +374,7 @@ Offset_0x028880:
 Offset_0x028894:
                 andi.b  #$70, D5
                 beq.s   Offset_0x0288E6
-                move.w  #$0100, Obj_Priority(A1)                         ; $0008
+                move.w  #$0100, priority(A1)                         ; $0008
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 move.b  #$01, Obj_Control_Var_10(A1)                     ; $0040
                 move.b  #$0E, y_radius(A1)                           ; $001E

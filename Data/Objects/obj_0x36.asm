@@ -10,7 +10,7 @@ Obj_0x36_Hz_Breakable_Bar:                                     ; Offset_0x0143B2
                 move.l  #Hz_Breakable_Bar_Mappings, mappings(A0) ; Offset_0x01488E, $000C
                 move.w  #$43CA, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 moveq   #$00, D0
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 move.w  D0, D1
@@ -328,7 +328,7 @@ Offset_0x0147D4:
 Offset_0x014814:
                 move.w  Obj_X(A0), D2                                    ; $0010
                 move.w  Obj_Y(A0), D3                                    ; $0014
-                move.w  Obj_Priority(A0), D4                             ; $0008
+                move.w  priority(A0), D4                             ; $0008
                 move.l  A0, A1
                 bra.s   Offset_0x01482C      
 ;-------------------------------------------------------------------------------  
@@ -348,7 +348,7 @@ Offset_0x01482C:
                 move.w  (A4)+, D0
                 add.w   D3, D0
                 move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  D4, Obj_Priority(A1)                             ; $0008
+                move.w  D4, priority(A1)                             ; $0008
                 move.b  #$04, width_pixels(A1)                              ; $0007
                 move.b  #$04, height_pixels(A1)                             ; $0006
                 move.b  Obj_Map_Id(A0), Obj_Map_Id(A1)            ; $0022, $0022

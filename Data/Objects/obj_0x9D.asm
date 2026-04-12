@@ -158,7 +158,7 @@ Offset_0x044E68:
                 move.w  A3, Obj_Control_Var_0E(A0)                       ; $003E
                 move.w  (A3), Obj_Control_Var_0A(A0)                     ; $003A
                 move.b  #$06, routine(A0)                            ; $0005
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.w  #$003C, Obj_Timer(A0)                            ; $002E
                 move.w  Obj_X(A0), D0                                    ; $0010
                 sub.w   Obj_X(A1), D0                                    ; $0010

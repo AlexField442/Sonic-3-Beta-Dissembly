@@ -129,7 +129,7 @@ Offset_0x023A1A:
                 move.b  #$0C, y_radius(A0)                           ; $001E
                 move.b  #$04, render_flags(A0)                              ; $0004
                 bset    #$00, render_flags(A0)                              ; $0004
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$07, Obj_Ani_Time(A0)                           ; $0024
                 jmp     (DisplaySprite)                        ; Offset_0x011148
@@ -157,7 +157,7 @@ Offset_0x023AA2:
                 move.b  #$0C, y_radius(A0)                           ; $001E
                 move.b  #$04, render_flags(A0)                              ; $0004
                 bset    #$00, render_flags(A0)                              ; $0004
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$07, Obj_Ani_Time(A0)                           ; $0024
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022
@@ -271,7 +271,7 @@ Offset_0x023C64:
                 subq.w  #$01, Obj_Control_Var_06(A0)                     ; $0036
                 bne     Offset_0x023C80
                 move.b  #$02, routine(A0)                            ; $0005
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
 Offset_0x023C80:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 ;-------------------------------------------------------------------------------                

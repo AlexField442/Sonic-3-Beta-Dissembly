@@ -21,7 +21,7 @@ Obj_0x3C_Automatic_Door:                                       ; Offset_0x026ED0
                 move.w  (A1)+, Obj_Art_VRAM(A0)                          ; $000A
                 move.l  #Automatic_Door_Mappings, mappings(A0) ; Offset_0x027002, $000C
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
                 move.w  Obj_X(A0), D2                                    ; $0010
                 move.w  D2, D3
@@ -131,7 +131,7 @@ Offset_0x027032:
                 move.w  (A1)+, Obj_Art_VRAM(A0)                          ; $000A
                 move.l  #Automatic_Door_Horizontal_Mappings, mappings(A0) ; Offset_0x027168, $000C
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.w  Obj_X(A0), Obj_Control_Var_02(A0)         ; $0010, $0032
                 move.w  Obj_Y(A0), D2                                    ; $0014
                 move.w  D2, D3

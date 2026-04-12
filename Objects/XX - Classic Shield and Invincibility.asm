@@ -19,7 +19,7 @@ ClassicShield_Init:
 		addq.b	#2,routine(a0)
 		move.l	#Classic_Shield_Mappings,mappings(a0)
 		move.b	#4,render_flags(a0)
-		move.w	#$80,Obj_Priority(a0)
+		move.w	#$80,priority(a0)
 		move.b	#$18,width_pixels(a0)
 		move.w	#$79C,Obj_Art_VRAM(a0)
 ; Offset_0x00F9A8:
@@ -93,7 +93,7 @@ Offset_0x00FA2A:
 		move.b	#4,routine(a1)
 		move.l	#Invincibility_Mappings,mappings(a1)
 		move.w	#$79C,Obj_Art_VRAM(a1)
-		move.w	#$80,Obj_Priority(a1)
+		move.w	#$80,priority(a1)
 		move.b	#4,render_flags(a1)
 		bset	#6,render_flags(a1)
 		move.b	#$10,width_pixels(a1)

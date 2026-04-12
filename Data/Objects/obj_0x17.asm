@@ -20,7 +20,7 @@ LBz_Hooked_Ride_Range:                                         ; Offset_0x01D4C8
 Obj_0x17_LBz_Hooked_Ride:                                      ; Offset_0x01D4FC
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Control_Var_08(A0)         ; $0010, $0038
                 move.b  Obj_Subtype(A0), D0                              ; $002C
@@ -37,7 +37,7 @@ Obj_0x17_LBz_Hooked_Ride:                                      ; Offset_0x01D4FC
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
-                move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A0), priority(A1)        ; $0008, $0008
                 bset    #$06, render_flags(A1)                              ; $0004
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$20, height_pixels(A1)                             ; $0006

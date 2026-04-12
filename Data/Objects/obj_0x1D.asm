@@ -11,7 +11,7 @@
                 move.l  #LBz_Platform_Mappings_2, mappings(A1) ; Offset_0x01C3AA, $000C
                 move.w  #$42EA, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.w  #$0180, Obj_Priority(A1)                         ; $0008
+                move.w  #$0180, priority(A1)                         ; $0008
                 move.b  #$20, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  A0, Obj_Control_Var_0E(A1)                       ; $003E

@@ -6,7 +6,7 @@
                 move.l  #Goal_Marker_Mappings, mappings(A0) ; Offset_0x02D468, $000C
                 move.w  #$06BC, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
@@ -239,7 +239,7 @@ Offset_0x02D49A:
 Obj_Lap_Number:                                                ; Offset_0x02D4A8
                 move.l  #Lap_Number_Mappings, mappings(A0) ; Offset_0x02D524, $000C
                 move.w  #$8700, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.w  #$0190, Obj_X(A0)                                ; $0010
@@ -314,7 +314,7 @@ Offset_0x02D580:
 Obj_Neon_Display:                                              ; Offset_0x02D588
                 move.l  #Neon_Display_Mappings, mappings(A0) ; Offset_0x02D72A,$000C
                 move.w  #$8756, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.b  #$80, width_pixels(A0)                              ; $0007
                 move.b  #$28, height_pixels(A0)                             ; $0006
                 move.l  #Offset_0x02D5AE, (A0)
@@ -614,7 +614,7 @@ Offset_0x02DAE4:
 Obj_Timer_P1:                                                  ; Offset_0x02DAE6
                 move.l  #((M68K_RAM_Start+$7000)&$00FFFFFF), mappings(A0) ; $00FF7000, $000C
                 move.w  #$8600, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.b  #$40, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$00C8, Obj_X(A0)                                ; $0010
@@ -637,7 +637,7 @@ Offset_0x02DB34:
 Obj_Timer_P2:                                                  ; Offset_0x02DB48
                 move.l  #((M68K_RAM_Start+$7080)&$00FFFFFF), mappings(A0) ; $00FF7080, $000C
                 move.w  #$8600, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.b  #$40, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$00C8, Obj_X(A0)                                ; $0010
@@ -754,7 +754,7 @@ Offset_0x02DC9E:
 Offset_0x02DCD6:
                 move.l  #Offset_0x02DD72, mappings(A0)                    ; $000C
                 move.w  #$8750, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$0120, Obj_X(A0)                                ; $0010
@@ -834,7 +834,7 @@ Offset_0x02DDD4:
 Offset_0x02DDF4:
                 move.l  #Offset_0x02DEF4, mappings(A0)                    ; $000C
                 move.w  #$875E, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.b  #$04, width_pixels(A0)                              ; $0007
                 move.b  #$04, height_pixels(A0)                             ; $0006
                 tst.b   Obj_Subtype(A0)                                  ; $002C

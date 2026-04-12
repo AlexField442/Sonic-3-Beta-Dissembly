@@ -9,7 +9,7 @@
                 beq.s   Offset_0x00F2C8
                 move.w  #$0690, Obj_Art_VRAM(A0)                         ; $000A
 Offset_0x00F2C8:
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.l  #Offset_0x00F2E0, (A0)
@@ -20,7 +20,7 @@ Offset_0x00F2E0:
                 move.b  render_flags(A2), render_flags(A0)              ; $0004, $0004
                 move.w  Obj_X(A2), Obj_X(A0)                      ; $0010, $0010
                 move.w  Obj_Y(A2), Obj_Y(A0)                      ; $0014, $0014
-                move.w  Obj_Priority(A2), Obj_Priority(A0)        ; $0008, $0008
+                move.w  priority(A2), priority(A0)        ; $0008, $0008
                 andi.w  #$7FFF, Obj_Art_VRAM(A0)                         ; $000A
                 tst.w   Obj_Art_VRAM(A2)                                 ; $000A
                 bpl.s   Offset_0x00F31A

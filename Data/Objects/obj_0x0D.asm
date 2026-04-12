@@ -4,7 +4,7 @@
 ;===============================================================================      
 ; Offset_0x0170CA:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.l  #Offset_0x017242, (A0)
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x0170EE
@@ -188,7 +188,7 @@ Offset_0x0173A0:
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 ori.w   #$8000, Obj_Art_VRAM(A1)                         ; $000A
-                move.b  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
+                move.b  priority(A0), priority(A1)        ; $0008, $0008
                 move.b  width_pixels(A0), width_pixels(A1)              ; $0007, $0007
                 move.w  (A4)+, Obj_Speed_X(A1)                           ; $0018
                 move.w  (A4)+, Obj_Speed_Y(A1)                           ; $001A

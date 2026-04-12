@@ -8,7 +8,7 @@
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$80, width_pixels(A0)                              ; $0007
                 move.b  #$80, height_pixels(A0)                             ; $0006
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  Obj_Subtype(A0), D0                              ; $002C
                 btst    #$02, D0
                 beq.s   Offset_0x014022

@@ -1,5 +1,4 @@
 .int:		dc.w	.ziplinePeg-.int
-
 ; Offset_0x013F94:
 .ziplinePeg:	dc.w	3
 		dc.w	$F40C, $0000, -$20

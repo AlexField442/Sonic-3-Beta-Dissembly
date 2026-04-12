@@ -18,7 +18,7 @@ Offset_0x0100F0:
                 addq.b  #$02, routine(A0)                            ; $0005
                 move.l  #Dust_Water_Splash_2P_Mappings, mappings(A0) ; Offset_0x010260, $000C
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$07E0, Obj_Art_VRAM(A0)                         ; $000A
                 move.w  #Obj_Player_One, Obj_Player_Last(A0)      ; $B000, $0042
@@ -98,7 +98,7 @@ Offset_0x0101D2:
                 addq.b  #$02, routine(A1)                            ; $0005
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
-                move.w  #$0080, Obj_Priority(A1)                         ; $0008
+                move.w  #$0080, priority(A1)                         ; $0008
                 move.b  #$04, width_pixels(A1)                              ; $0007
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.w  Obj_Player_Last(A0), Obj_Player_Last(A1)  ; $0042, $0042

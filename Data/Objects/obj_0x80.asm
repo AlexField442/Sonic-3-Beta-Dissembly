@@ -289,7 +289,7 @@ Offset_0x036946:
                 move.b  #$06, routine(A0)                            ; $0005
                 moveq   #Missile_Throw_Sfx, D0                             ; $56
                 jsr     (PlaySound)                           ; Offset_0x001176
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 bset    #$01, render_flags(A0)                              ; $0004
                 move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
                 move.w  #$0060, Obj_Timer(A0)                            ; $002E
@@ -364,7 +364,7 @@ Offset_0x036A38:
 ;-------------------------------------------------------------------------------
 Offset_0x036A3C:
                 bsr     Offset_0x0369A4
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.l  #Offset_0x0371CD, Obj_Child_Data(A0)             ; $0030
                 move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046

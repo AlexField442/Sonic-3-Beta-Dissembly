@@ -278,7 +278,7 @@ Offset_0x03DFE4:
 ;-------------------------------------------------------------------------------
 Offset_0x03DFF2:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 bsr     Offset_0x03E1D6
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03E01C, Obj_Child(A0)                  ; $0034
@@ -523,10 +523,10 @@ Offset_0x03E2BE:
                 bne.s   Offset_0x03E2CE
                 move.b  #$08, Obj_Map_Id(A0)                             ; $0022
 Offset_0x03E2CE:
-                move.w  #$0180, Obj_Priority(A0)                         ; $0008
+                move.w  #$0180, priority(A0)                         ; $0008
                 tst.b   D3
                 bne.s   Offset_0x03E2DE
-                move.w  #$0300, Obj_Priority(A0)                         ; $0008
+                move.w  #$0300, priority(A0)                         ; $0008
 Offset_0x03E2DE:
                 rts
 ;-------------------------------------------------------------------------------

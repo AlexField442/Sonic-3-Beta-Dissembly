@@ -7,7 +7,7 @@
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$437A, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$40, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.b  #$02, Obj_Map_Id(A0)                             ; $0022
@@ -22,7 +22,7 @@
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$20, height_pixels(A1)                             ; $0006
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.w  #$0280, Obj_Priority(A1)                         ; $0008
+                move.w  #$0280, priority(A1)                         ; $0008
                 move.b  #$01, Obj_Map_Id(A1)                             ; $0022
                 move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C
 Offset_0x0259E8:

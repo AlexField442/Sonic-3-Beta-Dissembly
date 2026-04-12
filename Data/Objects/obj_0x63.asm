@@ -6,7 +6,7 @@
                 move.l  #DPz_Button_Mappings, mappings(A0) ; Offset_0x02C894, $000C
                 move.w  #$4280, Obj_Art_VRAM(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$0C, width_pixels(A0)                              ; $0007
                 move.b  #$08, height_pixels(A0)                             ; $0006
                 move.l  #Offset_0x02C812, (A0)

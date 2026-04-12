@@ -5,7 +5,7 @@
 ; Offset_0x00F1A6:
                 move.l  #Miles_Mappings, mappings(A0)    ; Offset_0x101FF4, $000C
                 move.w  #$06B0, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.l  #Offset_0x00F1CC, (A0)
@@ -15,7 +15,7 @@ Offset_0x00F1CC:
                 move.b  Obj_Status(A2), Obj_Status(A0)            ; $002A, $002A
                 move.w  Obj_X(A2), Obj_X(A0)                      ; $0010, $0010
                 move.w  Obj_Y(A2), Obj_Y(A0)                      ; $0014, $0014
-                move.w  Obj_Priority(A2), Obj_Priority(A0)        ; $0008, $0008
+                move.w  priority(A2), priority(A0)        ; $0008, $0008
                 andi.w  #$7FFF, Obj_Art_VRAM(A0)                         ; $000A
                 tst.w   Obj_Art_VRAM(A2)                                 ; $000A
                 bpl.s   Offset_0x00F200

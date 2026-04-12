@@ -48,7 +48,7 @@ Offset_0x017B20:
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$08, width_pixels(A1)                              ; $0007
                 move.b  #$08, height_pixels(A1)                             ; $0006
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.l  #Ride_Vine_Mappings, mappings(A1) ; Offset_0x018482, $000C
                 move.w  #$0422, Obj_Art_VRAM(A1)                         ; $000A
                 rts

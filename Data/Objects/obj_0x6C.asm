@@ -6,7 +6,7 @@
                 move.l  #Offset_0x02E64E, (A0)
                 move.l  #Bridge_Mappings, mappings(A0)   ; Offset_0x02EE60, $000C
                 move.w  #$4038, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 cmpi.b  #Iz_Id, (Current_Zone).w                    ; $05, $FFFFFE10
                 bne.s   Offset_0x02E54C
                 move.l  #Offset_0x02E6F0, (A0)
@@ -65,7 +65,7 @@ Offset_0x02E5C4:
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
-                move.w  Obj_Priority(A0), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A0), priority(A1)        ; $0008, $0008
                 bset    #$06, render_flags(A1)                              ; $0004
                 move.b  #$40, width_pixels(A1)                              ; $0007
                 move.b  #$08, height_pixels(A1)                             ; $0006
@@ -295,10 +295,10 @@ Offset_0x02E86E:
                 move.l  mappings(A3), mappings(A1)                  ; $000C, $000C
                 move.b  render_flags(A3), render_flags(A1)              ; $0004, $0004
                 move.w  Obj_Art_VRAM(A3), Obj_Art_VRAM(A1)        ; $000A, $000A
-                move.w  Obj_Priority(A3), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A3), priority(A1)        ; $0008, $0008
                 move.b  width_pixels(A3), width_pixels(A1)              ; $0007, $0007
                 move.b  height_pixels(A3), height_pixels(A1)            ; $0006, $0006
-                move.w  Obj_Priority(A3), Obj_Priority(A1)        ; $0008, $0008
+                move.w  priority(A3), priority(A1)        ; $0008, $0008
                 move.w  (A2)+, Obj_X(A1)                                 ; $0010
                 move.w  (A2)+, Obj_Y(A1)                                 ; $0014
                 move.w  (A2)+, D0

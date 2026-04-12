@@ -5721,7 +5721,7 @@ Offset_0x0043F6:
 		tst.b	Obj_Player_Control(A1)                           ; $002E
 		bne.s	Offset_0x0044A4
 		move.b	#$01, (A3)
-		move.w	Obj_Priority(A2), D0                             ; $0008
+		move.w	priority(A2), D0                             ; $0008
 		move.w	D0, Obj_Speed_X(A1)                              ; $0018
 		ext.l	D0
 		lsl.l	#$08, D0
@@ -11813,7 +11813,7 @@ DeleteObject_FreeRam:
 ; Offset_0x011148:
 DisplaySprite:
 		lea	(Sprite_Table_Input).w,a1
-		adda.w	Obj_Priority(a0),a1
+		adda.w	priority(a0),a1
 		cmpi.w	#$7E,(a1)
 		bcc.s	Exit_DisplaySprite
 		addq.w	#2,(a1)
@@ -14476,7 +14476,7 @@ Obj02_Pathswappers:
 		ori.b	#4,render_flags(a0)
 		move.b	#$40,width_pixels(a0)
 		move.b	#$40,height_pixels(a0)
-		move.w	#$280,Obj_Priority(a0)
+		move.w	#$280,priority(a0)
 		move.b	Obj_Subtype(a0),d0
 		btst	#2,d0			; is this a horizontal type?
 		beq.s	Pathswapper_CheckX	; if yes, branch
@@ -14764,514 +14764,7 @@ Offset_0x012E96:
 ; Offset_0x012E98:
 Layer_Switch_Mappings:	include	"data/mappings/02 - Pathswappers.asm"
 
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object 01 - Monitors
-;
-; The power-ups themselves are handled by the next object. This just does the
-; monitor collision and graphics.
-; ---------------------------------------------------------------------------
-; Offset_0x012F44: Obj_0x01_Monitors:
-Obj01_Monitors:
-		moveq	#0,d0
-		move.b	routine(a0),d0
-		move.w	Monitors_Index(pc,d0.w),d1
-		jmp	Monitors_Index(pc,d1.w)   
-; ===========================================================================
-; Offset_0x012F52:
-Monitors_Index:	dc.w Monitors_Init-Monitors_Index
-		dc.w Monitors_Main-Monitors_Index
-		dc.w Monitors_Break-Monitors_Index
-		dc.w Monitors_Animate-Monitors_Index
-		dc.w Monitors_ChkDel-Monitors_Index
-; ===========================================================================
-; Offset_0x012F5C:
-Monitors_Init:
-		addq.b	#2,routine(a0)
-		move.b	#$F,y_radius(a0)
-		move.b	#$F,x_radius(a0)
-		move.l	#Monitors_Mappings,mappings(a0)
-		move.w	#$4C4,Obj_Art_VRAM(a0)
-		move.b	#4,render_flags(a0)
-		move.w	#$180,Obj_Priority(a0)
-		move.b	#$E,width_pixels(a0)
-		move.b	#$10,height_pixels(a0)
-		move.w	Obj_Respaw_Ref(a0),a2
-		bclr	#7,(a2)
-		btst	#0,(a2)					; if this bit is set it means the monitor is already broken
-		beq.s	Offset_0x012FAE
-		move.b	#8,routine(a0)			; set monitor to 'broken' state
-		move.b	#$B,Obj_Map_Id(a0)
-		rts
-; ---------------------------------------------------------------------------
-
-Offset_0x012FAE:
-		move.b	#$46,Obj_Col_Flags(a0)
-		move.b	Obj_Subtype(a0),Obj_Ani_Number(a0)	; subtype = icon to display
-		tst.w	(Two_Player_Flag).w			; are we in two player mode?
-		beq.s	Monitors_Main				; if not, branch
-		move.b	#9,Obj_Ani_Number(a0)			; use '?' icon
-; Offset_0x012FC6:
-Monitors_Main:
-		move.b	Obj_Control_Var_0C(a0),d0
-		beq.s	SolidObject_Monitor
-		; only when secondary routine isn't 0
-		; make monitor fall
-		bsr.w	ObjectFall
-		tst.w	Obj_Speed_Y(a0)
-		bmi.s	SolidObject_Monitor
-		jsr	(ObjHitFloor).l
-		tst.w	d1					; is the monitor on the ground?
-		bpl.w	SolidObject_Monitor			; if not, branch
-		add.w	d1,Obj_Y(a0)				; move monitor out of ground
-		clr.w	Obj_Speed_Y(a0)
-		clr.b	Obj_Control_Var_0C(a0)			; stop monitor from falling
-; Offset_0x012FEE:
-SolidObject_Monitor:
-		move.w	#$19,d1
-		move.w	#$10,d2
-		move.w	d2,d3
-		addq.w	#1,d3
-		move.w	Obj_X(a0),d4
-		lea	(Obj_Player_One).w,a1
-		moveq	#3,d6
-		movem.l	d1-d4,-(sp)
-		bsr.w	SolidObject_Monitor_Sonic
-		movem.l	(sp)+,d1-d4
-		lea	(Obj_Player_Two).w,a1
-		moveq	#4,d6
-		bsr.w	SolidObject_Monitor_Tails
-		jsr	(Add_SpriteToCollisionResponseList).l
-; Offset_0x013020:
-Monitors_Animate:
-		lea	(Monitors_AnimateData).l,a1
-		bsr.w	AnimateSprite
-; Offset_0x01302A:
-Monitors_ChkDel:
-		bra.w	MarkObjGone
-; ===========================================================================
-; Offset_0x01302E:
-SolidObject_Monitor_Sonic:
-		btst	d6,Obj_Status(a0)			; is Sonic standing on the monitor?
-		bne.s	Monitors_ChkOverEdge			; if yes, branch
-		cmpi.b	#2,Obj_Ani_Number(a1)			; is Sonic spinning?
-		bne.w	SolidObject_cont			; if not, branch
-		rts
-; ---------------------------------------------------------------------------
-; Offset_0x013040:
-SolidObject_Monitor_Tails:
-		btst	d6,Obj_Status(a0)			; is Tails standing on the monitor?
-		bne.s	Monitors_ChkOverEdge			; if yes, branch
-		tst.w	(Two_Player_Flag).w			; is it two player mode?
-		beq.w	SolidObject_cont			; if not, branch
-		cmpi.b	#2,Obj_Ani_Number(a1)			; is Tails spinning?
-		bne.w	SolidObject_cont			; if not, branch
-		rts
-; ---------------------------------------------------------------------------
-; Offset_0x01305A:
-Monitors_ChkOverEdge:
-		move.w	d1,d2
-		add.w	d2,d2
-		btst	#1,Obj_Status(a1)			; is the character in the air?
-		bne.s	.inAir					; if yes, branch
-		; check, if character is standing on
-		move.w	Obj_X(a1),d0
-		sub.w	Obj_X(a0),d0
-		add.w	d1,d0
-		bmi.s	.inAir					; branch, if character is behind the left edge of the monitor
-		cmp.w	d2,d0
-		bcs.s	Monitors_CharStandOn			; branch, if character is behind the right edge of the monitor
-; Offset_0x013076:
-.inAir:
-		bclr	#3,Obj_Status(a1)			; clear 'on object' bit
-		bset	#1,Obj_Status(a1)			; set 'in air' bit
-		bclr	d6,Obj_Status(a0)			; clear 'standing on' bit for the current character
-		moveq	#0,d4
-		rts
-; ---------------------------------------------------------------------------
-; Offset_0x01308A:
-Monitors_CharStandOn:
-		move.w	d4,d2
-		bsr.w	Player_On_Platform
-		moveq	#0,d4
-		rts    
-; ===========================================================================
-; Offset_0x013094:
-Monitors_Break:
-		move.b	Obj_Status(a0),d0
-		andi.b	#$78,d0					; is someone touching the monitor?
-		beq.s	Monitors_SpawnIcon			; if not, branch
-		move.b	d0,d1
-		andi.b	#$28,d1					; is it the main character?
-		beq.s	.TailsBreakMonitor			; if not, branch
-		andi.b	#$D7,(Obj_Player_One+Obj_Status).w
-		ori.b	#2,(Obj_Player_One+Obj_Status).w	; prevent Sonic from walking in the air
-; Offset_0x0130B2:
-.TailsBreakMonitor:
-		andi.b	#$50,d0					; is it the sidekick?
-		beq.s	Monitors_SpawnIcon			; if not, branch
-		andi.b	#$D7,(Obj_Player_Two+Obj_Status).w
-		ori.b	#2,(Obj_Player_Two+Obj_Status).w	; prevent Tails from walking in the air
-; Offset_0x0130C4:
-Monitors_SpawnIcon:
-		clr.b	Obj_Status(a0)
-		addq.b	#2,routine(a0)
-		move.b	#0,Obj_Col_Flags(a0)
-		bsr.w	AllocateObject
-		bne.s	Monitors_SpawnSmoke
-		move.l	#Obj_MonitorContents,(a1)		; load Obj_MonitorContents
-		move.w	Obj_X(a0),Obj_X(a1)			; set icon's position
-		move.w	Obj_Y(a0),Obj_Y(a1)
-		move.b	Obj_Ani_Number(a0),Obj_Ani_Number(a1)
-		move.w	Obj_Player_Last(a0),Obj_Player_Last(a1)	; parent gets item
-; Offset_0x0130F6:
-Monitors_SpawnSmoke:
-		bsr.w	AllocateObject
-		bne.s	Offset_0x013112
-		move.l	#Obj_Explosion,(a1)			; load Obj_Explosion
-		addq.b	#2,routine(a1)
-		move.w	Obj_X(a0),Obj_X(a1)
-		move.w	Obj_Y(a0),Obj_Y(a1)
-
-Offset_0x013112:
-		move.w	Obj_Respaw_Ref(a0),a2
-		bset	#0,(a2)					; mark monitor as destroyed
-		move.b	#$A,Obj_Ani_Number(a0)
-		bra.w	DisplaySprite
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object - Monitor contents (code for power-up behavior and rising image)
-; ---------------------------------------------------------------------------
-; Offset_0x13120: Monitors_Contents:
-Obj_MonitorContents:
-		moveq	#0,d0
-		move.b	routine(a0),d0
-		move.w	MonitorContents_Index(pc,d0.w),d1
-		jmp	MonitorContents_Index(pc,d1.w)
-; ===========================================================================
-; Offset_0x013132:
-MonitorContents_Index:
-		dc.w MonitorContents_Init-MonitorContents_Index
-		dc.w MonitorContents_Raise-MonitorContents_Index
-		dc.w MonitorContents_Delete-MonitorContents_Index
-; ===========================================================================
-; Offset_0x013138:
-MonitorContents_Init:
-		addq.b	#2,routine(a0)
-		move.w	#$84C4,Obj_Art_VRAM(a0)
-		move.b	#$24,render_flags(a0)
-		move.w	#$180,Obj_Priority(a0)
-		move.b	#8,width_pixels(a0)
-		move.w	#-$300,Obj_Speed_Y(a0)
-		moveq	#0,d0
-		move.b	Obj_Ani_Number(a0),d0
-		; all of this up to MonitorContents_Icon are remnants from Sonic 2's multiplayer
-		tst.w	(Two_Player_Flag).w			; is this two player mode?
-		beq.s	MonitorContents_Icon			; if not, branch
-		move.w	(Level_frame_counter).w,d0		; use the timer to determine which item
-		andi.w	#7,d0					; and 7 means there are 8 different items
-		addq.w	#1,d0					; add 1 to prevent getting the static monitor
-		tst.w	(Two_Player_Items_Mode).w		; are monitors set to 'teleport only'?
-		beq.s	.noTeleport				; if not, branch
-		moveq	#8,d0					; force contents to be teleport
-; Offset_0x013178:
-.noTeleport:
-		; keep teleport monitor from causing unwanted effects
-		cmpi.w	#8,d0					; is it the teleport monitor?
-		bne.s	Offset_0x01318E				; if not, branch
-		move.b	(Update_HUD_timer).w,d1
-		add.b	(HUD_Timer_Refresh_Flag_P2).w,d1
-		cmpi.b	#2,d1					; is either player done with the act?
-		beq.s	Offset_0x01318E				; if not, branch
-		moveq	#7,d0					; give invincibility instead
-
-Offset_0x01318E:
-		move.b	d0,Obj_Ani_Number(a0)
-
-; Offset_0x013192:
-MonitorContents_Icon:
-		; determine correct mappings offset
-		addq.b	#1,d0
-		move.b	d0,Obj_Map_Id(a0)
-		move.l	#Monitors_Mappings,a1
-		add.b	d0,d0
-		adda.w	(a1,d0.w),a1
-		addq.w	#2,a1
-		move.l	a1,mappings(a0)
-; Offset_0x0131AA:
-MonitorContents_Raise:
-		bsr.s	MonitorContents_Move
-		bra.w	DisplaySprite
-; ===========================================================================
-; Offset_0x0131B0:
-MonitorContents_Move:
-		tst.w	Obj_Speed_Y(a0)				; is the icon still floating up?
-		bpl.w	MonitorContents_Main			; if not, branch
-		bsr.w	SpeedToPos
-		addi.w	#$18,Obj_Speed_Y(a0)
-		rts
-; ---------------------------------------------------------------------------
-; Offset_0x0131C4:
-MonitorContents_Main:
-		addq.b	#2,routine(a0)
-		move.w	#$1D,Obj_Ani_Time(a0)
-		move.w	Obj_Player_Last(a0),a1
-		lea	(Monitors_Broken).w,a2
-		cmpa.w	#Obj_Player_One,a1			; did Sonic break the monitor?
-		beq.s	MonitorContents_CheckType		; if yes, branch
-		lea	(Monitors_Broken_P2).w,a2
-; Offset_0x0131E0:
-MonitorContents_CheckType:
-		moveq	#0,d0
-		move.b	Obj_Ani_Number(a0),d0
-		add.w	d0,d0
-		move.w	MonitorContents_Type(pc,d0.w),d0
-		jmp	MonitorContents_Type(pc,d0.w)
-; ===========================================================================
-; Offset_0x0131F0:
-MonitorContents_Type:
-		dc.w MonitorContents_Eggman-MonitorContents_Type
-		dc.w MonitorContents_SonicLife-MonitorContents_Type
-		dc.w MonitorContents_Eggman-MonitorContents_Type
-		dc.w MonitorContents_Rings-MonitorContents_Type
-		dc.w MonitorContents_SpeedShoes-MonitorContents_Type
-		dc.w MonitorContents_FireShield-MonitorContents_Type
-		dc.w MonitorContents_LightningShield-MonitorContents_Type
-		dc.w MonitorContents_BubbleShield-MonitorContents_Type
-		dc.w MonitorContents_Invincibility-MonitorContents_Type
-		dc.w MonitorContents_SuperSonic-MonitorContents_Type
-; ===========================================================================
-; Offset_0x013204: Monitor_Static: Monitor_Robotnik: S2_Monitor_Miles_Life:
-MonitorContents_Eggman:
-		addq.w	#1,(a2)
-		bra.w	Hurt_Player_A1
-; ===========================================================================
-; Offset_0x1320A: Monitor_Sonic_Life:
-MonitorContents_SonicLife:
-		addq.w	#1,(Monitors_Broken).w
-		addq.b	#1,(Life_count).w
-		addq.b	#1,(Update_HUD_lives).w
-		moveq	#Extra_Life_Snd,d0
-		jmp	(PlaySound).l
-; ===========================================================================
-; Offset_0x01321E: Monitor_Rings:
-MonitorContents_Rings:
-		addq.w	#1,(a2)
-		lea	(Ring_count).w,a2
-		lea	(Update_HUD_rings).w,a3
-		lea	(Extra_life_flags).w,a4
-		lea	(Total_Ring_Count_Address).w,a5
-		; another Sonic 2 leftover
-		cmpa.w	#Obj_Player_One,a1
-		beq.s	.notTails
-		lea	(Ring_Count_Address_P2).w,a2
-		lea	(HUD_Rings_Refresh_Flag_P2).w,a3
-		lea	(Ring_Status_Flag_P2).w,a4
-		lea	(Total_Ring_Count_Address_P2).w,a5
-; Offset_0x013246:
-.notTails:
-		; these two functions cap ring collection at 999 rings
-		addi.w	#10,(a5)
-		cmpi.w	#999,(a5)
-		bcs.s	.under999Rings
-		move.w	#999,(a5)
-; Offset_0x013254:
-.under999Rings:
-		addi.w	#10,(a2)
-		cmpi.w	#999,(a2)
-		bcs.s	.under999Rings2
-		move.w	#999,(a2)
-; Offset_0x013262:
-.under999Rings2:
-		ori.b	#1,(a3)
-		cmpi.w	#100,(a2)
-		bcs.s	.playSound
-		bset	#1,(a4)
-		beq.s	MonitorContents_SonicOrTails
-		cmpi.w	#200,(a2)
-		bcs.s	.playSound
-		bset	#2,(a4)
-		beq.s	MonitorContents_SonicOrTails
-; Offset_0x01327E:
-.playSound:
-		moveq	#Ring_Sfx,d0
-		jmp	(PlaySound).l
-; ---------------------------------------------------------------------------
-; Hilariously, this function is still used in the final, complete with the
-; (now incorrect) jump to the Eggman monitor if the player is P2 Tails
-; Offset_0x013286: Monitor_Add_Life_To_P1_Or_P2:
-MonitorContents_SonicOrTails:
-		cmpa.w	#Obj_Player_One,a1
-		beq.w	MonitorContents_SonicLife
-		bra.w	MonitorContents_Eggman
-; ===========================================================================
-; Offset_0x013292: Monitor_Shoes:
-MonitorContents_SpeedShoes:
-		addq.w	#1,(a2)
-		bset	#Speed_Type, Obj_Player_Status(a1)
-		move.b	#$96,Obj_P_Spd_Shoes_Time(a1)
-		cmpa.w	#Obj_Player_One,a1
-		bne.s	.notSonic
-		cmpi.w	#2,(Player_Selected_Flag).w
-		beq.s	.notSonic
-		move.w	#$C00,(Sonic_Max_Speed).w
-		move.w	#$18,(Sonic_Acceleration).w
-		move.w	#$80,(Sonic_Deceleration).w
-		bra.s	.playMusic
-; Offset_0x0132C2:
-.notSonic:
-		move.w	#$C00,(Miles_Max_Speed).w
-		move.w	#$18,(Miles_Acceleration).w
-		move.w	#$80,(Miles_Deceleration).w
-; Offset_0x0132D4:
-.playMusic:
-		moveq	#Invincibility_Snd,d0
-		jmp	(PlaySound).l
-; ===========================================================================
-; Offset_0x0132DC: Monitor_Fire_Shield:
-MonitorContents_FireShield:
-		addq.w	#1,(a2)
-		bset	#Classic_Type,Obj_Player_Status(a1)
-		bset	#Fire_Type,Obj_Player_Status(a1)
-		moveq	#Got_Fire_Shield_Sfx,d0
-		jsr	(PlaySound).l
-		tst.b	Obj_Player_One_Or_Two_2(a0)
-		bne.s	.notSonic
-		move.l	#Obj_FireShield,(Obj_P1_Shield).w
-		move.w	a1,(Obj_P1_Shield+Obj_Player_Last).w
-		rts
-; Offset_0x013306:
-.notSonic:
-		move.l	#Obj_FireShield,(Obj_P2_Shield).w
-		move.w	a1,(Obj_P2_Shield+Obj_Player_Last).w
-		rts
-; ===========================================================================
-; Offset_0x013314: Monitor_Lightning_Shield:
-MonitorContents_LightningShield:
-		addq.w	#1,(a2)
-		bset	#Classic_Type,Obj_Player_Status(a1)
-		bset	#Lightning_Type,Obj_Player_Status(a1)
-		moveq	#Got_Lightning_Shield_Sfx,d0
-		jsr	(PlaySound).l
-		tst.b	Obj_Player_One_Or_Two_2(a0)
-		bne.s	.notSonic
-		move.l	#Obj_LightningShield,(Obj_P1_Shield).w
-		move.w	a1,(Obj_P1_Shield+Obj_Player_Last).w
-		rts
-; Offset_0x01333E:
-.notSonic:
-		move.l	#Obj_LightningShield,(Obj_P2_Shield).w
-		move.w	a1,(Obj_P2_Shield+Obj_Player_Last).w
-		rts
-; ===========================================================================
-; Offset_0x01334C: Monitor_Water_Shield:
-MonitorContents_BubbleShield:
-		addq.w	#1,(a2)
-		bset	#Classic_Type,Obj_Player_Status(a1)
-		bset	#Water_Type,Obj_Player_Status(a1)
-		moveq	#Got_Water_Shield_Sfx,d0
-		jsr	(PlaySound).l
-		tst.b	Obj_Player_One_Or_Two_2(a0)
-		bne.s	.notSonic
-		move.l	#Obj_BubbleShield,(Obj_P1_Shield).w
-		move.w	a1,(Obj_P1_Shield+Obj_Player_Last).w
-		rts
-; Offset_0x013376:
-.notSonic:
-		move.l	#Obj_BubbleShield,(Obj_P2_Shield).w
-		move.w	a1,(Obj_P2_Shield+Obj_Player_Last).w
-		rts
-; ===========================================================================
-; Offset_0x013384: Monitor_Invincibility:
-MonitorContents_Invincibility:
-		addq.w	#1,(a2)
-		tst.b	(Super_Sonic_flag).w
-		bne.s	Offset_0x0133CE
-		bset	#Invincibility_Type,Obj_Player_Status(a1)
-		move.b	#$96,Obj_P_Invcbility_Time(a1)
-		tst.b	(Boss_Flag).w
-		bne.s	Offset_0x0133AE
-		cmpi.b	#$C,Obj_Subtype(a1)
-		bls.s	Offset_0x0133AE
-		moveq	#Invincibility_Snd,d0
-		jsr	(PlaySound).l
-
-Offset_0x0133AE:
-		tst.b	Obj_Player_One_Or_Two_2(a0)
-		bne.s	.notSonic
-		move.l	#Obj_Invincibility,(Obj_P1_Invincibility).w
-		move.w	a1,(Obj_P1_Invincibility+Obj_Player_Last).w
-		rts
-; Offset_0x0133C2:
-.notSonic:
-		move.l	#Obj_Invincibility,(Obj_P2_Invincibility).w
-		move.w	a1,(Obj_P2_Invincibility+Obj_Player_Last).w
-
-Offset_0x0133CE:
-		rts
-; ===========================================================================
-; Offset_0x133D0: Monitor_Super_Sonic:
-MonitorContents_SuperSonic:
-		addq.w	#1,(a2)
-		addi.w	#50,(Ring_count).w
-		move.b	#1,(Super_Sonic_Palette_Status).w
-		move.b	#$F,(Super_Sonic_Palette_Timer).w
-		move.b	#1,(Super_Sonic_flag).w
-		move.b	#$81,(Obj_Player_One+Obj_Timer).w
-		move.b	#$1F,(Obj_Player_One+Obj_Ani_Number).w
-		move.l	#Obj_Super_Sonic_Stars,(Obj_Super_Sonic_Stars_RAM).w
-		move.w	#$A00,(Sonic_Max_Speed).w
-		move.w	#$30,(Sonic_Acceleration).w
-		move.w	#$100,(Sonic_Deceleration).w
-		move.b	#0,(Obj_Player_One+Obj_P_Invcbility_Time).w
-		bset	#Invincibility_Type,Obj_Player_Status(a1)
-		moveq	#Hyper_Form_Change_Sfx,d0
-		jsr	(PlaySound).l
-		moveq	#Invincibility_Snd,d0
-		jmp	(PlaySound).l
-		rts
-; ===========================================================================
-; Offset_0x01342E: Monitor_Delete_Object:
-MonitorContents_Delete:
-		subq.w	#1,Obj_Ani_Time(a0)
-		bmi.w	DeleteObject
-		bra.w	DisplaySprite
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Animation script for Monitors
-; ---------------------------------------------------------------------------
-; Offset_0x01343A:
-Monitors_AnimateData:
-		dc.w	MonAni_Static-Monitors_AnimateData
-		dc.w	MonAni_Sonic-Monitors_AnimateData
-		dc.w	MonAni_Eggman-Monitors_AnimateData
-		dc.w	MonAni_Rings-Monitors_AnimateData
-		dc.w	MonAni_SpeedShoes-Monitors_AnimateData
-		dc.w	MonAni_FireShield-Monitors_AnimateData
-		dc.w	MonAni_LightningShield-Monitors_AnimateData
-		dc.w	MonAni_BubbleShield-Monitors_AnimateData
-		dc.w	MonAni_Invincibility-Monitors_AnimateData
-		dc.w	MonAni_SuperSonic-Monitors_AnimateData
-		dc.w	MonAni_Broken-Monitors_AnimateData
-MonAni_Static:		dc.b	  1,  0,  1,$FF
-MonAni_Sonic:		dc.b	  1,  0,  2,  2,  1,  2,  2,$FF
-MonAni_Eggman:		dc.b	  1,  0,  3,  3,  1,  3,  3,$FF
-MonAni_Rings:		dc.b	  1,  0,  4,  4,  1,  4,  4,$FF
-MonAni_SpeedShoes:	dc.b	  1,  0,  5,  5,  1,  5,  5,$FF
-MonAni_FireShield:	dc.b	  1,  0,  6,  6,  1,  6,  6,$FF
-MonAni_LightningShield:	dc.b	  1,  0,  7,  7,  1,  7,  7,$FF
-MonAni_BubbleShield:	dc.b	  1,  0,  8,  8,  1,  8,  8,$FF
-MonAni_Invincibility:	dc.b	  1,  0,  9,  9,  1,  9,  9,$FF
-MonAni_SuperSonic:	dc.b	  1,  0, $A, $A,  1, $A, $A,$FF
-MonAni_Broken:		dc.b	  2,  0,  1, $B,$FE,  1
-		even
-; ---------------------------------------------------------------------------
-; Sprite mappings for Monitors and Monitor Contents
-; ---------------------------------------------------------------------------
-; Offset_0x0134A2:
-Monitors_Mappings:	include	"data/mappings/01 - Monitors.asm"
+		include	"Objects/01 - Monitors and Contents.asm"
                 
 ;------------------------------------------------------------------------------- 
 ; Rotina para tratar os espinhos e outros objetos como objeto s�lido
@@ -16080,187 +15573,9 @@ Offset_0x013D78:
 		moveq	#$00, D4
 		rts
 
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object - Explosion from a monitor or enemy
-; ---------------------------------------------------------------------------
-; Offset_0x013D7C: Object_Hit:
-Obj_Explosion:
-		moveq	#0,d0
-		move.b	routine(a0),d0
-		move.w	Explosion_Index(pc,d0.w),d1
-		jmp	Explosion_Index(pc,d1.w)   
-; ===========================================================================
-; Offset_0x013D8A:
-Explosion_Index:
-		dc.w Explosion_Init-Explosion_Index
-		dc.w Explosion_Main-Explosion_Index
-		dc.w Explosion_Display-Explosion_Index
-; ===========================================================================
-; Offset_0x013D90:
-Explosion_Init:
-		addq.b	#2,routine(a0)
-		jsr	(AllocateObject).l
-		bne.s	Explosion_Main
-		move.l	#Obj_Flickies,(a1)
-		move.w	Obj_X(a0),Obj_X(a1)
-		move.w	Obj_Y(a0),Obj_Y(a1)
-		move.w	Obj_Control_Var_0E(a0),Obj_Control_Var_0E(a1)
-; Offset_0x013DB4:
-Explosion_Main:
-		addq.b	#$02,routine(a0)
-		move.l	#Object_Hit_Mappings, mappings(a0)
-		move.w	Obj_Art_VRAM(a0),d0
-		andi.w	#$8000,d0
-		ori.w	#$5A0,d0
-		move.w	d0,Obj_Art_VRAM(a0)
-		move.b	#4,render_flags(a0)
-		move.w	#$80,Obj_Priority(a0)
-		move.b	#0,Obj_Col_Flags(a0)
-		move.b	#$C,width_pixels(a0)
-		move.b	#$C,height_pixels(a0)
-		move.b	#3,Obj_Ani_Time(a0)
-		move.b	#0,Obj_Map_Id(a0)
-		moveq	#Object_Hit_Sfx,d0
-		jsr	(PlaySound).l
-		move.l	#Explosion_Display,(a0)
-; Offset_0x013E08:
-Explosion_Display:
-		subq.b	#1,Obj_Ani_Time(a0)
-		bpl.s	Offset_0x013E22
-		move.b	#7,Obj_Ani_Time(a0)
-		addq.b	#1,Obj_Map_Id(a0)
-		cmpi.b	#5,Obj_Map_Id(a0)
-		beq.w	DeleteObject
-
-Offset_0x013E22:
-		jmp	(DisplaySprite).l
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object - Dissipation effect when the fire shield is submerged, as
-; well as a smoke effect for CNZ cannons and LBZ tunnels
-; ---------------------------------------------------------------------------
-; Offset_0x013E28: Obj_Fire_Shield_Dissipate:
-Obj_FireShield_Dissipate:
-		move.l	#Object_Hit_Mappings,mappings(a0)
-		move.w	#$5A0,Obj_Art_VRAM(a0)
-		move.b	#4,render_flags(a0)
-		move.w	#$280,Obj_Priority(a0)
-		move.b	#$C,width_pixels(a0)
-		move.b	#$C,height_pixels(a0)
-		move.b	#3,Obj_Ani_Time(a0)
-		move.b	#1,Obj_Map_Id(a0)
-		move.l	#FireShieldDissipate_Animate,(a0)
-; Offset_0x013E60:
-FireShieldDissipate_Animate:
-		jsr	(SpeedToPos).l
-		subq.b	#1,Obj_Ani_Time(a0)
-		bpl.s	FireShieldDissipate_Display
-		move.b	#3,Obj_Ani_Time(a0)
-		addq.b	#1,Obj_Map_Id(a0)
-		cmpi.b	#5,Obj_Map_Id(a0)
-		beq.w	DeleteObject
-; Offset_0x013E80:
-FireShieldDissipate_Display:
-		jmp	(DisplaySprite).l
-
-;-------------------------------------------------------------------------------
-Obj_Dissipate:                                                 ; Offset_0x013E86
-		move.l	#Object_Hit_Mappings, mappings(A0) ; Offset_0x013EF2, $000C
-		move.w	#$85A0, Obj_Art_VRAM(A0)                         ; $000A
-		move.b	#$04, render_flags(A0)                              ; $0004
-		move.w	#$0100, Obj_Priority(A0)                         ; $0008
-		move.b	#$0C, width_pixels(A0)                              ; $0007
-		move.b	#$0C, height_pixels(A0)                             ; $0006
-		move.b	#$00, Obj_Map_Id(A0)                             ; $0022
-		move.l	#Offset_0x013EB8, (A0)
-Offset_0x013EB8:                
-		subq.b	#$01, Obj_Ani_Time(A0)                           ; $0024
-		bmi.s	Offset_0x013EC0
-		rts
-Offset_0x013EC0:
-		move.b	#$03, Obj_Ani_Time(A0)                           ; $0024
-		move.l	#Offset_0x013ECC, (A0)
-Offset_0x013ECC:                
-		jsr	(SpeedToPos)                           ; Offset_0x01111E
-		subq.b	#$01, Obj_Ani_Time(A0)                           ; $0024
-		bpl.s	Offset_0x013EEC
-		move.b	#$07, Obj_Ani_Time(A0)                           ; $0024
-		addq.b	#$01, Obj_Map_Id(A0)                             ; $0022
-		cmpi.b	#$05, Obj_Map_Id(A0)                             ; $0022
-		beq.w	DeleteObject                           ; Offset_0x011138
-Offset_0x013EEC:
-		jmp	(DisplaySprite)                        ; Offset_0x011148  
-;-------------------------------------------------------------------------------
-Object_Hit_Mappings:                                           ; Offset_0x013EF2
-		dc.w	Offset_0x013EFC-Object_Hit_Mappings
-		dc.w	Offset_0x013F04-Object_Hit_Mappings
-		dc.w	Offset_0x013F0C-Object_Hit_Mappings
-		dc.w	Offset_0x013F14-Object_Hit_Mappings
-		dc.w	Offset_0x013F1C-Object_Hit_Mappings
-Offset_0x013EFC:
-		dc.w	$0001
-		dc.w	$F805, $0000, $FFF8
-Offset_0x013F04:
-		dc.w	$0001
-		dc.w	$F00F, $2004, $FFF0
-Offset_0x013F0C:
-		dc.w	$0001
-		dc.w	$F00F, $2014, $FFF0
-Offset_0x013F14:
-		dc.w	$0001
-		dc.w	$F00F, $2024, $FFF0
-Offset_0x013F1C:
-		dc.w	$0001
-		dc.w	$F00F, $2034, $FFF0  
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object 09 - Tree in Angel Island (used in first cutscene to mask the
-; Fire Breaths in the background)
-; ---------------------------------------------------------------------------
-; Offset_0x013F24: Obj_0x09_AIz_Tree:
-Obj09_AIZTree:
-		move.l	#AIZTree_Mappings,mappings(a0)
-		move.w	#$180,Obj_Priority(a0)
-		move.b	#8,width_pixels(a0)
-		move.b	#4,render_flags(a0)
-		move.w	#$4001,Obj_Art_VRAM(a0)
-		move.l	#AIZTree_ChkDel,(a0)
-; Offset_0x013F4A:
-AIZTree_ChkDel:
-		jmp	(MarkObjGone).l
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Sprite Mappings - Tree in Angel Island
-; ---------------------------------------------------------------------------
-; Offset_0x013F50: AIz_Tree_Mappings:
-AIZTree_Mappings:	include	"data/mappings/09 - AIZ Tree.asm"
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object 0A - Zipling Pegs in Angel Island
-; ---------------------------------------------------------------------------
-; Offset_0x013F66: Obj_0x0A_AIz_Zipline_Peg:
-Obj0A_ZiplinePeg:
-		move.l	#ZiplinePeg_Mappings,mappings(a0)
-		move.w	#$380,Obj_Priority(a0)
-		move.b	#$20,width_pixels(a0)
-		move.b	#4,render_flags(a0)
-		move.w	#$4324,Obj_Art_VRAM(a0)
-		move.l	#ZiplinePeg_ChkDel,(a0)
-; Offset_0x013F8C:
-ZiplinePeg_ChkDel:
-		jmp	(MarkObjGone).l
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Sprite Mappings - Zipling Pegs in Angel Island
-; ---------------------------------------------------------------------------
-; Offset_0x013F92 AIz_Zipline_Peg_Mappings:
-ZiplinePeg_Mappings:	include	"data/mappings/0A - AIZ Zipline Peg.asm"
+		include	"Objects/XX - Explosions and Smoke.asm"
+		include	"Objects/09 - AIZ Tree.asm"
+		include	"Objects/0A - AIZ Zipline Peg.asm"
 
 Obj_0x26_Auto_Spin:                                            ; Offset_0x013FA8
                 include 'data\objects\obj_0x26.asm'  
@@ -16302,7 +15617,7 @@ Obj05_Rock:
 		move.l	#Rock_Mappings,mappings(a0)
 		move.w	#$2333,Obj_Art_VRAM(a0)
 		ori.b	#4,render_flags(a0)
-		move.w	#$200,Obj_Priority(a0)
+		move.w	#$200,priority(a0)
 		move.w	#$40,Obj_Control_Var_12(a0)
 		cmpi.w	#AIz_Act_2,(Current_ZoneAndAct).w
 		bne.s	Offset_0x015152
@@ -16660,7 +15975,7 @@ Offset_0x01559C:
 		move.w	D0, Obj_Y(A1)					; $0014
 		move.w	Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)		; $000A, $000A
 		ori.w	#$8000, Obj_Art_VRAM(A1)				; $000A
-		move.w	#$0080, Obj_Priority(A1)				; $0008
+		move.w	#$0080, priority(A1)				; $0008
 		move.b	#$18, width_pixels(A1)					; $0007
 		move.b	#$18, width_pixels(A1)					; $0007
 		move.w	(A4)+, Obj_Speed_X(A1)				 ; $0018
@@ -16752,7 +16067,7 @@ Offset_0x015852:
 		move.b	#$30, height_pixels(A0)					; $0006
 Offset_0x0158A0:
 		ori.b	#$04, render_flags(A0)					; $0004
-		move.w	#$0200, Obj_Priority(A0)				; $0008
+		move.w	#$0200, priority(A0)				; $0008
 		move.b	#$07, Obj_Control_Var_08(A0)			; $0038
 		move.b	Obj_Subtype(A0), Obj_Map_Id(A0)		; $002C, $0022
 		ori.b	#$80, Obj_Status(A0)					; $002A
@@ -16816,7 +16131,7 @@ Offset_0x01594E:
 Obj_0x0F_Collapsing_Platform:
 		move.l	#Offset_0x015B62, (A0)
 		ori.b	#$04, render_flags(A0)					; $0004
-		move.w	#$0200, Obj_Priority(A0)				; $0008
+		move.w	#$0200, priority(A0)				; $0008
 		cmpi.b	#LBz_Id, (Current_Zone).w			; $06, $FFFFFE10
 		bne.s	Offset_0x0159E6
 		move.b	Obj_Subtype(A0), D0					; $002C
@@ -17160,7 +16475,7 @@ Offset_0x015DA4:
 		move.w	Obj_X(A0), Obj_X(A1)			; $0010, $0010
 		move.w	Obj_Y(A0), Obj_Y(A1)			; $0014, $0014
 		move.w	Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)		; $000A, $000A
-		move.w	Obj_Priority(A0), Obj_Priority(A1)		; $0008, $0008
+		move.w	priority(A0), priority(A1)		; $0008, $0008
 		move.b	width_pixels(A0), width_pixels(A1)			; $0007, $0007
 		move.b	height_pixels(A0), height_pixels(A1)			; $0006, $0006
 		move.b	(A4)+, Obj_Control_Var_08(A1)			; $0038
@@ -18061,7 +17376,7 @@ Offset_0x01819A:
 		move.b	#$04, render_flags(A1)					; $0004
 		move.b	#$08, width_pixels(A1)					; $0007
 		move.b	#$08, height_pixels(A1)					; $0006
-		move.w	#$0200, Obj_Priority(A1)				; $0008
+		move.w	#$0200, priority(A1)				; $0008
 		move.l	#Ride_Vine_Mappings, mappings(A1) ; Offset_0x018482, $000C
 		move.w	#$0422, Obj_Art_VRAM(A1)				; $000A
 		rts
@@ -18305,7 +17620,7 @@ Obj07_Springs:
 		ori.b	#4,render_flags(a0)
 		move.b	#$10,width_pixels(a0)
 		move.b	#$10,height_pixels(a0)
-		move.w	#$200,Obj_Priority(a0)
+		move.w	#$200,priority(a0)
 		move.w	Obj_X(a0),Obj_Control_Var_02(a0)
 		move.w	Obj_Y(a0),Obj_Control_Var_04(a0)
 		move.b	Obj_Subtype(a0),d0
@@ -18329,7 +17644,7 @@ Obj_0x07_Springs_2P:							; Offset_0x019268
 		ori.b	#$04, render_flags(A0)						; $0004
 		move.b	#$10, width_pixels(A0)						; $0007
 		move.b	#$10, height_pixels(A0)					; $0006
-		move.w	#$0200, Obj_Priority(A0)				; $0008
+		move.w	#$0200, priority(A0)				; $0008
 		move.w	Obj_X(A0), Obj_Control_Var_02(A0)		; $0010, $0032
 		move.w	Obj_Y(A0), Obj_Control_Var_04(A0)		; $0014, $0034
 		move.b	Obj_Subtype(A0), D0						; $002C
@@ -19121,7 +18436,7 @@ Spikes_Conf:							; Offset_0x01A432
 ; Offset_0x01A442:
 Obj_0x08_Spikes:
 		ori.b	#$04, render_flags(A0)					; $0004
-		move.w	#$0200, Obj_Priority(A0)				; $0008
+		move.w	#$0200, priority(A0)				; $0008
 		move.b	Obj_Subtype(A0), D0					; $002C
 		andi.w	#$00F0, D0
 		lsr.w	#$03, D0
@@ -20925,7 +20240,7 @@ Obj_0x2C_AIz_Collapsing_Bridge:
 		move.b	#$5A, width_pixels(A0)					; $0007
 		move.b	#$08, height_pixels(A0)					 ; $0006
 		move.b	#$04, render_flags(A0)					; $0004
-		move.w	#$0200, Obj_Priority(A0)				; $0008
+		move.w	#$0200, priority(A0)				; $0008
 		jsr	(AllocateObjectAfterCurrent)			; Offset_0x011DE0
 		bne	Offset_0x021FCE
 		move.l	#Offset_0x0220E4, (A1)
@@ -20934,7 +20249,7 @@ Obj_0x2C_AIz_Collapsing_Bridge:
 		ori.b	 #$04, render_flags(A1)					; $0004
 		move.b	#$5A, width_pixels(A1)					; $0007
 		move.b	#$08, height_pixels(A1)					 ; $0006
-		move.w	#$0200, Obj_Priority(A1)				; $0008
+		move.w	#$0200, priority(A1)				; $0008
 		move.w	Obj_X(A0), Obj_X(A1)			 ; $0010, $0010
 		move.w	Obj_Y(A0), Obj_Y(A1)			 ; $0014, $0014
 		bset	#$06, render_flags(A1)					; $0004
@@ -20968,7 +20283,7 @@ Offset_0x021FD8:
 		move.b	#$60, width_pixels(A0)					; $0007
 		move.b	#$08, height_pixels(A0)					 ; $0006
 		move.b	#$04, render_flags(A0)					; $0004
-		move.w	#$0200, Obj_Priority(A0)				; $0008
+		move.w	#$0200, priority(A0)				; $0008
 		jsr	(AllocateObjectAfterCurrent)			; Offset_0x011DE0
 		bne	Offset_0x022096
 		move.l	#Offset_0x0220E4, (A1)
@@ -20977,7 +20292,7 @@ Offset_0x021FD8:
 		ori.b	 #$04, render_flags(A1)					; $0004
 		move.b	#$60, width_pixels(A1)					; $0007
 		move.b	#$08, height_pixels(A1)					 ; $0006
-		move.w	#$0200, Obj_Priority(A1)				; $0008
+		move.w	#$0200, priority(A1)				; $0008
 		move.w	Obj_X(A0), Obj_X(A1)			 ; $0010, $0010
 		move.w	Obj_Y(A0), Obj_Y(A1)			 ; $0014, $0014
 		bset	#$06, render_flags(A1)					; $0004
@@ -21143,7 +20458,7 @@ Offset_0x02224E:
 		move.l	mappings(A3), mappings(A1)			; $000C, $000C
 		move.b	render_flags(A3), render_flags(A1)			; $0004, $0004
 		move.w	Obj_Art_VRAM(A3), Obj_Art_VRAM(A1)		 ; $000A, $000A
-		move.w	Obj_Priority(A3), Obj_Priority(A1)		 ; $0008, $0008
+		move.w	priority(A3), priority(A1)		 ; $0008, $0008
 		move.b	width_pixels(A3), width_pixels(A1)			; $0007, $0007
 		move.b	height_pixels(A3), height_pixels(A1)			; $0006, $0006
 		move.w	(A2)+, Obj_X(A1)				 ; $0010
@@ -21222,7 +20537,7 @@ Offset_0x022848:
 		move.b	#$18, width_pixels(A1)					; $0007
 		move.b	#$08, height_pixels(A1)					; $0006
 		move.b	#$04, render_flags(A1)					; $0004
-		move.w	#$0280, Obj_Priority(A1)				; $0008
+		move.w	#$0280, priority(A1)				; $0008
 		move.l	A1, A2
 		jsr	(AllocateObjectAfterCurrent)			; Offset_0x011DE0
 		bne	Offset_0x0228C0
@@ -21239,7 +20554,7 @@ Offset_0x0228A0:
 		move.b	#$20, width_pixels(A1)					; $0007
 		move.b	#$10, height_pixels(A1)					; $0006
 		move.b	#$04, render_flags(A1)					; $0004
-		move.w	#$0200, Obj_Priority(A1)				; $0008
+		move.w	#$0200, priority(A1)				; $0008
 		move.w	A2, Obj_Control_Var_0C(A1)				; $003C
 		move.w	A1, Obj_Control_Var_0C(A2)				; $003C
 Offset_0x0228C0:
@@ -21335,7 +20650,7 @@ Obj2F_StaticDecoration:
 		add.w	d1,d0
 		lea	StaticDecoration_ObjData(pc,d0.w),a1
 		move.w	(a1)+,Obj_Art_VRAM(a0)
-		move.w	(a1)+,Obj_Priority(a0)
+		move.w	(a1)+,priority(a0)
 		move.b	(a1)+,width_pixels(a0)
 		move.b	(a1)+,height_pixels(a0)
 		move.l	#StaticDecoration_Display,(a0)
@@ -21392,7 +20707,7 @@ Obj30_AnimatedDecoration:
 		add.w	d1,d0
 		lea	AniDecoration_ObjData(pc,d0.w),a1
 		move.w	(a1)+,Obj_Art_VRAM(a0)
-		move.w	(a1)+,Obj_Priority(a0)
+		move.w	(a1)+,priority(a0)
 		move.b	(a1)+,width_pixels(a0)
 		move.b	(a1)+,height_pixels(a0)
 		move.l	#AniDecoration_Display,(a0)
@@ -21446,7 +20761,7 @@ Obj35_AIZPlants:
 		add.w	d1,d0
 		lea	AIZPlants_ObjData(pc,d0.w),a1
 		move.w	(a1)+,Obj_Art_VRAM(a0)
-		move.w	(a1)+,Obj_Priority(a0)
+		move.w	(a1)+,priority(a0)
 		move.b	(a1)+,width_pixels(a0)
 		move.b	(a1)+,height_pixels(a0)
 		move.b	Obj_Subtype(a0),d0
@@ -21727,7 +21042,7 @@ Offset_0x023F8E:
 		move.b	#$04, render_flags(A0)					; $0004
 		move.b	#$08, width_pixels(A0)					; $0007
 		move.b	#$28, height_pixels(A0)					; $0006
-		move.w	#$0280, Obj_Priority(A0)				; $0008
+		move.w	#$0280, priority(A0)				; $0008
 		move.w	Obj_Respaw_Ref(A0), A2				 ; $0048
 		bclr	#$07, (A2)
 		btst	#$00, (A2)
@@ -21784,7 +21099,7 @@ Offset_0x02400C:
 		move.b	#$04, render_flags(A1)					; $0004
 		move.b	#$08, width_pixels(A1)					; $0007
 		move.b	#$08, height_pixels(A1)					; $0006
-		move.w	#$0200, Obj_Priority(A1)				; $0008
+		move.w	#$0200, priority(A1)				; $0008
 		move.b	#$02, Obj_Map_Id(A1)					; $0022
 		move.w	#$0020, Obj_Control_Var_06(A1)			; $0036
 		move.w	A0, Obj_Control_Var_0E(A1)				; $003E
@@ -21950,7 +21265,7 @@ Offset_0x024306:
 		subi.w	#$0030, D0
 		move.w	D0, Obj_Y(A1)					; $0014
 		move.w	D0, Obj_Control_Var_02(A1)				; $0032
-		move.w	Obj_Priority(A0), Obj_Priority(A1)		; $0008, $0008
+		move.w	priority(A0), priority(A1)		; $0008, $0008
 		move.b	#$08, width_pixels(A1)					; $0007
 		move.b	#$01, Obj_Map_Id(A1)					; $0022
 		move.w	#$FC00, Obj_Speed_X(A1)				; $0018
@@ -22825,13 +22140,13 @@ Run_TileDrawing:
 Load_Tiles_From_Start_Pointers:
 		dc.l	AIz_1_Events_Init
 		dc.l	AIz_1_Events_Init_2
-		dc.l	AIz_2_Events_Init
+		dc.l	AIZ2_RefreshScreen
 		dc.l	AIz_2_Events_Init_2
 ; Offset_0x02F346:
 Load_Tiles_As_You_Move_Pointers:
 		dc.l	AIz_1_Events_Run
 		dc.l	AIz_1_Events_Run_2
-		dc.l	AIz_2_Events_Run
+		dc.l	AIZ2_RunScreen
 		dc.l	AIz_2_Events_Run_2
 ;--------------
 		dc.l	Hz_1_Events_Init                       ; Offset_0x031C52
@@ -24396,8 +23711,13 @@ LBz_Water_Bg_Deform_Delta:                                     ; Offset_0x03045C
 		dc.b	$FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
 		dc.b	$FF, $FF, $FF, $FF, $00, $00, $00, $00
 		dc.b	$00, $00, $00, $01, $00, $01, $00, $01                 
-;-------------------------------------------------------------------------------  
-AIz_1_Events_Init:                                             ; Offset_0x0304DC 
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Angel Island 1 screen routines
+; ---------------------------------------------------------------------------
+; Offset_0x0304DC:
+AIz_1_Events_Init:
 		jsr	Reset_Tile_Offset_Position_Actual(PC)  ; Offset_0x02FEF2
 		jmp	Refresh_Plane_Full(PC)                 ; Offset_0x02FA7C
 ;------------------------------------------------------------------------------- 
@@ -24994,12 +24314,16 @@ AIz_Deform_Array:                                              ; Offset_0x030C3E
 ;------------------------------------------------------------------------------- 
 AIz_Flame_Vertical_Scroll:                                     ; Offset_0x030C5A
 		dc.w	$00FF, $FEFB, $F8F6, $F3F2, $F1F2, $F3F6, $F9FB, $FEFF
-;-------------------------------------------------------------------------------
-AIz_2_Events_Init:                                             ; Offset_0x030C6A
-		jsr	Reset_Tile_Offset_Position_Actual(PC)  ; Offset_0x02FEF2
-		jmp	Refresh_Plane_Full(PC)                 ; Offset_0x02FA7C  
-;------------------------------------------------------------------------------- 
-AIz_2_Events_Run:                                              ; Offset_0x030C72
+
+; ===========================================================================
+; Offset_0x030C6A: AIz_2_Events_Init:
+AIZ2_RefreshScreen:
+		jsr	Reset_Tile_Offset_Position_Actual(pc)
+		jmp	Refresh_Plane_Full(pc)
+
+; ===========================================================================
+; Offset_0x03C72: AIz_2_Events_Run:
+AIZ2_RunScreen:
 		move.w	(Earthquake_Offset).w, D0                    ; $FFFFEECE
 		add.w	D0, (Screen_Pos_Buffer_Y).w                  ; $FFFFEE84
 		move.w	(Level_Events_Routine).w, D0                 ; $FFFFEEC0
@@ -26336,7 +25660,7 @@ Offset_0x0322E8:
 		cmp.w	height_pixels(A1), D1                               ; $0006
 		bcc.s	Offset_0x032330
 		move.w	D2, (Background_Events+$10).w                ; $FFFFEEE2
-		move.w	Obj_Priority(A1), D0                             ; $0008
+		move.w	priority(A1), D0                             ; $0008
 		move.w	D0, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
 		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
 		move.w	Obj_Art_VRAM(A1), D0                             ; $000A
@@ -27993,9 +27317,10 @@ LBZ1_NormalBackground:
 		tst.w	(Level_Events_Buffer_5).w
 		beq.s	.normalDeform
 		clr.w	(Level_Events_Buffer_5).w
+
+; LBZ1_BeginLoadingAct2:
 		; The level transition appears to have been programmed for a much earlier build
 		; of the game due to several oddities that cause it to break, as documented below
-; LBZ1_BeginLoadingAct2:
 		movem.l	d7-a0/a2-a3,-(sp)
 		lea	(Launch_Base_2_Chunks).l,a1
 		lea	(M68K_RAM_Start).l,a2
@@ -28003,8 +27328,10 @@ LBZ1_NormalBackground:
 		lea	(Launch_Base_2_Blocks_2).l,a1
 		lea	(Blocks_Mem_Address+$628).w,a2
 		jsr	(Queue_Kos).l
-		lea	(Launch_Base_2_Tiles_2).l,a1	; load tiles, note these are decompressed into
-		move.w	#$2D60,d2			; the wrong location as it should be $2CA0
+		; These tiles are decompressed to the wrong VRAM location; they
+		; should be loaded at $2CA0, not $2D60
+		lea	(Launch_Base_2_Tiles_2).l,a1
+		move.w	#$2D60,d2
 		jsr	(Queue_Kos_Module).l
 		moveq	#$24,d0
 		jsr	(LoadPLC).l
@@ -29513,7 +28840,7 @@ AIZPlaneIntro_Init:
 		addq.b	#2,routine(a0)
 		move.l	#Sonic_Mappings,mappings(a0)
 		move.w	#$680,Obj_Art_VRAM(a0)
-		move.w	#$280,Obj_Priority(a0)
+		move.w	#$280,priority(a0)
 		move.b	#1,Obj_Map_Id(a0)
 		move.b	#$40,width_pixels(a0)
 		move.b	#$20,width_pixels(a0)
@@ -29713,7 +29040,7 @@ Obj_IntroTornado:
 		move.l	#Offset_0x035DB0,(a0)
 		move.l	#Tornado_Mappings,mappings(a0)
 		move.w	#$529,Obj_Art_VRAM(a0)
-		move.w	#$280,Obj_Priority(a0)
+		move.w	#$280,priority(a0)
 		move.b	#$40,width_pixels(a0)
 		move.b	#$20,width_pixels(a0)
 		lea	(Art_Tornado).l,a1
@@ -29755,7 +29082,7 @@ Offset_0x035DE8:
 Obj_IntroTornadoProp:
 		move.l	#Tornado_Mappings,mappings(a0)
 		move.w	#$529,Obj_Art_VRAM(a0)
-		move.w	#$280,Obj_Priority(a0)
+		move.w	#$280,priority(a0)
 		move.b	#4,width_pixels(a0)
 		move.b	#$C,width_pixels(a0)
 		move.l	#IntroTornadoProp_Animate,(a0)
@@ -29774,7 +29101,7 @@ IntroTornadoProp_Animate:
 Obj_IntroTornadoBooster:
 		move.l	#Tornado_Mappings,mappings(a0)
 		move.w	#$529,Obj_Art_VRAM(a0)
-		move.w	#$280,Obj_Priority(a0)
+		move.w	#$280,priority(a0)
 		move.b	#4,width_pixels(a0)
 		move.b	#$C,width_pixels(a0)
 		move.l	#IntroTornadoBooster_Animate,(a0)
@@ -29794,7 +29121,7 @@ Obj_IntroSuperSonicWaves:
 		move.l	#IntroSSWaves_Animate,(a0)
 		move.l	#Surfboard_Waves_Mappings,mappings(a0)
 		move.w	#$3D1,Obj_Art_VRAM(a0)
-		move.w	#$100,Obj_Priority(a0)
+		move.w	#$100,priority(a0)
 		move.b	#$10,width_pixels(a0)
 		bset	#0,render_flags(a0)
 		move.w	Obj_Child_Ref(a0),a1
@@ -31111,7 +30438,7 @@ Offset_0x039356:
 Offset_0x03935C:
 		moveq	#$00, D0
 		move.b	Obj_Subtype(A0), D0					; $002C
-		move.w	Offset_0x03936A(PC, D0), Obj_Priority(A0)		; $0008
+		move.w	Offset_0x03936A(PC, D0), priority(A0)		; $0008
 		rts							
 ;-------------------------------------------------------------------------------
 Offset_0x03936A:
@@ -31480,7 +30807,7 @@ Offset_0x03975C:
 		dc.b	$0C, $10, $08, $00	 
 ;-------------------------------------------------------------------------------
 Jawz_Explosion_Setup_Data:					; Offset_0x039768
-		dc.l	Object_Hit_Mappings			; Offset_0x013EF2
+		dc.l	MapUnc_Explosion			; Offset_0x013EF2
 		dc.w	$85A0, $0080
 		dc.b	$0C, $0C, $00, $8B										 
 ;-------------------------------------------------------------------------------
@@ -31712,7 +31039,7 @@ Offset_0x040760:
 		add.w	d0,d0
 		move.w	d0,d1
 		lea	HeyHo_Priority(pc,d0.w),a2
-		move.w	(a2)+,Obj_Priority(a0)
+		move.w	(a2)+,priority(a0)
 		add.w	d1,d1
 		add.b	Obj_Subtype(a0),d1
 		lea	HeyHo_Position(pc,d1.w),a2
@@ -32361,7 +31688,7 @@ SetupObjectAttributes.UsrMap:
 		move.w	(a1)+,Obj_Art_VRAM(a0)
 ; Offset_0x041D7A: Object_Settings_3:
 SetupObjectAttributes3:
-		move.w	(a1)+,Obj_Priority(a0)
+		move.w	(a1)+,priority(a0)
 		move.b	(a1)+,width_pixels(a0)
 		move.b	(a1)+,height_pixels(a0)
 		move.b	(a1)+,Obj_Map_Id(a0)
@@ -33678,7 +33005,7 @@ SetupSlottedObjectAttributes:
 		move.w	a2,Obj_Control_Var_0C(a0)	; keep track of address and bit number
 		move.w	d3,Obj_Art_VRAM(a0)
 		move.l	(a1)+,mappings(a0)
-		move.w	(a1)+,Obj_Priority(a0)
+		move.w	(a1)+,priority(a0)
 		move.b	(a1)+,width_pixels(a0)
 		move.b	(a1)+,height_pixels(a0)
 		move.b	(a1)+,Obj_Map_Id(a0)
@@ -34520,7 +33847,7 @@ Child_Get_Priority:                                            ; Offset_0x043230
 		beq.s	Offset_0x043248
 		bset	#$07, Obj_Art_VRAM(A0)                           ; $000A
 Offset_0x043248:
-		move.w	Obj_Priority(A1), Obj_Priority(A0)        ; $0008, $0008
+		move.w	priority(A1), priority(A0)        ; $0008, $0008
 		rts                        
 ;===============================================================================
 Move_0x0E_Bytes_A2_A1:                                         ; Offset_0x043250

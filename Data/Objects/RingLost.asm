@@ -45,7 +45,7 @@ Offset_0x010B18:
                 move.l  #Rings_Mappings, mappings(A1)    ; Offset_0x010DE2, $000C
                 move.w  #$A6BC, Obj_Art_VRAM(A1)                         ; $000A
                 move.b  #$84, render_flags(A1)                              ; $0004
-                move.w  #$0180, Obj_Priority(A1)                         ; $0008
+                move.w  #$0180, priority(A1)                         ; $0008
                 move.b  #$47, Obj_Col_Flags(A1)                          ; $0028
                 move.b  #$08, width_pixels(A1)                              ; $0007
                 move.b  #$FF, (Object_Frame_Anim_Counter).w          ; $FFFFFEA6
@@ -120,7 +120,7 @@ Offset_0x010C30:
 Offset_0x010C3A:
                 addq.b  #$02, routine(A0)                            ; $0005
                 move.b  #$00, Obj_Col_Flags(A0)                          ; $0028
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 bsr     CollectRing            ; Offset_0x010A20
 ;-------------------------------------------------------------------------------                
 Offset_0x010C4E:

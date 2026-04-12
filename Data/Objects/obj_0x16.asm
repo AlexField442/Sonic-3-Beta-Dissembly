@@ -8,7 +8,7 @@ Offset_0x01D2EA:
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 ori.b   #$04, render_flags(A1)                              ; $0004
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 rts
 ;-------------------------------------------------------------------------------                
 Obj_0x16_LBz_Flame_Thrower:                                    ; Offset_0x01D312

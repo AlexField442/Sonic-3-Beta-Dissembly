@@ -8,7 +8,7 @@
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
                 lea     Obj_Speed_X(A0), A2                              ; $0018
@@ -28,7 +28,7 @@
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$60, width_pixels(A1)                              ; $0007
                 move.b  #$C0, height_pixels(A1)                             ; $0006
-                move.w  #$0300, Obj_Priority(A1)                         ; $0008
+                move.w  #$0300, priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_Sub_X(A1)                  ; $0010, $0012
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014

@@ -28,7 +28,7 @@ Offset_0x010C76:
                 rts
 Offset_0x010CAA:
                 addq.b  #$02, routine(A0)                            ; $0005
-                move.w  #$0100, Obj_Priority(A0)                         ; $0008
+                move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$52, Obj_Col_Flags(A0)                          ; $0028
                 move.w  #$0C40, (S1_Load_Big_Ring_Art_Flag).w        ; $FFFFF7BE
 ;-------------------------------------------------------------------------------                

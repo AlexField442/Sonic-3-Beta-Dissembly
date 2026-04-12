@@ -616,7 +616,7 @@ Offset_0x03864A:
                 move.w  D0, A2
                 bset    #$01, Obj_Status(A2)                             ; $002A
                 clr.b   Obj_Timer(A2)                                    ; $002E
-                move.w  #$0100, Obj_Priority(A2)                         ; $0008
+                move.w  #$0100, priority(A2)                         ; $0008
 Offset_0x03865C:
                 rts
 ;-------------------------------------------------------------------------------
@@ -692,10 +692,10 @@ Offset_0x03870C:
                 neg.w   D2
 Offset_0x03870E:
                 add.w   D2, D1
-                move.w  #$0100, Obj_Priority(A2)                         ; $0008
+                move.w  #$0100, priority(A2)                         ; $0008
                 move.w  D1, Obj_Speed_X(A2)                              ; $0018
                 bpl.s   Offset_0x038722
-                move.w  #$0300, Obj_Priority(A2)                         ; $0008
+                move.w  #$0300, priority(A2)                         ; $0008
 Offset_0x038722:
                 ext.l   D1
                 lsl.l   #$08, D1
@@ -761,10 +761,10 @@ Offset_0x0387C6:
                 move.b  Obj_Control_Var_0D(A0), D0                       ; $003D
                 lsr.w   #$04, D0
                 move.b  Offset_0x0387FC(PC, D0), Obj_Map_Id(A0)          ; $0022
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 cmpi.b  #$08, D0
                 bcs.s   Offset_0x0387FA
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
 Offset_0x0387FA:
                 rts
 ;-------------------------------------------------------------------------------
@@ -808,7 +808,7 @@ Offset_0x038854:
                 move.b  Obj_Control_Var_0D(A2), D0                       ; $003D
                 lsr.w   #$03, D0
                 andi.w  #$FFFE, D0
-                move.w  Offset_0x0388A4(PC, D0), Obj_Priority(A0)        ; $0008
+                move.w  Offset_0x0388A4(PC, D0), priority(A0)        ; $0008
                 lea     Offset_0x0388C4(PC, D0), A1
                 move.b  (A1)+, D1
                 ext.w   D1

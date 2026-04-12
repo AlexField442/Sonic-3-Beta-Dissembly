@@ -27,7 +27,7 @@ Offset_0x020EFA:
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$18, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$0280, Obj_Priority(A0)                         ; $0008
+                move.w  #$0280, priority(A0)                         ; $0008
                 move.w  (Level_Frame_Count).w, D0                    ; $FFFFFE04
                 add.w   Obj_Control_Var_04(A0), D0                       ; $0034
                 and.w   Obj_Control_Var_02(A0), D0                       ; $0032
@@ -66,7 +66,7 @@ Offset_0x020F80:
                 move.b  #$28, width_pixels(A1)                              ; $0007
                 move.b  #$20, height_pixels(A1)                             ; $0006
                 move.b  #$04, render_flags(A1)                              ; $0004
-                move.w  #$0200, Obj_Priority(A1)                         ; $0008
+                move.w  #$0200, priority(A1)                         ; $0008
                 move.w  A0, Obj_Control_Var_0C(A1)                       ; $003C
 Offset_0x020FE6:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2  

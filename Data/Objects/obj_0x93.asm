@@ -302,7 +302,7 @@ Offset_0x049924:
                 bne.s   Offset_0x049970
                 move.w  A2, Obj_Height_3(A0)                             ; $0044
                 move.b  #$08, routine(A0)                            ; $0005
-                move.w  #$0000, Obj_Priority(A0)                         ; $0008
+                move.w  #$0000, priority(A0)                         ; $0008
                 move.l  #Offset_0x049838, Obj_Child(A0)                  ; $0034
                 bset    #$01, Obj_Status(A2)                             ; $002A
                 move.b  #$01, Obj_Timer(A2)                              ; $002E

@@ -4,7 +4,7 @@
 ;===============================================================================  
 ; Offset_0x026A80:
                 ori.b   #$04, render_flags(A0)                              ; $0004
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 move.l  #Hand_Launcher_Mappings, mappings(A0) ; Offset_0x026DB8, $000C
                 move.w  #$23E4, Obj_Art_VRAM(A0)                         ; $000A
                 move.b  #$20, width_pixels(A0)                              ; $0007
@@ -21,7 +21,7 @@
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$20, width_pixels(A1)                              ; $0007
                 move.b  #$30, width_pixels(A1)                              ; $0007
-                move.w  #$0280, Obj_Priority(A1)                         ; $0008
+                move.w  #$0280, priority(A1)                         ; $0008
                 move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
                 move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
                 move.w  A0, Obj_Control_Var_0C(A1)                       ; $003C
@@ -42,7 +42,7 @@ Offset_0x026B28:
                 tst.b   Obj_Control_Var_04(A0)                           ; $0034
                 beq.s   Offset_0x026B60
                 move.b  #$07, Obj_Map_Id(A0)                             ; $0022
-                move.w  #$0080, Obj_Priority(A0)                         ; $0008
+                move.w  #$0080, priority(A0)                         ; $0008
                 tst.w   Obj_Control_Var_06(A0)                           ; $0036
                 beq.s   Offset_0x026B46
                 subq.w  #$01, Obj_Control_Var_06(A0)                     ; $0036
@@ -59,7 +59,7 @@ Offset_0x026B52:
 Offset_0x026B60:
                 move.w  #$0013, Obj_Control_Var_06(A0)                   ; $0036
                 move.b  #$06, Obj_Map_Id(A0)                             ; $0022
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
                 cmpi.w  #$0018, Obj_Control_Var_00(A0)                   ; $0030
                 bls.s   Offset_0x026B80
                 subq.w  #$08, Obj_Control_Var_00(A0)                     ; $0030
@@ -98,7 +98,7 @@ Offset_0x026BDC:
                 bne.s   Offset_0x026BF4
                 bsr     Offset_0x026C24
                 move.b  #$06, Obj_Map_Id(A0)                             ; $0022
-                move.w  #$0200, Obj_Priority(A0)                         ; $0008
+                move.w  #$0200, priority(A0)                         ; $0008
 Offset_0x026BF4:
                 addq.w  #$08, Obj_Control_Var_00(A0)                     ; $0030
 Offset_0x026BF8:
