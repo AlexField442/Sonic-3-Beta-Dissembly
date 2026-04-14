@@ -9,7 +9,7 @@ Obj09_AIZTree:
 		move.w	#$180,priority(a0)
 		move.b	#8,width_pixels(a0)
 		move.b	#4,render_flags(a0)
-		move.w	#$4001,Obj_Art_VRAM(a0)
+		move.w	#$4001,art_tile(a0)
 		move.l	#AIZTree_ChkDel,(a0)
 ; Offset_0x013F4A:
 AIZTree_ChkDel:

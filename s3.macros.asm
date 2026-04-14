@@ -17,9 +17,9 @@ rom_ptr_z80 macro addr
 
 ; we don't have bytesToLcnt or bytesToWcnt yet, so here's examples of when they are used
 ; bytesToLcnt
-; #(XX>>2-YY>>2)-1
+; #(XX/4-YY/4)-1
 ; bytesToWcnt
-; #(XX>>1-YY>>1)-1
+; #(XX/2-YY/2)-1
 
 ; fills a region of 68k RAM with 0
 clearRAM macro startaddr,endaddr

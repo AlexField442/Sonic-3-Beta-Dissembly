@@ -17,11 +17,11 @@ Obj_FireShield:
 		move.w	#$80,priority(a0)
 		move.b	#$18,width_pixels(a0)
 		move.b	#$18,height_pixels(a0)
-		move.w	#$79C,Obj_Art_VRAM(a0)
+		move.w	#$79C,art_tile(a0)
 		move.w	#$F380,shield_VRAM(a0)
-		btst	#7,(Obj_Player_One+Obj_Art_VRAM).w
+		btst	#7,(Obj_Player_One+art_tile).w
 		beq.s	.notHighPriority
-		bset	#7,Obj_Art_VRAM(a0)
+		bset	#7,art_tile(a0)
 ; Offset_0x010410:
 .notHighPriority:
 		move.l	#FireShield_Main,(a0)
@@ -32,13 +32,13 @@ FireShield_Main:
 		bne.s	Offset_0x010464
 		btst	#Classic_Type,Obj_Player_Status(a2)
 		beq.s	FireShield_Delete
-		move.w	Obj_X(a2),Obj_X(a0)
-		move.w	Obj_Y(a2),Obj_Y(a0)
+		move.w	x_pos(a2),x_pos(a0)
+		move.w	y_pos(a2),y_pos(a0)
 		move.b	Obj_Status(a2),Obj_Status(a0)
-		andi.w	#$7FFF,Obj_Art_VRAM(a0)
-		tst.w	Obj_Art_VRAM(A2)
+		andi.w	#$7FFF,art_tile(a0)
+		tst.w	art_tile(A2)
 		bpl.s	FireShield_Display
-		ori.w	#$8000,Obj_Art_VRAM(a0)
+		ori.w	#$8000,art_tile(a0)
 ; Offset_0x01044E: .notHighPriority:
 FireShield_Display:
 		lea	(FireShield_AnimateData).l,a1
@@ -66,11 +66,11 @@ Obj_LightningShield:
 		move.w	#$80,priority(a0)
 		move.b	#$18,width_pixels(a0)
 		move.b	#$18,height_pixels(a0)
-		move.w	#$79C,Obj_Art_VRAM(a0)
+		move.w	#$79C,art_tile(a0)
 		move.w	#$F380,shield_VRAM(a0)
-		btst	#7,(Obj_Player_One+Obj_Art_VRAM).w
+		btst	#7,(Obj_Player_One+art_tile).w
 		beq.s	.notHighPriority
-		bset	#7,Obj_Art_VRAM(a0)
+		bset	#7,art_tile(a0)
 ; Offset_0x0104B6:
 .notHighPriority:
 		move.l	#LightningShield_Main,(a0)
@@ -81,13 +81,13 @@ LightningShield_Main:
 		bne.s	Offset_0x01050A
 		btst	#Classic_Type,Obj_Player_Status(a2)
 		beq.s	LightningShield_Delete
-		move.w	Obj_X(a2),Obj_X(a0)
-		move.w	Obj_Y(a2),Obj_Y(a0)
+		move.w	x_pos(a2),x_pos(a0)
+		move.w	y_pos(a2),y_pos(a0)
 		move.b	Obj_Status(a2),Obj_Status(a0)
-		andi.w	#$7FFF,Obj_Art_VRAM(a0)
-		tst.w	Obj_Art_VRAM(A2)
+		andi.w	#$7FFF,art_tile(a0)
+		tst.w	art_tile(A2)
 		bpl.s	LightningShield_Display
-		ori.w	#$8000,Obj_Art_VRAM(a0)
+		ori.w	#$8000,art_tile(a0)
 ; Offset_0x0104F4: .notHighPriority:
 LightningShield_Display:
 		lea	(LightningShield_AnimateData).l,a1
@@ -115,11 +115,11 @@ Obj_BubbleShield:
 		move.w	#$80,priority(a0)
 		move.b	#$18,width_pixels(a0)
 		move.b	#$18,height_pixels(a0)
-		move.w	#$79C,Obj_Art_VRAM(a0)
+		move.w	#$79C,art_tile(a0)
 		move.w	#$F380,shield_VRAM(a0)
-		btst	#7,(Obj_Player_One+Obj_Art_VRAM).w
+		btst	#7,(Obj_Player_One+art_tile).w
 		beq.s	.notHighPriority
-		bset	#7,Obj_Art_VRAM(a0)
+		bset	#7,art_tile(a0)
 ; Offset_0x01055C:
 .notHighPriority:
 		move.l	#BubbleShield_Main,(a0)
@@ -130,13 +130,13 @@ BubbleShield_Main:
 		bne.s	Offset_0x0105B0
 		btst	#Classic_Type,Obj_Player_Status(a2)
 		beq.s	BubbleShield_Delete
-		move.w	Obj_X(a2),Obj_X(a0)
-		move.w	Obj_Y(a2),Obj_Y(a0)
+		move.w	x_pos(a2),x_pos(a0)
+		move.w	y_pos(a2),y_pos(a0)
 		move.b	Obj_Status(a2),Obj_Status(a0)
-		andi.w	#$7FFF,Obj_Art_VRAM(a0)
-		tst.w	Obj_Art_VRAM(A2)
+		andi.w	#$7FFF,art_tile(a0)
+		tst.w	art_tile(A2)
 		bpl.s	BubbleShield_Display
-		ori.w	#$8000,Obj_Art_VRAM(a0)
+		ori.w	#$8000,art_tile(a0)
 ; Offset_0x01059A: .notHighPriority:
 BubbleShield_Display:
 		lea	(BubbleShield_AnimateData).l,a1

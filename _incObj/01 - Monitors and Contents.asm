@@ -25,7 +25,7 @@ Monitors_Init:
 		move.b	#$F,y_radius(a0)
 		move.b	#$F,x_radius(a0)
 		move.l	#Monitors_Mappings,mappings(a0)
-		move.w	#$4C4,Obj_Art_VRAM(a0)
+		move.w	#$4C4,art_tile(a0)
 		move.b	#4,render_flags(a0)
 		move.w	#$180,priority(a0)
 		move.b	#$E,width_pixels(a0)
@@ -57,7 +57,7 @@ Monitors_Main:
 		jsr	(ObjHitFloor).l
 		tst.w	d1					; is the monitor on the ground?
 		bpl.w	SolidObject_Monitor			; if not, branch
-		add.w	d1,Obj_Y(a0)				; move monitor out of ground
+		add.w	d1,y_pos(a0)				; move monitor out of ground
 		clr.w	Obj_Speed_Y(a0)
 		clr.b	Obj_Control_Var_0C(a0)			; stop monitor from falling
 ; Offset_0x012FEE:
@@ -66,7 +66,7 @@ SolidObject_Monitor:
 		move.w	#$10,d2
 		move.w	d2,d3
 		addq.w	#1,d3
-		move.w	Obj_X(a0),d4
+		move.w	x_pos(a0),d4
 		lea	(Obj_Player_One).w,a1
 		moveq	#3,d6
 		movem.l	d1-d4,-(sp)
@@ -109,8 +109,8 @@ Monitors_ChkOverEdge:
 		btst	#1,Obj_Status(a1)			; is the character in the air?
 		bne.s	.inAir					; if yes, branch
 		; check, if character is standing on
-		move.w	Obj_X(a1),d0
-		sub.w	Obj_X(a0),d0
+		move.w	x_pos(a1),d0
+		sub.w	x_pos(a0),d0
 		add.w	d1,d0
 		bmi.s	.inAir					; branch, if character is behind the left edge of the monitor
 		cmp.w	d2,d0
@@ -154,8 +154,8 @@ Monitors_SpawnIcon:
 		bsr.w	AllocateObject
 		bne.s	Monitors_SpawnSmoke
 		move.l	#Obj_MonitorContents,(a1)		; load Obj_MonitorContents
-		move.w	Obj_X(a0),Obj_X(a1)			; set icon's position
-		move.w	Obj_Y(a0),Obj_Y(a1)
+		move.w	x_pos(a0),x_pos(a1)			; set icon's position
+		move.w	y_pos(a0),y_pos(a1)
 		move.b	Obj_Ani_Number(a0),Obj_Ani_Number(a1)
 		move.w	Obj_Player_Last(a0),Obj_Player_Last(a1)	; parent gets item
 ; Offset_0x0130F6:
@@ -164,8 +164,8 @@ Monitors_SpawnSmoke:
 		bne.s	Offset_0x013112
 		move.l	#Obj_Explosion,(a1)			; load Obj_Explosion
 		addq.b	#2,routine(a1)
-		move.w	Obj_X(a0),Obj_X(a1)
-		move.w	Obj_Y(a0),Obj_Y(a1)
+		move.w	x_pos(a0),x_pos(a1)
+		move.w	y_pos(a0),y_pos(a1)
 
 Offset_0x013112:
 		move.w	Obj_Respaw_Ref(a0),a2
@@ -193,7 +193,7 @@ MonitorContents_Index:
 ; Offset_0x013138:
 MonitorContents_Init:
 		addq.b	#2,routine(a0)
-		move.w	#$84C4,Obj_Art_VRAM(a0)
+		move.w	#$84C4,art_tile(a0)
 		move.b	#$24,render_flags(a0)
 		move.w	#$180,priority(a0)
 		move.b	#8,width_pixels(a0)

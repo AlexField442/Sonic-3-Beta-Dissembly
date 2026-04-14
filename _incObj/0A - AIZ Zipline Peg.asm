@@ -8,7 +8,7 @@ Obj0A_ZiplinePeg:
 		move.w	#$380,priority(a0)
 		move.b	#$20,width_pixels(a0)
 		move.b	#4,render_flags(a0)
-		move.w	#$4324,Obj_Art_VRAM(a0)
+		move.w	#$4324,art_tile(a0)
 		move.l	#ZiplinePeg_ChkDel,(a0)
 ; Offset_0x013F8C:
 ZiplinePeg_ChkDel:

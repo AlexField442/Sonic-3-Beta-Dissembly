@@ -28,10 +28,10 @@ Explosion_Init:
 Explosion_Main:
 		addq.b	#2,routine(a0)
 		move.l	#MapUnc_Explosion,mappings(a0)
-		move.w	Obj_Art_VRAM(a0),d0
+		move.w	art_tile(a0),d0
 		andi.w	#$8000,d0
 		ori.w	#$5A0,d0
-		move.w	d0,Obj_Art_VRAM(a0)
+		move.w	d0,art_tile(a0)
 		move.b	#4,render_flags(a0)
 		move.w	#$80,priority(a0)
 		move.b	#0,Obj_Col_Flags(a0)
@@ -62,7 +62,7 @@ Explosion_Display:
 ; Offset_0x013E28: Obj_Fire_Shield_Dissipate:
 Obj_FireShield_Dissipate:
 		move.l	#MapUnc_Explosion,mappings(a0)
-		move.w	#$5A0,Obj_Art_VRAM(a0)
+		move.w	#$5A0,art_tile(a0)
 		move.b	#4,render_flags(a0)
 		move.w	#$280,priority(a0)
 		move.b	#$C,width_pixels(a0)
@@ -90,7 +90,7 @@ FireShieldDissipate_Display:
 ; Offset_0x013E86:
 Obj_Dissipate:
 		move.l	#MapUnc_Explosion,mappings(a0)
-		move.w	#$85A0,Obj_Art_VRAM(a0)
+		move.w	#$85A0,art_tile(a0)
 		move.b	#4,render_flags(a0)
 		move.w	#$100,priority(a0)
 		move.b	#$C,width_pixels(a0)

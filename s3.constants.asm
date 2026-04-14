@@ -54,19 +54,26 @@ routine:		equ 5		; 1 byte
 height_pixels:		equ 6		; 1 byte
 width_pixels:		equ 7		; 1 byte
 priority:		equ 8		; 2 bytes ; 8/9
+art_tile:		equ $A		; 2 bytes ; $A/$B
 mappings:		equ $C		; 4 bytes ; $C/$D/$E/$F
 
+x_pos:			equ $10		; 2 bytes ; $10/$11
+x_sub:			equ $12		; 2 bytes ; $12/$13
+y_pos:			equ $14		; 2 bytes ; $14/$15
+y_sub:			equ $16		; 2 bytes ; $16/$17
+x_vel:			equ $18		; 2 bytes ; $18/$19
+y_vel:			equ $1A		; 2 bytes ; $1A/$1B
 y_radius:		equ $1E		; 1 byte
 x_radius:		equ $1F		; 1 byte
 
 ; OLD! To deprecate!
-Obj_Art_VRAM          equ $0A     ; Word          ; 02..03      ; 0A..0B
-Obj_X                 equ $10     ; Word          ; 08..09      ; 10..11
-Obj_Sub_X             equ $12     ; Word          ; 0A..0B      ; 12..13  ; Fixed position
-Obj_Y                 equ $14     ; Word          ; 0C..0D      ; 14..15
-Obj_Sub_Y             equ $16     ; Word          ; 0E..0F      ; 16..17
-Obj_Speed_X           equ $18     ; Longword      ; 10..13      ; 18..1B
-Obj_Speed_Y           equ $1A     ; complemento do $18 as vezes referenciado em word ; 12..13 ; 1A..1B
+Obj_Art_VRAM          equ art_tile
+Obj_X                 equ x_pos
+Obj_Sub_X             equ x_sub
+Obj_Y                 equ y_pos
+Obj_Sub_Y             equ y_sub
+Obj_Speed_X           equ x_vel
+Obj_Speed_Y           equ y_vel
 Obj_Inertia           equ $1C     ; Word          ; 14..15      ; 1C..1D
 Obj_Ani_Number        equ $20     ; Byte          ; 1C          ; 20
 Obj_Ani_Flag          equ $21     ; Byte          ; 1D          ; 21
@@ -120,7 +127,7 @@ Obj_Control_Var_13      equ $43
 Obj_Player_One_Or_Two_2 equ $43
 Obj_Control_Var_14      equ $44  
 Obj_Control_Var_16      equ $46  
-
+Obj_Control_Var_18      equ $48
 
 
 ; Variaveis usadas pelos jogadores

@@ -21,7 +21,7 @@ ClassicShield_Init:
 		move.b	#4,render_flags(a0)
 		move.w	#$80,priority(a0)
 		move.b	#$18,width_pixels(a0)
-		move.w	#$79C,Obj_Art_VRAM(a0)
+		move.w	#$79C,art_tile(a0)
 ; Offset_0x00F9A8:
 ClassicShield_Main:
 		move.w	Obj_Player_Last(a0),a2
@@ -29,13 +29,13 @@ ClassicShield_Main:
 		bne.s	Offset_0x00F9F2
 		btst	#0,Obj_Player_Status(a2)
 		beq.s	ClassicShield_Delete
-		move.w	Obj_X(a2),Obj_X(a0)
-		move.w	Obj_Y(a2),Obj_Y(a0)
+		move.w	x_pos(a2),x_pos(a0)
+		move.w	y_pos(a2),y_pos(a0)
 		move.b	Obj_Status(a2),Obj_Status(a0)
-		andi.w	#$7FFF,Obj_Art_VRAM(a0)
-		tst.w	Obj_Art_VRAM(a2)
+		andi.w	#$7FFF,art_tile(a0)
+		tst.w	art_tile(a2)
 		bpl.s	ClassicShield_Display
-		ori.w	#$8000,Obj_Art_VRAM(a0)
+		ori.w	#$8000,art_tile(a0)
 ; Offset_0x00F9E0:
 ClassicShield_Display:
 		lea	(Classic_Shield_Animate_Data).l,a1
@@ -92,12 +92,12 @@ Offset_0x00FA2A:
 		move.l	(a0),(a1)
 		move.b	#4,routine(a1)
 		move.l	#Invincibility_Mappings,mappings(a1)
-		move.w	#$79C,Obj_Art_VRAM(a1)
+		move.w	#$79C,art_tile(a1)
 		move.w	#$80,priority(a1)
 		move.b	#4,render_flags(a1)
 		bset	#6,render_flags(a1)
 		move.b	#$10,width_pixels(a1)
-		move.w	#2,Obj_Sub_Y(a1)
+		move.w	#2,y_sub(a1)
 		move.w	Obj_Player_Last(a0),Obj_Player_Last(a1)
 		move.b	d2,Obj_Control_Var_06(a1)
 		addq.w	#1,d2
@@ -117,10 +117,10 @@ Invincibility_BigStars:
 		move.w	Obj_Player_Last(a0),a1
 		btst	#Invincibility_Type,Obj_Player_Status(a1)
 		beq.w	DeleteObject
-		move.w	Obj_X(a1),d0
-		move.w	D0, Obj_X(a0)
-		move.w	Obj_Y(a1),d1
-		move.w	d1,Obj_Y(a0)
+		move.w	x_pos(a1),d0
+		move.w	D0, x_pos(a0)
+		move.w	y_pos(a1),d1
+		move.w	d1,y_pos(a0)
 		lea	Obj_Speed_X(a0),a2
 		lea	Offset_0x00FC04(pc),a3
 		moveq	#0,d5
@@ -184,8 +184,8 @@ Offset_0x00FB32:
 		lea	(a6,d0.w),a2
 		move.w	(a2)+,d0
 		move.w	(a2)+,d1
-		move.w	d0,Obj_X(a0)
-		move.w	d1,Obj_Y(a0)
+		move.w	d0,x_pos(a0)
+		move.w	d1,y_pos(a0)
 		lea	Obj_Speed_X(a0),a2
 		move.l	Obj_Control_Var_00(a0),a3
 

@@ -44,8 +44,8 @@ CutKnux_AIZ1_Init:
 		lea	Knuckles_Setup_Data(pc),a1
 		jsr	(SetupSlottedObjectAttributes).l
 		move.b	#8,Obj_Map_Id(a0)
-		move.w	#$1400,Obj_X(a0)
-		move.w	#$430,Obj_Y(a0)
+		move.w	#$1400,x_pos(a0)
+		move.w	#$430,y_pos(a0)
 		moveq	#Volume_Down,d0
 		jsr	(PlaySound).l
 		move.w	#$77,Obj_Height_3(a0)
@@ -54,6 +54,10 @@ CutKnux_AIZ1_Init:
 CutKnux_AIZ1_Null:
 		rts
 ; ---------------------------------------------------------------------------
+; This code is disabled for a good reason, as re-enabling it would cause the
+; distant palmtrees in the intro appear wrong. POSSIBLY indicative of an earlier
+; build that lacked them, as the early palette tables include an intro palette
+; that similarly doesn't work well with the final graphics.
 ; Offset_0x034C28: CutKnux_AIZ1_LoadPal:
 		lea	Knuckles_Palette(pc),a1
 		jmp	(Pal_Load_Line_1).l
@@ -85,8 +89,8 @@ CutKnux_AIZ2_Index:
 CutKnux_AIZ2_Init:
 		lea	Knuckles_Setup_Data(pc),a1
 		jsr	(SetupSlottedObjectAttributes).l
-		move.w	#$4B8E,Obj_X(a0)
-		move.w	#$17D,Obj_Y(a0)
+		move.w	#$4B8E,x_pos(a0)
+		move.w	#$17D,y_pos(a0)
 		bset	#0,render_flags(a0)
 		moveq	#Volume_Down,d0
 		jsr	(PlaySound).l
@@ -108,11 +112,11 @@ CutKnux_AIZ2_PlayMusic:
 
 ;-------------------------------------------------------------------------------
 Offset_0x034CAE:
-		move.w  Obj_X(A0), D0				    ; $0010
+		move.w  x_pos(A0), D0				    ; $0010
 		subq.w  #$02, D0
 		cmpi.w  #$4B3C, D0
 		bcs.s   Offset_0x034CC8
-		move.w  D0, Obj_X(A0)				    ; $0010
+		move.w  D0, x_pos(A0)				    ; $0010
 		lea     Offset_0x0355B1(PC), A1
 		jmp     (Animate_Raw_A1)		       ; Offset_0x042092
 Offset_0x034CC8:
@@ -160,7 +164,7 @@ Offset_0x034D62:
 		rts
 Offset_0x034D64:
 		addq.b  #$02, routine(A0)		            ; $0005
-		add.w   D1, Obj_Y(A0)				    ; $0014
+		add.w   D1, y_pos(A0)				    ; $0014
 		bra     Offset_0x034CE2            
 ;-------------------------------------------------------------------------------  
 Offset_0x034D70:
@@ -202,7 +206,7 @@ Offset_0x034DB6:
 ;-------------------------------------------------------------------------------
 Offset_0x034DE2:
 		lea     (Obj_Player_One).w, A1		       ; $FFFFB000
-		cmpi.w  #$3990, Obj_X(A1)				; $0010
+		cmpi.w  #$3990, x_pos(A1)				; $0010
 		bcs.s   Offset_0x034DFC
 		tst.b   Obj_Timer(A1)				    ; $002E
 		bne.s   Offset_0x034DFC
@@ -221,7 +225,7 @@ Offset_0x034E04:
 		jmp     (Pal_Load_Line_1)		      ; Offset_0x04314C  
 ;-------------------------------------------------------------------------------
 Offset_0x034E2E:
-		subq.w  #$04, Obj_X(A0)				  ; $0010
+		subq.w  #$04, x_pos(A0)				  ; $0010
 		lea     (Offset_0x0355B1), A1
 		jsr     (Animate_Raw_A1)		       ; Offset_0x042092
 		jmp     (Run_Object_Wait_Timer_A0)             ; Offset_0x0423D2   
@@ -339,7 +343,7 @@ Offset_0x034FCC:
 Offset_0x034FCE:
 		move.b  #$08, routine(A0)		            ; $0005
 		bclr    #$00, render_flags(A0)		              ; $0004
-		add.w   D1, Obj_Y(A0)				    ; $0014
+		add.w   D1, y_pos(A0)				    ; $0014
 		move.w  #$003F, Obj_Timer(A0)		            ; $002E
 		move.l  #Offset_0x034FF8, Obj_Child(A0)		  ; $0034
 		bra     Offset_0x034CE2		  
@@ -384,7 +388,7 @@ Offset_0x035062:
 		moveq   #$13, D1
 		move.w  #$0100, D2
 		move.w  #$0200, D3
-		move.w  Obj_X(A0), D4				    ; $0010
+		move.w  x_pos(A0), D4				    ; $0010
 		jmp     (Solid_Object_2)		       ; Offset_0x0135B6
 Offset_0x035088:
 		jmp     (DeleteObject)		         ; Offset_0x011138
@@ -473,7 +477,7 @@ Offset_0x035194:
 Offset_0x0351AC:
 		tst.b   render_flags(A0)				    ; $0004
 		bpl     Offset_0x0351BE
-		addq.w  #$02, Obj_X(A0)				  ; $0010
+		addq.w  #$02, x_pos(A0)				  ; $0010
 		jmp     (AnimateRaw)		          ; Offset_0x04208E
 Offset_0x0351BE:
 		clr.b   (Knuckles_Control_Lock_Flag).w               ; $FFFFFAA9
@@ -539,8 +543,8 @@ Offset_0x035288:
 		move.b  Obj_Subtype(A0), D0		              ; $002C
 		add.w   D0, D0
 		lea     Offset_0x0352B6(PC, D0), A1
-		move.w  (A1)+, Obj_X(A0)				 ; $0010
-		move.w  (A1)+, Obj_Y(A0)				 ; $0014
+		move.w  (A1)+, x_pos(A0)				 ; $0010
+		move.w  (A1)+, y_pos(A0)				 ; $0014
 		move.b  #$0A, Obj_Subtype(A0)		            ; $002C
 		jmp     (Offset_0x041C9A)
 ;-------------------------------------------------------------------------------
@@ -548,7 +552,7 @@ Offset_0x0352B6:
 		dc.w    $3BC0, $01A0, $3B80, $01A0, $3B40, $01A0, $3B00, $01A0 
 ;-------------------------------------------------------------------------------
 Offset_0x0352C6:
-		subq.w  #$04, Obj_Y(A0)				  ; $0014
+		subq.w  #$04, y_pos(A0)				  ; $0014
 		jmp     (Run_Object_Wait_Timer_A0)             ; Offset_0x0423D2 
 ;------------------------------------------------------------------------------- 
 Knuckles_In_Launch_Base_2:				     ; Offset_0x0352D0
@@ -632,8 +636,8 @@ Offset_0x0353B8:
 		add.w   D0, D0
 		move.l  Offset_0x0353E4(PC, D0), Obj_Control_Var_0E(A0)  ; $003E
 		lsl.w   #$02, D0
-		add.w   D0, Obj_Y(A0)				    ; $0014
-		move.w  Obj_X(A0), Obj_Control_Var_0A(A0)         ; $0010, $003A
+		add.w   D0, y_pos(A0)				    ; $0014
+		move.w  x_pos(A0), Obj_Control_Var_0A(A0)         ; $0010, $003A
 		rts				     
 ;-------------------------------------------------------------------------------
 Offset_0x0353E4:
@@ -650,7 +654,7 @@ Offset_0x035418:
 		jmp     (Delete_Sprite_Check_X_Y)              ; Offset_0x042AD0
 ;-------------------------------------------------------------------------------
 Offset_0x03541E:
-		move.w  Obj_X(A0), D0				    ; $0010
+		move.w  x_pos(A0), D0				    ; $0010
 		move.w  Obj_Control_Var_10(A0), D1		       ; $0040
 		cmp.w   Obj_Control_Var_0A(A0), D0		       ; $003A
 		scs     D2
@@ -673,7 +677,7 @@ Offset_0x03545C:
 		tst.b   Obj_Subtype(A0)				  ; $002C
 		bne.s   Offset_0x035472
 		move.w  Obj_Child_Ref(A0), A1		            ; $0046
-		move.w  Obj_X(A0), Obj_X(A1)		      ; $0010, $0010
+		move.w  x_pos(A0), x_pos(A1)		      ; $0010, $0010
 Offset_0x035472:
 		jmp     (Delete_Sprite_Check_X_Y)              ; Offset_0x042AD0  
 ;-------------------------------------------------------------------------------

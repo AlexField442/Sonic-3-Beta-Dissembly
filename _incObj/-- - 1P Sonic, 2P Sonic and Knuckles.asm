@@ -63,37 +63,37 @@ Offset_0x00A5B6:
                 move.b  #$0D, Obj_Player_LRB_Solid(A0)                   ; $0047
                 cmpa.w  #Obj_Player_One, A0                              ; $B000
                 bne.s   Offset_0x00A66A
-                move.w  #$0680, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0680, art_tile(A0)                         ; $000A
                 move.l  #Sonic_Mappings_2P, mappings(A0) ; Offset_0x102C70, $000C
                 tst.b   Obj_Player_Selected(A0)                          ; $0038
                 beq.s   Offset_0x00A642
                 move.l  #Knuckles_Mappings_2P, mappings(A0)   ; Offset_0x1032E0, $000C
-                addi.w  #$2000, Obj_Art_VRAM(A0)                         ; $000A
+                addi.w  #$2000, art_tile(A0)                         ; $000A
 Offset_0x00A642:
                 cmpi.b  #EMz_Id, (Current_Zone).w                   ; $12, $FFFFFE10
                 bne.s   Offset_0x00A650
-                ori.w   #$8000, Obj_Art_VRAM(A0)                         ; $000A
+                ori.w   #$8000, art_tile(A0)                         ; $000A
 Offset_0x00A650:
-                move.w  Obj_X(A0), (Saved_Obj_X_P1).w         ; $0010, $FFFFFE32
-                move.w  Obj_Y(A0), (Saved_Obj_Y_P1).w         ; $0014, $FFFFFE34
-                move.w  Obj_Art_VRAM(A0), (Saved_Obj_Art_VRAM_P1).w      ; $000A, $FFFFFE3C
+                move.w  x_pos(A0), (Saved_Obj_X_P1).w         ; $0010, $FFFFFE32
+                move.w  y_pos(A0), (Saved_Obj_Y_P1).w         ; $0014, $FFFFFE34
+                move.w  art_tile(A0), (Saved_Obj_Art_VRAM_P1).w      ; $000A, $FFFFFE3C
                 move.w  Obj_Player_Top_Solid(A0), (Saved_Top_Solid_P1).w ; $0046, $FFFFFE3E
                 bra.s   Offset_0x00A6B2
 Offset_0x00A66A:
-                move.w  #$06A0, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$06A0, art_tile(A0)                         ; $000A
                 move.l  #Sonic_Mappings_2P, mappings(A0) ; Offset_0x102C70, $000C
                 tst.b   Obj_Player_Selected(A0)                          ; $0038
                 beq.s   Offset_0x00A68C
                 move.l  #Knuckles_Mappings_2P, mappings(A0)   ; Offset_0x1032E0, $000C
-                addi.w  #$2000, Obj_Art_VRAM(A0)                         ; $000A
+                addi.w  #$2000, art_tile(A0)                         ; $000A
 Offset_0x00A68C:
                 cmpi.b  #EMz_Id, (Current_Zone).w                   ; $12, $FFFFFE10
                 bne.s   Offset_0x00A69A
-                ori.w   #$8000, Obj_Art_VRAM(A0)                         ; $000A
+                ori.w   #$8000, art_tile(A0)                         ; $000A
 Offset_0x00A69A:
-                move.w  Obj_X(A0), (Saved_Obj_X_P2).w         ; $0010, $FFFFFEE2
-                move.w  Obj_Y(A0), (Saved_Obj_Y_P2).w         ; $0014, $FFFFFEE4
-                move.w  Obj_Art_VRAM(A0), (Saved_Obj_Art_VRAM_P2).w      ; $000A, $FFFFFEEC
+                move.w  x_pos(A0), (Saved_Obj_X_P2).w         ; $0010, $FFFFFEE2
+                move.w  y_pos(A0), (Saved_Obj_Y_P2).w         ; $0014, $FFFFFEE4
+                move.w  art_tile(A0), (Saved_Obj_Art_VRAM_P2).w      ; $000A, $FFFFFEEC
                 move.w  Obj_Player_Top_Solid(A0), (Saved_Top_Solid_P2).w ; $0046, $FFFFFEEE
 Offset_0x00A6B2:
                 move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $0030
@@ -136,11 +136,11 @@ Offset_0x00A732:
                 cmpi.w  #$FF00, (Sonic_Level_Limits_Min_Y).w         ; $FFFFEE18
                 bne.s   Offset_0x00A742
                 move.w  (Screen_Wrap_Y).w, D0                        ; $FFFFEEAA
-                and.w   D0, Obj_Y(A0)                                    ; $0014
+                and.w   D0, y_pos(A0)                                    ; $0014
 Offset_0x00A742:
                 move.w  (Screen_Wrap_X).w, D0                        ; $FFFFEEA8
-                and.w   D0, Obj_X(A0)                                    ; $0010
-                addi.w  #$0400, Obj_X(A0)                                ; $0010
+                and.w   D0, x_pos(A0)                                    ; $0010
+                addi.w  #$0400, x_pos(A0)                                ; $0010
                 bsr     Sonic_RecordPos                 ; Offset_0x00ACA2
                 move.b  (Primary_Angle).w, Obj_Player_Next_Tilt(A0) ; $FFFFF768, $003A
                 move.b  (Secondary_Angle).w, Obj_Player_Tilt(A0)    ; $FFFFF76A, $003B
@@ -261,7 +261,7 @@ Offset_0x00A8AC:
                 move.b  #$07, y_radius(A0)                           ; $001E
                 move.b  #$03, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
-                addq.w  #$04, Obj_Y(A0)                                  ; $0014
+                addq.w  #$04, y_pos(A0)                                  ; $0014
                 move.w  #Rolling_Sfx, D0                                 ; $003C
                 jsr     (PlaySound)                           ; Offset_0x001176
                 tst.w   Obj_Inertia(A0)                                  ; $001C
@@ -298,7 +298,7 @@ Offset_0x00A92C:
                 move.b  #$07, y_radius(A0)                           ; $001E
                 move.b  #$03, x_radius(A0)                            ; $001F
                 move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
-                addq.w  #$04, Obj_Y(A0)                                  ; $0014
+                addq.w  #$04, y_pos(A0)                                  ; $0014
                 move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D
                 moveq   #$00, D0
                 move.b  Obj_Player_Spdsh_Cnt(A0), D0                     ; $003E
@@ -420,12 +420,12 @@ Sonic_Init:
 		move.w	#$80,Deceleration(a4)
 		tst.b	(Saved_Level_Flag).w
 		bne.s	Sonic_Init_Continued
-		move.w	#$680,Obj_Art_VRAM(a0)
+		move.w	#$680,art_tile(a0)
 		move.b	#$C,Obj_Player_Top_Solid(a0)
 		move.b	#$D,Obj_Player_LRB_Solid(a0)
-		move.w	Obj_X(a0),(Saved_Obj_X_P1).w
-		move.w	Obj_Y(a0),(Saved_Obj_Y_P1).w
-		move.w	Obj_Art_VRAM(a0),(Saved_Obj_Art_VRAM_P1).w
+		move.w	x_pos(a0),(Saved_Obj_X_P1).w
+		move.w	y_pos(a0),(Saved_Obj_Y_P1).w
+		move.w	art_tile(a0),(Saved_Obj_Art_VRAM_P1).w
 		move.w	Obj_Player_Top_Solid(a0),(Saved_Top_Solid_P1).w
 ; Offset_0x00AAEA:
 Sonic_Init_Continued:
@@ -433,11 +433,11 @@ Sonic_Init_Continued:
 		move.b	#4,Obj_Player_Flip_Speed(a0)
 		move.b	#0,(Super_Sonic_flag).w
 		move.b	#$1E,Obj_Subtype(a0)
-		subi.w	#$20,Obj_X(a0)
-		addi.w	#4,Obj_Y(a0)
+		subi.w	#$20,x_pos(a0)
+		addi.w	#4,y_pos(a0)
 		bsr.w	ResetPlayerPositionArray
-		addi.w	#$20,Obj_X(a0)
-		subi.w	#4,Obj_Y(a0)
+		addi.w	#$20,x_pos(a0)
+		subi.w	#4,y_pos(a0)
 		move.w	#0,(Dropdash_flag).w
 
 ; ---------------------------------------------------------------------------
@@ -474,7 +474,7 @@ Offset_0x00AB6C:
 		cmpi.w	#-$100,(Sonic_Level_Limits_Min_Y).w	; is vertical wrapping enabled?
 		bne.s	Offset_0x00AB7C				; if not, branch
 		move.w	(Screen_Wrap_Y).w,d0
-		and.w	d0,Obj_Y(a0)				; perform wrapping of Sonic's y-position
+		and.w	d0,y_pos(a0)				; perform wrapping of Sonic's y-position
 
 Offset_0x00AB7C:
 		bsr.s	Sonic_Display
@@ -600,8 +600,8 @@ Sonic_RecordPos:
 		move.w	(Position_Table_Index).w,d0
 		lea	(Position_Table_Data).w,a1
 		lea	(a1,d0.w),a1
-		move.w	Obj_X(a0),(a1)+
-		move.w	Obj_Y(a0),(a1)+
+		move.w	x_pos(a0),(a1)+
+		move.w	y_pos(a0),(a1)+
 		addq.b	#4,(Position_Table_Index+1).w
 		lea	(Status_Table_Data).w,a1
 		lea	(a1,d0.w),a1
@@ -614,8 +614,8 @@ Offset_0x00ACD2:
 		move.w  (Position_Table_Index_2P).w, D0              ; $FFFFEE2A
 		lea     (Position_Table_Data_P2).w, A1               ; $FFFFE600
 		lea     $00(A1, D0), A1
-		move.w  Obj_X(A0), (A1)+				 ; $0010
-		move.w  Obj_Y(A0), (A1)+				 ; $0014
+		move.w  x_pos(A0), (A1)+				 ; $0010
+		move.w  y_pos(A0), (A1)+				 ; $0014
 		addq.b  #$04, (Position_Table_Index_2P+$01).w        ; $FFFFEE2B
 		rts 
 
@@ -635,11 +635,11 @@ ResetPlayerPositionArray:
 		bne.s	Reset_Player_Position_Array_P2	; if not, branch
 		lea	(Position_Table_Data).w,a1
 		lea	(Status_Table_Data).w,a2
-		move.w	#($100>>2)-1,d0
+		move.w	#($100/4)-1,d0
 
 Offset_0x00ACFE:
-		move.w	Obj_X(a0),(a1)+
-		move.w	Obj_Y(a0),(a1)+
+		move.w	x_pos(a0),(a1)+
+		move.w	y_pos(a0),(a1)+
 		move.l	#0,(a2)+		; set all position data to 0
 		dbf	d0,Offset_0x00ACFE
 		move.w	#0,(Position_Table_Index).w
@@ -648,11 +648,11 @@ Offset_0x00ACFE:
 ; Offset_0x00AD18:
 Reset_Player_Position_Array_P2:
 		lea	(Position_Table_Data_P2).w,a1
-		move.w	#($100>>2)-1,d0
+		move.w	#($100/4)-1,d0
 
 Offset_0x00AD20:
-		move.w	Obj_X(a0),(a1)+
-		move.w	Obj_Y(a0),(a1)+
+		move.w	x_pos(a0),(a1)+
+		move.w	y_pos(a0),(a1)+
 		dbf	d0,Offset_0x00AD20
 		move.w	#0,(Position_Table_Index_2P).w
 		rts
@@ -676,7 +676,7 @@ Offset_0x00AD3A:
 ; Offset_0x00AD3C: Sonic_InLevelWithWater:
 Sonic_InWater:
 		move.w	(Water_Level_Move).w,d0
-		cmp.w	Obj_Y(a0),d0				; is Sonic above the water?
+		cmp.w	y_pos(a0),d0				; is Sonic above the water?
 		bge.s	Sonic_OutWater				; if yes, branch
 
 		bset	#6,Obj_Status(a0)			; set underwater flag
@@ -913,8 +913,8 @@ Sonic_NotRight:
 		move.w	d1,d2
 		add.w	d2,d2
 		subq.w	#2,d2
-		add.w	Obj_X(a0),d1
-		sub.w	Obj_X(a1),d1
+		add.w	x_pos(a0),d1
+		sub.w	x_pos(a1),d1
 		tst.b	(Super_Sonic_flag).w
 		bne.w	SuperSonic_Balance
 		cmpi.w	#2,d1
@@ -986,7 +986,7 @@ Sonic_Balance:
 		btst	#0,Obj_Status(a0)			; is Sonic facing right?
 		bne.s	.facingRight				; if yes, branch
 		move.b	#6,Obj_Ani_Number(a0)			; use "balancing" animation 1
-		move.w	Obj_X(a0),d3
+		move.w	x_pos(a0),d3
 		subq.w	#6,d3
 		jsr	(Player_HitFloor_D3).l
 		cmpi.w	#$C,d1					; is Sonic REALLY close to the edge?
@@ -997,7 +997,7 @@ Sonic_Balance:
 .facingRight:
 		; same as above as above
 		move.b	#$1D,Obj_Ani_Number(a0)			; use "balancing" animation 3
-		move.w	Obj_X(a0),d3
+		move.w	x_pos(a0),d3
 		subq.w	#6,d3
 		jsr	(Player_HitFloor_D3).l
 		cmpi.w	#$C,d1					; is Sonic REALLY close to the edge?
@@ -1013,7 +1013,7 @@ Sonic_BalanceLeft:
 		btst	#0,Obj_Status(a0)			; is Sonic facing left?
 		beq.s	.facingLeft				; if yes, branch
 		move.b	#6,Obj_Ani_Number(a0)			; use "balancing" animation 1
-		move.w	Obj_X(a0),d3
+		move.w	x_pos(a0),d3
 		addq.w	#6,d3
 		jsr	(Player_HitFloor_D3).l
 		cmpi.w	#$C,d1					; is Sonic REALLY close to the edge?
@@ -1024,7 +1024,7 @@ Sonic_BalanceLeft:
 .facingLeft:
 		; you get the point, right?
 		move.b	#$1D,Obj_Ani_Number(a0)			; use "balancing" animation 3
-		move.w	Obj_X(a0),d3
+		move.w	x_pos(a0),d3
 		addq.w	#6,d3
 		jsr	(Player_HitFloor_D3).l
 		cmpi.w	#$C,d1					; is Sonic REALLY close to the edge?
@@ -1338,7 +1338,7 @@ Offset_0x00B402:
 		move.b  #$05, Obj_Ani_Number(A0)		         ; $0020
 		sub.b   Obj_Height_3(A0), D0		             ; $0044
 		ext.w   D0
-		add.w   D0, Obj_Y(A0)				    ; $0014
+		add.w   D0, y_pos(A0)				    ; $0014
 		bra.s   Offset_0x00B448
 Offset_0x00B436:
 		move.w  #$0400, Obj_Inertia(A0)		          ; $001C
@@ -1491,7 +1491,7 @@ Offset_0x00B55E:
 
 ; Offset_0x00B562:
 Sonic_LevelBoundaries:
-		move.l	Obj_X(a0),d1
+		move.l	x_pos(a0),d1
 		move.w	Obj_Speed_X(a0),d0
 		ext.l	d0
 		asl.l	#8,d0
@@ -1509,7 +1509,7 @@ Sonic_LevelBoundaries:
 Sonic_Boundary_CheckBottom:
 		move.w	(Sonic_Level_Limits_Max_Y).w,d0
 		addi.w	#$E0,d0
-		cmp.w	Obj_Y(a0),d0				; has Sonic touched the bottom boundary?
+		cmp.w	y_pos(a0),d0				; has Sonic touched the bottom boundary?
 		blt.s	Sonic_Boundary_Bottom			; if yes, branch
 		rts
 ; ---------------------------------------------------------------------------
@@ -1519,8 +1519,8 @@ Sonic_Boundary_Bottom:
 ; ===========================================================================
 ; Offset_0x00B59E:
 Sonic_Boundary_Sides:
-		move.w	d0,Obj_X(a0)
-		move.w	#0,Obj_Sub_X(a0)
+		move.w	d0,x_pos(a0)
+		move.w	#0,x_sub(a0)
 		move.w	#0,Obj_Speed_X(a0)
 		move.w	#0,Obj_Inertia(a0)
 		bra.s	Sonic_Boundary_CheckBottom
@@ -1565,7 +1565,7 @@ Sonic_DoRoll:
 		move.b	#$E,y_radius(a0)
 		move.b	#7,x_radius(a0)
 		move.b	#2,Obj_Ani_Number(a0)			; use "rolling" animation
-		addq.w	#5,Obj_Y(a0)
+		addq.w	#5,y_pos(a0)
 		move.w	#Rolling_Sfx,d0
 		jsr	(PlaySound).l				; play rolling sound
 		tst.w	Obj_Inertia(a0)
@@ -1641,7 +1641,7 @@ Offset_0x00B674:
 		move.b	y_radius(a0),d0
 		sub.b	Obj_Height_3(a0),d0
 		ext.w	d0
-		sub.w	d0,Obj_Y(a0)
+		sub.w	d0,y_pos(a0)
 
 Offset_0x00B6F0:
 		rts
@@ -1777,7 +1777,7 @@ Sonic_ThrowRings:
 		move.b	#0,Obj_Ani_Number(a0)
 		sub.b	Obj_Height_3(a0),d0
 		ext.w	d0
-		add.w	d0,Obj_Y(a0)
+		add.w	d0,y_pos(a0)
 ; Offset_0x00B83A:
 .notRolling:
 		move.b	(Control_Ports_Logical_Data+1).w,d0
@@ -1807,7 +1807,7 @@ Offset_0x00B870:
 		move.b	#0,Obj_Ani_Number(a0)
 		sub.b	Obj_Height_3(a0),d0
 		ext.w	d0
-		add.w	d0,Obj_Y(a0)
+		add.w	d0,y_pos(a0)
 ; Offset_0x00B89E:
 .notRolling2:
 		; strangely, only the single ring fire clears Sonic's vertical momentum
@@ -1899,10 +1899,10 @@ Sonic_HyperDash_Velocities:
 ; Offset_0x00B994:
 Obj_ThrownRing:
 		move.l	#ThrownRing_LoadIndex,(a1)
-		move.w	Obj_X(a0),Obj_X(a1)
-		move.w	Obj_Y(a0),Obj_Y(a1)
+		move.w	x_pos(a0),x_pos(a1)
+		move.w	y_pos(a0),y_pos(a1)
 		move.l	#Rings_Mappings,mappings(a1)
-		move.w	#$26BC,Obj_Art_VRAM(a1)
+		move.w	#$26BC,art_tile(a1)
 		move.b	#$84,render_flags(a1)
 		move.w	#$180,priority(a1)
 		move.b	#8,width_pixels(a1)
@@ -2062,7 +2062,7 @@ Sonic_UpdateSpindash:
 		move.b	#$E,y_radius(a0)
 		move.b	#7,x_radius(a0)
 		move.b	#2,Obj_Ani_Number(a0)
-		addq.w	#5,Obj_Y(a0)
+		addq.w	#5,y_pos(a0)
 		move.b	#0,Obj_Player_Spdsh_Flag(a0)
 		moveq	#0,d0
 		move.b	Obj_Player_Spdsh_Cnt(a0),d0
@@ -2306,13 +2306,13 @@ Offset_0x00BD90:
 		bsr     Player_HitWall		         ; Offset_0x00A0BC
 		tst.w   D1
 		bpl.s   Offset_0x00BDD4
-		sub.w   D1, Obj_X(A0)				    ; $0010
+		sub.w   D1, x_pos(A0)				    ; $0010
 		move.w  #$0000, Obj_Speed_X(A0)		          ; $0018
 Offset_0x00BDD4:
 		bsr     Offset_0x009EC6
 		tst.w   D1
 		bpl.s   Offset_0x00BDE6
-		add.w   D1, Obj_X(A0)				    ; $0010
+		add.w   D1, x_pos(A0)				    ; $0010
 		move.w  #$0000, Obj_Speed_X(A0)		          ; $0018
 Offset_0x00BDE6:
 		bsr     Player_Check_Floor		     ; Offset_0x009BD4
@@ -2326,7 +2326,7 @@ Offset_0x00BDE6:
 		cmp.b   D2, D0
 		blt.s   Offset_0x00BE58
 Offset_0x00BDFE:
-		add.w   D1, Obj_Y(A0)				    ; $0014
+		add.w   D1, y_pos(A0)				    ; $0014
 		move.b  D3, Obj_Angle(A0)				; $0026
 		bsr     Offset_0x00BF6A
 		move.b  D3, D0
@@ -2359,14 +2359,14 @@ Offset_0x00BE5A:
 		bsr     Player_HitWall		         ; Offset_0x00A0BC
 		tst.w   D1
 		bpl.s   Offset_0x00BE72
-		sub.w   D1, Obj_X(A0)				    ; $0010
+		sub.w   D1, x_pos(A0)				    ; $0010
 		move.w  #$0000, Obj_Speed_X(A0)		          ; $0018
 		move.w  Obj_Speed_Y(A0), Obj_Inertia(A0)          ; $001A, $001C
 Offset_0x00BE72:
 		bsr     Player_DontRunOnWalls		  ; Offset_0x009F1C
 		tst.w   D1
 		bpl.s   Offset_0x00BE8C
-		sub.w   D1, Obj_Y(A0)				    ; $0014
+		sub.w   D1, y_pos(A0)				    ; $0014
 		tst.w   Obj_Speed_Y(A0)				  ; $001A
 		bpl.s   Offset_0x00BE8A
 		move.w  #$0000, Obj_Speed_Y(A0)		          ; $001A
@@ -2378,7 +2378,7 @@ Offset_0x00BE8C:
 		bsr     Player_Check_Floor		     ; Offset_0x009BD4
 		tst.w   D1
 		bpl.s   Offset_0x00BEB2
-		add.w   D1, Obj_Y(A0)				    ; $0014
+		add.w   D1, y_pos(A0)				    ; $0014
 		move.b  D3, Obj_Angle(A0)				; $0026
 		bsr     Offset_0x00BF6A
 		move.w  #$0000, Obj_Speed_Y(A0)		          ; $001A
@@ -2389,19 +2389,19 @@ Offset_0x00BEB4:
 		bsr     Player_HitWall		         ; Offset_0x00A0BC
 		tst.w   D1
 		bpl.s   Offset_0x00BEC6
-		sub.w   D1, Obj_X(A0)				    ; $0010
+		sub.w   D1, x_pos(A0)				    ; $0010
 		move.w  #$0000, Obj_Speed_X(A0)		          ; $0018
 Offset_0x00BEC6:
 		bsr     Offset_0x009EC6
 		tst.w   D1
 		bpl.s   Offset_0x00BED8
-		add.w   D1, Obj_X(A0)				    ; $0010
+		add.w   D1, x_pos(A0)				    ; $0010
 		move.w  #$0000, Obj_Speed_X(A0)		          ; $0018
 Offset_0x00BED8:
 		bsr     Player_DontRunOnWalls		  ; Offset_0x009F1C
 		tst.w   D1
 		bpl.s   Offset_0x00BF0E
-		sub.w   D1, Obj_Y(A0)				    ; $0014
+		sub.w   D1, y_pos(A0)				    ; $0014
 		move.b  D3, D0
 		addi.b  #$20, D0
 		andi.b  #$40, D0
@@ -2421,14 +2421,14 @@ Offset_0x00BF10:
 		bsr     Offset_0x009EC6
 		tst.w   D1
 		bpl.s   Offset_0x00BF28
-		add.w   D1, Obj_X(A0)				    ; $0010
+		add.w   D1, x_pos(A0)				    ; $0010
 		move.w  #$0000, Obj_Speed_X(A0)		          ; $0018
 		move.w  Obj_Speed_Y(A0), Obj_Inertia(A0)          ; $001A, $001C
 Offset_0x00BF28:
 		bsr     Player_DontRunOnWalls		  ; Offset_0x009F1C
 		tst.w   D1
 		bpl.s   Offset_0x00BF42
-		sub.w   D1, Obj_Y(A0)				    ; $0014
+		sub.w   D1, y_pos(A0)				    ; $0014
 		tst.w   Obj_Speed_Y(A0)				  ; $001A
 		bpl.s   Offset_0x00BF40
 		move.w  #$0000, Obj_Speed_Y(A0)		          ; $001A
@@ -2440,7 +2440,7 @@ Offset_0x00BF42:
 		bsr     Player_Check_Floor		     ; Offset_0x009BD4
 		tst.w   D1
 		bpl.s   Offset_0x00BF68
-		add.w   D1, Obj_Y(A0)				    ; $0014
+		add.w   D1, y_pos(A0)				    ; $0014
 		move.b  D3, Obj_Angle(A0)				; $0026
 		bsr     Offset_0x00BF6A
 		move.w  #$0000, Obj_Speed_Y(A0)		          ; $001A
@@ -2472,7 +2472,7 @@ Sonic_ResetOnFloor:
 		move.b	#0,Obj_Ani_Number(a0)
 		sub.b	Obj_Height_3(a0),d0
 		ext.w	d0
-		add.w	d0,Obj_Y(a0)
+		add.w	d0,y_pos(a0)
 ; Offset_0x00BFAE:
 Sonic_ResetOnFloor_Part2:
 		bclr	#1,Obj_Status(a0)
@@ -2539,7 +2539,7 @@ Offset_0x00C072:
 		cmpi.w	#-$100,(Sonic_Level_Limits_Min_Y).w
 		bne.s	Offset_0x00C082
 		move.w	(Screen_Wrap_Y).w,d0
-		and.w	d0,Obj_Y(a0)
+		and.w	d0,y_pos(a0)
 
 Offset_0x00C082:
 		bsr.w	Sonic_HurtStop
@@ -2552,7 +2552,7 @@ Offset_0x00C082:
 Sonic_HurtStop:
 		move.w	(Sonic_Level_Limits_Max_Y).w,d0
 		addi.w	#$E0,d0
-		cmp.w	Obj_Y(a0),d0
+		cmp.w	y_pos(a0),d0
 		blt.w	KillSonic
 		movem.l	a4-a6,-(sp)
 		bsr.w	Sonic_Floor
@@ -2616,7 +2616,7 @@ Offset_0x00C142:
 		subi.w	#$70,d0
 
 Offset_0x00C156:
-		cmp.w	Obj_Y(a0),d0
+		cmp.w	y_pos(a0),d0
 		bge.w	Offset_0x00C20E
 		tst.w	(Two_Player_Flag).w
 		bne.w	Player_Respawning
@@ -2674,9 +2674,9 @@ Player_Respawning:
 
 ; Sonic_Respawning:
 		move.b	#0,(Sonic_Scroll_Lock_Flag).w
-		move.w	(Saved_Obj_X_P1).w,Obj_X(a0)
-		move.w	(Saved_Obj_Y_P1).w,Obj_Y(a0)
-		move.w	(Saved_Obj_Art_VRAM_P1).w,Obj_Art_VRAM(a0)
+		move.w	(Saved_Obj_X_P1).w,x_pos(a0)
+		move.w	(Saved_Obj_Y_P1).w,y_pos(a0)
+		move.w	(Saved_Obj_Art_VRAM_P1).w,art_tile(a0)
 		move.w	(Saved_Top_Solid_P1).w,Obj_Player_Top_Solid(a0)
 		clr.w	(Ring_count).w
 		clr.b	(Extra_life_flags).w
@@ -2685,9 +2685,9 @@ Player_Respawning:
 ; Offset_0x00C244:
 Tails_Respawning:
 		move.b	#0,(Miles_Scroll_Lock_Flag).w
-		move.w	(Saved_Obj_X_P2).w,Obj_X(a0)
-		move.w	(Saved_Obj_Y_P2).w,Obj_Y(a0)
-		move.w	(Saved_Obj_Art_VRAM_P2).w,Obj_Art_VRAM(a0)
+		move.w	(Saved_Obj_X_P2).w,x_pos(a0)
+		move.w	(Saved_Obj_Y_P2).w,y_pos(a0)
+		move.w	(Saved_Obj_Art_VRAM_P2).w,art_tile(a0)
 		move.w	(Saved_Top_Solid_P2).w,Obj_Player_Top_Solid(a0)
 		clr.w	(Ring_Count_Address_P2).w
 		clr.b	(Ring_Status_Flag_P2).w

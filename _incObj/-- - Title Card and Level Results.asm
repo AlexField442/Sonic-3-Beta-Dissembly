@@ -3,10 +3,8 @@
 ; Object - Title Card
 ; ---------------------------------------------------------------------------
 
-titlecard_objcnt	= Obj_Control_Var_00		; counts which object of the title card is loaded
-titlecard_timer		= Obj_Control_Var_02		; timer until the title card disappears
-titlecard_unk1		= Obj_Control_Var_04		; seems to be used to actually tell the title card to move offscreen?
-titlecard_xdest		= Obj_Control_Var_16		; where each title card ends up on the X axis
+titlecard_objcnt:	equ Obj_Control_Var_00		; counts which object of the title card is loaded
+titlecard_x_target:	equ Obj_Control_Var_16		; where each title card ends up on the X axis
 
 ; Offset_0x024546: Obj_Title_Cards:
 Obj_TitleCard:
@@ -44,7 +42,7 @@ Offset_0x02457E:
 		jsr	(Queue_Kos_Module).l
 		move.w	#90,Obj_Timer(a0)			; set wait timer to 90 frames
 		move.w	#4,titlecard_objcnt(a0)
-		clr.w	titlecard_timer(a0)
+		clr.w	Obj_Control_Var_02(a0)
 		addq.b	#2,routine(a0)
 		rts
 ; ===========================================================================
@@ -59,16 +57,16 @@ TitleCard_Main:
 ; Offset_0x0245CC:
 TitleCard_MakeObject:
 		move.l	(a2)+,(a1)
-		move.w	(a2)+,titlecard_xdest(a1)
-		move.w	(a2)+,Obj_X(a1)
-		move.w	(a2)+,Obj_Y(a1)
+		move.w	(a2)+,titlecard_x_target(a1)
+		move.w	(a2)+,x_pos(a1)
+		move.w	(a2)+,y_pos(a1)
 		move.b	(a2)+,Obj_Map_Id(a1)
 		move.b	(a2)+,width_pixels(a1)
 		move.w	(a2)+,d2
 		move.b	d2,Obj_Col_Flags(a1)
 		move.b	#$40,render_flags(a1)
 		move.l	#Title_Cards_Mappings,mappings(a1)
-		move.w	a0,Obj_Respaw_Ref(a1)
+		move.w	a0,Obj_Control_Var_18(a1)
 		jsr	(AllocateObject_Immediate).l
 		dbne	d1,TitleCard_MakeObject
 		tst.w	Obj_Control_Var_0E(a0)
@@ -87,14 +85,14 @@ Offset_0x02461E:
 ; ===========================================================================
 ; Offset_0x024620:
 TitleCard_Wait:
-		tst.w	titlecard_unk1(a0)
+		tst.w	Obj_Control_Var_04(a0)
 		beq.s	Offset_0x02462C
-		clr.w	titlecard_unk1(a0)
+		clr.w	Obj_Control_Var_04(a0)
 		rts
 ; ---------------------------------------------------------------------------
 
 Offset_0x02462C:
-		st	Obj_Respaw_Ref(a0)
+		st	Obj_Control_Var_18(a0)
 		addq.b	#2,routine(a0)
 		rts
 ; ===========================================================================
@@ -109,7 +107,7 @@ TitleCard_Wait2:
 Offset_0x024642:
 		tst.w	titlecard_objcnt(a0)
 		beq.s	TitleCard_SetupLevel
-		addq.w	#1,titlecard_timer(a0)
+		addq.w	#1,Obj_Control_Var_02(a0)
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x02464E:
@@ -146,8 +144,8 @@ TitleCard_LoadAnimals:
 ; ---------------------------------------------------------------------------
 ; Offset_0x0246A4: Title_Card_Red_Bar:
 Obj_TtlCardRedBar:
-		move.w	Obj_Respaw_Ref(a0),a1
-		move.w	titlecard_timer(a1),d0
+		move.w	Obj_Control_Var_18(a0),a1
+		move.w	Obj_Control_Var_02(a1),d0
 		beq.s	Offset_0x0246CC
 		tst.b	render_flags(a0)
 		bmi.s	Offset_0x0246BE
@@ -157,16 +155,16 @@ Obj_TtlCardRedBar:
 Offset_0x0246BE:
 		cmp.b	Obj_Col_Flags(a0),d0
 		bcs.s	Offset_0x0246E2
-		subi.w	#$20,Obj_Y(a0)
+		subi.w	#32,y_pos(a0)
 		bra.s	Offset_0x0246E2
 
 Offset_0x0246CC:
-		move.w	Obj_Y(a0),d0
-		cmp.w	titlecard_xdest(a0),d0
+		move.w	y_pos(a0),d0
+		cmp.w	titlecard_x_target(a0),d0
 		beq.s	Offset_0x0246E2
-		addi.w	#$10,d0
-		move.w	d0,Obj_Y(a0)
-		st	titlecard_unk1(a1)
+		addi.w	#16,d0
+		move.w	d0,y_pos(a0)
+		st	Obj_Control_Var_04(a1)
 
 Offset_0x0246E2:
 		move.b	#$70,height_pixels(a0)
@@ -186,8 +184,8 @@ Obj_TtlCardName:
 ; ---------------------------------------------------------------------------
 ; Offset_0x0246FC: Title_Card_Zone:
 Obj_TtlCardZone:
-		move.w	Obj_Respaw_Ref(a0),a1
-		move.w	titlecard_timer(a1),d0
+		move.w	Obj_Control_Var_18(a0),a1
+		move.w	Obj_Control_Var_02(a1),d0
 		beq.s	Offset_0x024724
 		tst.b	render_flags(a0)
 		bmi.s	Offset_0x024716
@@ -198,16 +196,16 @@ Obj_TtlCardZone:
 Offset_0x024716:
 		cmp.b	Obj_Col_Flags(a0),d0
 		bcs.s	Offset_0x02473A
-		addi.w	#$20,Obj_X(a0)
+		addi.w	#$20,x_pos(a0)
 		bra.s	Offset_0x02473A
 
 Offset_0x024724:
-		move.w	Obj_X(A0),d0
-		cmp.w	titlecard_xdest(a0),d0
+		move.w	x_pos(A0),d0
+		cmp.w	titlecard_x_target(a0),d0
 		beq.s	Offset_0x02473A
 		subi.w	#$10,d0
-		move.w	d0,Obj_X(a0)
-		st	titlecard_unk1(a1)
+		move.w	d0,x_pos(a0)
+		st	Obj_Control_Var_04(a1)
 
 Offset_0x02473A:
 		jmp	(DisplaySprite).l
@@ -225,7 +223,7 @@ Obj_TtlCardAct:
 		bne.s	Obj_TtlCardZone
 
 Offset_0x024756:
-		move.w	Obj_Respaw_Ref(a0),a1
+		move.w	Obj_Control_Var_18(a0),a1
 		subq.w	#1,titlecard_objcnt(a1)
 		jmp	(DeleteObject).l									
 ; ===========================================================================
@@ -320,7 +318,7 @@ Offset_0x024844:
 		moveq	#0,d1
 		move.b	(Timer_second).w,d1
 		add.w	d1,d0
-		cmpi.w	#600-1,d0				; are we 1 second away from a Time Over?
+		cmpi.w	#600-1,d0				; are we one second away from a Time Over?
 		bne.s	LevelResults_TimeBonus			; if not, branch
 		move.w	#10000,(Level_Results_Time_Bonus).w	; give 100000 points
 		bra.s	LevelResults_RingBonus
@@ -344,7 +342,7 @@ LevelResults_RingBonus:
 		move.w	d0,(Level_Results_Ring_Bonus).w
 		clr.w	(Level_Results_Total_Bonus).w
 		move.w	#$96,Obj_Timer(a0)
-		move.w	#$C,Obj_Control_Var_00(a0)
+		move.w	#$C,titlecard_objcnt(a0)
 		move.b	#$1E,(Obj_Player_One+Obj_Subtype).w
 		move.b	#$1E,(Obj_Player_Two+Obj_Subtype).w
 		addq.b	#2,routine(a0)
@@ -354,7 +352,7 @@ LevelResults_RingBonus:
 LevelResults_Main:
 		subq.w	#1,Obj_Timer(a0)
 		tst.b	(Kos_modules_left).w		; has the KosinskiM art finished decompressing?
-		bne.s	Offset_0x02490C				; if not, branch
+		bne.s	Offset_0x02490C			; if not, branch
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x02490C
 		lea	LevelResults_ObjArray(pc),a2
@@ -362,17 +360,17 @@ LevelResults_Main:
 ; Offset_0x0248CC:
 LevelResults_MakeObject:
 		move.l	(a2)+,(a1)
-		move.w	(a2)+,Obj_Control_Var_16(a1)
-		move.w	(a2)+,Obj_X(a1)
+		move.w	(a2)+,titlecard_x_target(a1)
+		move.w	(a2)+,x_pos(a1)
 		spl	routine(a1)
-		move.w	(a2)+,Obj_Y(a1)
+		move.w	(a2)+,y_pos(a1)
 		move.b	(a2)+,Obj_Map_Id(a1)
 		move.b	(a2)+,width_pixels(a1)
 		move.w	(a2)+,d2
 		move.b	d2,Obj_Col_Flags(a1)
 		move.b	#$40,render_flags(a1)
 		move.l	#Level_Results_Mappings,mappings(a1)
-		move.w	a0,Obj_Respaw_Ref(a1)
+		move.w	a0,Obj_Control_Var_18(a1)
 		jsr	(AllocateObject_Immediate).l
 		dbne	d1,LevelResults_MakeObject
 		addq.b	#2,routine(a0)
@@ -423,7 +421,7 @@ LevelResults_Wait2:
 ; ---------------------------------------------------------------------------
 
 Offset_0x02496A:
-		tst.w	Obj_Control_Var_00(a0)
+		tst.w	titlecard_objcnt(a0)
 		beq.s	LevelResults_EndLevel
 		addq.w	#1,Obj_Control_Var_02(a0)
 		rts
@@ -458,8 +456,8 @@ Obj_LevResultsCharName:
 ; LevResultsCharName_Knux:
 		addq.b	#3,Obj_Map_Id(a0)			; use Knuckles frame
 		moveq	#$30,d0
-		sub.w	d0,Obj_X(a0)
-		sub.w	d0,Obj_Control_Var_16(a0)
+		sub.w	d0,x_pos(a0)
+		sub.w	d0,titlecard_x_target(a0)
 		add.b	d0,width_pixels(a0)
 		bra.s	Offset_0x0249E4
 ; ---------------------------------------------------------------------------
@@ -470,8 +468,8 @@ LevResultsCharName_Tails:
 		bpl.s	Offset_0x0249E4				; if yes, branch
 		addq.b	#1,Obj_Map_Id(a0)			; use Tails frame
 		moveq	#8,d0
-		add.w	d0,Obj_X(a0)
-		add.w	d0,Obj_Control_Var_16(a0)
+		add.w	d0,x_pos(a0)
+		add.w	d0,titlecard_x_target(a0)
 		sub.b	d0,width_pixels(a0)
 
 Offset_0x0249E4:
@@ -535,13 +533,13 @@ LevelResults_Display:
 
 ; Offset_0x024A24: LR_Cvt_Hex_To_BCD:
 LevelResults_DisplayScore:
-		move.w	#7,Obj_Sub_Y(a0)
+		move.w	#7,y_sub(a0)
 		jsr	LevelResults_GetDecimalScore(pc)
 		rol.l	#4,d1
 		lea	Obj_Speed_X(a0),a1
-		move.w	Obj_X(a0),d2
-		subi.w	#$38,d2					; move to left of the last zero
-		move.w	Obj_Y(A0),d3
+		move.w	x_pos(a0),d2
+		subi.w	#56,d2					; move to left of the last zero
+		move.w	y_pos(A0),d3
 		moveq	#0,d4
 		moveq	#6,d5
 
@@ -571,12 +569,12 @@ Offset_0x024A56:
 
 ; Offset_0x024A62: LR_Move_Element:
 LevelResults_MoveElement:
-		move.w	Obj_Respaw_Ref(a0),a1
+		move.w	Obj_Control_Var_18(a0),a1
 		move.w	Obj_Control_Var_02(a1),d0		; is the object moving onto the screen?
 		beq.s	LevelResults_MoveOntoScreen		; if yes, branch
 		tst.b	render_flags(a0)			; is the object off-screen?
 		bmi.s	LevelResults_MoveOffScreen		; if not, branch
-		subq.w	#1,Obj_Control_Var_00(a1)
+		subq.w	#1,titlecard_objcnt(a1)
 		addq.w	#4,sp
 		jmp	(DeleteObject).l
 ; ---------------------------------------------------------------------------
@@ -584,20 +582,20 @@ LevelResults_MoveElement:
 LevelResults_MoveOffScreen:
 		cmp.b	Obj_Col_Flags(a0),d0
 		bcs.s	Offset_0x024AAC
-		move.w	#-$20,d0
+		move.w	#-32,d0
 		tst.b	routine(a0)
 		beq.s	Offset_0x024A90
 		neg.w	d0
 
 Offset_0x024A90:
-		add.w	Obj_X(a0),d0
+		add.w	x_pos(a0),d0
 		bra.s	LevelResults_ApplySpeed
 ; ---------------------------------------------------------------------------
 ; Offset_0x024A96:
 LevelResults_MoveOntoScreen:
-		moveq	#$10,d1
-		move.w	Obj_X(a0),d0
-		cmp.w	Obj_Control_Var_16(a0),d0
+		moveq	#16,d1
+		move.w	x_pos(a0),d0
+		cmp.w	titlecard_x_target(a0),d0
 		beq.s	LevelResults_ApplySpeed
 		blt.s	Offset_0x024AA6
 		neg.w	d1
@@ -606,7 +604,7 @@ Offset_0x024AA6:
 		add.w	d1,d0
 ; Offset_0x024AA8:
 LevelResults_ApplySpeed:
-		move.w	d0,Obj_X(a0)
+		move.w	d0,x_pos(a0)
 
 Offset_0x024AAC:
 		rts
@@ -621,7 +619,7 @@ Offset_0x024AAC:
 ; Offset_0x24AAE: LR_Get_BCD_Total_Bonus:
 LevelResults_GetDecimalScore:
 		clr.l	(Level_Result_BCD_Total_Bonus).w
-		lea	TimeBonuses(pc),a1
+		lea	LevelResults_ABCD(pc),a1
 		moveq	#$F,d2
 
 Offset_0x024AB8:
@@ -645,15 +643,27 @@ Offset_0x024ACE:
 ; End of function LevelResults_GetDecimalScore
 
 ; ===========================================================================
-; Apparently, according to Jorge, this is used by LevelResults_GetDecimalScore
-; as it reads backwards into these values when reading TimeBonuses
+; This is used by LevelResults_GetDecimalScore as a table for ABCD conversion
+; table; note that the game actually reads it from bottom-to-top.
 ; Offset_0x024AD8:
-		dc.b    $03, $27, $68, $01, $63, $84, $00, $81
-		dc.b    $92, $00, $40, $96, $00, $20, $48, $00
-		dc.b    $10, $24, $00, $05, $12, $00, $02, $56
-		dc.b    $00, $01, $28, $00, $00, $64, $00, $00
-		dc.b    $32, $00, $00, $16, $00, $00, $08, $00
-		dc.b    $00, $04, $00, $00, $02, $00, $00, $01
+		dc.b    $03, $27, $68
+		dc.b	$01, $63, $84
+		dc.b	$00, $81, $92
+		dc.b	$00, $40, $96
+		dc.b	$00, $20, $48
+		dc.b	$00, $10, $24
+		dc.b	$00, $05, $12
+		dc.b	$00, $02, $56
+		dc.b    $00, $01, $28
+		dc.b	$00, $00, $64
+		dc.b	$00, $00, $32
+		dc.b	$00, $00, $16
+		dc.b	$00, $00, $08
+		dc.b	$00, $00, $04
+		dc.b	$00, $00, $02
+		dc.b	$00, $00, $01
+LevelResults_ABCD:
+
 ; ===========================================================================
 ; Offset_0x024B08: LR_Decimal_Values:
 TimeBonuses:	dc.w	5000
@@ -667,6 +677,7 @@ TimeBonuses:	dc.w	5000
 		dc.w	300
 		dc.w	100
 TimeBonuses_End:
+
 ; ===========================================================================
 ; Offset_0x024B1C: Level_Results_Conf:
 LevelResults_ObjArray:
@@ -683,8 +694,3 @@ LevelResults_ObjArray:
 		ttlresObjData Obj_LevResultsGeneral,	 $D4, $554,$11C, $B,$30,9	; "TOTAL"
 		ttlresObjData Obj_LevelResultsTotal,	$178, $5F8,$11C,  1,$40,9	; Total Score Number
 LevelResults_ObjArray_End:
-
-; ===========================================================================
-
-Offset_0x024BC4:
-		jmp	(DeleteObject).l
