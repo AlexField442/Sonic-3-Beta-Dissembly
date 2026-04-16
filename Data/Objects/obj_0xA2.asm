@@ -34,7 +34,7 @@ Offset_0x04603E:
                 bne.s   Offset_0x046054
                 neg.w   D0
 Offset_0x046054:
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
+                move.w  D0, x_vel(A0)                              ; $0018
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x04605A:
@@ -64,13 +64,13 @@ Offset_0x046092:
                 jmp     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A 
 ;-------------------------------------------------------------------------------
 Offset_0x04609A:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$03, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x0460A8
                 rts
 Offset_0x0460A8:
                 move.b  #$04, routine(A0)                            ; $0005
-                addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                addq.b  #$01, mapping_frame(A0)                             ; $0022
                 rts              
 ;-------------------------------------------------------------------------------
 Offset_0x0460B4:

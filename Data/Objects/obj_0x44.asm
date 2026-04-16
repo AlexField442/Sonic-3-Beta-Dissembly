@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x027F0E:
                 move.l  #Trapdoor_Mappings, mappings(A0) ; Offset_0x027FAA, $000C
-                move.w  #$43F0, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$43F0, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$20, width_pixels(A0)                              ; $0007
@@ -17,23 +17,23 @@ Offset_0x027F3A:
                 bsr.s   Offset_0x027F6A
                 move.w  #$0020, D1
                 move.w  #$0009, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
                 lea     (Trapdoor_Animate_Data), A1            ; Offset_0x027F9E
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 Offset_0x027F6A:
-                move.w  Obj_X(A0), D0                                    ; $0010
-                sub.w   Obj_X(A1), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
+                sub.w   x_pos(A1), D0                                    ; $0010
                 addi.w  #$0020, D0
                 cmpi.w  #$0040, D0
                 bcc.s   Offset_0x027F9C
-                move.w  Obj_Y(A0), D0                                    ; $0014
-                sub.w   Obj_Y(A1), D0                                    ; $0014
+                move.w  y_pos(A0), D0                                    ; $0014
+                sub.w   y_pos(A1), D0                                    ; $0014
                 addi.w  #$0020, D0
                 cmpi.w  #$0020, D0
                 bcc.s   Offset_0x027F9C
-                move.b  #$01, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$01, anim(A0)                         ; $0020
                 moveq   #Trapdoor_Sfx, D0                                 ; -$7B
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x027F9C:

@@ -25,13 +25,13 @@ Offset_0x049B42:
                 jsr     (SetupChildObject_LinkedList) ; Offset_0x041EA0
                 move.w  #$0200, D0
                 move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
-                move.w  D0, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D0, y_vel(A0)                              ; $001A
                 move.w  #$0008, Obj_Control_Var_10(A0)                   ; $0040
                 bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
 Offset_0x049B80:                
                 move.w  #$0200, D0
                 move.w  D0, Obj_Control_Var_0A(A0)                       ; $003A
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
+                move.w  D0, x_vel(A0)                              ; $0018
                 move.w  #$0020, Obj_Control_Var_0C(A0)                   ; $003C
                 bclr    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 rts   
@@ -41,7 +41,7 @@ Offset_0x049B9A:
                 jsr     (Swing_Left_And_Right)                 ; Offset_0x042372
                 jsr     (Swing_Up_And_Down)                    ; Offset_0x04232E
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                tst.w   Obj_Speed_Y(A0)                                  ; $001A
+                tst.w   y_vel(A0)                                  ; $001A
                 beq.s   Offset_0x049BBA
                 rts
 Offset_0x049BBA:
@@ -59,8 +59,8 @@ Offset_0x049BD6:
 Offset_0x049BE8:
                 move.b  #$02, routine(A0)                            ; $0005
                 bclr    #$02, Obj_Control_Var_08(A0)                     ; $0038
-                clr.b   Obj_Ani_Frame(A0)                                ; $0023
-                clr.b   Obj_Ani_Time(A0)                                 ; $0024
+                clr.b   anim_frame(A0)                                ; $0023
+                clr.b   anim_frame_duration(A0)                                 ; $0024
                 move.l  #Offset_0x049DB2, Obj_Child_Data(A0)             ; $0030
                 bchg    #01, Obj_Control_Var_08(A0)                      ; $0038
                 bne.s   Offset_0x049C14
@@ -87,10 +87,10 @@ Offset_0x049C34:
                 jsr     (SetupObjectAttributes3)                    ; Offset_0x041D7A
                 bset    #$01, render_flags(A0)                              ; $0004
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 cmpi.b  #$0C, D0
                 bne.s   Offset_0x049C56
-                move.b  #$06, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$06, mapping_frame(A0)                             ; $0022
 Offset_0x049C56:
                 move.w  D0, Obj_Timer(A0)                                ; $002E
                 move.b  #$01, Obj_Control_Var_12(A0)                     ; $0042
@@ -109,7 +109,7 @@ Offset_0x049C7A:
                 bsr     Offset_0x049D70
                 jsr     (Swing_Left_And_Right)                 ; Offset_0x042372
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$02, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x049C98
                 rts
@@ -121,17 +121,17 @@ Offset_0x049C98:
 Offset_0x049CA6:
                 jsr     (Swing_Left_And_Right)                 ; Offset_0x042372
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.w  Obj_Y(A0), D0                                    ; $0014
+                move.w  parent3(A0), A1                            ; $0046
+                move.w  y_pos(A0), D0                                    ; $0014
                 move.b  Obj_Control_Var_12(A0), D1                       ; $0042
                 ext.w   D1
                 add.w   D1, D0
-                cmp.w   Obj_Y(A1), D0                                    ; $0014
+                cmp.w   y_pos(A1), D0                                    ; $0014
                 beq.s   Offset_0x049CCE
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 rts
 Offset_0x049CCE:
-                move.w  Obj_Y(A1), Obj_Y(A0)                      ; $0014, $0014
+                move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
                 move.b  #$08, routine(A0)                            ; $0005
                 neg.b   Obj_Control_Var_12(A0)                           ; $0042
                 neg.b   Obj_Control_Var_13(A0)                           ; $0043
@@ -140,23 +140,23 @@ Offset_0x049CCE:
 Offset_0x049CE4:
                 jsr     (Swing_Left_And_Right)                 ; Offset_0x042372
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.w  Obj_Y(A1), D0                                    ; $0014
+                move.w  parent3(A0), A1                            ; $0046
+                move.w  y_pos(A1), D0                                    ; $0014
                 move.b  Obj_Control_Var_13(A0), D1                       ; $0043
                 ext.w   D1
                 bmi.s   Offset_0x049D0A
                 add.w   D1, D0
-                cmp.w   Obj_Y(A0), D0                                    ; $0014
+                cmp.w   y_pos(A0), D0                                    ; $0014
                 bls.s   Offset_0x049D14
                 rts
 Offset_0x049D0A:
                 add.w   D1, D0
-                cmp.w   Obj_Y(A0), D0                                    ; $0014
+                cmp.w   y_pos(A0), D0                                    ; $0014
                 bcc.s   Offset_0x049D14
                 rts
 Offset_0x049D14:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 bchg    #01, render_flags(A0)                               ; $0004
                 bclr    #$02, Obj_Control_Var_08(A0)                     ; $0038
                 rts     
@@ -175,7 +175,7 @@ Offset_0x049D42:
 ;-------------------------------------------------------------------------------
 Offset_0x049D58:
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsr.w   #$01, D0
                 move.b  Offset_0x049D68(PC, D0), Obj_Control_Var_13(A0)  ; $0043
                 rts         
@@ -184,12 +184,12 @@ Offset_0x049D68:
                 dc.b    $F4, $FB, $FB, $FB, $FB, $FB, $FB, $00     
 ;-------------------------------------------------------------------------------
 Offset_0x049D70:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.w  Obj_Y(A1), D0                                    ; $0014
+                move.w  parent3(A0), A1                            ; $0046
+                move.w  y_pos(A1), D0                                    ; $0014
                 move.b  Obj_Control_Var_13(A0), D1                       ; $0043
                 ext.w   D1
                 add.w   D1, D0
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 rts      
 ;-------------------------------------------------------------------------------
 Dragonfly_Setup_Data:                                          ; Offset_0x049D86

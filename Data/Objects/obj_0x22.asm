@@ -7,7 +7,7 @@
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$0280, priority(A0)                         ; $0008
-                move.b  #$D7, Obj_Col_Flags(A0)                          ; $0028
+                move.b  #$D7, collision_flags(A0)                          ; $0028
                 move.l  #Offset_0x02007E, (A0)
 Offset_0x02007E:                
                 tst.w   Obj_Control_Var_00(A0)                           ; $0030
@@ -17,24 +17,24 @@ Offset_0x02007E:
                 move.w  #$0000, (Animate_Counters+$04).w             ; $FFFFF7F4
                 bra.s   Offset_0x0200F2
 Offset_0x020092:
-                tst.b   Obj_Col_Prop(A0)                                 ; $0029
+                tst.b   collision_property(A0)                                 ; $0029
                 beq.s   Offset_0x0200F2
-                clr.b   Obj_Col_Prop(A0)                                 ; $0029
+                clr.b   collision_property(A0)                                 ; $0029
                 move.w  #$0081, Obj_Control_Var_00(A0)                   ; $0030
                 move.w  #$0001, (Animate_Counters+$04).w             ; $FFFFF7F4
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x0200DC
                 move.l  #Obj_0x8B_LBz_Flybot_767, (A1)         ; Offset_0x048DF8
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
+                move.b  subtype(A0), D0                              ; $002C
                 add.w   D0, D0
                 add.w   D0, D0
                 andi.w  #$000C, D0
                 move.l  Offset_0x0200FE(PC, D0), D0
-                add.w   D0, Obj_Y(A1)                                    ; $0014
+                add.w   D0, y_pos(A1)                                    ; $0014
                 swap.w  D0
-                add.w   D0, Obj_X(A1)                                    ; $0010
+                add.w   D0, x_pos(A1)                                    ; $0010
 Offset_0x0200DC:
                 rts
 Offset_0x0200DE:

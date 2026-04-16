@@ -8,10 +8,10 @@
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$18, height_pixels(A0)                             ; $0006
-                move.w  #$079C, Obj_Art_VRAM(A0)                         ; $000A
-                btst    #$07, (Obj_Player_One+Obj_Art_VRAM).w        ; $FFFFB00A
+                move.w  #$079C, art_tile(A0)                         ; $000A
+                btst    #$07, (Obj_Player_One+art_tile).w        ; $FFFFB00A
                 beq.s   Offset_0x0102DE
-                bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
+                bset    #$07, art_tile(A0)                           ; $000A
 Offset_0x0102DE:
                 move.l  #Offset_0x0102E4, (A0)
 Offset_0x0102E4:                
@@ -19,13 +19,13 @@ Offset_0x0102E4:
                 beq.s   Offset_0x010364
                 tst.b   Obj_P_Invunerblt_Time(A0)                        ; $0034
                 beq.s   Offset_0x010334
-                subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
+                subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x01031C
-                move.b  #$01, Obj_Ani_Time(A0)                           ; $0024
-                addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
-                cmpi.b  #$06, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$01, anim_frame_duration(A0)                           ; $0024
+                addq.b  #$01, mapping_frame(A0)                             ; $0022
+                cmpi.b  #$06, mapping_frame(A0)                             ; $0022
                 bcs.s   Offset_0x01031C
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, mapping_frame(A0)                             ; $0022
                 move.b  #$00, Obj_P_Invunerblt_Time(A0)                  ; $0034
                 move.b  #$01, Obj_P_Invcbility_Time(A0)                  ; $0035
                 rts
@@ -33,20 +33,20 @@ Offset_0x01031C:
                 tst.b   Obj_P_Invcbility_Time(A0)                        ; $0035
                 bne.s   Offset_0x01032E
 Offset_0x010322:
-                move.w  (Obj_Player_One+Obj_X).w, Obj_X(A0)   ; $FFFFB010, $0010
-                move.w  (Obj_Player_One+Obj_Y).w, Obj_Y(A0)   ; $FFFFB014, $0014
+                move.w  (Obj_Player_One+x_pos).w, x_pos(A0)   ; $FFFFB010, $0010
+                move.w  (Obj_Player_One+y_pos).w, y_pos(A0)   ; $FFFFB014, $0014
 Offset_0x01032E:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x010334:
                 tst.b   (Obj_Player_One+Obj_Timer).w                 ; $FFFFB02E
                 bne.s   Offset_0x010356
-                move.w  (Obj_Player_One+Obj_Inertia).w, D0           ; $FFFFB01C
+                move.w  (Obj_Player_One+inertia).w, D0           ; $FFFFB01C
                 bpl.s   Offset_0x010342
                 neg.w   D0
 Offset_0x010342:
                 cmpi.w  #$0800, D0
                 bcs.s   Offset_0x010356
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, mapping_frame(A0)                             ; $0022
                 move.b  #$01, Obj_P_Invunerblt_Time(A0)                  ; $0034
                 bra.s   Offset_0x010322
 Offset_0x010356:

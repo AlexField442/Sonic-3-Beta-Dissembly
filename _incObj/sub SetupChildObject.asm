@@ -10,13 +10,13 @@ SetupChildObject:
 Offset_0x041D9E:
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x041DE8
-		move.w	a0,Obj_Child_Ref(a1)			; load parent RAM address into $46
+		move.w	a0,parent3(a1)			; load parent RAM address into $46
 
 		move.l	mappings(a0),mappings(a1)
 		; not sure why this is also a longword, given that VRAM is stored as a word
 		move.l	art_tile(a0),art_tile(a1)		; mappings and VRAM offset copied from parent object
 		move.l	(a2)+,(a1)				; object address
-		move.b	d2,Obj_Subtype(a1)			; index of child object
+		move.b	d2,subtype(a1)			; index of child object
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1				; x positional offset
 		move.b	d1,Obj_Control_Var_12(a1)
@@ -50,7 +50,7 @@ SetupChildObject_Complex:
 Offset_0x041DEE:
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x041E4C
-		move.w	a0,Obj_Child_Ref(a1)
+		move.w	a0,parent3(a1)
 
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(A0),art_tile(a1)
@@ -58,7 +58,7 @@ Offset_0x041DEE:
 		move.l	(a2)+,Obj_Control_Var_0E(a1)
 		move.l	(a2)+,Obj_Control_Var_00(a1)
 		move.l	(a2)+,Obj_Control_Var_04(a1)
-		move.b	d2,Obj_Subtype(a1)
+		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1
 		move.b	d1,Obj_Control_Var_12(a1)
@@ -94,12 +94,12 @@ Offset_0x041E52:
 		move.l	a2,a3
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x041E9E
-		move.w	a0,Obj_Child_Ref(a1)
+		move.w	a0,parent3(a1)
 
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(a0),art_tile(a1)
 		move.l	(a3)+,(a1)
-		move.b	d2,Obj_Subtype(a1)
+		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a3)+,d1
 		move.b	d1,Obj_Control_Var_12(a1)
@@ -133,13 +133,13 @@ SetupChildObject_LinkedList:
 Offset_0x041EA6:
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x041EDE
-		move.w	a3,Obj_Child_Ref(a1)		; store parent address
-		move.w	a1,Obj_Height_3(a3)		; store child address
+		move.w	a3,parent3(a1)		; store parent address
+		move.w	a1,default_y_radius(a3)		; store child address
 		move.l	a1,a3				; get next parent address
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(a0),art_tile(a1)
 		move.l	(a2),(a1)
-		move.b	d2,Obj_Subtype(a1)
+		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),x_pos(a1)
 		move.w	y_pos(a0),y_pos(a1)
 		addq.w	#2,d2
@@ -163,14 +163,14 @@ SetupChildObject_ComplexAdjusted:
 Offset_0x041EE4:
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x041F58
-		move.w	a0,Obj_Child_Ref(a1)
+		move.w	a0,parent3(a1)
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(a0),art_tile(a1)
 		move.l	(a2)+,(a1)
 		move.l	(a2)+,Obj_Control_Var_0E(a1)
 		move.l	(a2)+,Obj_Control_Var_00(a1)
 		move.l	(a2)+,Obj_Control_Var_04(a1)
-		move.b	d2,Obj_Subtype(a1)
+		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1
 		move.b	d1,Obj_Control_Var_12(a1)
@@ -216,9 +216,9 @@ SetupChildObject_Simple:
 Offset_0x041F5E:
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x041F84
-		move.w	a0,Obj_Child_Ref(a1)
+		move.w	a0,parent3(a1)
 		move.l	(a2),(a1)
-		move.b	d2,Obj_Subtype(a1)
+		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),x_pos(a1)
 		move.w	y_pos(a0),y_pos(a1)
 		addq.w	#2,d2
@@ -242,11 +242,11 @@ SetupChildObject_FindFree:
 Offset_0x041F8A:
 		jsr	(AllocateObject).l
 		bne.s	Offset_0x041FD4
-		move.w	a0,Obj_Child_Ref(a1)
+		move.w	a0,parent3(a1)
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(a0),art_tile(a1)
 		move.l	(a2)+,(a1)
-		move.b	d2,Obj_Subtype(a1)
+		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1
 		move.b	d1,Obj_Control_Var_12(a1)
@@ -281,13 +281,13 @@ SetupChildObject_TreeList:
 Offset_0x041FDC:
 		jsr	(AllocateObjectAfterCurrent).l
 		bne.s	Offset_0x042014
-		move.w	a3,Obj_Child_Ref(a1)
-		move.w	a0,Obj_Height_3(a1)
+		move.w	a3,parent3(a1)
+		move.w	a0,default_y_radius(a1)
 		move.l	a1,a3
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(a0),art_tile(a1)
 		move.l	(a2),(a1)
-		move.b	d2,Obj_Subtype(a1)
+		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),x_pos(a1)
 		move.w	y_pos(a0),y_pos(a1)
 		addq.w	#2,d2

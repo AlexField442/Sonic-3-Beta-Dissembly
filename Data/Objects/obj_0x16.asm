@@ -4,7 +4,7 @@
 ;===============================================================================
 Offset_0x01D2EA:
                 move.l  #Flame_Thrower_Mappings, mappings(A1) ; Offset_0x01D3C6, $000C
-                move.w  #$43AC, Obj_Art_VRAM(A1)                         ; $000A
+                move.w  #$43AC, art_tile(A1)                         ; $000A
                 move.b  #$10, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 ori.b   #$04, render_flags(A1)                              ; $0004
@@ -17,21 +17,21 @@ Obj_0x16_LBz_Flame_Thrower:                                    ; Offset_0x01D312
                 move.l  #Offset_0x01D31C, (A0)
 Offset_0x01D31C:                
                 move.b  (Vint_runcount+$03).w, D0         ; $FFFFFE0F
-                add.b   Obj_Subtype(A0), D0                              ; $002C
+                add.b   subtype(A0), D0                              ; $002C
                 andi.b  #$7F, D0
                 bne.s   Offset_0x01D376
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x01D376
                 move.l  #Offset_0x01D39A, (A1)
                 bsr.s   Offset_0x01D2EA
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.b  Obj_Status(A0), Obj_Status(A1)            ; $002A, $002A
-                move.b  #$9D, Obj_Col_Flags(A1)                          ; $0028
-                addi.w  #$0040, Obj_X(A1)                                ; $0010
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
+                move.b  status(A0), status(A1)            ; $002A, $002A
+                move.b  #$9D, collision_flags(A1)                          ; $0028
+                addi.w  #$0040, x_pos(A1)                                ; $0010
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x01D368
-                subi.w  #$0080, Obj_X(A1)                                ; $0010
+                subi.w  #$0080, x_pos(A1)                                ; $0010
 Offset_0x01D368:
                 tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01D376
@@ -45,7 +45,7 @@ Offset_0x01D376:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2     
 ;-------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ Offset_0x01D39A:
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
                 tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x01D3B2
-                move.w  #$7FFF, Obj_X(A0)                                ; $0010
+                move.w  #$7FFF, x_pos(A0)                                ; $0010
 Offset_0x01D3B2:
                 jmp     (MarkObjGone_5)                        ; Offset_0x011BCC     
 ;-------------------------------------------------------------------------------   

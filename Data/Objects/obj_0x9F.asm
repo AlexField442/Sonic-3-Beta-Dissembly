@@ -20,7 +20,7 @@ Offset_0x0444A8:
 Offset_0x0444B2:
                 lea     Catakiller_Jr_Setup_Data(PC), A1       ; Offset_0x04460C
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                move.w  #$FF00, Obj_Speed_X(A0)                          ; $0018
+                move.w  #$FF00, x_vel(A0)                          ; $0018
                 lea     Offset_0x044642(PC), A2
                 jsr     SetupChildObject_Repeat(PC)        ; Offset_0x041E4E
 Offset_0x0444C8:
@@ -37,7 +37,7 @@ Offset_0x0444E8:
                 move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0100, D0
                 move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
-                move.w  D0, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D0, y_vel(A0)                              ; $001A
                 move.w  #$0008, Obj_Control_Var_10(A0)                   ; $0040
                 bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
                 rts     
@@ -47,7 +47,7 @@ Offset_0x044508:
                 tst.w   D3
                 beq.s   Offset_0x044520
                 move.b  #$08, routine(A0)                            ; $0005
-                neg.w   Obj_Speed_X(A0)                                  ; $0018
+                neg.w   x_vel(A0)                                  ; $0018
                 bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x044520:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
@@ -77,7 +77,7 @@ Offset_0x044552:
 ;-------------------------------------------------------------------------------
 Offset_0x04455C:
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.w  Offset_0x044576(PC, D0), D1
                 lea     Offset_0x044576(PC, D1), A1
                 lsr.w   #$01, D0
@@ -103,13 +103,13 @@ Offset_0x044590:
                 move.b  #$04, routine(A0)                            ; $0005
                 moveq   #$40, D1
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 addq.w  #$02, D0
                 lsl.w   #$02, D0
                 sub.w   D0, D1
                 move.w  D1, Obj_Timer(A0)                                ; $002E
                 move.l  #Offset_0x0445FE, Obj_Child(A0)                  ; $0034
-                move.w  #$FF00, Obj_Speed_X(A0)                          ; $0018
+                move.w  #$FF00, x_vel(A0)                          ; $0018
                 bra     Offset_0x0444C8
 ;-------------------------------------------------------------------------------
 Offset_0x0445BA:
@@ -128,7 +128,7 @@ Offset_0x0445D6:
 Offset_0x0445E8:
                 cmpi.l  #Offset_0x04453C, (A0)
                 bne.s   Offset_0x0445FC
-                cmpi.b  #$06, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$06, subtype(A0)                            ; $002C
                 bcc.s   Offset_0x0445FC
                 jsr     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
 Offset_0x0445FC:

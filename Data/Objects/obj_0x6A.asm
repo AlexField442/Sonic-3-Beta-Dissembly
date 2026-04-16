@@ -4,10 +4,10 @@
 ;------------------------------------------------------------------------------- 
 ; Offset_0x014B5A:
                 move.l  #Invisible_Block_Mappings, mappings(A0) ; Offset_0x014352, $000C
-                move.w  #$86BC, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$86BC, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.b  D0, D1
                 andi.w  #$00F0, D0
                 addi.w  #$0010, D0
@@ -17,12 +17,12 @@
                 addq.w  #$01, D1
                 lsl.w   #$03, D1
                 move.b  D1, height_pixels(A0)                               ; $0006
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x014BA4
                 move.l  #Offset_0x014C20, (A0)
                 rts
 Offset_0x014BA4:
-                btst    #$01, Obj_Status(A0)                             ; $002A
+                btst    #$01, status(A0)                             ; $002A
                 beq.s   Offset_0x014BB4
                 move.l  #Offset_0x014C84, (A0)
                 rts
@@ -37,9 +37,9 @@ Offset_0x014BBA:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 bsr     Solid_Object_2                         ; Offset_0x0135B6
-                move.b  Obj_Status(A0), D6                               ; $002A
+                move.b  status(A0), D6                               ; $002A
                 andi.b  #$18, D6
                 beq.s   Offset_0x014BFE
                 move.b  D6, D0
@@ -53,7 +53,7 @@ Offset_0x014BF0:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 bsr     Hurt_Player_A1                         ; Offset_0x01A71C
 Offset_0x014BFE:
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0
@@ -72,7 +72,7 @@ Offset_0x014C20:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 bsr     Solid_Object_2                         ; Offset_0x0135B6
                 swap.w  D6
                 andi.w  #$0003, D6
@@ -88,7 +88,7 @@ Offset_0x014C54:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 bsr     Hurt_Player_A1                         ; Offset_0x01A71C
 Offset_0x014C62:
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0
@@ -107,7 +107,7 @@ Offset_0x014C84:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 bsr     Solid_Object_2                         ; Offset_0x0135B6
                 swap.w  D6
                 andi.w  #$000C, D6
@@ -123,7 +123,7 @@ Offset_0x014CB8:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 bsr     Hurt_Player_A1                         ; Offset_0x01A71C
 Offset_0x014CC6:
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0

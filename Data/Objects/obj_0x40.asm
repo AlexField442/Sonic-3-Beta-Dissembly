@@ -7,14 +7,14 @@ Offset_0x014AAE:
 ;-------------------------------------------------------------------------------
 Obj_0x40_Hz_Block:                                             ; Offset_0x014AB6
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  subtype(A0), D0                              ; $002C
+                move.b  D0, mapping_frame(A0)                               ; $0022
                 add.w   D0, D0
                 lea     Offset_0x014AAE(PC, D0), A1
                 move.b  (A1)+, width_pixels(A0)                             ; $0007
                 move.b  (A1)+, height_pixels(A0)                            ; $0006
                 move.l  #Hz_Block_Mappings, mappings(A0) ; Offset_0x014B0E, $000C
-                move.w  #$43D4, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$43D4, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
                 move.l  #Offset_0x014AEE, (A0)
@@ -27,7 +27,7 @@ Offset_0x014AEE:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 bsr     Solid_Object_2                         ; Offset_0x0135B6
                 bra     MarkObjGone                            ; Offset_0x011AF2      
 ;-------------------------------------------------------------------------------                

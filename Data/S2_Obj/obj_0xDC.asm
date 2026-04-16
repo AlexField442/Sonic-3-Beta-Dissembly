@@ -21,7 +21,7 @@ Offset_0x010FD6:
                 sub.l   D1, D0
                 asr.l   #$04, D0
                 sub.l   D0, Obj_Control_Var_04(A0)                       ; $0034
-                move.w  Obj_Control_Var_04(A0), Obj_X(A0)         ; $0034, $0010
+                move.w  Obj_Control_Var_04(A0), x_pos(A0)         ; $0034, $0010
                 moveq   #$00, D1
                 move.w  Obj_Control_Var_0E(A0), D1                       ; $003E
                 swap.w  D1
@@ -29,7 +29,7 @@ Offset_0x010FD6:
                 sub.l   D1, D0
                 asr.l   #$04, D0
                 sub.l   D0, Obj_Control_Var_08(A0)                       ; $0038
-                move.w  Obj_Control_Var_08(A0), Obj_Y(A0)         ; $0038, $0014
+                move.w  Obj_Control_Var_08(A0), y_pos(A0)         ; $0038, $0014
                 lea     Slot_Machine_Rings_Animate_Data(PC), A1 ; Offset_0x01103A
                 bsr     AnimateSprite                          ; Offset_0x01115E
                 subq.w  #$01, Obj_Control_Var_10(A0)                     ; $0040

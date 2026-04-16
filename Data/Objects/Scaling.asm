@@ -14,10 +14,10 @@ Offset_0x01AA42:
 ;-------------------------------------------------------------------------------
 Offset_0x01AA46:
                 addq.b  #$02, routine(A0)                            ; $0005
-                move.w  Obj_X(A0), Obj_Control_Var_04(A0)         ; $0010, $0034
-                move.w  Obj_Y(A0), Obj_Control_Var_06(A0)         ; $0014, $0036
+                move.w  x_pos(A0), Obj_Control_Var_04(A0)         ; $0010, $0034
+                move.w  y_pos(A0), Obj_Control_Var_06(A0)         ; $0014, $0036
                 move.l  #Scaling_Mappings, mappings(A0)  ; Offset_0x01B1B8, $000C
-                move.w  #$6500, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$6500, art_tile(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$40, width_pixels(A0)                              ; $0007
@@ -44,13 +44,13 @@ Offset_0x01AAB0:
                 move.b  #$00, Obj_Control_Var_10(A0)                     ; $0040
                 move.b  #$00, Obj_Control_Var_00(A0)                     ; $0030
                 move.w  #$003C, Obj_Control_Var_02(A0)                   ; $0032
-                move.b  Obj_Ani_Number(A0), D0                           ; $0020
+                move.b  anim(A0), D0                           ; $0020
                 addq.b  #$01, D0
                 cmpi.b  #$05, D0
                 bcs.s   Offset_0x01AAD6
                 moveq   #$00, D0
 Offset_0x01AAD6:
-                move.b  D0, Obj_Ani_Number(A0)                           ; $0020
+                move.b  D0, anim(A0)                           ; $0020
 Offset_0x01AADA:
                 move.w  Obj_Control_Var_04(A0), D2                       ; $0034
                 move.w  Obj_Control_Var_06(A0), D3                       ; $0036
@@ -61,8 +61,8 @@ Offset_0x01AADA:
                 divu.w  D0, D4
                 sub.w   D4, D2
                 sub.w   D4, D3
-                move.w  D2, Obj_X(A0)                                    ; $0010
-                move.w  D3, Obj_Y(A0)                                    ; $0014
+                move.w  D2, x_pos(A0)                                    ; $0010
+                move.w  D3, y_pos(A0)                                    ; $0014
                 clr.w   (Art_Scaling_Data_Buffer).w                  ; $FFFFF740
                 tst.w   Obj_Control_Var_02(A0)                           ; $0032
                 bne.s   Offset_0x01AB32
@@ -129,7 +129,7 @@ Perform_Scaling:                                               ; Offset_0x01ABE2
                 bcs.s   Offset_0x01ABF2
                 move.b  #$1C, D1
 Offset_0x01ABF2:
-                move.b  D1, Obj_Map_Id(A0)                               ; $0022
+                move.b  D1, mapping_frame(A0)                               ; $0022
                 add.w   D1, D1
                 move.w  Offset_0x01ABA2(PC, D1), D1
                 move.w  (Art_Scaling_Data_Buffer).w, D2              ; $FFFFF740
@@ -148,7 +148,7 @@ Offset_0x01AC1A:
                 movem.l D1/D5-D7/A0/A2/A4, -(A7)
                 lea     (M68K_Dev_RAM_Start+$8000), A2               ; $FFFE8000
                 add.w   D2, D0
-                move.w  D0, Obj_Art_VRAM(A0)                             ; $000A
+                move.w  D0, art_tile(A0)                             ; $000A
                 lsl.w   #$05, D2
                 adda.w  D2, A2
                 bsr.s   Offset_0x01AC4E
@@ -167,7 +167,7 @@ Offset_0x01AC4E:
                 moveq   #$00, D0
                 move.b  Obj_Control_Var_10(A0), D0                       ; $0040
                 moveq   #$00, D1
-                move.b  Obj_Ani_Number(A0), D1                           ; $0020
+                move.b  anim(A0), D1                           ; $0020
                 move.l  Obj_Control_Var_12(A0), A1                       ; $0042
                 ror.w   #$04, D1
                 adda.l  D1, A1

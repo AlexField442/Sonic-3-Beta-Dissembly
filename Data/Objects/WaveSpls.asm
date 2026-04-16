@@ -4,16 +4,16 @@
 ;------------------------------------------------------------------------------- 
 ; Offset_0x014926:
                 move.l  #Wave_Splash_Mappings, mappings(A0) ; Offset_0x0149F2, $000C
-                move.w  #$842E, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$842E, art_tile(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$80, width_pixels(A0)                              ; $0007
                 move.b  #$08, height_pixels(A0)                             ; $0006
                 bset    #$06, render_flags(A0)                              ; $0004
-                move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
-                lea     Obj_Speed_X(A0), A2                              ; $0018
-                move.w  Obj_X(A0), (A2)                                  ; $0010
+                move.w  #$0001, y_sub(A0)                            ; $0016
+                lea     x_vel(A0), A2                              ; $0018
+                move.w  x_pos(A0), (A2)                                  ; $0010
                 addi.w  #$00C0, (A2)+
-                move.w  Obj_Y(A0), (A2)+                                 ; $0014
+                move.w  y_pos(A0), (A2)+                                 ; $0014
                 move.l  #Offset_0x014968, (A0)
 Offset_0x014968:                
                 move.w  (Camera_X).w, D1                             ; $FFFFEE78
@@ -23,13 +23,13 @@ Offset_0x014968:
                 beq.s   Offset_0x014980
                 addi.w  #$0020, D1
 Offset_0x014980:
-                move.w  D1, Obj_X(A0)                                    ; $0010
+                move.w  D1, x_pos(A0)                                    ; $0010
                 move.w  (Water_Level_Move).w, D1                     ; $FFFFF646
-                move.w  D1, Obj_Y(A0)                                    ; $0014
-                lea     Obj_Speed_X(A0), A2                              ; $0018
-                move.w  Obj_X(A0), (A2)                                  ; $0010
+                move.w  D1, y_pos(A0)                                    ; $0014
+                lea     x_vel(A0), A2                              ; $0018
+                move.w  x_pos(A0), (A2)                                  ; $0010
                 addi.w  #$00C0, (A2)+
-                move.w  Obj_Y(A0), (A2)+                                 ; $0014
+                move.w  y_pos(A0), (A2)+                                 ; $0014
                 tst.b   Obj_Control_Var_02(A0)                           ; $0032
                 bne.s   Offset_0x0149BA
                 tst.b   (Control_Ports_Logical_Data+$01).w           ; $FFFFF603
@@ -37,24 +37,24 @@ Offset_0x014980:
                 tst.b   (Control_Ports_Logical_Data_2+$01).w         ; $FFFFF66B
                 bpl.s   Offset_0x0149CA
 Offset_0x0149AE:
-                addq.b  #$03, Obj_Map_Id(A0)                             ; $0022
+                addq.b  #$03, mapping_frame(A0)                             ; $0022
                 move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
                 bra.s   Offset_0x0149E8
 Offset_0x0149BA:
                 tst.w   (Pause_Status).w                             ; $FFFFF63A
                 bne.s   Offset_0x0149E8
                 move.b  #$00, Obj_Control_Var_02(A0)                     ; $0032
-                subq.b  #$03, Obj_Map_Id(A0)                             ; $0022
+                subq.b  #$03, mapping_frame(A0)                             ; $0022
 Offset_0x0149CA:
-                subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
+                subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x0149E8
-                move.b  #$09, Obj_Ani_Time(A0)                           ; $0024
-                addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
-                cmpi.b  #$04, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$09, anim_frame_duration(A0)                           ; $0024
+                addq.b  #$01, mapping_frame(A0)                             ; $0022
+                cmpi.b  #$04, mapping_frame(A0)                             ; $0022
                 bcs.s   Offset_0x0149E8
-                move.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$01, mapping_frame(A0)                             ; $0022
 Offset_0x0149E8:
-                move.b  Obj_Map_Id(A0), $0001(A2)                        ; $0022
+                move.b  mapping_frame(A0), $0001(A2)                        ; $0022
                 bra     DisplaySprite                          ; Offset_0x011148
 ;-------------------------------------------------------------------------------
 Wave_Splash_Mappings:                                          ; Offset_0x0149F2

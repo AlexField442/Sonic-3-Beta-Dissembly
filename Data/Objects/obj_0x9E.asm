@@ -19,7 +19,7 @@ Offset_0x044FAC:
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Offset_0x045040, Obj_Child_Data(A0)             ; $0030
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 add.w   D0, D0
                 add.w   D0, D0
                 move.w  D0, Obj_Timer(A0)                                ; $002E
@@ -30,7 +30,7 @@ Offset_0x044FAC:
                 jsr     Set_Velocity_X_Track_Player_One(PC)    ; Offset_0x042E4C
                 move.w  #$0020, D0
                 move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
-                move.w  D0, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D0, y_vel(A0)                              ; $001A
                 move.w  #$0001, Obj_Control_Var_10(A0)                   ; $0040
                 bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
                 rts     
@@ -40,15 +40,15 @@ Offset_0x044FFA:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 jsr     Animate_Raw_Multi_Delay(PC)            ; Offset_0x04215C
                 jsr     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
-                move.b  #$0A, Obj_Col_Flags(A0)                          ; $0028
-                cmpi.b  #$02, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$0A, collision_flags(A0)                          ; $0028
+                cmpi.b  #$02, mapping_frame(A0)                             ; $0022
                 bne.s   Offset_0x045020
-                move.b  #$86, Obj_Col_Flags(A0)                          ; $0028
+                move.b  #$86, collision_flags(A0)                          ; $0028
 Offset_0x045020:
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x045022:
-                neg.w   Obj_Speed_X(A0)                                  ; $0018
+                neg.w   x_vel(A0)                                  ; $0018
                 bchg    #00, render_flags(A0)                               ; $0004
                 move.w  Obj_Control_Var_0A(A0), Obj_Timer(A0)     ; $003A, $002E
                 rts                                               

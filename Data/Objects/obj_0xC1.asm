@@ -6,7 +6,7 @@
                 jsr     Object_Check_Range(PC)                 ; Offset_0x04326E
                 lea     Offset_0x047B30(PC), A1
                 move.l  #Delete_Sprite_Clear_Respaw_Flag_Check_X, (A0) ; Offset_0x042B3C
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 beq.s   Offset_0x047AEE
                 lea     Offset_0x047B3C(PC), A1
                 move.l  #Offset_0x047AF2, (A0)
@@ -15,7 +15,7 @@ Offset_0x047AEE:
 ;-------------------------------------------------------------------------------
 Offset_0x047AF2:
                 moveq   #$00, D0
-                move.b  Obj_Col_Prop(A0), D0                             ; $0029
+                move.b  collision_property(A0), D0                             ; $0029
                 bne.s   Offset_0x047AFE
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
 Offset_0x047AFE:

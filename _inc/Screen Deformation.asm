@@ -1478,10 +1478,10 @@ Offset_0x02FFEA:
 		beq.s	Offset_0x02FFFE
 		btst	#$02, render_flags(A1)                              ; $0004
 		beq.s	Offset_0x02FFFE
-		sub.w	D0, Obj_X(A1)                                    ; $0010
-		sub.w	D1, Obj_Y(A1)                                    ; $0014
+		sub.w	D0, x_pos(A1)                                    ; $0010
+		sub.w	D1, y_pos(A1)                                    ; $0014
 Offset_0x02FFFE:
-		lea	Obj_Size(A1), A1                                 ; $004A
+		lea	object_size(A1), A1                                 ; $004A
 		dbf	D2, Offset_0x02FFEA
 		rts 
 ;-------------------------------------------------------------------------------
@@ -1799,7 +1799,7 @@ Obj_AIz_Tree_Reveal_Control:                                   ; Offset_0x03064C
 Offset_0x03065E:
 		subq.w	#$01, Obj_Timer(A0)                              ; $002E
 		move.w	#$0480, D0
-		sub.w	(Obj_Player_One+Obj_Y).w, D0                 ; $FFFFB014
+		sub.w	(Obj_Player_One+y_pos).w, D0                 ; $FFFFB014
 		lsr.w	#$03, D0
 		addq.w	#$03, D0
 		cmp.w	(Foreground_Events_Y_Counter).w, D0          ; $FFFFEEC4
@@ -2017,10 +2017,10 @@ Offset_0x030920:
 		move.l	#$02EE0AEE, (A1)
 		move.w	#$2F00, D0
 		move.w	#$0080, D1
-		sub.w	D0, (Obj_Player_One+Obj_X).w                 ; $FFFFB010
-		sub.w	D1, (Obj_Player_One+Obj_Y).w                 ; $FFFFB014
-		sub.w	D0, (Obj_Player_Two+Obj_X).w                 ; $FFFFB05A
-		sub.w	D1, (Obj_Player_Two+Obj_Y).w                 ; $FFFFB05E
+		sub.w	D0, (Obj_Player_One+x_pos).w                 ; $FFFFB010
+		sub.w	D1, (Obj_Player_One+y_pos).w                 ; $FFFFB014
+		sub.w	D0, (Obj_Player_Two+x_pos).w                 ; $FFFFB05A
+		sub.w	D1, (Obj_Player_Two+y_pos).w                 ; $FFFFB05E
 		sub.w	D0, (Camera_X).w                             ; $FFFFEE78
 		sub.w	D1, (Camera_Y).w                             ; $FFFFEE7C
 		sub.w	D0, (Screen_Pos_Buffer_X).w                  ; $FFFFEE80
@@ -2683,8 +2683,8 @@ AIz_Do_Ship_Loop:                                              ; Offset_0x031152
 		bcs.s	Offset_0x031186
 		move.w	#$0200, D1
 		move.w	D1, (Level_Repeat_Offset).w                  ; $FFFFEEBC
-		sub.w	D1, (Obj_Player_One+Obj_X).w                 ; $FFFFB010
-		sub.w	D1, (Obj_Player_Two+Obj_X).w                 ; $FFFFB05A
+		sub.w	D1, (Obj_Player_One+x_pos).w                 ; $FFFFB010
+		sub.w	D1, (Obj_Player_Two+x_pos).w                 ; $FFFFB05A
 		sub.w	D1, D0
 		move.w	D0, D1
 		andi.w	#$FFF0, D1
@@ -2697,16 +2697,16 @@ Offset_0x031186:
 		move.w	D0, (Sonic_Level_Limits_Min_X).w             ; $FFFFEE14
 		move.w	D0, (Sonic_Level_Limits_Max_X).w             ; $FFFFEE16
 		addi.w	#$0018, D0
-		cmp.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
+		cmp.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
 		bls.s	Offset_0x0311AC
-		move.w	D0, (Obj_Player_One+Obj_X).w                 ; $FFFFB010
-		move.w	#$0400, (Obj_Player_One+Obj_Inertia).w       ; $FFFFB01C
+		move.w	D0, (Obj_Player_One+x_pos).w                 ; $FFFFB010
+		move.w	#$0400, (Obj_Player_One+inertia).w       ; $FFFFB01C
 		bra.s	Offset_0x0311BA
 Offset_0x0311AC:
 		addi.w	#$0088, D0
-		cmp.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
+		cmp.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
 		bhi.s	Offset_0x0311BA
-		move.w	D0, (Obj_Player_One+Obj_X).w                 ; $FFFFB010
+		move.w	D0, (Obj_Player_One+x_pos).w                 ; $FFFFB010
 Offset_0x0311BA:
 		rts
 ;-------------------------------------------------------------------------------
@@ -3202,7 +3202,7 @@ Hz_2_Wall_Move_2:                                              ; Offset_0x031DD0
 		move.w	#$000E, (Earthquake_Flag).w                  ; $FFFFEECC
 		bra.s	Offset_0x031E08
 Offset_0x031DF8:
-		cmpi.w	#$0688, (Obj_Player_One+Obj_X).w             ; $FFFFB010
+		cmpi.w	#$0688, (Obj_Player_One+x_pos).w             ; $FFFFB010
 		bcs.s	Offset_0x031E08
 		st	(Earthquake_Flag).w                          ; $FFFFEECC
 Offset_0x031E04:
@@ -3266,10 +3266,10 @@ Offset_0x031E9A:
 		move.w	(Background_Events).w, D4                    ; $FFFFEED2
                 neg.w   D4
 		addi.w	#$05C0, D4
-		move.w	D4, Obj_X(A0)                                    ; $0010
-		move.w	#$0700, Obj_Y(A0)                                ; $0014
+		move.w	D4, x_pos(A0)                                    ; $0010
+		move.w	#$0700, y_pos(A0)                                ; $0014
 		move.b	#$40, width_pixels(A0)                              ; $0007
-		bset	#$07, Obj_Status(A0)                             ; $002A
+		bset	#$07, status(A0)                             ; $002A
 		moveq	#$4B, D1
 		move.w	#$0100, D2
 		move.w	#$0100, D3
@@ -3357,10 +3357,10 @@ MGz_1_Transition:                                              ; Offset_0x031FB8
 		movem.l	(A7)+, D7/A0/A2/A3
 		move.w	#$2E00, D0
 		move.w	#$0600, D1
-		sub.w	D0, (Obj_Player_One+Obj_X).w                 ; $FFFFB010
-		sub.w	D1, (Obj_Player_One+Obj_Y).w                 ; $FFFFB014
-		sub.w	D0, (Obj_Player_Two+Obj_X).w                 ; $FFFFB05A
-		sub.w	D1, (Obj_Player_Two+Obj_Y).w                 ; $FFFFB05E
+		sub.w	D0, (Obj_Player_One+x_pos).w                 ; $FFFFB010
+		sub.w	D1, (Obj_Player_One+y_pos).w                 ; $FFFFB014
+		sub.w	D0, (Obj_Player_Two+x_pos).w                 ; $FFFFB05A
+		sub.w	D1, (Obj_Player_Two+y_pos).w                 ; $FFFFB05E
 		jsr	Calc_Objects_X_Y_During_Transition(PC) ; Offset_0x02FFE4
 		sub.w	D0, (Camera_X).w                             ; $FFFFEE78
 		sub.w	D1, (Camera_Y).w                             ; $FFFFEE7C
@@ -3508,14 +3508,14 @@ Offset_0x0321B4:
 		moveq	#$09, D4
 Offset_0x0321DA:
 		move.l	#Obj_Earthquake_Tiles_Attributes, (A1) ; Offset_0x0325CE
-		move.w	D1, Obj_X(A1)                                    ; $0010
+		move.w	D1, x_pos(A1)                                    ; $0010
 		move.w	D2, Obj_Timer(A1)                                ; $002E
 		move.l	D3, Obj_Control_Var_00(A1)                       ; $0030
                 swap.w  D2
 		jsr	(AllocateObject_Immediate)               ; Offset_0x011DC8
 		bne.s	Offset_0x03221A
 		move.l	#Obj_Earthquake_Tiles_Attributes, (A1) ; Offset_0x0325CE
-		move.w	D1, Obj_X(A1)                                    ; $0010
+		move.w	D1, x_pos(A1)                                    ; $0010
 		move.w	D2, Obj_Timer(A1)                                ; $002E
 		move.l	D3, Obj_Control_Var_00(A1)                       ; $0030
 		addi.w	#$0020, D1
@@ -3577,8 +3577,8 @@ Offset_0x0322AE:
 		rts
 ;------------------------------------------------------------------------------- 
 MGz_2_Quake:                                                   ; Offset_0x0322B0
-		move.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
-		move.w	(Obj_Player_One+Obj_Y).w, D1                 ; $FFFFB014
+		move.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
+		move.w	(Obj_Player_One+y_pos).w, D1                 ; $FFFFB014
 		move.w	(Background_Events+$10).w, D2                ; $FFFFEEE2
 		jmp	Offset_0x0322C0(pc,d2.w)                                
 ;-------------------------------------------------------------------------------    
@@ -3611,7 +3611,7 @@ Offset_0x0322E8:
 		move.w	priority(A1), D0                             ; $0008
 		move.w	D0, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
 		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		move.w	Obj_Art_VRAM(A1), D0                             ; $000A
+		move.w	art_tile(A1), D0                             ; $000A
 		cmpi.w	#$0004, D2
 		bne.s	Offset_0x032326
 		move.w	D0, (Sonic_Level_Limits_Max_X).w             ; $FFFFEE16
@@ -3642,8 +3642,8 @@ MGz_Quake_1:                                                   ; Offset_0x03233E
 		jsr	(AllocateObject)                     ; Offset_0x011DD8
 		bne.s	Offset_0x032380
 		move.l	#Obj_0xAF_MGz_Drill_Mobile, (A1)       ; Offset_0x039920
-		move.w	#$08E0, Obj_X(A1)                                ; $0010
-		move.w	#$0690, Obj_Y(A1)                                ; $0014
+		move.w	#$08E0, x_pos(A1)                                ; $0010
+		move.w	#$0690, y_pos(A1)                                ; $0014
 Offset_0x032380:
 		rts 
 ;-------------------------------------------------------------------------------  
@@ -3662,8 +3662,8 @@ MGz_Quake_2:                                                   ; Offset_0x032382
 		bne.s	Offset_0x0323CA
 		move.l	#Obj_0xAF_MGz_Drill_Mobile, (A1)       ; Offset_0x039920
 		bset	#$00, render_flags(A1)                              ; $0004
-		move.w	#$3320, Obj_X(A1)                                ; $0010
-		move.w	#$0790, Obj_Y(A1)                                ; $0014
+		move.w	#$3320, x_pos(A1)                                ; $0010
+		move.w	#$0790, y_pos(A1)                                ; $0014
 Offset_0x0323CA:
 		rts       
 ;------------------------------------------------------------------------------- 
@@ -3682,8 +3682,8 @@ MGz_Quake_3:                                                   ; Offset_0x0323CC
 		bne.s	Offset_0x032412
 		move.l	#Obj_0xAF_MGz_Drill_Mobile, (A1)       ; Offset_0x039920
 		bset	#$00, render_flags(A1)                              ; $0004
-		move.w	#$3300, Obj_X(A1)                                ; $0010
-		move.w	#$0780, Obj_Y(A1)                                ; $0014
+		move.w	#$3300, x_pos(A1)                                ; $0010
+		move.w	#$0780, y_pos(A1)                                ; $0014
 Offset_0x032412:
 		rts
 Offset_0x032414:
@@ -3697,14 +3697,14 @@ Offset_0x032414:
 		rts 
 ;------------------------------------------------------------------------------- 
 MGz_Quake_4:                                                   ; Offset_0x032434  
-		cmpi.w	#$0980, (Obj_Player_One+Obj_X).w             ; $FFFFB010
+		cmpi.w	#$0980, (Obj_Player_One+x_pos).w             ; $FFFFB010
 		bcc.s	Offset_0x032468
 		rts
 ;------------------------------------------------------------------------------- 
 MGz_Quake_5:                                                   ; Offset_0x03243E
-		cmpi.w	#$0100, (Obj_Player_One+Obj_Y).w             ; $FFFFB014
+		cmpi.w	#$0100, (Obj_Player_One+y_pos).w             ; $FFFFB014
 		bcc.s	Offset_0x03245C
-		cmpi.w	#$2F80, (Obj_Player_One+Obj_X).w             ; $FFFFB010
+		cmpi.w	#$2F80, (Obj_Player_One+x_pos).w             ; $FFFFB010
 		bcs.s	Offset_0x03245C
 		move.w	#$6000, D0
 		move.w	D0, (Sonic_Level_Limits_Max_X).w             ; $FFFFEE16
@@ -3714,7 +3714,7 @@ Offset_0x03245C:
 		rts  
 ;------------------------------------------------------------------------------- 
 MGz_Quake_6:                                                   ; Offset_0x03245E
-		cmpi.w	#$3200, (Obj_Player_One+Obj_X).w             ; $FFFFB010
+		cmpi.w	#$3200, (Obj_Player_One+x_pos).w             ; $FFFFB010
 		bcs.s	Offset_0x032468
 		rts
 Offset_0x032468:
@@ -3738,8 +3738,8 @@ Offset_0x032482:
 		rts                
 ;-------------------------------------------------------------------------------  
 MGz_Chunk_0:                                                   ; Offset_0x032498 
-		move.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
-		move.w	(Obj_Player_One+Obj_Y).w, D1                 ; $FFFFB014
+		move.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
+		move.w	(Obj_Player_One+y_pos).w, D1                 ; $FFFFB014
 		lea	MGz_Chunk_Array(PC), A1                ; Offset_0x03262A
 		moveq	#$04, D2
 		moveq	#$02, D3
@@ -3824,7 +3824,7 @@ Offset_0x032588:
 		rts   
 ;------------------------------------------------------------------------------- 
 MGz_Chunk_4:                                                   ; Offset_0x03258A
-		cmpi.w	#$2A00, (Obj_Player_One+Obj_X).w             ; $FFFFB010
+		cmpi.w	#$2A00, (Obj_Player_One+x_pos).w             ; $FFFFB010
 		bcs.s	Offset_0x03259A
 		clr.w	(Background_Events+$04).w                    ; $FFFFEED6
 		moveq	#$5C, D0
@@ -3891,8 +3891,8 @@ MGz_2_Vertical_Scroll_Array:                                   ; Offset_0x03271E
 MGz_2_Events_Init_2:                                           ; Offset_0x032732
 		jsr	MGz_2_Clear_Bottom_Background(PC)      ; Offset_0x032968
 		move.w	#$0004, (Level_Events_Routine_2).w           ; $FFFFEEC2
-		move.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
-		move.w	(Obj_Player_One+Obj_Y).w, D1                 ; $FFFFB014
+		move.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
+		move.w	(Obj_Player_One+y_pos).w, D1                 ; $FFFFB014
 		cmpi.w	#$0500, D1
 		bcc.s	Offset_0x03276A
 		cmpi.w	#$3800, D0
@@ -4100,8 +4100,8 @@ MGz_2_Clear_Bottom_Background:                                 ; Offset_0x032968
 		rts 
 ;-------------------------------------------------------------------------------  
 MGz_2_Event_Trigger:                                           ; Offset_0x03297A
-		move.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
-		move.w	(Obj_Player_One+Obj_Y).w, D1                 ; $FFFFB014
+		move.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
+		move.w	(Obj_Player_One+y_pos).w, D1                 ; $FFFFB014
 		move.w	(Background_Events).w, D2                    ; $FFFFEED2
 		jmp	Offset_0x03298A(pc,d2.w) 
 ;------------------------------------------------------------------------------- 
@@ -4560,10 +4560,10 @@ Iz_1_Transition:                                               ; Offset_0x032F3C
 		movem.l	(A7)+, D7/A0/A2/A3
 		move.w	#$6880, D0
 		move.w	#$FF00, D1
-		sub.w	D0, (Obj_Player_One+Obj_X).w                 ; $FFFFB010
-		sub.w	D1, (Obj_Player_One+Obj_Y).w                 ; $FFFFB014
-		sub.w	D0, (Obj_Player_Two+Obj_X).w                 ; $FFFFB05A
-		sub.w	D1, (Obj_Player_Two+Obj_Y).w                 ; $FFFFB05E
+		sub.w	D0, (Obj_Player_One+x_pos).w                 ; $FFFFB010
+		sub.w	D1, (Obj_Player_One+y_pos).w                 ; $FFFFB014
+		sub.w	D0, (Obj_Player_Two+x_pos).w                 ; $FFFFB05A
+		sub.w	D1, (Obj_Player_Two+y_pos).w                 ; $FFFFB05E
 		jsr	Calc_Objects_X_Y_During_Transition(PC) ; Offset_0x02FFE4
 		sub.w	D0, (Camera_X).w                             ; $FFFFEE78
 		sub.w	D1, (Camera_Y).w                             ; $FFFFEE7C
@@ -4976,8 +4976,8 @@ Offset_0x03346E:
 		move.w	(A3), A5
 		jsr	LBz_1_Do_Mod_3(PC)                     ; Offset_0x03364E
 Offset_0x033474:
-		move.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
-		move.w	(Obj_Player_One+Obj_Y).w, D1                 ; $FFFFB014
+		move.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
+		move.w	(Obj_Player_One+y_pos).w, D1                 ; $FFFFB014
 		moveq	#$00, D2
 		jsr	LBz_1_Check_Layout_Mod(PC)             ; Offset_0x0335CA
 		jsr	Reset_Tile_Offset_Position_Actual(PC)  ; Offset_0x02FEF2
@@ -4986,8 +4986,8 @@ Offset_0x033474:
 LBz_1_Events_Run:                                              ; Offset_0x03348A
 		move.w	(Earthquake_Offset).w, D0                    ; $FFFFEECE
 		add.w	D0, (Screen_Pos_Buffer_Y).w                  ; $FFFFEE84
-		move.w	(Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
-		move.w	(Obj_Player_One+Obj_Y).w, D1                 ; $FFFFB014
+		move.w	(Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
+		move.w	(Obj_Player_One+y_pos).w, D1                 ; $FFFFB014
 		move.w	(Background_Events).w, D2                    ; $FFFFEED2
 		bne.s	Offset_0x0334AC
 		jsr	LBz_1_Check_Layout_Mod(PC)             ; Offset_0x0335CA
@@ -5329,10 +5329,10 @@ LBZ1_LevelTransition:
 		; This seems to have been written with an earlier version of the routine
 		; in mind as it does not reset camera boundaries
 		moveq	#0,d1
-		sub.w	d0,(Obj_Player_One+Obj_X).w
-		sub.w	d1,(Obj_Player_One+Obj_Y).w
-		sub.w	d0,(Obj_Player_Two+Obj_X).w
-		sub.w	d1,(Obj_Player_Two+Obj_Y).w
+		sub.w	d0,(Obj_Player_One+x_pos).w
+		sub.w	d1,(Obj_Player_One+y_pos).w
+		sub.w	d0,(Obj_Player_Two+x_pos).w
+		sub.w	d1,(Obj_Player_Two+y_pos).w
 		jsr	Calc_Objects_X_Y_During_Transition(pc)
 		sub.w	d0,(Camera_X).w
 		sub.w	d1,(Camera_Y).w
@@ -5420,7 +5420,7 @@ Offset_0x033918:
 		bra.w	LBz_2_Normal                           ; Offset_0x033956 
 ;------------------------------------------------------------------------------- 
 LBz_2_From_Transition:                                         ; Offset_0x033920
-		cmpi.w	#$060A, (Obj_Player_One+Obj_X).w             ; $FFFFB010
+		cmpi.w	#$060A, (Obj_Player_One+x_pos).w             ; $FFFFB010
 		bcs.s	Offset_0x033932
 		bsr.s	LBz_2_Layout_Mod                       ; Offset_0x033936
 		addq.w	#$04, (Level_Events_Routine).w               ; $FFFFEEC0

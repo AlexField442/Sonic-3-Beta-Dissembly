@@ -4,50 +4,50 @@
 ;===============================================================================
 ; Offset_0x02A390:
                 move.l  #Swinging_Spiked_Ball_Mappings, mappings(A0) ; Offset_0x02A582, $000C
-                move.w  #$235F, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$235F, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
-                move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
-                move.b  #$03, Obj_Map_Id(A0)                             ; $0022
-                move.b  #$8F, Obj_Col_Flags(A0)                          ; $0028
+                move.w  x_pos(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
+                move.w  y_pos(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
+                move.b  #$03, mapping_frame(A0)                             ; $0022
+                move.b  #$8F, collision_flags(A0)                          ; $0028
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02A444
                 move.l  #Offset_0x02A4C4, (A1)
                 move.l  #Swinging_Spiked_Ball_Mappings, mappings(A1) ; Offset_0x02A582, $000C
-                move.w  #$235F, Obj_Art_VRAM(A1)                         ; $000A
+                move.w  #$235F, art_tile(A1)                         ; $000A
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.b  #$50, width_pixels(A1)                              ; $0007
                 move.b  #$50, height_pixels(A1)                             ; $0006
                 move.w  #$0280, priority(A1)                         ; $0008
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 bset    #$06, render_flags(A1)                              ; $0004
-                move.w  #$0004, Obj_Sub_Y(A1)                            ; $0016
-                lea     Obj_Speed_X(A1), A2                              ; $0018
-                move.w  Obj_Sub_Y(A1), D0                                ; $0016
+                move.w  #$0004, y_sub(A1)                            ; $0016
+                lea     x_vel(A1), A2                              ; $0018
+                move.w  y_sub(A1), D0                                ; $0016
 Offset_0x02A424:
-                move.w  Obj_X(A0), (A2)+                                 ; $0010
-                move.w  Obj_Y(A0), (A2)+                                 ; $0014
+                move.w  x_pos(A0), (A2)+                                 ; $0010
+                move.w  y_pos(A0), (A2)+                                 ; $0014
                 move.w  #$0000, (A2)+
                 dbra    D0, Offset_0x02A424
                 move.w  #$0001, -2(A2)
-                move.b  #$01, Obj_Map_Id(A1)                             ; $0022
+                move.b  #$01, mapping_frame(A1)                             ; $0022
                 move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C
 Offset_0x02A444:
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 beq.s   Offset_0x02A46A
                 move.w  #$0002, -2(A2)
-                move.b  #$02, Obj_Map_Id(A1)                             ; $0022
+                move.b  #$02, mapping_frame(A1)                             ; $0022
                 move.w  #$8000, Obj_Control_Var_04(A0)                   ; $0034
                 move.w  #$0100, Obj_Control_Var_06(A0)                   ; $0036
                 move.l  #Offset_0x02A49A, (A0)
                 bra.s   Offset_0x02A49A
 Offset_0x02A46A:
                 moveq   #$02, D0
-                btst    #$01, Obj_Status(A0)                             ; $002A
+                btst    #$01, status(A0)                             ; $002A
                 beq.s   Offset_0x02A476
                 neg.w   D0
 Offset_0x02A476:
@@ -79,20 +79,20 @@ Offset_0x02A4C4:
 ;-------------------------------------------------------------------------------
 Offset_0x02A4CA:
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.b  #$00, Obj_Map_Id(A1)                             ; $0022
-                move.w  #$0005, Obj_Sub_Y(A1)                            ; $0016
+                move.b  #$00, mapping_frame(A1)                             ; $0022
+                move.w  #$0005, y_sub(A1)                            ; $0016
                 move.b  Obj_Control_Var_04(A0), D0                       ; $0034
                 bpl.s   Offset_0x02A4F4
                 move.w  #$0300, priority(A0)                         ; $0008
-                move.b  #$01, Obj_Map_Id(A1)                             ; $0022
-                move.w  #$0004, Obj_Sub_Y(A1)                            ; $0016
+                move.b  #$01, mapping_frame(A1)                             ; $0022
+                move.w  #$0004, y_sub(A1)                            ; $0016
 Offset_0x02A4F4:
                 jsr     (CalcSine)                             ; Offset_0x001B20
                 move.w  Obj_Control_Var_00(A0), D3                       ; $0030
                 swap.w  D1
                 asr.l   #$04, D1
                 move.l  D1, D5
-                lea     Obj_Speed_X(A1), A2                              ; $0018
+                lea     x_vel(A1), A2                              ; $0018
                 moveq   #$03, D6
 Offset_0x02A50A:
                 move.l  D5, D4
@@ -105,24 +105,24 @@ Offset_0x02A50A:
                 add.l   D1, D5
                 swap.w  D5
                 add.w   D3, D5
-                move.w  D5, Obj_X(A0)                                    ; $0010
+                move.w  D5, x_pos(A0)                                    ; $0010
                 rts
 Offset_0x02A526:
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.b  #$00, Obj_Map_Id(A1)                             ; $0022
-                move.w  #$0005, Obj_Sub_Y(A1)                            ; $0016
+                move.b  #$00, mapping_frame(A1)                             ; $0022
+                move.w  #$0005, y_sub(A1)                            ; $0016
                 move.b  Obj_Control_Var_04(A0), D0                       ; $0034
                 bpl.s   Offset_0x02A550
                 move.w  #$0300, priority(A0)                         ; $0008
-                move.b  #$02, Obj_Map_Id(A1)                             ; $0022
-                move.w  #$0004, Obj_Sub_Y(A1)                            ; $0016
+                move.b  #$02, mapping_frame(A1)                             ; $0022
+                move.w  #$0004, y_sub(A1)                            ; $0016
 Offset_0x02A550:
                 jsr     (CalcSine)                             ; Offset_0x001B20
                 move.w  Obj_Control_Var_02(A0), D3                       ; $0032
                 swap.w  D1
                 asr.l   #$04, D1
                 move.l  D1, D5
-                lea     Obj_Speed_Y(A1), A2                              ; $001A
+                lea     y_vel(A1), A2                              ; $001A
                 moveq   #$03, D6
 Offset_0x02A566:
                 move.l  D5, D4
@@ -135,7 +135,7 @@ Offset_0x02A566:
                 add.l   D1, D5
                 swap.w  D5
                 add.w   D3, D5
-                move.w  D5, Obj_Y(A0)                                    ; $0014
+                move.w  D5, y_pos(A0)                                    ; $0014
                 rts                            
 ;-------------------------------------------------------------------------------  
 Swinging_Spiked_Ball_Mappings:                                 ; Offset_0x02A582

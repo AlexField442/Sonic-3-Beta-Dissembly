@@ -10,7 +10,7 @@ Offset_0x0468EC:
                 move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
                 move.w  #$005F, Obj_Timer(A0)                            ; $002E
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.w  Offset_0x046926(PC, D0), Obj_Control_Var_12(A0)  ; $0042
                 jsr     Refresh_Child_Position(PC)             ; Offset_0x042016
                 moveq   #$00, D0
@@ -37,16 +37,16 @@ Offset_0x046960:
                 moveq   #$2B, D1
                 moveq   #$40, D2
                 moveq   #$70, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 move.w  (Obj_Knuckles_Mem_Address).w, A1             ; $FFFFFAA4
                 cmpi.l  #Obj_0xB9_Iz_Platform_2, (A1)          ; Offset_0x046644
                 bne.s   Offset_0x0469AC
-                move.w  Obj_X(A1), D0                                    ; $0010
-                move.w  Obj_Y(A1), D1                                    ; $0014
+                move.w  x_pos(A1), D0                                    ; $0010
+                move.w  y_pos(A1), D1                                    ; $0014
                 and.w   (Screen_Wrap_Y).w, D1                        ; $FFFFEEAA
-                move.w  Obj_X(A0), D2                                    ; $0010
-                move.w  Obj_Y(A0), D3                                    ; $0014
+                move.w  x_pos(A0), D2                                    ; $0010
+                move.w  y_pos(A0), D3                                    ; $0014
                 lea     Offset_0x0469CC(PC), A2
                 add.w   (A2)+, D2
                 cmp.w   D2, D0

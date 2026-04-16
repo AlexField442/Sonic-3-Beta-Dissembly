@@ -38,7 +38,7 @@ Offset_0x049EA4:
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x049EB4:
-                cmpi.b  #$07, Obj_Map_Id(A0)                             ; $0022
+                cmpi.b  #$07, mapping_frame(A0)                             ; $0022
                 bcs.s   Offset_0x049EC0
                 bsr     Offset_0x049F12
 Offset_0x049EC0:
@@ -56,7 +56,7 @@ Offset_0x049ED8:
                 rts
 Offset_0x049EE0:
                 move.b  #$02, routine(A0)                            ; $0005
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, mapping_frame(A0)                             ; $0022
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x049EEE:
@@ -79,12 +79,12 @@ Offset_0x049F10:
 ;-------------------------------------------------------------------------------
 Offset_0x049F12:
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                cmpi.b  #$08, Obj_Ani_Number(A1)                         ; $0020
+                cmpi.b  #$08, anim(A1)                         ; $0020
                 beq.s   Offset_0x049F22
                 bsr     Offset_0x049F34
 Offset_0x049F22:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
-                cmpi.b  #$08, Obj_Ani_Number(A1)                         ; $0020
+                cmpi.b  #$08, anim(A1)                         ; $0020
                 beq.s   Offset_0x049F32
                 bsr     Offset_0x049F34
 Offset_0x049F32:
@@ -111,7 +111,7 @@ Offset_0x049F52:
                 bne.s   Offset_0x049F6A
                 neg.w   D2
 Offset_0x049F6A:
-                add.w   D2, Obj_X(A1)                                    ; $0010
+                add.w   D2, x_pos(A1)                                    ; $0010
 Offset_0x049F6E:
                 rts     
 ;-------------------------------------------------------------------------------

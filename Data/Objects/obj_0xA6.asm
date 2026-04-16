@@ -46,9 +46,9 @@ Offset_0x045B8A:
                 beq.s   Offset_0x045BA6
                 bmi.s   Offset_0x045BA6
                 moveq   #$00, D0
-                move.b  Obj_Ani_Frame(A0), D0                            ; $0023
+                move.b  anim_frame(A0), D0                            ; $0023
                 move.w  Offset_0x045BA8(PC, D0), D0
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
 Offset_0x045BA6:
                 rts  
 ;-------------------------------------------------------------------------------
@@ -57,20 +57,20 @@ Offset_0x045BA8:
 ;-------------------------------------------------------------------------------
 Offset_0x045BAE:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.w  #$FA00, Obj_Speed_Y(A0)                          ; $001A
+                move.w  #$FA00, y_vel(A0)                          ; $001A
                 move.l  #Offset_0x045BD4, Obj_Child(A0)                  ; $0034
 Offset_0x045BC2:
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x045BC4:
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.w   Obj_Speed_Y(A0)                                  ; $001A
+                tst.w   y_vel(A0)                                  ; $001A
                 bmi.s   Offset_0x045BC2
                 jmp     Run_Object_Hit_Floor_A0(PC)            ; Offset_0x0423E0  
 ;-------------------------------------------------------------------------------
 Offset_0x045BD4:
                 move.b  #$08, routine(A0)                            ; $0005
-                clr.w   Obj_Speed_Y(A0)                                  ; $001A
+                clr.w   y_vel(A0)                                  ; $001A
                 move.l  #Offset_0x045C0E, Obj_Child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
@@ -81,9 +81,9 @@ Offset_0x045BE8:
                 beq.s   Offset_0x045C04
                 bmi.s   Offset_0x045C04
                 moveq   #$00, D0
-                move.b  Obj_Ani_Frame(A0), D0                            ; $0023
+                move.b  anim_frame(A0), D0                            ; $0023
                 move.w  Offset_0x045C06(PC, D0), D0
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
 Offset_0x045C04:
                 rts    
 ;-------------------------------------------------------------------------------
@@ -111,11 +111,11 @@ Offset_0x045C30:
                 jmp     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A  
 ;-------------------------------------------------------------------------------
 Offset_0x045C38:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.b  #$05, Obj_Map_Id(A0)                             ; $0022
-                tst.w   Obj_Speed_Y(A1)                                  ; $001A
+                move.w  parent3(A0), A1                            ; $0046
+                move.b  #$05, mapping_frame(A0)                             ; $0022
+                tst.w   y_vel(A1)                                  ; $001A
                 bmi.s   Offset_0x045C4E
-                move.b  #$04, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$04, mapping_frame(A0)                             ; $0022
 Offset_0x045C4E:
                 rts
 ;-------------------------------------------------------------------------------

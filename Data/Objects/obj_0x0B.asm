@@ -6,9 +6,9 @@
                 lea     (Offset_0x01B7F6), A6
                 move.l  A0, A1
                 move.l  #Obj_Sphere_Test_Main, (A1)            ; Offset_0x01B696
-                cmpi.b  #$01, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$01, subtype(A0)                            ; $002C
                 beq     Offset_0x01B362
-                cmpi.b  #$02, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$02, subtype(A0)                            ; $002C
                 beq     Offset_0x01B520
                 tst.b   (Control_Ports_Buffer_Data+$02).w            ; $FFFFF606
                 bne     Offset_0x01B520
@@ -119,11 +119,11 @@ Offset_0x01B4CA:
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  #$0200, priority(A1)                         ; $0008
                 move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
-                move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_X(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.w  Obj_Y(A0), Obj_Control_Var_02(A1)         ; $0014, $0032
+                move.w  #$24E0, art_tile(A1)                         ; $000A
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  x_pos(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
+                move.w  y_pos(A0), Obj_Control_Var_02(A1)         ; $0014, $0032
                 rts
 Offset_0x01B50A:
                 cmpi.w  #$0040, D2
@@ -220,11 +220,11 @@ Offset_0x01B636:
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  #$0200, priority(A1)                         ; $0008
                 move.l  #Sphere_Test_Mappings, mappings(A1) ; Offset_0x01BB9A, $000C
-                move.w  #$24E0, Obj_Art_VRAM(A1)                         ; $000A
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_X(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.w  Obj_Y(A0), Obj_Control_Var_02(A1)         ; $0014, $0032
+                move.w  #$24E0, art_tile(A1)                         ; $000A
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  x_pos(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
+                move.w  y_pos(A0), Obj_Control_Var_02(A1)         ; $0014, $0032
                 rts    
 ;-------------------------------------------------------------------------------                                                         
 Pal_Sphere_Test:                                               ; Offset_0x01B676   
@@ -298,14 +298,14 @@ Offset_0x01B736:
                 bsr     Get_Scalars                            ; Offset_0x01B982
 ;-------------------------------------------------------------------------------                
 Obj_Eosian_Sphere:                                             ; Offset_0x01B75A                
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0
                 bhi     Offset_0x01B770
                 bra.s   Offset_0x01B78E
 Offset_0x01B770:
-                move.w  Obj_Respaw_Ref(A0), D0                           ; $0048
+                move.w  respawn_index(A0), D0                           ; $0048
                 beq.s   Offset_0x01B77C
                 move.w  D0, A2
                 bclr    #$07, (A2)
@@ -329,9 +329,9 @@ Offset_0x01B78E:
                 add.w   (Art_Scaling_Data_Buffer+$18).w, D2          ; $FFFFF758
                 bsr     Offset_0x01B8F6
                 add.w   Obj_Control_Var_00(A0), D1                       ; $0030
-                move.w  D1, Obj_X(A0)                                    ; $0010
+                move.w  D1, x_pos(A0)                                    ; $0010
                 add.w   Obj_Control_Var_02(A0), D2                       ; $0032
-                move.w  D2, Obj_Y(A0)                                    ; $0014
+                move.w  D2, y_pos(A0)                                    ; $0014
                 subi.w  #$0080, D0
                 lsr.w   #$05, D0
                 addi.w  #$0000, D0
@@ -339,7 +339,7 @@ Offset_0x01B78E:
                 bcs.s   Offset_0x01B7E0
                 move.w  #$000F, D0
 Offset_0x01B7E0:
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  D0, mapping_frame(A0)                               ; $0022
                 lsl.w   #$06, D0
                 andi.w  #$0380, D0
                 move.w  D0, priority(A0)                             ; $0008

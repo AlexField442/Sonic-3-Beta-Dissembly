@@ -10,17 +10,17 @@
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 ;-------------------------------------------------------------------------------
 Offset_0x0479A2:
-                move.b  (Obj_Player_One+Obj_Ani_Number).w, Obj_Control_Var_0A(A0) ; $FFFFB020, $003A
-                move.b  (Obj_Player_Two+Obj_Ani_Number).w, Obj_Control_Var_0B(A0) ; $FFFFB06A, $003B
+                move.b  (Obj_Player_One+anim).w, Obj_Control_Var_0A(A0) ; $FFFFB020, $003A
+                move.b  (Obj_Player_Two+anim).w, Obj_Control_Var_0B(A0) ; $FFFFB06A, $003B
                 moveq   #$23, D1
                 moveq   #$10, D2
                 moveq   #$10, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 bsr     Offset_0x0479C8
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 Offset_0x0479C8:
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 btst    #$03, D0
                 beq.s   Offset_0x0479DE
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
@@ -33,13 +33,13 @@ Offset_0x0479DE:
                 cmpi.b  #$02, Obj_Control_Var_0B(A0)                     ; $003B
                 bne.s   Offset_0x047A36
 Offset_0x0479F0:
-                bset    #$02, Obj_Status(A1)                             ; $002A
+                bset    #$02, status(A1)                             ; $002A
                 move.b  #$0E, y_radius(A1)                           ; $001E
                 move.b  #$07, x_radius(A1)                            ; $001F
-                move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
-                move.w  #$FD00, Obj_Speed_Y(A1)                          ; $001A
-                bset    #$01, Obj_Status(A1)                             ; $002A
-                bclr    #$03, Obj_Status(A1)                             ; $002A
+                move.b  #$02, anim(A1)                         ; $0020
+                move.w  #$FD00, y_vel(A1)                          ; $001A
+                bset    #$01, status(A1)                             ; $002A
+                bclr    #$03, status(A1)                             ; $002A
                 move.b  #$02, routine(A1)                            ; $0005
                 lea     Offset_0x047A86(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
@@ -54,13 +54,13 @@ Offset_0x047A38:
                 jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Animate_Raw_Delete_Sprite_Check_X_Y, (A0) ; Offset_0x042FB2
                 move.l  #Offset_0x047184, Obj_Child_Data(A0)             ; $0030
-                cmpi.b  #$0C, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0C, subtype(A0)                            ; $002C
                 bcs.s   Offset_0x047A5E
                 move.l  #Offset_0x04718E, Obj_Child_Data(A0)             ; $0030
 Offset_0x047A5E:
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
                 andi.b  #$03, D0
-                move.b  D0, Obj_Ani_Frame(A0)                            ; $0023
+                move.b  D0, anim_frame(A0)                            ; $0023
                 moveq   #$00, D0
                 jmp     Set_Indexed_Velocity(PC)               ; Offset_0x042D5A             
 ;-------------------------------------------------------------------------------

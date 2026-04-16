@@ -15,15 +15,15 @@ Offset_0x044678:
                 lea     Offset_0x0446CC(PC), A1
                 jsr     Animate_Raw_A1(PC)                     ; Offset_0x042092
                 moveq   #$00, D0
-                move.b  Obj_Col_Prop(A0), D0                             ; $0029
+                move.b  collision_property(A0), D0                             ; $0029
                 bne.s   Offset_0x044692
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
 Offset_0x044692:
                 add.w   D0, D0
                 move.w  Offset_0x0446BA-$02(PC, D0), A1
-                cmpi.b  #$02, Obj_Ani_Number(A1)                         ; $0020
+                cmpi.b  #$02, anim(A1)                         ; $0020
                 beq.s   Offset_0x0446B6
-                cmpi.b  #$09, Obj_Ani_Number(A1)                         ; $0020
+                cmpi.b  #$09, anim(A1)                         ; $0020
                 beq.s   Offset_0x0446B6
                 lea     (Offset_0x0397A8), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A

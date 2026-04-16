@@ -42,19 +42,19 @@ Offset_0x049A1E:
                 bne.s   Offset_0x049A2A
                 rts
 Offset_0x049A2A:
-                subq.w  #$03, Obj_Y(A0)                                  ; $0014
+                subq.w  #$03, y_pos(A0)                                  ; $0014
                 rts  
 ;-------------------------------------------------------------------------------   
 Offset_0x049A30:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.w  #$FD00, Obj_Speed_Y(A0)                          ; $001A
+                move.w  #$FD00, y_vel(A0)                          ; $001A
                 move.l  #Offset_0x049A8C, Obj_Child(A0)                  ; $0034
                 move.w  #$FF00, D4
                 jmp     Set_Velocity_X_Track_Player_One(PC)    ; Offset_0x042E4C 
 ;-------------------------------------------------------------------------------
 Offset_0x049A4C:
                 jsr     (Move_Light_Gravity)                   ; Offset_0x0426C2
-                tst.w   Obj_Speed_X(A0)                                  ; $0018
+                tst.w   x_vel(A0)                                  ; $0018
                 bmi.s   Offset_0x049A64
                 moveq   #$08, D3
                 jsr     (Object_HitWall_Right)                 ; Offset_0x009EEE
@@ -65,11 +65,11 @@ Offset_0x049A64:
 Offset_0x049A6C:
                 tst.w   D1
                 bpl.s   Offset_0x049A7E
-                add.w   D1, Obj_X(A0)                                    ; $0010
-                neg.w   Obj_Speed_X(A0)                                  ; $0018
+                add.w   D1, x_pos(A0)                                    ; $0010
+                neg.w   x_vel(A0)                                  ; $0018
                 bchg    #00, render_flags(A0)                               ; $0004
 Offset_0x049A7E:
-                tst.w   Obj_Speed_Y(A0)                                  ; $001A
+                tst.w   y_vel(A0)                                  ; $001A
                 bmi     Offset_0x049A1C
                 jmp     (Run_Object_Hit_Floor_A0)              ; Offset_0x0423E0   
 ;-------------------------------------------------------------------------------
@@ -86,9 +86,9 @@ Offset_0x049AA4:
                 rts
 Offset_0x049AB0:
                 moveq   #$00, D0
-                move.b  Obj_Ani_Frame(A0), D0                            ; $0023
+                move.b  anim_frame(A0), D0                            ; $0023
                 move.w  Offset_0x049AC0(PC, D0), D0
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x049AC0:

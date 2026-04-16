@@ -7,7 +7,7 @@ DeleteObject:
 		move.l	a0,a1
 ; Offset_0x01113A: Delete_A1_Object:
 DeleteObject2:
-		moveq	#(Obj_Size/4)-1,d0
+		moveq	#(object_size/4)-1,d0
 
 		moveq	#0,d1					; we want to clear up to the next object
 								; delete the object by setting all of its bytes to 0

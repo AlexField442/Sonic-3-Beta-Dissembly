@@ -73,7 +73,7 @@ Obj_AIz_Battleship_Propeller:                                  ; Offset_0x031288
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.w  #$0080, priority(A0)                         ; $0008
-                move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0500, art_tile(A0)                         ; $000A
                 move.l  #AIz_Battleship_Propeller_Mappings, mappings(A0) ; Offset_0x031B48, $000C
                 move.w  #$0A71, Obj_Control_Var_00(A0)                   ; $0030
 ;-------------------------------------------------------------------------------                
@@ -92,7 +92,7 @@ Obj_AIz_FBz_Ship_Bomb:                                         ; Offset_0x0312DC
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.w  #$0080, priority(A0)                         ; $0008
-                move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0500, art_tile(A0)                         ; $000A
                 move.l  #AIz_FBz_Ship_Bomb_Main_Mappings, mappings(A0) ; Offset_0x031B78, $000C
                 move.b  #$10, y_radius(A0)                           ; $001E
                 move.w  #$0A60, Obj_Control_Var_00(A0)                   ; $0030
@@ -126,10 +126,10 @@ Offset_0x03134E:
                 jmp     (DisplaySprite)                        ; Offset_0x011148  
 ;-------------------------------------------------------------------------------
 AIz_FBz_Ship_Bomb_Drop:                                        ; Offset_0x031358
-                move.l  Obj_Y(A0), D0                                    ; $0014
-                add.l   Obj_Speed_Y(A0), D0                              ; $001A
-                move.l  D0, Obj_Y(A0)                                    ; $0014
-                addi.l  #$00002000, Obj_Speed_Y(A0)                      ; $001A
+                move.l  y_pos(A0), D0                                    ; $0014
+                add.l   y_vel(A0), D0                              ; $001A
+                move.l  D0, y_pos(A0)                                    ; $0014
+                addi.l  #$00002000, y_vel(A0)                      ; $001A
                 swap.w  D0
                 jsr     Offset_0x0313E4(PC)
                 jsr     (DisplaySprite)                        ; Offset_0x011148
@@ -145,13 +145,13 @@ AIz_FBz_Ship_Bomb_Drop:                                        ; Offset_0x031358
                 moveq   #$07, D1
 Offset_0x0313A0:
                 move.l  #Obj_AIz_FBz_Bomb_Explosion, (A1)      ; Offset_0x031402
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 move.w  (A2)+, D2
-                add.w   D2, Obj_X(A1)                                    ; $0010
+                add.w   D2, x_pos(A1)                                    ; $0010
                 move.w  (A2)+, D2
-                add.w   D2, Obj_Y(A1)                                    ; $0014
-                move.w  (A2)+, Obj_Ani_Number(A1)                        ; $0020
+                add.w   D2, y_pos(A1)                                    ; $0014
+                move.w  (A2)+, anim(A1)                        ; $0020
                 move.w  (A2)+, Obj_Timer(A1)                             ; $002E
                 jsr     (AllocateObject_Immediate)               ; Offset_0x011DC8
                 dbne    D1, Offset_0x0313A0
@@ -167,16 +167,16 @@ Offset_0x0313D8:
 Offset_0x0313E4:                
                 sub.w   (Earthquake_Last_Offset).w, D0               ; $FFFFEED0
                 add.w   (Earthquake_Offset).w, D0                    ; $FFFFEECE
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 move.w  Obj_Timer(A0), D0                                ; $002E
                 sub.w   (AIz_Flying_Battery_X).w, D0                 ; $FFFFEE98
                 add.w   (Screen_Pos_Buffer_X).w, D0                  ; $FFFFEE80
-                move.w  D0, Obj_X(A0)                                    ; $0010
+                move.w  D0, x_pos(A0)                                    ; $0010
                 rts      
 ;-------------------------------------------------------------------------------
 Obj_AIz_FBz_Bomb_Explosion:                                    ; Offset_0x031402
                 move.w  (Level_Repeat_Offset).w, D0                  ; $FFFFEEBC
-                sub.w   D0, Obj_X(A0)                                    ; $0010
+                sub.w   D0, x_pos(A0)                                    ; $0010
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bmi.s   Offset_0x031412
                 rts
@@ -184,14 +184,14 @@ Offset_0x031412:
                 move.l  #Offset_0x03143A, (A0)
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$20, width_pixels(A0)                              ; $0007
-                move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0500, art_tile(A0)                         ; $000A
                 move.l  #AIz_FBz_Ship_Bomb_Main_Mappings, mappings(A0) ; Offset_0x031B78, $000C
-                move.b  #$8B, Obj_Col_Flags(A0)                          ; $0028
+                move.b  #$8B, collision_flags(A0)                          ; $0028
                 bra.s   Offset_0x031442    
 ;-------------------------------------------------------------------------------  
 Offset_0x03143A:
                 move.w  (Level_Repeat_Offset).w, D0                  ; $FFFFEEBC
-                sub.w   D0, Obj_X(A0)                                    ; $0010
+                sub.w   D0, x_pos(A0)                                    ; $0010
 Offset_0x031442:                
                 lea     AIz_FBz_Bomb_Explosion_Animate_Data(PC), A1 ; Offset_0x031BF0
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
@@ -200,8 +200,8 @@ Offset_0x031442:
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x031458:
                 moveq   #$04, D0
-                add.b   Obj_Ani_Number(A0), D0                           ; $0020
-                cmp.b   Obj_Map_Id(A0), D0                               ; $0022
+                add.b   anim(A0), D0                           ; $0020
+                cmp.b   mapping_frame(A0), D0                               ; $0022
                 bls.s   Offset_0x03146A
                 jsr     (Add_SpriteToCollisionResponseList)       ; Offset_0x00A540
 Offset_0x03146A:
@@ -235,9 +235,9 @@ Offset_0x0314BE:
 ;-------------------------------------------------------------------------------
 Obj_AIz_Background_Tree:                                       ; Offset_0x0314C0
                 move.l  #Obj_AIz_Background_Tree_Move, (A0)    ; Offset_0x0314E6
-                move.w  #$043F, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$043F, art_tile(A0)                         ; $000A
                 move.l  #AIz_Background_Tree_Mappings, mappings(A0) ; Offset_0x031C0E, $000C
-                move.w  #$00E9, Obj_Y(A0)                                ; $0014
+                move.w  #$00E9, y_pos(A0)                                ; $0014
                 move.w  #$01C0, Obj_Timer(A0)                            ; $002E
                 move.w  (Level_Events_Buffer_1).w, Obj_Control_Var_00(A0) ; $FFFFEEB6, $0030    
 ;-------------------------------------------------------------------------------
@@ -253,7 +253,7 @@ Offset_0x0314F4:
                 sub.w   D0, D1
                 move.w  Obj_Timer(A0), D0                                ; $002E
                 sub.w   D1, D0
-                move.w  D0, Obj_X(A0)                                    ; $0010
+                move.w  D0, x_pos(A0)                                    ; $0010
                 cmpi.w  #$01C0, D0
                 bcc.s   Offset_0x031518
                 jmp     (DisplaySprite)                        ; Offset_0x011148
@@ -263,11 +263,11 @@ Offset_0x031518:
 Obj_AIz_Boss_Small:                                            ; Offset_0x03151A
                 move.l  #Obj_AIz_Boss_Small_Main, (A0)         ; Offset_0x03155A
                 move.w  #$0300, priority(A0)                         ; $0008
-                move.w  #$0500, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0500, art_tile(A0)                         ; $000A
                 move.l  #AIz_Boss_Small_Mappings, mappings(A0) ; Offset_0x031C2A, $000C
-                move.w  #$0030, Obj_X(A0)                                ; $0010
-                move.w  #$00D8, Obj_Y(A0)                                ; $0014
-                move.w  #$0005, Obj_Speed_X(A0)                          ; $0018
+                move.w  #$0030, x_pos(A0)                                ; $0010
+                move.w  #$00D8, y_pos(A0)                                ; $0014
+                move.w  #$0005, x_vel(A0)                          ; $0018
                 clr.w   Obj_Timer(A0)                                    ; $002E
                 lea     (Palette_Row_1_Offset+$02).w, A1             ; $FFFFED22
                 lea     Pal_AIz_Boss_Small(PC), A5             ; Offset_0x031A40
@@ -285,7 +285,7 @@ Obj_AIz_Boss_Small_Main:                                       ; Offset_0x03155A
                 moveq   #Robotnik_Buzzer_Sfx, D0                           ; $57
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x031574:
-                cmpi.w  #$0240, Obj_X(A0)                                ; $0010
+                cmpi.w  #$0240, x_pos(A0)                                ; $0010
                 bcs.s   Offset_0x031594
                 clr.b   (Sonic_Scroll_Lock_Flag).w                   ; $FFFFEE0A
                 clr.w   (Level_Repeat_Routine).w                     ; $FFFFEEB2
@@ -293,10 +293,10 @@ Offset_0x031574:
                 move.w  #$6000, (Sonic_Level_Limits_Max_X).w         ; $FFFFEE16
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x031594:
-                move.l  Obj_X(A0), D0                                    ; $0010
-                move.l  Obj_Speed_X(A0), D1                              ; $0018
+                move.l  x_pos(A0), D0                                    ; $0010
+                move.l  x_vel(A0), D1                              ; $0018
                 add.l   D1, D0
-                move.l  D0, Obj_X(A0)                                    ; $0010
+                move.l  D0, x_pos(A0)                                    ; $0010
                 tst.b   $002F(A0)
                 bne.s   Offset_0x0315BA
                 subi.l  #$00000E80, D1
@@ -306,7 +306,7 @@ Offset_0x031594:
 Offset_0x0315BA:
                 addi.l  #$00000E80, D1
 Offset_0x0315C0:
-                move.l  D1, Obj_Speed_X(A0)                              ; $0018
+                move.l  D1, x_vel(A0)                              ; $0018
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0315CA:
                 rts

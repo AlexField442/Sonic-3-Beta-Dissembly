@@ -7,18 +7,18 @@
                 move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  #$26A0, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$26A0, art_tile(A0)                         ; $000A
                 move.b  #$FF, Obj_Player_Control(A0)                     ; $002E
                 move.l  #Offset_0x018EDE, (A0)
-                move.w  #$0001, Obj_Ani_Number(A0)                       ; $0020
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
-                move.b  #$00, Obj_Ani_Frame(A0)                          ; $0023
+                move.w  #$0001, anim(A0)                       ; $0020
+                move.b  #$00, mapping_frame(A0)                             ; $0022
+                move.b  #$00, anim_frame(A0)                          ; $0023
 Offset_0x018EDE:                
-                move.w  Obj_X(A0), D0                                    ; $0010
-                sub.w   (Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
+                move.w  x_pos(A0), D0                                    ; $0010
+                sub.w   (Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
                 cmpi.w  #$0070, D0
                 bcc.s   Offset_0x018EF8
-                move.b  #$01, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$01, anim(A0)                         ; $0020
                 move.l  #Offset_0x018F10, (A0)
 Offset_0x018EF8:
                 lea     (Knuckles_Animate_Data), A1            ; Offset_0x018F48
@@ -31,8 +31,8 @@ Offset_0x018F10:
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
                 tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x018F34
-                move.b  #$02, Obj_Ani_Number(A0)                         ; $0020
-                move.w  #$0800, Obj_Speed_X(A0)                          ; $0018
+                move.b  #$02, anim(A0)                         ; $0020
+                move.w  #$0800, x_vel(A0)                          ; $0018
                 move.l  #Offset_0x018F40, (A0)
 Offset_0x018F34:
                 jsr     (Load_Knuckles_Dynamic_PLC)            ; Offset_0x018F76
@@ -59,7 +59,7 @@ Offset_0x018F64:
 ;-------------------------------------------------------------------------------
 Load_Knuckles_Dynamic_PLC:                                     ; Offset_0x018F76
                 moveq   #$00, D0
-                move.b  Obj_Map_Id(A0), D0                               ; $0022
+                move.b  mapping_frame(A0), D0                               ; $0022
                 cmp.b   Obj_Player_Control(A0), D0                       ; $002E
                 beq.s   Offset_0x018FC8
                 move.b  D0, Obj_Player_Control(A0)                       ; $002E

@@ -22,12 +22,12 @@ Offset_0x048AB0:
                 beq.s   Offset_0x048AC6
                 neg.w   D0
 Offset_0x048AC6:
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
+                move.w  D0, x_vel(A0)                              ; $0018
                 lea     Offset_0x048BAA(PC), A2
                 jmp     (SetupChildObject)                 ; Offset_0x041D9A  
 ;-------------------------------------------------------------------------------
 Offset_0x048AD4:
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 bne.s   Offset_0x048AE2
                 bsr     Offset_0x048B7A
                 beq     Offset_0x048B96
@@ -38,10 +38,10 @@ Offset_0x048AE8:
                 lea     Offset_0x048BA4(PC), A1
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.l  #Offset_0x048B18, (A0)
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsl.b   #$05, D0
                 move.b  D0, Obj_Control_Var_0C(A0)                       ; $003C
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 moveq   #$08, D0
                 btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x048B10
@@ -51,8 +51,8 @@ Offset_0x048B10:
                 jmp     Child_Display_Touch_Or_Delete(PC)      ; Offset_0x042472   
 ;-------------------------------------------------------------------------------
 Offset_0x048B18:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                tst.b   Obj_Subtype(A1)                                  ; $002C
+                move.w  parent3(A0), A1                            ; $0046
+                tst.b   subtype(A1)                                  ; $002C
                 bne.s   Offset_0x048B28
                 bsr     Offset_0x048B7A
                 beq.s   Offset_0x048B30
@@ -64,16 +64,16 @@ Offset_0x048B30:
                 jsr     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2
                 cmpi.b  #$80, Obj_Control_Var_0C(A0)                     ; $003C
                 bne.s   Offset_0x048B4A
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                cmpi.b  #$04, Obj_Subtype(A1)                            ; $002C
+                move.w  parent3(A0), A1                            ; $0046
+                cmpi.b  #$04, subtype(A1)                            ; $002C
                 beq.s   Offset_0x048B4E
 Offset_0x048B4A:
                 jmp     Child_Display_Touch_Or_Delete(PC)      ; Offset_0x042472
 Offset_0x048B4E:
                 move.l  #Offset_0x048B6E, (A0)
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 move.w  #$0001, Obj_Control_Var_10(A0)                   ; $0040
-                tst.w   Obj_Speed_X(A1)                                  ; $0018
+                tst.w   x_vel(A1)                                  ; $0018
                 bpl.s   Offset_0x048B6A
                 move.w  #$FFFF, Obj_Control_Var_10(A0)                   ; $0040
 Offset_0x048B6A:
@@ -81,15 +81,15 @@ Offset_0x048B6A:
 ;-------------------------------------------------------------------------------
 Offset_0x048B6E:
                 move.w  Obj_Control_Var_10(A0), D0                       ; $0040
-                add.w   D0, Obj_X(A0)                                    ; $0010
+                add.w   D0, x_pos(A0)                                    ; $0010
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_Y(PC) ; Offset_0x042B96
 Offset_0x048B7A:
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                btst    #$01, Obj_Status(A1)                             ; $002A
+                btst    #$01, status(A1)                             ; $002A
                 bne.s   Offset_0x048B92
-                tst.w   Obj_Speed_X(A1)                                  ; $0018
+                tst.w   x_vel(A1)                                  ; $0018
                 bne.s   Offset_0x048B96
-                tst.w   Obj_Speed_Y(A1)                                  ; $001A
+                tst.w   y_vel(A1)                                  ; $001A
                 bne.s   Offset_0x048B96
 Offset_0x048B92:
                 moveq   #$00, D0

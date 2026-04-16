@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x027DBA:
                 move.l  #CNz_Platform_Mappings, mappings(A0) ; Offset_0x027EBA, $000C
-                move.w  #$43BE, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$43BE, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$30, width_pixels(A0)                              ; $0007
@@ -16,7 +16,7 @@ Offset_0x027DEC:
 Offset_0x027DEE:                
                 move.w  #$0030, D1
                 move.w  #$0011, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
                 lea     (CNz_Platform_Animate_Data), A1        ; Offset_0x027E12
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
@@ -36,42 +36,42 @@ Offset_0x027E20:
 Offset_0x027E26:
                 move.b  Obj_Control_Var_00(A0), D0                       ; $0030
                 bne.s   Offset_0x027E68
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 beq.s   Offset_0x027E42
                 move.b  #$01, Obj_Control_Var_00(A0)                     ; $0030
-                move.w  #$0100, Obj_Ani_Number(A0)                       ; $0020
+                move.w  #$0100, anim(A0)                       ; $0020
 Offset_0x027E42:
-                tst.w   Obj_Speed_Y(A0)                                  ; $001A
+                tst.w   y_vel(A0)                                  ; $001A
                 beq.s   Offset_0x027E66
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                addi.w  #$0008, Obj_Speed_Y(A0)                          ; $001A
-                tst.w   Obj_Speed_Y(A0)                                  ; $001A
+                addi.w  #$0008, y_vel(A0)                          ; $001A
+                tst.w   y_vel(A0)                                  ; $001A
                 bmi.s   Offset_0x027E66
-                move.w  #$0000, Obj_Speed_Y(A0)                          ; $001A
-                move.w  #$0200, Obj_Ani_Number(A0)                       ; $0020
+                move.w  #$0000, y_vel(A0)                          ; $001A
+                move.w  #$0200, anim(A0)                       ; $0020
 Offset_0x027E66:
                 rts
 Offset_0x027E68:
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 beq.s   Offset_0x027EA2
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                cmpi.w  #$0200, Obj_Speed_Y(A0)                          ; $001A
+                cmpi.w  #$0200, y_vel(A0)                          ; $001A
                 bge.s   Offset_0x027E86
-                addi.w  #$0018, Obj_Speed_Y(A0)                          ; $001A
+                addi.w  #$0018, y_vel(A0)                          ; $001A
 Offset_0x027E86:
                 jsr     (ObjHitFloor)                          ; Offset_0x009D84
                 tst.w   D1
                 bpl.s   Offset_0x027EA0
-                add.w   D1, Obj_Y(A0)                                    ; $0014
+                add.w   D1, y_pos(A0)                                    ; $0014
                 move.l  #Offset_0x027DEE, (A0)
-                move.w  #$0200, Obj_Ani_Number(A0)                       ; $0020
+                move.w  #$0200, anim(A0)                       ; $0020
 Offset_0x027EA0:
                 rts
 Offset_0x027EA2:
-                neg.w   Obj_Speed_Y(A0)                                  ; $001A
-                subi.w  #$0080, Obj_Speed_Y(A0)                          ; $001A
+                neg.w   y_vel(A0)                                  ; $001A
+                subi.w  #$0080, y_vel(A0)                          ; $001A
                 move.b  #$00, Obj_Control_Var_00(A0)                     ; $0030
                 moveq   #Rising_Platform_Sfx, D0                          ; -$7D
                 jmp     (Play_Music)                           ; Offset_0x001176   

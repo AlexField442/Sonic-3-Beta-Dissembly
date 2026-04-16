@@ -17,7 +17,7 @@ Offset_0x0446EC:
                 dc.w    Offset_0x044724-Offset_0x0446EC 
 ;-------------------------------------------------------------------------------
 Offset_0x0446F2:
-                move.b  #$01, Obj_Col_Prop(A0)                           ; $0029
+                move.b  #$01, collision_property(A0)                           ; $0029
                 lea     Blastoid_Setup_Data(PC), A1            ; Offset_0x044762
                 jmp     SetupObjectAttributes(PC)                    ; Offset_0x041D72   
 ;-------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ Offset_0x044724:
                 tst.w   D2
                 beq.s   Offset_0x044722
                 bmi.s   Offset_0x044722
-                cmpi.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                cmpi.b  #$01, mapping_frame(A0)                             ; $0022
                 bne.s   Offset_0x044722
                 lea     Offset_0x04477A(PC), A2
                 jmp     SetupChildObject_ComplexAdjusted(PC) ; Offset_0x041EE0  
@@ -48,9 +48,9 @@ Offset_0x04473E:
                 rts            
 ;-------------------------------------------------------------------------------
 Offset_0x044746:
-                tst.b   Obj_Col_Prop(A0)                                 ; $0029
+                tst.b   collision_property(A0)                                 ; $0029
                 bne     Offset_0x044722
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 st      $00(A3, D0)

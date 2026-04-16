@@ -4,12 +4,12 @@
 ;===============================================================================
 ; Offset_0x026960:
                 move.l  #Fan_Mappings_2P, mappings(A0)   ; Offset_0x026A50, $000C
-                move.w  #$6300, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$6300, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$04, height_pixels(A0)                             ; $0006
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 addq.w  #$08, D0
                 lsl.w   #$04, D0
@@ -22,10 +22,10 @@ Offset_0x0269A4:
                 bsr     Offset_0x0269CC
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 bsr     Offset_0x0269CC
-                addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
-                cmpi.b  #$03, Obj_Map_Id(A0)                             ; $0022
+                addq.b  #$01, mapping_frame(A0)                             ; $0022
+                cmpi.b  #$03, mapping_frame(A0)                             ; $0022
                 bcs.s   Offset_0x0269C6
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, mapping_frame(A0)                             ; $0022
 Offset_0x0269C6:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0269CC:
@@ -33,16 +33,16 @@ Offset_0x0269CC:
                 bcc     Offset_0x026A4E
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x026A4E
-                move.w  Obj_X(A1), D0                                    ; $0010
-                sub.w   Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
+                sub.w   x_pos(A0), D0                                    ; $0010
                 addi.w  #$0014, D0
                 cmpi.w  #$0028, D0
                 bcc.s   Offset_0x026A4E
                 moveq   #$00, D1
                 move.b  (Oscillate_Data_Buffer+$16).w, D1            ; $FFFFFE74
-                add.w   Obj_Y(A1), D1                                    ; $0014
+                add.w   y_pos(A1), D1                                    ; $0014
                 add.w   Obj_Control_Var_06(A0), D1                       ; $0036
-                sub.w   Obj_Y(A0), D1                                    ; $0014
+                sub.w   y_pos(A0), D1                                    ; $0014
                 bcs.s   Offset_0x026A4E
                 cmp.w   Obj_Control_Var_08(A0), D1                       ; $0038
                 bcc.s   Offset_0x026A4E
@@ -54,14 +54,14 @@ Offset_0x026A12:
                 add.w   Obj_Control_Var_06(A0), D1                       ; $0036
                 neg.w   D1
                 asr.w   #$06, D1
-                add.w   D1, Obj_Y(A1)                                    ; $0014
-                bset    #$01, Obj_Status(A1)                             ; $002A
-                move.w  #$0000, Obj_Speed_Y(A1)                          ; $001A
-                move.w  #$0001, Obj_Inertia(A1)                          ; $001C
+                add.w   D1, y_pos(A1)                                    ; $0014
+                bset    #$01, status(A1)                             ; $002A
+                move.w  #$0000, y_vel(A1)                          ; $001A
+                move.w  #$0001, inertia(A1)                          ; $001C
                 tst.b   Obj_Flip_Angle(A1)                               ; $0027
                 bne.s   Offset_0x026A4E
                 move.b  #$01, Obj_Flip_Angle(A1)                         ; $0027
-                move.b  #$00, Obj_Ani_Number(A1)                         ; $0020
+                move.b  #$00, anim(A1)                         ; $0020
                 move.b  #$7F, Obj_Control_Var_00(A1)                     ; $0030
                 move.b  #$08, Obj_Control_Var_01(A1)                     ; $0031
 Offset_0x026A4E:

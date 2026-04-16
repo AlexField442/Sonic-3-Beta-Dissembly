@@ -5,37 +5,37 @@
 ;===============================================================================
 ; Offset_0x01FDB6:
                 move.l  #Smashing_Spike_Mappins, mappings(A0) ; Offset_0x01FED8, $000C
-                move.w  #$4455, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$4455, art_tile(A0)                         ; $000A
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$0080, priority(A0)                         ; $0008
                 cmpi.b  #MGz_Id, (Current_Zone).w                   ; $02, $FFFFFE10
                 bne.s   Offset_0x01FDFE
                 move.l  #Smashing_Pillar_Mappings, mappings(A0) ; Offset_0x01FEE8, $000C
-                move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$4001, art_tile(A0)                         ; $000A
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$28, height_pixels(A0)                             ; $0006
                 move.w  #$0280, priority(A0)                         ; $0008
 Offset_0x01FDFE:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  Obj_Y(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
+                move.w  y_pos(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$03, D0
                 move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
                 move.l  #Offset_0x01FE1C, (A0)
 Offset_0x01FE1C:                
                 tst.b   Obj_Control_Var_02(A0)                           ; $0032
                 bne.s   Offset_0x01FE68
-                move.w  Obj_Speed_Y(A0), D0                              ; $001A
-                addi.w  #$0080, Obj_Speed_Y(A0)                          ; $001A
+                move.w  y_vel(A0), D0                              ; $001A
+                addi.w  #$0080, y_vel(A0)                          ; $001A
                 ext.l   D0
                 lsl.l   #$08, D0
                 add.l   D0, Obj_Control_Var_04(A0)                       ; $0034
                 move.w  Obj_Control_Var_04(A0), D2                       ; $0034
                 cmp.w   Obj_Control_Var_08(A0), D2                       ; $0038
                 bcs.s   Offset_0x01FE7C
-                clr.w   Obj_Speed_Y(A0)                                  ; $001A
+                clr.w   y_vel(A0)                                  ; $001A
                 move.w  Obj_Control_Var_08(A0), Obj_Control_Var_04(A0) ; $0038, $0034
                 move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
                 tst.b   render_flags(A0)                                    ; $0004
@@ -58,7 +58,7 @@ Offset_0x01FE76:
 Offset_0x01FE7C:
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 add.w   Obj_Control_Var_04(A0), D0                       ; $0034
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 moveq   #$00, D1
                 move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
@@ -66,7 +66,7 @@ Offset_0x01FE7C:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 swap.w  D6
                 andi.w  #$000C, D6

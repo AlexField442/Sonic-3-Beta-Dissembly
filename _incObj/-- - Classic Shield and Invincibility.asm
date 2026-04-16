@@ -31,7 +31,7 @@ ClassicShield_Main:
 		beq.s	ClassicShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)
-		move.b	Obj_Status(a2),Obj_Status(a0)
+		move.b	status(a2),status(a0)
 		andi.w	#$7FFF,art_tile(a0)
 		tst.w	art_tile(a2)
 		bpl.s	ClassicShield_Display
@@ -103,7 +103,7 @@ Offset_0x00FA2A:
 		addq.w	#1,d2
 		move.l	(a2)+,Obj_Control_Var_00(a1)
 		move.w	(a2)+,Obj_Control_Var_04(a1)
-		lea	Obj_Size(a1),a1
+		lea	object_size(a1),a1
 		dbf	d1,Offset_0x00FA2A
 
 		move.b	#2,routine(a0)
@@ -121,7 +121,7 @@ Invincibility_BigStars:
 		move.w	D0, x_pos(a0)
 		move.w	y_pos(a1),d1
 		move.w	d1,y_pos(a0)
-		lea	Obj_Speed_X(a0),a2
+		lea	x_vel(a0),a2
 		lea	Offset_0x00FC04(pc),a3
 		moveq	#0,d5
 
@@ -146,7 +146,7 @@ Offset_0x00FAC6:
 		move.w	d3,(a2)+
 		move.w	d5,(a2)+
 		moveq	#$12,d0
-		btst	#0,Obj_Status(a1)
+		btst	#0,status(a1)
 		beq.s	Offset_0x00FAF6
 		neg.w	d0
 
@@ -186,7 +186,7 @@ Offset_0x00FB32:
 		move.w	(a2)+,d1
 		move.w	d0,x_pos(a0)
 		move.w	d1,y_pos(a0)
-		lea	Obj_Speed_X(a0),a2
+		lea	x_vel(a0),a2
 		move.l	Obj_Control_Var_00(a0),a3
 
 Offset_0x00FB5A:
@@ -214,7 +214,7 @@ Offset_0x00FB6A:
 		move.w	d3,(a2)+
 		move.w	d5,(a2)+
 		moveq	#2,d0
-		btst	#0,Obj_Status(a1)
+		btst	#0,status(a1)
 		beq.s	Offset_0x00FBA6
 		neg.w	d0
 

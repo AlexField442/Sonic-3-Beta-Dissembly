@@ -7,7 +7,7 @@ Offset_0x020EC0:
                 dc.w    $01FF, $03FF, $07FF, $0FFF, $1FFF, $3FFF, $7FFF, $FFFF
 ;-------------------------------------------------------------------------------
 Obj_0x29_AIz_Disappearing_Platform:                            ; Offset_0x020EE0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.b  D0, D1
                 andi.w  #$000F, D0
                 move.w  D0, D2
@@ -22,8 +22,8 @@ Offset_0x020EFA:
                 lsl.w   D2, D1
                 move.w  D1, Obj_Control_Var_04(A0)                       ; $0034
                 move.l  #AIz_Disappearing_Platform_Mappings, mappings(A0) ; Offset_0x021050, $000C
-                move.w  #$42F0, Obj_Art_VRAM(A0)                         ; $000A
-                move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$42F0, art_tile(A0)                         ; $000A
+                move.w  #$4001, art_tile(A0)                         ; $000A
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$18, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
@@ -35,10 +35,10 @@ Offset_0x020EFA:
                 subi.w  #$00C8, D0
                 bcc.s   Offset_0x020F5E
                 neg.w   D0
-                move.b  D0, Obj_Ani_Time(A0)                             ; $0024
-                move.b  #$00, Obj_Ani_Frame(A0)                          ; $0023
-                move.w  #$0202, Obj_Ani_Number(A0)                       ; $0020
-                move.b  #$05, Obj_Map_Id(A0)                             ; $0022
+                move.b  D0, anim_frame_duration(A0)                             ; $0024
+                move.b  #$00, anim_frame(A0)                          ; $0023
+                move.w  #$0202, anim(A0)                       ; $0020
+                move.b  #$05, mapping_frame(A0)                             ; $0022
 Offset_0x020F5E:
                 move.l  #Offset_0x020F64, (A0)
 Offset_0x020F64:                
@@ -46,12 +46,12 @@ Offset_0x020F64:
                 add.w   Obj_Control_Var_04(A0), D0                       ; $0034
                 and.w   Obj_Control_Var_02(A0), D0                       ; $0032
                 bne     Offset_0x020F80
-                move.w  #$0100, Obj_Ani_Number(A0)                       ; $0020
+                move.w  #$0100, anim(A0)                       ; $0020
                 move.b  #$00, Obj_Control_Var_06(A0)                     ; $0036
 Offset_0x020F80:
                 lea     (AIz_Disappearing_Platform_Animate_Data), A1 ; Offset_0x021030
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
-                cmpi.b  #$05, Obj_Map_Id(A0)                             ; $0022
+                cmpi.b  #$05, mapping_frame(A0)                             ; $0022
                 bne.s   Offset_0x020FE6
                 tst.b   Obj_Control_Var_06(A0)                           ; $0036
                 bne.s   Offset_0x020FE6
@@ -59,10 +59,10 @@ Offset_0x020F80:
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x020FE6
                 move.l  #Offset_0x020FEC, (A1)
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 move.l  #AIz_Disappearing_Platform_Mappings_2, mappings(A1) ; Offset_0x02105C, $000C
-                move.w  #$62F0, Obj_Art_VRAM(A1)                         ; $000A
+                move.w  #$62F0, art_tile(A1)                         ; $000A
                 move.b  #$28, width_pixels(A1)                              ; $0007
                 move.b  #$20, height_pixels(A1)                             ; $0006
                 move.b  #$04, render_flags(A1)                              ; $0004
@@ -73,20 +73,20 @@ Offset_0x020FE6:
 ;-------------------------------------------------------------------------------
 Offset_0x020FEC:
                 move.w  Obj_Control_Var_0C(A0), A1                       ; $003C
-                cmpi.b  #$03, Obj_Map_Id(A1)                             ; $0022
+                cmpi.b  #$03, mapping_frame(A1)                             ; $0022
                 bne.s   Offset_0x020FFE
-                move.w  #$7FF0, Obj_X(A0)                                ; $0010
+                move.w  #$7FF0, x_pos(A0)                                ; $0010
 Offset_0x020FFE:
-                subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
+                subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x021014
-                move.b  #$03, Obj_Ani_Time(A0)                           ; $0024
-                addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
-                andi.b  #$03, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$03, anim_frame_duration(A0)                           ; $0024
+                addq.b  #$01, mapping_frame(A0)                             ; $0022
+                andi.b  #$03, mapping_frame(A0)                             ; $0022
 Offset_0x021014:
                 move.w  #$002B, D1
                 move.w  #$0018, D2
                 move.w  #$0019, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2    
 ;-------------------------------------------------------------------------------   

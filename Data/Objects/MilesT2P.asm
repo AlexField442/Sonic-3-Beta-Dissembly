@@ -4,10 +4,10 @@
 ;===============================================================================
 ; Offset_0x00F2AE:
                 move.l  #Miles_Tails_2P_Mappings, mappings(A0) ; Offset_0x1030DA, $000C
-                move.w  #$06B0, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$06B0, art_tile(A0)                         ; $000A
                 cmpa.w  #$CC0A, A0
                 beq.s   Offset_0x00F2C8
-                move.w  #$0690, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0690, art_tile(A0)                         ; $000A
 Offset_0x00F2C8:
                 move.w  #$0100, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
@@ -15,20 +15,20 @@ Offset_0x00F2C8:
                 move.l  #Offset_0x00F2E0, (A0)
 Offset_0x00F2E0:                
                 move.w  Obj_P_Flips_Remaining(A0), A2                    ; $0030
-                move.b  Obj_Angle(A2), Obj_Angle(A0)              ; $0026, $0026
-                move.b  Obj_Status(A2), Obj_Status(A0)            ; $002A, $002A
+                move.b  angle(A2), angle(A0)              ; $0026, $0026
+                move.b  status(A2), status(A0)            ; $002A, $002A
                 move.b  render_flags(A2), render_flags(A0)              ; $0004, $0004
-                move.w  Obj_X(A2), Obj_X(A0)                      ; $0010, $0010
-                move.w  Obj_Y(A2), Obj_Y(A0)                      ; $0014, $0014
+                move.w  x_pos(A2), x_pos(A0)                      ; $0010, $0010
+                move.w  y_pos(A2), y_pos(A0)                      ; $0014, $0014
                 move.w  priority(A2), priority(A0)        ; $0008, $0008
-                andi.w  #$7FFF, Obj_Art_VRAM(A0)                         ; $000A
-                tst.w   Obj_Art_VRAM(A2)                                 ; $000A
+                andi.w  #$7FFF, art_tile(A0)                         ; $000A
+                tst.w   art_tile(A2)                                 ; $000A
                 bpl.s   Offset_0x00F31A
-                ori.w   #$8000, Obj_Art_VRAM(A0)                         ; $000A
+                ori.w   #$8000, art_tile(A0)                         ; $000A
 Offset_0x00F31A:
                 moveq   #$00, D0
-                move.b  Obj_Ani_Number(A2), D0                           ; $0020
-                btst    #$05, Obj_Status(A2)                             ; $002A
+                move.b  anim(A2), D0                           ; $0020
+                btst    #$05, status(A2)                             ; $002A
                 beq.s   Offset_0x00F330
                 cmpi.b  #$05, D0
                 beq.s   Offset_0x00F330
@@ -37,7 +37,7 @@ Offset_0x00F330:
                 cmp.b   Obj_P_Invunerblt_Time(A0), D0                    ; $0034
                 beq.s   Offset_0x00F340
                 move.b  D0, Obj_P_Invunerblt_Time(A0)                    ; $0034
-                move.b  Offset_0x00F354(PC, D0), Obj_Ani_Number(A0)      ; $0020
+                move.b  Offset_0x00F354(PC, D0), anim(A0)      ; $0020
 Offset_0x00F340:
                 lea     (Miles_Tails_2P_Animate_Data), A1      ; Offset_0x00F376
                 bsr     Miles_Animate_Sprite_2P_A1             ; Offset_0x00EDD6

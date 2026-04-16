@@ -20,7 +20,7 @@ Offset_0x0100F0:
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
-                move.w  #$07E0, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$07E0, art_tile(A0)                         ; $000A
                 move.w  #Obj_Player_One, Obj_Player_Last(A0)      ; $B000, $0042
                 cmpa.w  #Obj_P1_Dust_Water_Splash, A0                    ; $CC54
                 beq.s   Offset_0x010126
@@ -29,7 +29,7 @@ Offset_0x0100F0:
 Offset_0x010126:
                 move.w  Obj_Player_Last(A0), A2                          ; $0042
                 moveq   #$00, D0
-                move.b  Obj_Ani_Number(A0), D0                           ; $0020
+                move.b  anim(A0), D0                           ; $0020
                 add.w   D0, D0
                 move.w  Offset_0x01013A(PC, D0), D1             
                 jmp     Offset_0x01013A(PC, D1)
@@ -41,71 +41,71 @@ Offset_0x01013A:
                 dc.w    Offset_0x010192-Offset_0x01013A
 ;-------------------------------------------------------------------------------                
 Offset_0x010142:
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, mapping_frame(A0)                             ; $0022
                 bra.s   Offset_0x01019A
 ;-------------------------------------------------------------------------------                
 Offset_0x01014A:
-                cmpi.b  #$0C, Obj_Subtype(A2)                            ; $002C
+                cmpi.b  #$0C, subtype(A2)                            ; $002C
                 bcs.s   Offset_0x0101AC
                 cmpi.b  #$04, routine(A2)                            ; $0005
                 bcc.s   Offset_0x0101AC
                 tst.b   Obj_Player_Spdsh_Flag(A2)                        ; $003D
                 beq.s   Offset_0x0101AC
-                move.w  Obj_X(A2), Obj_X(A0)                      ; $0010, $0010
-                move.w  Obj_Y(A2), Obj_Y(A0)                      ; $0014, $0014
-                move.b  Obj_Status(A2), Obj_Status(A0)            ; $002A, $002A
-                andi.b  #$01, Obj_Status(A0)                             ; $002A
-                tst.b   Obj_Ani_Flag(A0)                                 ; $0021
+                move.w  x_pos(A2), x_pos(A0)                      ; $0010, $0010
+                move.w  y_pos(A2), y_pos(A0)                      ; $0014, $0014
+                move.b  status(A2), status(A0)            ; $002A, $002A
+                andi.b  #$01, status(A0)                             ; $002A
+                tst.b   prev_anim(A0)                                 ; $0021
                 bne.s   Offset_0x01019A
-                andi.w  #$7FFF, Obj_Art_VRAM(A0)                         ; $000A
-                tst.w   Obj_Art_VRAM(A2)                                 ; $000A
+                andi.w  #$7FFF, art_tile(A0)                         ; $000A
+                tst.w   art_tile(A2)                                 ; $000A
                 bpl.s   Offset_0x01019A
-                ori.w   #$8000, Obj_Art_VRAM(A0)                         ; $000A
+                ori.w   #$8000, art_tile(A0)                         ; $000A
                 bra.s   Offset_0x01019A
 ;-------------------------------------------------------------------------------                
 Offset_0x010192:
-                cmpi.b  #$0C, Obj_Subtype(A2)                            ; $002C
+                cmpi.b  #$0C, subtype(A2)                            ; $002C
                 bcs.s   Offset_0x0101AC
 Offset_0x01019A:
                 lea     (Dust_Water_Splash_2P_Animate_Data), A1 ; Offset_0x010246
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0101AC:
-                move.b  #$00, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$00, anim(A0)                         ; $0020
                 rts
 Offset_0x0101B4:
                 bra     DeleteObject                           ; Offset_0x011138
 Offset_0x0101B8:
                 move.w  Obj_Player_Last(A0), A2                          ; $0042
-                cmpi.b  #$0D, Obj_Ani_Number(A2)                         ; $0020
+                cmpi.b  #$0D, anim(A2)                         ; $0020
                 beq.s   Offset_0x0101D2
                 move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$00, Obj_Control_Var_06(A0)                     ; $0036
                 rts
 Offset_0x0101D2:
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, mapping_frame(A0)                             ; $0022
                 subq.b  #$01, Obj_Control_Var_06(A0)                     ; $0036
                 bpl.s   Offset_0x010244
                 move.b  #$03, Obj_Control_Var_06(A0)                     ; $0036
                 bsr     AllocateObject                       ; Offset_0x011DD8
                 bne.s   Offset_0x010244
                 move.l  (A0), (A1)
-                move.w  Obj_X(A2), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A2), Obj_Y(A1)                      ; $0014, $0014
-                addi.w  #$000C, Obj_Y(A1)                                ; $0014
-                move.b  #$00, Obj_Status(A1)                             ; $002A
-                move.b  #$03, Obj_Ani_Number(A1)                         ; $0020
+                move.w  x_pos(A2), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A2), y_pos(A1)                      ; $0014, $0014
+                addi.w  #$000C, y_pos(A1)                                ; $0014
+                move.b  #$00, status(A1)                             ; $002A
+                move.b  #$03, anim(A1)                         ; $0020
                 addq.b  #$02, routine(A1)                            ; $0005
                 move.l  mappings(A0), mappings(A1)                  ; $000C, $000C
                 move.b  render_flags(A0), render_flags(A1)              ; $0004, $0004
                 move.w  #$0080, priority(A1)                         ; $0008
                 move.b  #$04, width_pixels(A1)                              ; $0007
-                move.w  Obj_Art_VRAM(A0), Obj_Art_VRAM(A1)        ; $000A, $000A
+                move.w  art_tile(A0), art_tile(A1)        ; $000A, $000A
                 move.w  Obj_Player_Last(A0), Obj_Player_Last(A1)  ; $0042, $0042
-                andi.w  #$7FFF, Obj_Art_VRAM(A1)                         ; $000A
-                tst.w   Obj_Art_VRAM(A2)                                 ; $000A
+                andi.w  #$7FFF, art_tile(A1)                         ; $000A
+                tst.w   art_tile(A2)                                 ; $000A
                 bpl.s   Offset_0x010244
-                ori.w   #$8000, Obj_Art_VRAM(A1)                         ; $000A
+                ori.w   #$8000, art_tile(A1)                         ; $000A
 Offset_0x010244:
                 rts                          
 ;-------------------------------------------------------------------------------

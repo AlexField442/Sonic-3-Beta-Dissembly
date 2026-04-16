@@ -50,7 +50,7 @@ Offset_0x043BAC:
                 addq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
                 btst    #$00, Obj_Control_Var_09(A0)                     ; $0039
                 beq.s   Offset_0x043BCE
-                neg.w   Obj_Speed_X(A1)                                  ; $0018
+                neg.w   x_vel(A1)                                  ; $0018
 Offset_0x043BCE:
                 rts  
 ;-------------------------------------------------------------------------------

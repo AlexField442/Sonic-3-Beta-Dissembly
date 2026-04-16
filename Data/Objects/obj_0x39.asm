@@ -3,13 +3,13 @@
 ; ->>>  
 ;===============================================================================
 ; Offset_0x026736:
-                move.w  (Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
+                move.w  (Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
                 subi.w  #$0020, D0
-                cmp.w   Obj_X(A0), D0                                    ; $0010
+                cmp.w   x_pos(A0), D0                                    ; $0010
                 bcs.s   Offset_0x026756
-                move.w  (Obj_Player_One+Obj_Y).w, D0                 ; $FFFFB014
+                move.w  (Obj_Player_One+y_pos).w, D0                 ; $FFFFB014
                 subi.w  #$0020, D0
-                sub.w   Obj_Y(A0), D0                                    ; $0014
+                sub.w   y_pos(A0), D0                                    ; $0014
                 cmpi.w  #$0040, D0
                 bcs.s   Offset_0x026762
 Offset_0x026756:
@@ -28,7 +28,7 @@ Offset_0x026780:
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
                 move.l  #Large_Fan_Mappings, mappings(A0) ; Offset_0x02685C, $000C
-                move.w  #$2500, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$2500, art_tile(A0)                         ; $000A
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
                 move.w  #$0008, Obj_Control_Var_00(A0)                   ; $0030
@@ -36,18 +36,18 @@ Offset_0x026780:
 Offset_0x0267B2:                
                 tst.w   Obj_Control_Var_00(A0)                           ; $0030
                 beq.s   Offset_0x0267C8
-                addq.w  #$08, Obj_Y(A0)                                  ; $0014
+                addq.w  #$08, y_pos(A0)                                  ; $0014
                 subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
                 bne.s   Offset_0x0267C8
                 move.b  #$00, (Wind_Tunnels_Flag).w                  ; $FFFFF7C7
 Offset_0x0267C8:
-                subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
+                subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl     Offset_0x0267E8
-                move.b  #$00, Obj_Ani_Time(A0)                           ; $0024
-                addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
-                cmpi.b  #$05, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, anim_frame_duration(A0)                           ; $0024
+                addq.b  #$01, mapping_frame(A0)                             ; $0022
+                cmpi.b  #$05, mapping_frame(A0)                             ; $0022
                 bcs.s   Offset_0x0267E8
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$00, mapping_frame(A0)                             ; $0022
 Offset_0x0267E8:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2  
 ;-------------------------------------------------------------------------------

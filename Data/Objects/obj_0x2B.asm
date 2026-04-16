@@ -4,14 +4,14 @@
 ;------------------------------------------------------------------------------- 
 ; Offset_0x021B1C:
                 move.l  #Flipping_Bridge_Mappings, mappings(A0) ; Offset_0x021E78, $000C
-                move.w  #$42F0, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$42F0, art_tile(A0)                         ; $000A
                 move.b  #$80, width_pixels(A0)                              ; $0007
                 move.b  #$04, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.w  Obj_Y(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
+                move.w  y_pos(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
                 move.l  #Offset_0x021C8E, Obj_Control_Var_02(A0)         ; $0032
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x021B5E
                 move.l  #Offset_0x021D0E, Obj_Control_Var_02(A0)         ; $0032
 Offset_0x021B5E:
@@ -21,9 +21,9 @@ Offset_0x021B5E:
                 move.b  D0, Obj_Control_Var_07(A0)                       ; $0037
                 lsr.b   #$04, D1
                 andi.w  #$0007, D1
-                move.b  D1, Obj_Ani_Time_2(A0)                           ; $0025
+                move.b  D1, anim_frame_delay(A0)                           ; $0025
                 moveq   #$01, D1
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x021B86
                 moveq   #-$01, D1
                 subq.b  #$01, Obj_Control_Var_07(A0)                     ; $0037
@@ -33,28 +33,28 @@ Offset_0x021B86:
                 bne     Offset_0x021C20
                 move.l  #Offset_0x021C48, (A1)
                 move.l  #Flipping_Bridge_Mappings, mappings(A1) ; Offset_0x021E78, $000C
-                move.w  #$42F0, Obj_Art_VRAM(A1)                         ; $000A
+                move.w  #$42F0, art_tile(A1)                         ; $000A
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.b  #$80, width_pixels(A1)                              ; $0007
                 move.b  #$40, height_pixels(A1)                             ; $0006
                 move.w  #$0200, priority(A1)                         ; $0008
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 bset    #$06, render_flags(A1)                              ; $0004
-                move.w  #$0008, Obj_Sub_Y(A1)                            ; $0016
-                move.w  Obj_Y(A0), D2                                    ; $0014
-                move.w  Obj_X(A0), D3                                    ; $0010
+                move.w  #$0008, y_sub(A1)                            ; $0016
+                move.w  y_pos(A0), D2                                    ; $0014
+                move.w  x_pos(A0), D3                                    ; $0010
                 subi.w  #$0070, D3
                 addi.w  #$0020, D2
                 move.w  #$0008, D4
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 bpl.s   Offset_0x021BFA
                 subi.w  #$0010, D2
                 move.w  #$0004, D4
 Offset_0x021BFA:
                 moveq   #$00, D1
-                lea     Obj_Speed_X(A1), A2                              ; $0018
-                move.w  Obj_Sub_Y(A1), D6                                ; $0016
+                lea     x_vel(A1), A2                              ; $0018
+                move.w  y_sub(A1), D6                                ; $0016
                 subq.w  #$01, D6
 Offset_0x021C06:
                 move.w  D3, (A2)+
@@ -74,7 +74,7 @@ Offset_0x021C26:
                 moveq   #$00, D1
                 move.b  width_pixels(A0), D1                                ; $0007
                 move.l  Obj_Control_Var_02(A0), A2                       ; $0032
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Offset_0x021D8E)
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E  
 ;-------------------------------------------------------------------------------
@@ -82,11 +82,11 @@ Offset_0x021C48:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 ;-------------------------------------------------------------------------------
 Offset_0x021C4E:
-                subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
+                subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x021C7E
-                move.b  Obj_Ani_Time_2(A0), Obj_Ani_Time(A0)      ; $0025, $0024
+                move.b  anim_frame_delay(A0), anim_frame_duration(A0)      ; $0025, $0024
                 lea     $001D(A3), A2
-                move.w  Obj_Sub_Y(A3), D6                                ; $0016
+                move.w  y_sub(A3), D6                                ; $0016
                 subq.w  #$01, D6
                 move.b  Obj_Control_Var_07(A0), D2                       ; $0037
                 move.b  Obj_Control_Var_06(A0), D1                       ; $0036
@@ -155,22 +155,22 @@ Offset_0x021D8E:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 addq.b  #$01, D6
 Offset_0x021DA4:
-                btst    D6, Obj_Status(A0)                               ; $002A
+                btst    D6, status(A0)                               ; $002A
                 beq.s   Offset_0x021DFA
                 move.w  D1, D2
                 add.w   D2, D2
-                btst    #$01, Obj_Status(A1)                             ; $002A
+                btst    #$01, status(A1)                             ; $002A
                 bne.s   Offset_0x021DC6
-                move.w  Obj_X(A1), D0                                    ; $0010
-                sub.w   Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
+                sub.w   x_pos(A0), D0                                    ; $0010
                 add.w   D1, D0
                 bmi.s   Offset_0x021DC6
                 cmp.w   D2, D0
                 bcs.s   Offset_0x021DDA
 Offset_0x021DC6:
-                bclr    #$03, Obj_Status(A1)                             ; $002A
-                bset    #$01, Obj_Status(A1)                             ; $002A
-                bclr    D6, Obj_Status(A0)                               ; $002A
+                bclr    #$03, status(A1)                             ; $002A
+                bset    #$01, status(A1)                             ; $002A
+                bclr    D6, status(A0)                               ; $002A
                 moveq   #$00, D4
                 rts
 Offset_0x021DDA:
@@ -187,10 +187,10 @@ Offset_0x021DDA:
                 moveq   #$00, D4
                 rts
 Offset_0x021DFA:
-                tst.w   Obj_Speed_Y(A1)                                  ; $001A
+                tst.w   y_vel(A1)                                  ; $001A
                 bmi.s   Offset_0x021E76
-                move.w  Obj_X(A1), D0                                    ; $0010
-                sub.w   Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
+                sub.w   x_pos(A0), D0                                    ; $0010
                 add.w   D1, D0
                 bmi.s   Offset_0x021E76
                 add.w   D1, D1
@@ -205,9 +205,9 @@ Offset_0x021E1E:
                 lsr.w   #$01, D0
                 move.b  $00(A2, D0), D3
                 ext.w   D3
-                move.w  Obj_Y(A0), D0                                    ; $0014
+                move.w  y_pos(A0), D0                                    ; $0014
                 sub.w   D3, D0
-                move.w  Obj_Y(A1), D2                                    ; $0014
+                move.w  y_pos(A1), D2                                    ; $0014
                 move.b  y_radius(A1), D1                             ; $001E
                 ext.w   D1
                 add.w   D2, D1
@@ -230,7 +230,7 @@ Offset_0x021E1E:
                 bcs.s   Offset_0x021E76
                 add.w   D0, D2
                 addq.w  #$03, D2
-                move.w  D2, Obj_Y(A1)                                    ; $0014
+                move.w  D2, y_pos(A1)                                    ; $0014
                 jmp     (Ride_Object_Set_Ride)                 ; Offset_0x013C80
 Offset_0x021E76:
                 rts        

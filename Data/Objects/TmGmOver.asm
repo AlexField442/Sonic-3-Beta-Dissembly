@@ -7,40 +7,40 @@
                 beq.s   Offset_0x024454
                 rts
 Offset_0x024454:
-                move.w  #$0050, Obj_X(A0)                                ; $0010
-                btst    #$00, Obj_Map_Id(A0)                             ; $0022
+                move.w  #$0050, x_pos(A0)                                ; $0010
+                btst    #$00, mapping_frame(A0)                             ; $0022
                 beq.s   Offset_0x024468
-                move.w  #$01F0, Obj_X(A0)                                ; $0010
+                move.w  #$01F0, x_pos(A0)                                ; $0010
 Offset_0x024468:
-                move.w  #$00F0, Obj_Y(A0)                                ; $0014
+                move.w  #$00F0, y_pos(A0)                                ; $0014
                 move.l  #Time_Over_Game_Over_Mappings, mappings(A0) ; Offset_0x024FD2, $000C
-                move.w  #$879C, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$879C, art_tile(A0)                         ; $000A
                 move.w  #$0000, priority(A0)                         ; $0008
                 move.l  #Offset_0x024488, (A0)
 Offset_0x024488:                
                 moveq   #$10, D1
-                cmpi.w  #$0120, Obj_X(A0)                                ; $0010
+                cmpi.w  #$0120, x_pos(A0)                                ; $0010
                 beq.s   Offset_0x0244A0
                 bcs.s   Offset_0x024496
                 neg.w   D1
 Offset_0x024496:
-                add.w   D1, Obj_X(A0)                                    ; $0010
+                add.w   D1, x_pos(A0)                                    ; $0010
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0244A0:
-                move.w  #$02D0, Obj_Ani_Time(A0)                         ; $0024
+                move.w  #$02D0, anim_frame_duration(A0)                         ; $0024
                 move.l  #Offset_0x0244AE, (A0)
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x0244AE:
-                btst    #$00, Obj_Map_Id(A0)                             ; $0022
+                btst    #$00, mapping_frame(A0)                             ; $0022
                 bne     Offset_0x024540
                 move.b  (Control_Ports_Buffer_Data+$01).w, D0        ; $FFFFF605
                 or.b    (Control_Ports_Buffer_Data+$03).w, D0        ; $FFFFF607
                 andi.b  #$70, D0
                 bne.s   Offset_0x0244D6
-                tst.w   Obj_Ani_Time(A0)                                 ; $0024
+                tst.w   anim_frame_duration(A0)                                 ; $0024
                 beq.s   Offset_0x0244D6
-                subq.w  #$01, Obj_Ani_Time(A0)                           ; $0024
+                subq.w  #$01, anim_frame_duration(A0)                           ; $0024
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x0244D6:
                 tst.b   (Time_Over_flag).w                           ; $FFFFFE1A

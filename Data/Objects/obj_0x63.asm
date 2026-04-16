@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x02C7E6:
                 move.l  #DPz_Button_Mappings, mappings(A0) ; Offset_0x02C894, $000C
-                move.w  #$4280, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$4280, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$0C, width_pixels(A0)                              ; $0007
@@ -13,16 +13,16 @@
 Offset_0x02C812:                
                 move.w  #$000C, D1
                 move.w  #$0002, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
                 lea     (Palette_Row_2_Offset+$1C).w, A2             ; $FFFFED5C
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  #$00, mapping_frame(A0)                             ; $0022
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 lea     $00(A3, D0), A3
                 moveq   #$00, D3
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 bne.s   Offset_0x02C854
                 bclr    D3, (A3)
@@ -33,13 +33,13 @@ Offset_0x02C854:
                 bne.s   Offset_0x02C866
                 moveq   #Switch_Blip_Sfx, D0                               ; $64
                 jsr     (Play_Music)                           ; Offset_0x001176
-                move.b  #$00, Obj_Ani_Time(A0)                           ; $0024
+                move.b  #$00, anim_frame_duration(A0)                           ; $0024
 Offset_0x02C866:
                 bset    D3, (A3)
-                move.b  #$01, Obj_Map_Id(A0)                             ; $0022
-                subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
+                move.b  #$01, mapping_frame(A0)                             ; $0022
+                subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x02C88E
-                move.b  #$03, Obj_Ani_Time(A0)                           ; $0024
+                move.b  #$03, anim_frame_duration(A0)                           ; $0024
                 move.w  (A2), D0
                 move.l  #$002E000A, (A2)
                 cmpi.w  #$002E, D0

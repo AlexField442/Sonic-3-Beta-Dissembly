@@ -8,23 +8,23 @@ Offset_0x02A878:
                 dc.b    $20, $40, $01, $40  
 ;-------------------------------------------------------------------------------
 Obj_0x57_MGz_Trigger_Platform:                                 ; Offset_0x02A884
-                move.b  Obj_Subtype(A0), D1                              ; $002C
+                move.b  subtype(A0), D1                              ; $002C
                 andi.w  #$00F0, D1
                 lsr.w   #$02, D1
                 lea     Offset_0x02A878(PC, D1), A1
                 move.b  (A1)+, width_pixels(A0)                             ; $0007
                 move.b  (A1)+, height_pixels(A0)                            ; $0006
-                move.b  (A1)+, Obj_Map_Id(A0)                            ; $0022
+                move.b  (A1)+, mapping_frame(A0)                            ; $0022
                 moveq   #$00, D0
                 move.b  (A1)+, D0
                 move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
                 lsr.w   #$02, D1
                 move.w  D1, Obj_Control_Var_04(A0)                       ; $0034
                 move.l  #Trigger_Platform_Mappings, mappings(A0) ; Offset_0x02A9C2, $000C
-                move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$4001, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
-                move.w  Obj_X(A0), Obj_Control_Var_06(A0)         ; $0010, $0036
+                move.w  x_pos(A0), Obj_Control_Var_06(A0)         ; $0010, $0036
                 tst.w   D1
                 beq.s   Offset_0x02A8DA
                 move.l  #Offset_0x02A94E, (A0)
@@ -32,23 +32,23 @@ Obj_0x57_MGz_Trigger_Platform:                                 ; Offset_0x02A884
 Offset_0x02A8DA:
                 move.l  #Offset_0x02A8E0, (A0)
 Offset_0x02A8E0:                
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 tst.b   $00(A3, D0)
                 beq.s   Offset_0x02A926
                 moveq   #$02, D0
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x02A8FE
                 neg.w   D0
 Offset_0x02A8FE:
-                add.w   D0, Obj_X(A0)                                    ; $0010
+                add.w   D0, x_pos(A0)                                    ; $0010
                 move.w  #$FFFF, (Earthquake_Flag).w                  ; $FFFFEECC
                 subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
                 bne.s   Offset_0x02A926
-                move.w  #$7F00, Obj_X(A0)                                ; $0010
+                move.w  #$7F00, x_pos(A0)                                ; $0010
                 move.w  #$7F00, Obj_Control_Var_06(A0)                   ; $0036
-                move.w  #$0000, Obj_Respaw_Ref(A0)                       ; $0048
+                move.w  #$0000, respawn_index(A0)                       ; $0048
                 move.w  #$0000, (Earthquake_Flag).w                  ; $FFFFEECC
 Offset_0x02A926:
                 moveq   #$00, D1
@@ -58,12 +58,12 @@ Offset_0x02A926:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 move.w  Obj_Control_Var_06(A0), D0                       ; $0036
                 jmp     (MarkObjGone_2)                        ; Offset_0x011B1A
 Offset_0x02A94E:
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 tst.b   $00(A3, D0)
@@ -76,11 +76,11 @@ Offset_0x02A96C:
                 beq.s   Offset_0x02A99E
                 bmi.s   Offset_0x02A99E
                 move.w  Obj_Control_Var_04(A0), D0                       ; $0034
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x02A982
                 neg.w   D0
 Offset_0x02A982:
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
                 move.w  #$FFFF, (Earthquake_Flag).w                  ; $FFFFEECC
                 subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
                 bne.s   Offset_0x02A99E
@@ -94,7 +94,7 @@ Offset_0x02A99E:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2   
 ;-------------------------------------------------------------------------------

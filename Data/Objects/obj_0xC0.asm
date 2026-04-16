@@ -6,7 +6,7 @@
                 jsr     Object_Check_Range(PC)                 ; Offset_0x04326E
                 lea     Ice_Spikes_Setup_Data(PC), A1          ; Offset_0x04796E
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 bne.s   Offset_0x0478FE
                 move.l  #Offset_0x04790C, (A0)
                 lea     Offset_0x04797A(PC), A2
@@ -17,14 +17,14 @@ Offset_0x0478FA:
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A
 Offset_0x0478FE:
                 move.l  #Offset_0x047920, (A0)
-                move.b  #$92, Obj_Col_Flags(A0)                          ; $0028
+                move.b  #$92, collision_flags(A0)                          ; $0028
                 rts
 ;-------------------------------------------------------------------------------
 Offset_0x04790C:
                 moveq   #$17, D1
                 moveq   #$08, D2
                 moveq   #$08, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C    
 ;-------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ Offset_0x047942:
                 beq.s   Offset_0x04794E
                 neg.w   D0
 Offset_0x04794E:
-                add.w   D0, Obj_X(A0)                                    ; $0010
+                add.w   D0, x_pos(A0)                                    ; $0010
                 jsr     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C   
 ;-------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ Offset_0x04795A:
                 rts                                                           
 ;-------------------------------------------------------------------------------
 Offset_0x047962:
-                move.b  #$98, Obj_Col_Flags(A0)                          ; $0028
+                move.b  #$98, collision_flags(A0)                          ; $0028
                 jmp     (Add_SpriteToCollisionResponseList)       ; Offset_0x00A540
 ;-------------------------------------------------------------------------------   
 Ice_Spikes_Setup_Data:                                         ; Offset_0x04796E

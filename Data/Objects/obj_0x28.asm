@@ -4,10 +4,10 @@
 ;===============================================================================      
 ; Offset_0x0142D4:
                 move.l  #Invisible_Block_Mappings, mappings(A0) ; Offset_0x014352, $000C
-                move.w  #$86BC, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$86BC, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.b  D0, D1
                 andi.w  #$00F0, D0
                 addi.w  #$0010, D0
@@ -26,9 +26,9 @@ Offset_0x014314:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 bsr     Solid_Object_2                         ; Offset_0x0135B6
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0

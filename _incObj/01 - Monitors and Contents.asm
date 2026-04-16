@@ -30,21 +30,21 @@ Monitors_Init:
 		move.w	#$180,priority(a0)
 		move.b	#$E,width_pixels(a0)
 		move.b	#$10,height_pixels(a0)
-		move.w	Obj_Respaw_Ref(a0),a2
+		move.w	respawn_index(a0),a2
 		bclr	#7,(a2)
 		btst	#0,(a2)				; if this bit is set it means the monitor is already broken
 		beq.s	Offset_0x012FAE
 		move.b	#8,routine(a0)			; set monitor to 'broken' state
-		move.b	#$B,Obj_Map_Id(a0)
+		move.b	#$B,mapping_frame(a0)
 		rts
 ; ---------------------------------------------------------------------------
 
 Offset_0x012FAE:
-		move.b	#$46,Obj_Col_Flags(a0)
-		move.b	Obj_Subtype(a0),Obj_Ani_Number(a0)	; subtype = icon to display
+		move.b	#$46,collision_flags(a0)
+		move.b	subtype(a0),anim(a0)	; subtype = icon to display
 		tst.w	(Two_Player_Flag).w			; are we in two player mode?
 		beq.s	Monitors_Main				; if not, branch
-		move.b	#9,Obj_Ani_Number(a0)			; use '?' icon
+		move.b	#9,anim(a0)			; use '?' icon
 ; Offset_0x012FC6:
 Monitors_Main:
 		move.b	Obj_Control_Var_0C(a0),d0
@@ -52,13 +52,13 @@ Monitors_Main:
 		; only when secondary routine isn't 0
 		; make monitor fall
 		bsr.w	ObjectFall
-		tst.w	Obj_Speed_Y(a0)
+		tst.w	y_vel(a0)
 		bmi.s	SolidObject_Monitor
 		jsr	(ObjHitFloor).l
 		tst.w	d1					; is the monitor on the ground?
 		bpl.w	SolidObject_Monitor			; if not, branch
 		add.w	d1,y_pos(a0)				; move monitor out of ground
-		clr.w	Obj_Speed_Y(a0)
+		clr.w	y_vel(a0)
 		clr.b	Obj_Control_Var_0C(a0)			; stop monitor from falling
 ; Offset_0x012FEE:
 SolidObject_Monitor:
@@ -86,19 +86,19 @@ Monitors_ChkDel:
 ; ===========================================================================
 ; Offset_0x01302E:
 SolidObject_Monitor_Sonic:
-		btst	d6,Obj_Status(a0)			; is Sonic standing on the monitor?
+		btst	d6,status(a0)			; is Sonic standing on the monitor?
 		bne.s	Monitors_ChkOverEdge			; if yes, branch
-		cmpi.b	#2,Obj_Ani_Number(a1)			; is Sonic spinning?
+		cmpi.b	#2,anim(a1)			; is Sonic spinning?
 		bne.w	SolidObject_cont			; if not, branch
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x013040:
 SolidObject_Monitor_Tails:
-		btst	d6,Obj_Status(a0)			; is Tails standing on the monitor?
+		btst	d6,status(a0)			; is Tails standing on the monitor?
 		bne.s	Monitors_ChkOverEdge			; if yes, branch
 		tst.w	(Two_Player_Flag).w			; is it two player mode?
 		beq.w	SolidObject_cont			; if not, branch
-		cmpi.b	#2,Obj_Ani_Number(a1)			; is Tails spinning?
+		cmpi.b	#2,anim(a1)			; is Tails spinning?
 		bne.w	SolidObject_cont			; if not, branch
 		rts
 ; ---------------------------------------------------------------------------
@@ -106,7 +106,7 @@ SolidObject_Monitor_Tails:
 Monitors_ChkOverEdge:
 		move.w	d1,d2
 		add.w	d2,d2
-		btst	#1,Obj_Status(a1)			; is the character in the air?
+		btst	#1,status(a1)			; is the character in the air?
 		bne.s	.inAir					; if yes, branch
 		; check, if character is standing on
 		move.w	x_pos(a1),d0
@@ -117,9 +117,9 @@ Monitors_ChkOverEdge:
 		bcs.s	Monitors_CharStandOn			; branch, if character is behind the right edge of the monitor
 ; Offset_0x013076:
 .inAir:
-		bclr	#3,Obj_Status(a1)			; clear 'on object' bit
-		bset	#1,Obj_Status(a1)			; set 'in air' bit
-		bclr	d6,Obj_Status(a0)			; clear 'standing on' bit for the current character
+		bclr	#3,status(a1)			; clear 'on object' bit
+		bset	#1,status(a1)			; set 'in air' bit
+		bclr	d6,status(a0)			; clear 'standing on' bit for the current character
 		moveq	#0,d4
 		rts
 ; ---------------------------------------------------------------------------
@@ -132,31 +132,31 @@ Monitors_CharStandOn:
 ; ===========================================================================
 ; Offset_0x013094:
 Monitors_Break:
-		move.b	Obj_Status(a0),d0
+		move.b	status(a0),d0
 		andi.b	#$78,d0					; is someone touching the monitor?
 		beq.s	Monitors_SpawnIcon			; if not, branch
 		move.b	d0,d1
 		andi.b	#$28,d1					; is it the main character?
 		beq.s	.TailsBreakMonitor			; if not, branch
-		andi.b	#$D7,(Obj_Player_One+Obj_Status).w
-		ori.b	#2,(Obj_Player_One+Obj_Status).w	; prevent Sonic from walking in the air
+		andi.b	#$D7,(Obj_Player_One+status).w
+		ori.b	#2,(Obj_Player_One+status).w	; prevent Sonic from walking in the air
 ; Offset_0x0130B2:
 .TailsBreakMonitor:
 		andi.b	#$50,d0					; is it the sidekick?
 		beq.s	Monitors_SpawnIcon			; if not, branch
-		andi.b	#$D7,(Obj_Player_Two+Obj_Status).w
-		ori.b	#2,(Obj_Player_Two+Obj_Status).w	; prevent Tails from walking in the air
+		andi.b	#$D7,(Obj_Player_Two+status).w
+		ori.b	#2,(Obj_Player_Two+status).w	; prevent Tails from walking in the air
 ; Offset_0x0130C4:
 Monitors_SpawnIcon:
-		clr.b	Obj_Status(a0)
+		clr.b	status(a0)
 		addq.b	#2,routine(a0)
-		move.b	#0,Obj_Col_Flags(a0)
+		move.b	#0,collision_flags(a0)
 		bsr.w	AllocateObject
 		bne.s	Monitors_SpawnSmoke
 		move.l	#Obj_MonitorContents,(a1)		; load Obj_MonitorContents
 		move.w	x_pos(a0),x_pos(a1)			; set icon's position
 		move.w	y_pos(a0),y_pos(a1)
-		move.b	Obj_Ani_Number(a0),Obj_Ani_Number(a1)
+		move.b	anim(a0),anim(a1)
 		move.w	Obj_Player_Last(a0),Obj_Player_Last(a1)	; parent gets item
 ; Offset_0x0130F6:
 Monitors_SpawnSmoke:
@@ -168,9 +168,9 @@ Monitors_SpawnSmoke:
 		move.w	y_pos(a0),y_pos(a1)
 
 Offset_0x013112:
-		move.w	Obj_Respaw_Ref(a0),a2
+		move.w	respawn_index(a0),a2
 		bset	#0,(a2)					; mark monitor as destroyed
-		move.b	#$A,Obj_Ani_Number(a0)
+		move.b	#$A,anim(a0)
 		bra.w	DisplaySprite
 
 ; ===========================================================================
@@ -197,9 +197,9 @@ MonitorContents_Init:
 		move.b	#$24,render_flags(a0)
 		move.w	#$180,priority(a0)
 		move.b	#8,width_pixels(a0)
-		move.w	#-$300,Obj_Speed_Y(a0)
+		move.w	#-$300,y_vel(a0)
 		moveq	#0,d0
-		move.b	Obj_Ani_Number(a0),d0
+		move.b	anim(a0),d0
 		; all of this up to MonitorContents_Icon are remnants from Sonic 2's multiplayer
 		tst.w	(Two_Player_Flag).w			; is this two player mode?
 		beq.s	MonitorContents_Icon			; if not, branch
@@ -221,13 +221,13 @@ MonitorContents_Init:
 		moveq	#7,d0					; give invincibility instead
 
 Offset_0x01318E:
-		move.b	d0,Obj_Ani_Number(a0)
+		move.b	d0,anim(a0)
 
 ; Offset_0x013192:
 MonitorContents_Icon:
 		; determine correct mappings offset
 		addq.b	#1,d0
-		move.b	d0,Obj_Map_Id(a0)
+		move.b	d0,mapping_frame(a0)
 		move.l	#Monitors_Mappings,a1
 		add.b	d0,d0
 		adda.w	(a1,d0.w),a1
@@ -240,16 +240,16 @@ MonitorContents_Raise:
 ; ===========================================================================
 ; Offset_0x0131B0:
 MonitorContents_Move:
-		tst.w	Obj_Speed_Y(a0)				; is the icon still floating up?
+		tst.w	y_vel(a0)				; is the icon still floating up?
 		bpl.w	MonitorContents_Main			; if not, branch
 		bsr.w	SpeedToPos
-		addi.w	#$18,Obj_Speed_Y(a0)
+		addi.w	#$18,y_vel(a0)
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x0131C4:
 MonitorContents_Main:
 		addq.b	#2,routine(a0)
-		move.w	#$1D,Obj_Ani_Time(a0)
+		move.w	#$1D,anim_frame_duration(a0)
 		move.w	Obj_Player_Last(a0),a1
 		lea	(Monitors_Broken).w,a2
 		cmpa.w	#Obj_Player_One,a1			; did Sonic break the monitor?
@@ -258,7 +258,7 @@ MonitorContents_Main:
 ; Offset_0x0131E0:
 MonitorContents_CheckType:
 		moveq	#0,d0
-		move.b	Obj_Ani_Number(a0),d0
+		move.b	anim(a0),d0
 		add.w	d0,d0
 		move.w	MonitorContents_Type(pc,d0.w),d0
 		jmp	MonitorContents_Type(pc,d0.w)
@@ -426,7 +426,7 @@ MonitorContents_Invincibility:
 		move.b	#$96,Obj_P_Invcbility_Time(a1)
 		tst.b	(Boss_Flag).w
 		bne.s	Offset_0x0133AE
-		cmpi.b	#$C,Obj_Subtype(a1)
+		cmpi.b	#$C,subtype(a1)
 		bls.s	Offset_0x0133AE
 		moveq	#Invincibility_Snd,d0
 		jsr	(PlaySound).l
@@ -453,7 +453,7 @@ MonitorContents_SuperSonic:
 		move.b	#$F,(Super_Sonic_Palette_Timer).w
 		move.b	#1,(Super_Sonic_flag).w
 		move.b	#$81,(Obj_Player_One+Obj_Timer).w
-		move.b	#$1F,(Obj_Player_One+Obj_Ani_Number).w
+		move.b	#$1F,(Obj_Player_One+anim).w
 		move.l	#Obj_Super_Sonic_Stars,(Obj_Super_Sonic_Stars_RAM).w
 		move.w	#$A00,(Sonic_Max_Speed).w
 		move.w	#$30,(Sonic_Acceleration).w
@@ -468,7 +468,7 @@ MonitorContents_SuperSonic:
 ; ===========================================================================
 ; Offset_0x01342E: Monitor_Delete_Object:
 MonitorContents_Delete:
-		subq.w	#1,Obj_Ani_Time(a0)
+		subq.w	#1,anim_frame_duration(a0)
 		bmi.w	DeleteObject
 		bra.w	DisplaySprite
 

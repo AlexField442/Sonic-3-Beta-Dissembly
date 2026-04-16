@@ -53,11 +53,11 @@ Offset_0x0072FE:
                 move.b  #$10, height_pixels(A1)                             ; $0006
                 move.w  #$0200, priority(A1)                         ; $0008
                 move.l  #Spheres_2_Mappings, mappings(A1) ; Offset_0x0078EC, $000C
-                move.w  #$A400, Obj_Art_VRAM(A1)                         ; $000A
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_X(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                move.w  Obj_Y(A0), Obj_Control_Var_02(A1)         ; $0014, $0032
+                move.w  #$A400, art_tile(A1)                         ; $000A
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  x_pos(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
+                move.w  y_pos(A0), Obj_Control_Var_02(A1)         ; $0014, $0032
                 rts
 ;-------------------------------------------------------------------------------                
 Branch_To_SS_Obj_Sphere_Test_Main_2:                           ; Offset_0x00733E
@@ -235,10 +235,10 @@ Offset_0x00755E:
                 bsr     Offset_0x007680
                 bsr     Offset_0x007656
                 bsr     Offset_0x0076AA
-                bclr    #$07, Obj_Art_VRAM(A0)                           ; $000A
+                bclr    #$07, art_tile(A0)                           ; $000A
                 cmpi.w  #$0080, D0
                 bge.s   Offset_0x00757C
-                bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
+                bset    #$07, art_tile(A0)                           ; $000A
 Offset_0x00757C:
                 add.w   (Art_Scaling_Data_Buffer+$1A).w, D0          ; $FFFFF75A
                 cmpi.w  #$0080, D0
@@ -246,9 +246,9 @@ Offset_0x00757C:
                 add.w   (Art_Scaling_Data_Buffer+$18).w, D2          ; $FFFFF758
                 bsr     Offset_0x007648
                 add.w   Obj_Control_Var_00(A0), D1                       ; $0030
-                move.w  D1, Obj_X(A0)                                    ; $0010
+                move.w  D1, x_pos(A0)                                    ; $0010
                 add.w   Obj_Control_Var_02(A0), D2                       ; $0032
-                move.w  D2, Obj_Y(A0)                                    ; $0014
+                move.w  D2, y_pos(A0)                                    ; $0014
                 subi.w  #$0080, D0
                 lsr.w   #$05, D0
                 addi.w  #$0006, D0
@@ -256,7 +256,7 @@ Offset_0x00757C:
                 bcs.s   Offset_0x0075B2
                 move.w  #$000F, D0
 Offset_0x0075B2:
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  D0, mapping_frame(A0)                               ; $0022
                 lsl.w   #$06, D0
                 andi.w  #$0380, D0
                 move.w  D0, priority(A0)                             ; $0008

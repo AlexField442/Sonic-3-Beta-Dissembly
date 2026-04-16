@@ -11,7 +11,7 @@ Offset_0x046A14:
                 moveq   #$1B, D1
                 moveq   #$10, D2
                 moveq   #$11, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2      
 ;===============================================================================

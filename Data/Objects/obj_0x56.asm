@@ -4,41 +4,41 @@
 ;===============================================================================
 ; Offset_0x02AA8A:
                 move.l  #Moving_Spike_Platform_Mappings, mappings(A0) ; Offset_0x02ABA8, $000C
-                move.w  #$4001, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$4001, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$30, height_pixels(A0)                             ; $0006
-                move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
-                move.w  Obj_Y(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                move.w  x_pos(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
+                move.w  y_pos(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x02AACA
                 move.b  #$01, Obj_Control_Var_04(A0)                     ; $0034
 Offset_0x02AACA:
                 move.l  #Offset_0x02AAD0, (A0)
 Offset_0x02AAD0:                
-                move.w  Obj_X(A0), -(A7)                                 ; $0010
+                move.w  x_pos(A0), -(A7)                                 ; $0010
                 tst.b   Obj_Control_Var_04(A0)                           ; $0034
                 bne.s   Offset_0x02AAF4
-                addq.w  #$01, Obj_X(A0)                                  ; $0010
+                addq.w  #$01, x_pos(A0)                                  ; $0010
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 addi.w  #$0050, D0
-                cmp.w   Obj_X(A0), D0                                    ; $0010
+                cmp.w   x_pos(A0), D0                                    ; $0010
                 bne.s   Offset_0x02AB0C
                 move.b  #$01, Obj_Control_Var_04(A0)                     ; $0034
                 bra.s   Offset_0x02AB0C
 Offset_0x02AAF4:
-                subq.w  #$01, Obj_X(A0)                                  ; $0010
+                subq.w  #$01, x_pos(A0)                                  ; $0010
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 subi.w  #$0050, D0
-                cmp.w   Obj_X(A0), D0                                    ; $0010
+                cmp.w   x_pos(A0), D0                                    ; $0010
                 bne.s   Offset_0x02AB0C
                 move.b  #$00, Obj_Control_Var_04(A0)                     ; $0034
 Offset_0x02AB0C:
                 moveq   #$00, D0
                 move.b  (Oscillate_Data_Buffer+$12).w, D0            ; $FFFFFE70
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 moveq   #$00, D1
                 move.b  width_pixels(A0), D1                                ; $0007
                 addi.w  #$000B, D1
@@ -54,29 +54,29 @@ Offset_0x02AB0C:
                 move.b  D6, D0
                 andi.b  #$01, D0
                 beq.s   Offset_0x02AB64
-                bclr    #$05, Obj_Status(A0)                             ; $002A
+                bclr    #$05, status(A0)                             ; $002A
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                move.w  Obj_Y(A1), D0                                    ; $0014
-                sub.w   Obj_Y(A0), D0                                    ; $0014
+                move.w  y_pos(A1), D0                                    ; $0014
+                sub.w   y_pos(A0), D0                                    ; $0014
                 addi.w  #$0028, D0
                 bmi.s   Offset_0x02AB64
                 jsr     (Hurt_Player_A1)                       ; Offset_0x01A71C
 Offset_0x02AB64:
                 andi.b  #$02, D6
                 beq.s   Offset_0x02AB88
-                bclr    #$06, Obj_Status(A0)                             ; $002A
+                bclr    #$06, status(A0)                             ; $002A
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
-                move.w  Obj_Y(A1), D0                                    ; $0014
-                sub.w   Obj_Y(A0), D0                                    ; $0014
+                move.w  y_pos(A1), D0                                    ; $0014
+                sub.w   y_pos(A0), D0                                    ; $0014
                 addi.w  #$0028, D0
                 bmi.s   Offset_0x02AB88
                 jsr     (Hurt_Player_A1)                       ; Offset_0x01A71C
 Offset_0x02AB88:
-                subq.b  #$01, Obj_Ani_Time(A0)                           ; $0024
+                subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x02AB9E
-                move.b  #$07, Obj_Ani_Time(A0)                           ; $0024
-                addq.b  #$01, Obj_Map_Id(A0)                             ; $0022
-                andi.b  #$03, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$07, anim_frame_duration(A0)                           ; $0024
+                addq.b  #$01, mapping_frame(A0)                             ; $0022
+                andi.b  #$03, mapping_frame(A0)                             ; $0022
 Offset_0x02AB9E:
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 jmp     (MarkObjGone_2)                        ; Offset_0x011B1A

@@ -6,22 +6,22 @@
                 tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
                 bne     Obj_0x33_Switch_2P                     ; Offset_0x0237AA
                 move.l  #Switch_Mappings, mappings(A0)   ; Offset_0x023832, $000C
-                move.w  #$0456, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0456, art_tile(A0)                         ; $000A
                 cmpi.b  #Hz_Id, (Current_Zone).w                    ; $01, $FFFFFE10
                 bne.s   Offset_0x02368E
                 move.l  #Hz_Switch_Mappings, mappings(A0) ; Offset_0x02385C, $000C
-                move.w  #$2426, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$2426, art_tile(A0)                         ; $000A
 Offset_0x02368E:
                 cmpi.b  #CNz_Id, (Current_Zone).w                   ; $03, $FFFFFE10
                 bne.s   Offset_0x0236A4
                 move.l  #CNz_Switch_Mappings, mappings(A0) ; Offset_0x02388C, $000C
-                move.w  #$441A, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$441A, art_tile(A0)                         ; $000A
 Offset_0x0236A4:
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$0200, priority(A0)                         ; $0008
-                addq.w  #$04, Obj_Y(A0)                                  ; $0014
-                btst    #$05, Obj_Subtype(A0)                            ; $002C
+                addq.w  #$04, y_pos(A0)                                  ; $0014
+                btst    #$05, subtype(A0)                            ; $002C
                 beq.s   Offset_0x0236CC
                 move.l  #Offset_0x023740, (A0)
                 bra     Offset_0x023740
@@ -34,22 +34,22 @@ Offset_0x0236D2:
                 move.w  #$001B, D1
                 move.w  #$0004, D2
                 move.w  #$0005, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  #$00, mapping_frame(A0)                             ; $0022
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 lea     $00(A3, D0), A3
                 moveq   #$00, D3
-                btst    #$06, Obj_Subtype(A0)                            ; $002C
+                btst    #$06, subtype(A0)                            ; $002C
                 beq.s   Offset_0x023710
                 moveq   #$07, D3
 Offset_0x023710:
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 bne.s   Offset_0x023726
-                btst    #$04, Obj_Subtype(A0)                            ; $002C
+                btst    #$04, subtype(A0)                            ; $002C
                 bne.s   Offset_0x02373A
                 bclr    D3, (A3)
                 bra.s   Offset_0x02373A
@@ -60,7 +60,7 @@ Offset_0x023726:
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x023732:
                 bset    D3, (A3)
-                move.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$01, mapping_frame(A0)                             ; $0022
 Offset_0x02373A:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 ;-------------------------------------------------------------------------------                
@@ -69,22 +69,22 @@ Offset_0x023740:
                 bpl.s   Offset_0x0237A4
                 move.w  #$0010, D1
                 move.w  #$0006, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  #$00, mapping_frame(A0)                             ; $0022
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 lea     $00(A3, D0), A3
                 moveq   #$00, D3
-                btst    #$06, Obj_Subtype(A0)                            ; $002C
+                btst    #$06, subtype(A0)                            ; $002C
                 beq.s   Offset_0x02377A
                 moveq   #$07, D3
 Offset_0x02377A:
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 bne.s   Offset_0x023790
-                btst    #$04, Obj_Subtype(A0)                            ; $002C
+                btst    #$04, subtype(A0)                            ; $002C
                 bne.s   Offset_0x0237A4
                 bclr    D3, (A3)
                 bra.s   Offset_0x0237A4
@@ -95,34 +95,34 @@ Offset_0x023790:
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x02379C:
                 bset    D3, (A3)
-                move.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$01, mapping_frame(A0)                             ; $0022
 Offset_0x0237A4:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 ;-------------------------------------------------------------------------------                
 Obj_0x33_Switch_2P:                                            ; Offset_0x0237AA
                 move.l  #Switch_Mappings_2P, mappings(A0) ; Offset_0x0238BC, $000C
-                move.w  #$03AD, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$03AD, art_tile(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.b  #$0C, width_pixels(A0)                              ; $0007
                 move.w  #$0200, priority(A0)                         ; $0008
-                addq.w  #$04, Obj_Y(A0)                                  ; $0014
+                addq.w  #$04, y_pos(A0)                                  ; $0014
                 move.l  #Offset_0x0237D4, (A0)
 Offset_0x0237D4:                
                 move.w  #$0013, D1
                 move.w  #$0004, D2
                 move.w  #$0005, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
-                move.b  #$00, Obj_Map_Id(A0)                             ; $0022
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  #$00, mapping_frame(A0)                             ; $0022
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 lea     $00(A3, D0), A3
                 moveq   #$00, D3
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 bne.s   Offset_0x023818
-                btst    #$04, Obj_Subtype(A0)                            ; $002C
+                btst    #$04, subtype(A0)                            ; $002C
                 bne.s   Offset_0x02382C
                 bclr    D3, (A3)
                 bra.s   Offset_0x02382C
@@ -133,7 +133,7 @@ Offset_0x023818:
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x023824:
                 bset    D3, (A3)
-                move.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$01, mapping_frame(A0)                             ; $0022
 Offset_0x02382C:
                 jmp     (DisplaySprite)                        ; Offset_0x011148   
 ;-------------------------------------------------------------------------------

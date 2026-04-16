@@ -22,8 +22,8 @@ RobotnikHead_Init:
 		lea	RobotnikHead_ObjData(pc),a1
 		jsr	(SetupObjectAttributes).l
 		jsr	(Boss_Test_And_Set_Layer_Flag).l
-		move.w	Obj_Child_Ref(a0),a1
-		move.w	Obj_Child_Ref(a1),Obj_Height_3(a0)
+		move.w	parent3(a0),a1
+		move.w	parent3(a1),default_y_radius(a0)
 
 Offset_0x036098:
 		rts
@@ -32,12 +32,12 @@ Offset_0x036098:
 RobotnikHead_Main:
 		lea	RobotnikHead_AnimateData(pc),a1
 		jsr	(Animate_Raw_A1).l
-		move.w	Obj_Height_3(a0),a1
-		btst	#7,Obj_Status(a1)	; has Robotnik been defeated?
+		move.w	default_y_radius(a0),a1
+		btst	#7,status(a1)	; has Robotnik been defeated?
 		bne.s	RobotnikHead_Defeated	; if yes, branch
-		btst	#6,Obj_Status(a1)	; has Robotnik been hit?
+		btst	#6,status(a1)	; has Robotnik been hit?
 		beq.s	Offset_0x0360BE		; if not, branch
-		move.b	#2,Obj_Map_Id(A0)	; use "hit" frame
+		move.b	#2,mapping_frame(A0)	; use "hit" frame
 
 Offset_0x0360BE:
 		rts
@@ -45,7 +45,7 @@ Offset_0x0360BE:
 ; Offset_0x0360C0:
 RobotnikHead_Defeated:
 		move.b	#4,routine(a0)
-		move.b	#3,Obj_Map_Id(a0)	; use "defeated" frame
+		move.b	#3,mapping_frame(a0)	; use "defeated" frame
 		rts  
 ; ===========================================================================
 ; Offset_0x0360CE:
@@ -98,8 +98,8 @@ FBZRobotnikHead_Index:
 FBZRobotnikHead_Init:
 		lea	FBZRobotnikHead_ObjData(pc),a1
 		jsr	(SetupObjectAttributes).l
-		move.w	Obj_Child_Ref(a0),a1
-		move.w	Obj_Child_Ref(a1),Obj_Height_3(a0)
+		move.w	parent3(a0),a1
+		move.w	parent3(a1),default_y_radius(a0)
 		rts      
 ; ===========================================================================
 ; Offset_0x036140:
@@ -111,20 +111,20 @@ FBZRobotnikHead_Main:
 		bset	#0,render_flags(a0)		; flip Robotnik's head
 
 Offset_0x036156:
-		clr.b	Obj_Map_Id(a0)
-		move.w	Obj_Height_3(a0),a1
+		clr.b	mapping_frame(a0)
+		move.w	default_y_radius(a0),a1
 		; This should be using a1; as a result, the forward-facing
 		; Robotnik head goes unused, OOPS
 		btst	#2,Obj_Control_Var_08(a0)	; is Robotnik swinging round and round?
 		beq.s	Offset_0x03616C			; if yes, branch
-		move.b	#1,Obj_Map_Id(a0)		; use "forward" frame
+		move.b	#1,mapping_frame(a0)		; use "forward" frame
 
 Offset_0x03616C:
-		btst	#7,Obj_Status(a1)	; has Robotnik been defeated?
+		btst	#7,status(a1)	; has Robotnik been defeated?
 		bne.s	Offset_0x036184		; if yes, branch
-		btst	#6,Obj_Status(a1)	; has Robotnik been hit?
+		btst	#6,status(a1)	; has Robotnik been hit?
 		beq.s	Offset_0x036182		; if not, branch
-		move.b	#2,Obj_Map_Id(a0)	; use "hit" frame
+		move.b	#2,mapping_frame(a0)	; use "hit" frame
 
 Offset_0x036182:
 		rts
@@ -132,7 +132,7 @@ Offset_0x036182:
 
 Offset_0x036184:
 		move.b	#4,routine(a0)
-		move.b	#3,Obj_Map_Id(a0)	; use "defeated" frame
+		move.b	#3,mapping_frame(a0)	; use "defeated" frame
 		rts
 
 ; ===========================================================================
@@ -163,12 +163,12 @@ LBZRobotnikHead_Init:
 LBZRobotnikHead_Main:
 		lea	RobotnikHead_AnimateData(pc),a1
 		jsr	(Animate_Raw_A1).l
-		move.w	Obj_Child_Ref(a0),a1
-		btst	#7,Obj_Status(a1)	; has Robotnik been defeated?
+		move.w	parent3(a0),a1
+		btst	#7,status(a1)	; has Robotnik been defeated?
 		bne.s	Offset_0x0361E2		; if yes, branch
-		btst	#6,Obj_Status(a1)	; has Robotnik been hit?
+		btst	#6,status(a1)	; has Robotnik been hit?
 		beq.s	Offset_0x0361E0		; if not, branch
-		move.b	#2,Obj_Map_Id(a0)	; use "forward" frame
+		move.b	#2,mapping_frame(a0)	; use "forward" frame
 
 Offset_0x0361E0:
 		rts
@@ -176,5 +176,5 @@ Offset_0x0361E0:
 
 Offset_0x0361E2:
 		move.b	#4,routine(a0)
-		move.b	#3,Obj_Map_Id(a0)	; use "defeated" frame
+		move.b	#3,mapping_frame(a0)	; use "defeated" frame
 		rts

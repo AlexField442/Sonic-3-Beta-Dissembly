@@ -52,7 +52,7 @@ Offset_0x045EBC:
                 bne.s   Offset_0x045ECE
                 neg.w   D0
 Offset_0x045ECE:
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
                 move.w  #$0020, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x045EE8, Obj_Child(A0)                  ; $0034
                 lea     Offset_0x045FE8(PC), A2
@@ -77,13 +77,13 @@ Offset_0x045F06:
                 lea     Sparkle_Setup_Data_2(PC), A1           ; Offset_0x045FD4
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 moveq   #$34, D0
                 btst    #$01, render_flags(A1)                              ; $0004
                 bne.s   Offset_0x045F26
                 neg.w   D0
 Offset_0x045F26:
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x045F2C:
@@ -105,26 +105,26 @@ Offset_0x045F46:
 Offset_0x045F4C:
                 lea     Sparkle_Setup_Data_3(PC), A1           ; Offset_0x045FDA
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 move.w  #$0600, D0
                 btst    #$01, render_flags(A1)                              ; $0004
                 bne.s   Offset_0x045F66
                 neg.w   D0
 Offset_0x045F66:
-                move.w  D0, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D0, y_vel(A0)                              ; $001A
                 move.w  #$0600, D0
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 bne.s   Offset_0x045F76
                 neg.w   D0
 Offset_0x045F76:
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
+                move.w  D0, x_vel(A0)                              ; $0018
                 rts       
 ;-------------------------------------------------------------------------------
 Offset_0x045F7C:
                 lea     Offset_0x046000(PC), A1
                 jsr     Animate_Raw_A1(PC)                     ; Offset_0x042092
                 moveq   #$40, D0
-                move.w  Obj_Speed_X(A0), D1                              ; $0018
+                move.w  x_vel(A0), D1                              ; $0018
                 bmi.s   Offset_0x045F8E
                 neg.w   D0
 Offset_0x045F8E:
@@ -134,14 +134,14 @@ Offset_0x045F8E:
                 cmpi.w  #$0100, D1
                 ble.s   Offset_0x045FB6
 Offset_0x045F9C:
-                move.w  D1, Obj_Speed_X(A0)                              ; $0018
+                move.w  D1, x_vel(A0)                              ; $0018
                 moveq   #$40, D0
-                move.w  Obj_Speed_Y(A0), D1                              ; $001A
+                move.w  y_vel(A0), D1                              ; $001A
                 bmi.s   Offset_0x045FAA
                 neg.w   D0
 Offset_0x045FAA:
                 add.w   D0, D1
-                move.w  D1, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D1, y_vel(A0)                              ; $001A
                 jmp     (SpeedToPos)                           ; Offset_0x01111E
 Offset_0x045FB6:
                 move.b  #$04, routine(A0)                            ; $0005

@@ -26,47 +26,47 @@ Offset_0x00F3AC:
                 beq.s   Offset_0x00F3C6
                 move.l  #Miles_Underwater_Mappings, mappings(A0) ; Offset_0x0258A0, $000C
 Offset_0x00F3C6:
-                move.w  #$045C, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$045C, art_tile(A0)                         ; $000A
                 move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$0080, priority(A0)                         ; $0008
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x00F3F4
                 addq.b  #$08, routine(A0)                            ; $0005
                 andi.w  #$007F, D0
                 move.b  D0, Obj_Player_Hit_Flag(A0)                      ; $0037
                 bra     Offset_0x00F68E
 Offset_0x00F3F4:
-                move.b  D0, Obj_Ani_Number(A0)                           ; $0020
-                move.w  Obj_X(A0), Obj_P_Invunerblt_Time(A0)      ; $0010, $0034
-                move.w  #$FF00, Obj_Speed_Y(A0)                          ; $001A
+                move.b  D0, anim(A0)                           ; $0020
+                move.w  x_pos(A0), Obj_P_Invunerblt_Time(A0)      ; $0010, $0034
+                move.w  #$FF00, y_vel(A0)                          ; $001A
 Offset_0x00F404:
                 lea     (Bubbles_Animate_Data), A1             ; Offset_0x00F8E0
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
 Offset_0x00F410:
                 move.w  (Water_Level_Move).w, D0                     ; $FFFFF646
-                cmp.w   Obj_Y(A0), D0                                    ; $0014
+                cmp.w   y_pos(A0), D0                                    ; $0014
                 bcs.s   Offset_0x00F436
                 move.b  #$06, routine(A0)                            ; $0005
-                addq.b  #$07, Obj_Ani_Number(A0)                         ; $0020
-                cmpi.b  #$0D, Obj_Ani_Number(A0)                         ; $0020
+                addq.b  #$07, anim(A0)                         ; $0020
+                cmpi.b  #$0D, anim(A0)                         ; $0020
                 beq.s   Offset_0x00F47C
                 bcs.s   Offset_0x00F47C
-                move.b  #$0D, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$0D, anim(A0)                         ; $0020
                 bra.s   Offset_0x00F47C
 Offset_0x00F436:
                 tst.w   (Sonic_Wind_Flag).w                          ; $FFFFF7C8
                 beq.s   Offset_0x00F440
                 addq.w  #$04, Obj_P_Invunerblt_Time(A0)                  ; $0034
 Offset_0x00F440:
-                move.b  Obj_Angle(A0), D0                                ; $0026
-                addq.b  #$01, Obj_Angle(A0)                              ; $0026
+                move.b  angle(A0), D0                                ; $0026
+                addq.b  #$01, angle(A0)                              ; $0026
                 andi.w  #$007F, D0
                 lea     (Offset_0x00F546), A1
                 move.b  $00(A1, D0), D0
                 ext.w   D0
                 add.w   Obj_P_Invunerblt_Time(A0), D0                    ; $0034
-                move.w  D0, Obj_X(A0)                                    ; $0010
+                move.w  D0, x_pos(A0)                                    ; $0010
                 bsr     Offset_0x00F4FA
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 tst.b   render_flags(A0)                                    ; $0004
@@ -83,12 +83,12 @@ Offset_0x00F490:
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x00F496:
                 move.l  Obj_Player_Jump(A0), A2                          ; $0040
-                cmpi.b  #$0C, Obj_Subtype(A2)                            ; $002C
+                cmpi.b  #$0C, subtype(A2)                            ; $002C
                 bhi.s   Offset_0x00F4D0
                 subq.w  #$01, Obj_Player_St_Convex(A0)                   ; $003C
                 bne.s   Offset_0x00F4B4
                 move.b  #$0E, routine(A0)                            ; $0005
-                addq.b  #$07, Obj_Ani_Number(A0)                         ; $0020
+                addq.b  #$07, anim(A0)                         ; $0020
                 bra.s   Offset_0x00F47C
 Offset_0x00F4B4:
                 lea     (Bubbles_Animate_Data), A1             ; Offset_0x00F8E0
@@ -101,7 +101,7 @@ Offset_0x00F4D0:
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x00F4D6:
                 move.l  Obj_Player_Jump(A0), A2                          ; $0040
-                cmpi.b  #$0C, Obj_Subtype(A2)                            ; $002C
+                cmpi.b  #$0C, subtype(A2)                            ; $002C
                 bhi.s   Offset_0x00F490
                 bsr.s   Offset_0x00F4FA
                 lea     (Bubbles_Animate_Data), A1             ; Offset_0x00F8E0
@@ -113,19 +113,19 @@ Offset_0x00F4FA:
                 beq.s   Offset_0x00F544
                 subq.w  #$01, Obj_Player_St_Convex(A0)                   ; $003C
                 bne.s   Offset_0x00F544
-                cmpi.b  #$07, Obj_Ani_Number(A0)                         ; $0020
+                cmpi.b  #$07, anim(A0)                         ; $0020
                 bcc.s   Offset_0x00F544
                 move.w  #$000F, Obj_Player_St_Convex(A0)                 ; $003C
-                clr.w   Obj_Speed_Y(A0)                                  ; $001A
+                clr.w   y_vel(A0)                                  ; $001A
                 move.b  #$80, render_flags(A0)                              ; $0004
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 sub.w   (Camera_X).w, D0                             ; $FFFFEE78
                 addi.w  #$0080, D0
-                move.w  D0, Obj_X(A0)                                    ; $0010
-                move.w  Obj_Y(A0), D0                                    ; $0014
+                move.w  D0, x_pos(A0)                                    ; $0010
+                move.w  y_pos(A0), D0                                    ; $0014
                 sub.w   (Camera_Y).w, D0                             ; $FFFFEE7C
                 addi.w  #$0080, D0
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 move.b  #$0C, routine(A0)                            ; $0005
 Offset_0x00F544:
                 rts                       
@@ -166,7 +166,7 @@ Offset_0x00F546:
 ;-------------------------------------------------------------------------------
 Offset_0x00F646:
                 moveq   #$00, D1
-                move.b  Obj_Map_Id(A0), D1                               ; $0022
+                move.b  mapping_frame(A0), D1                               ; $0022
                 cmpi.b  #$09, D1
                 bcs.s   Offset_0x00F68C
                 cmpi.b  #$13, D1
@@ -196,7 +196,7 @@ Offset_0x00F68E:
                 bne     Offset_0x00F78C
                 cmpi.b  #$06, routine(A2)                            ; $0005
                 bcc     Offset_0x00F89C
-                btst    #$06, Obj_Status(A2)                             ; $002A
+                btst    #$06, status(A2)                             ; $002A
                 beq     Offset_0x00F89C
                 subq.w  #$01, Obj_Player_St_Convex(A0)                   ; $003C
                 bpl     Offset_0x00F7B0
@@ -206,7 +206,7 @@ Offset_0x00F68E:
                 andi.w  #$0001, D0
                 move.b  D0, Obj_Player_Selected(A0)                      ; $0038
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A2), D0                              ; $002C
+                move.b  subtype(A2), D0                              ; $002C
                 cmpi.w  #$0019, D0
                 beq.s   Offset_0x00F712
                 cmpi.w  #$0014, D0
@@ -232,7 +232,7 @@ Offset_0x00F712:
                 moveq   #Underwater_Sfx, D0                                ; $79
                 jsr     (PlaySound)                           ; Offset_0x001176
 Offset_0x00F720:
-                subq.b  #$01, Obj_Subtype(A2)                            ; $002C
+                subq.b  #$01, subtype(A2)                            ; $002C
                 bcc     Offset_0x00F7AE
                 move.b  #$81, Obj_Player_Control(A2)                     ; $002E
                 move.w  #Drowning_Sfx, D0                                ; $003B
@@ -245,12 +245,12 @@ Offset_0x00F720:
                 move.l  A0, -(A7)
                 move.l  A2, A0
                 bsr     Sonic_ResetOnFloor                     ; Offset_0x00BF76
-                move.b  #$17, Obj_Ani_Number(A0)                         ; $0020
-                bset    #$01, Obj_Status(A0)                             ; $002A
-                bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
-                move.w  #$0000, Obj_Speed_Y(A0)                          ; $001A
-                move.w  #$0000, Obj_Speed_X(A0)                          ; $0018
-                move.w  #$0000, Obj_Inertia(A0)                          ; $001C
+                move.b  #$17, anim(A0)                         ; $0020
+                bset    #$01, status(A0)                             ; $002A
+                bset    #$07, art_tile(A0)                           ; $000A
+                move.w  #$0000, y_vel(A0)                          ; $001A
+                move.w  #$0000, x_vel(A0)                          ; $0018
+                move.w  #$0000, inertia(A0)                          ; $001C
                 move.l  (A7)+, A0
                 cmpa.w  #Obj_Player_One, A2                              ; $B000
                 bne.s   Offset_0x00F78A
@@ -266,7 +266,7 @@ Offset_0x00F79A:
                 move.l  A0, -(A7)
                 move.l  A2, A0
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                addi.w  #$0010, Obj_Speed_Y(A0)                          ; $001A
+                addi.w  #$0010, y_vel(A0)                          ; $001A
                 move.l  (A7)+, A0
                 bra.s   Offset_0x00F7B0
 Offset_0x00F7AE:
@@ -284,36 +284,36 @@ Offset_0x00F7C0:
                 jsr     (AllocateObject)                     ; Offset_0x011DD8
                 bne     Offset_0x00F89C
                 move.l  (A0), (A1)
-                move.w  Obj_X(A2), Obj_X(A1)                      ; $0010, $0010
+                move.w  x_pos(A2), x_pos(A1)                      ; $0010, $0010
                 moveq   #$06, D0
-                btst    #$00, Obj_Status(A2)                             ; $002A
+                btst    #$00, status(A2)                             ; $002A
                 beq.s   Offset_0x00F7F4
                 neg.w   D0
-                move.b  #$40, Obj_Angle(A1)                              ; $0026
+                move.b  #$40, angle(A1)                              ; $0026
 Offset_0x00F7F4:
-                add.w   D0, Obj_X(A1)                                    ; $0010
-                move.w  Obj_Y(A2), Obj_Y(A1)                      ; $0014, $0014
+                add.w   D0, x_pos(A1)                                    ; $0010
+                move.w  y_pos(A2), y_pos(A1)                      ; $0014, $0014
                 move.l  Obj_Player_Jump(A0), Obj_Player_Jump(A1)  ; $0040, $0040
-                move.b  #$06, Obj_Subtype(A1)                            ; $002C
+                move.b  #$06, subtype(A1)                            ; $002C
                 tst.w   Obj_P_Flips_Remaining(A0)                        ; $0030
                 beq     Offset_0x00F846
                 andi.w  #$0007, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
                 addi.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
-                move.w  Obj_Y(A2), D0                                    ; $0014
+                move.w  y_pos(A2), D0                                    ; $0014
                 subi.w  #$000C, D0
-                move.w  D0, Obj_Y(A1)                                    ; $0014
+                move.w  D0, y_pos(A1)                                    ; $0014
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
-                move.b  D0, Obj_Angle(A1)                                ; $0026
+                move.b  D0, angle(A1)                                ; $0026
                 move.w  (Level_Frame_Count).w, D0                    ; $FFFFFE04
                 andi.b  #$03, D0
                 bne.s   Offset_0x00F892
-                move.b  #$0E, Obj_Subtype(A1)                            ; $002C
+                move.b  #$0E, subtype(A1)                            ; $002C
                 bra.s   Offset_0x00F892
 Offset_0x00F846:
                 btst    #$07, Obj_Player_Next_Tilt(A0)                   ; $003A
                 beq.s   Offset_0x00F892
                 moveq   #$00, D2
-                move.b  Obj_Subtype(A2), D2                              ; $002C
+                move.b  subtype(A2), D2                              ; $002C
                 cmpi.b  #$0C, D2
                 bcc.s   Offset_0x00F892
                 lsr.w   #$01, D2
@@ -322,14 +322,14 @@ Offset_0x00F846:
                 bne.s   Offset_0x00F87A
                 bset    #$06, Obj_Player_Next_Tilt(A0)                   ; $003A
                 bne.s   Offset_0x00F892
-                move.b  D2, Obj_Subtype(A1)                              ; $002C
+                move.b  D2, subtype(A1)                              ; $002C
                 move.w  #$001C, Obj_Player_St_Convex(A1)                 ; $003C
 Offset_0x00F87A:
                 tst.b   Obj_Player_Selected(A0)                          ; $0038
                 bne.s   Offset_0x00F892
                 bset    #$06, Obj_Player_Next_Tilt(A0)                   ; $003A
                 bne.s   Offset_0x00F892
-                move.b  D2, Obj_Subtype(A1)                              ; $002C
+                move.b  D2, subtype(A1)                              ; $002C
                 move.w  #$001C, Obj_Player_St_Convex(A1)                 ; $003C
 Offset_0x00F892:
                 subq.b  #$01, Obj_Player_Selected(A0)                    ; $0038

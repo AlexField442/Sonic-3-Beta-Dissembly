@@ -43,10 +43,10 @@ Offset_0x04A306:
                 move.l  Obj_Control_Var_0E(A0), A1                       ; $003E
                 jsr     (SetupObjectAttributes3)                    ; Offset_0x041D7A
                 move.l  #Offset_0x043B32, (A0)
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsr.b   #$02, D0
                 addq.b  #$06, D0
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  D0, mapping_frame(A0)                               ; $0022
                 jmp     (Delete_Sprite_Clear_Respaw_Flag_Check_X_Y) ; Offset_0x042B96   
 ;-------------------------------------------------------------------------------
 Offset_0x04A328:

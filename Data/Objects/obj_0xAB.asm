@@ -9,10 +9,10 @@
                 move.l  #Offset_0x048318, (A0)
                 bclr    #$01, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0482F4
-                bset    #$07, Obj_Art_VRAM(A0)                           ; $000A
+                bset    #$07, art_tile(A0)                           ; $000A
 Offset_0x0482F4:
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$0006, D0
                 move.w  Offset_0x048310(PC, D0), D4
                 jsr     (Set_Velocity_X_Track_Player_One)      ; Offset_0x042E4C
@@ -50,7 +50,7 @@ Offset_0x048354:
                 move.b  #$08, x_radius(A0)                            ; $001F
                 move.l  #Offset_0x04837C, (A0)
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsr.b   #$01, D0
                 move.b  Offset_0x048378(PC, D0), Obj_Control_Var_0C(A0)  ; $003C
                 rts               
@@ -61,7 +61,7 @@ Offset_0x048378:
 Offset_0x04837C:
                 btst    #$00, (Vint_runcount+$03).w       ; $FFFFFE0F
                 bne.s   Offset_0x0483DC
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x048398
                 addq.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
@@ -74,14 +74,14 @@ Offset_0x04839C:
                 beq.s   Offset_0x0483DC
                 move.l  #Offset_0x0483E6, (A0)
                 move.l  #Offset_0x0483FA, Obj_Child(A0)                  ; $0034
-                move.w  Obj_Speed_X(A1), D0                              ; $0018
+                move.w  x_vel(A1), D0                              ; $0018
                 asl.w   #$01, D0
                 move.l  #Run_Object_Hit_Wall_Right_A0, Obj_Child_Data(A0) ; Offset_0x042424, $0030
-                move.w  #$0008, Obj_Height_3(A0)                         ; $0044
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
+                move.w  #$0008, default_y_radius(A0)                         ; $0044
+                move.w  D0, x_vel(A0)                              ; $0018
                 bpl.s   Offset_0x0483DC
                 move.l  #Run_Object_Hit_Wall_Left_A0, Obj_Child_Data(A0) ; Offset_0x04243A, $0030
-                move.w  #$FFF8, Obj_Height_3(A0)                         ; $0044
+                move.w  #$FFF8, default_y_radius(A0)                         ; $0044
 Offset_0x0483DC:
                 moveq   #$04, D2
                 jsr     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2
@@ -90,7 +90,7 @@ Offset_0x0483DC:
 Offset_0x0483E6:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 move.l  Obj_Child_Data(A0), A1                           ; $0030
-                move.w  Obj_Height_3(A0), D3                             ; $0044
+                move.w  default_y_radius(A0), D3                             ; $0044
                 jsr     (A1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_Y(PC) ; Offset_0x042B96    
 ;-------------------------------------------------------------------------------

@@ -38,7 +38,7 @@ Offset_0x0124EA:
 		addi.w	#8,d0
 		cmp.w	(Sonic_Level_Limits_Max_Y).w,d0
 		bcs.s	Offset_0x012504
-		btst	#1,(Obj_Player_One+Obj_Status).w
+		btst	#1,(Obj_Player_One+status).w
 		beq.s	Offset_0x012504
 		add.w	d1,d1
 		add.w	d1,d1

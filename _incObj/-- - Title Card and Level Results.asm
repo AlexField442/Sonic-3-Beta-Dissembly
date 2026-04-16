@@ -60,10 +60,10 @@ TitleCard_MakeObject:
 		move.w	(a2)+,titlecard_x_target(a1)
 		move.w	(a2)+,x_pos(a1)
 		move.w	(a2)+,y_pos(a1)
-		move.b	(a2)+,Obj_Map_Id(a1)
+		move.b	(a2)+,mapping_frame(a1)
 		move.b	(a2)+,width_pixels(a1)
 		move.w	(a2)+,d2
-		move.b	d2,Obj_Col_Flags(a1)
+		move.b	d2,collision_flags(a1)
 		move.b	#$40,render_flags(a1)
 		move.l	#Title_Cards_Mappings,mappings(a1)
 		move.w	a0,Obj_Control_Var_18(a1)
@@ -153,7 +153,7 @@ Obj_TtlCardRedBar:
 		jmp	(DeleteObject).l
 
 Offset_0x0246BE:
-		cmp.b	Obj_Col_Flags(a0),d0
+		cmp.b	collision_flags(a0),d0
 		bcs.s	Offset_0x0246E2
 		subi.w	#32,y_pos(a0)
 		bra.s	Offset_0x0246E2
@@ -176,7 +176,7 @@ Offset_0x0246E2:
 ; Offset_0x0246EE: Title_Card_Level_Name:
 Obj_TtlCardName:
 		move.b	(Apparent_Zone).w,d0
-		add.b	d0,Obj_Map_Id(a0)
+		add.b	d0,mapping_frame(a0)
 		move.l	#Obj_TtlCardZone,(a0)
 
 ; ---------------------------------------------------------------------------
@@ -194,7 +194,7 @@ Obj_TtlCardZone:
 ; ---------------------------------------------------------------------------
 
 Offset_0x024716:
-		cmp.b	Obj_Col_Flags(a0),d0
+		cmp.b	collision_flags(a0),d0
 		bcs.s	Offset_0x02473A
 		addi.w	#$20,x_pos(a0)
 		bra.s	Offset_0x02473A
@@ -343,8 +343,8 @@ LevelResults_RingBonus:
 		clr.w	(Level_Results_Total_Bonus).w
 		move.w	#$96,Obj_Timer(a0)
 		move.w	#$C,titlecard_objcnt(a0)
-		move.b	#$1E,(Obj_Player_One+Obj_Subtype).w
-		move.b	#$1E,(Obj_Player_Two+Obj_Subtype).w
+		move.b	#$1E,(Obj_Player_One+subtype).w
+		move.b	#$1E,(Obj_Player_Two+subtype).w
 		addq.b	#2,routine(a0)
 		rts     
 ; ===========================================================================
@@ -364,10 +364,10 @@ LevelResults_MakeObject:
 		move.w	(a2)+,x_pos(a1)
 		spl	routine(a1)
 		move.w	(a2)+,y_pos(a1)
-		move.b	(a2)+,Obj_Map_Id(a1)
+		move.b	(a2)+,mapping_frame(a1)
 		move.b	(a2)+,width_pixels(a1)
 		move.w	(a2)+,d2
-		move.b	d2,Obj_Col_Flags(a1)
+		move.b	d2,collision_flags(a1)
 		move.b	#$40,render_flags(a1)
 		move.l	#Level_Results_Mappings,mappings(a1)
 		move.w	a0,Obj_Control_Var_18(a1)
@@ -454,7 +454,7 @@ Obj_LevResultsCharName:
 		cmpi.w	#Knuckles_Alone,(Player_Selected_Flag).w	; is this a Knuckles game?
 		bne.s	Offset_0x0249E4				; if not, branch
 ; LevResultsCharName_Knux:
-		addq.b	#3,Obj_Map_Id(a0)			; use Knuckles frame
+		addq.b	#3,mapping_frame(a0)			; use Knuckles frame
 		moveq	#$30,d0
 		sub.w	d0,x_pos(a0)
 		sub.w	d0,titlecard_x_target(a0)
@@ -463,10 +463,10 @@ Obj_LevResultsCharName:
 ; ---------------------------------------------------------------------------
 ; Offset_0x0249C8:
 LevResultsCharName_Tails:
-		addq.b	#1,Obj_Map_Id(a0)			; use Miles frame
+		addq.b	#1,mapping_frame(a0)			; use Miles frame
 		tst.b	(Hardware_Id).w				; is this a Japanese console?
 		bpl.s	Offset_0x0249E4				; if yes, branch
-		addq.b	#1,Obj_Map_Id(a0)			; use Tails frame
+		addq.b	#1,mapping_frame(a0)			; use Tails frame
 		moveq	#8,d0
 		add.w	d0,x_pos(a0)
 		add.w	d0,titlecard_x_target(a0)
@@ -490,7 +490,7 @@ Obj_LevResultsGeneral:
 Obj_LevResultsAct:
 		tst.b	(Apparent_Act).w			; are we in "Act 2"?
 		beq.s	Offset_0x0249E4				; if not, branch
-		addq.b	#1,Obj_Map_Id(a0)
+		addq.b	#1,mapping_frame(a0)
 		bra.s	Offset_0x0249E4
 
 ; ---------------------------------------------------------------------------
@@ -536,7 +536,7 @@ LevelResults_DisplayScore:
 		move.w	#7,y_sub(a0)
 		jsr	LevelResults_GetDecimalScore(pc)
 		rol.l	#4,d1
-		lea	Obj_Speed_X(a0),a1
+		lea	x_vel(a0),a1
 		move.w	x_pos(a0),d2
 		subi.w	#56,d2					; move to left of the last zero
 		move.w	y_pos(A0),d3
@@ -580,7 +580,7 @@ LevelResults_MoveElement:
 ; ---------------------------------------------------------------------------
 ; Offset_0x024A7E:
 LevelResults_MoveOffScreen:
-		cmp.b	Obj_Col_Flags(a0),d0
+		cmp.b	collision_flags(a0),d0
 		bcs.s	Offset_0x024AAC
 		move.w	#-32,d0
 		tst.b	routine(a0)

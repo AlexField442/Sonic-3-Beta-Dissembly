@@ -27,13 +27,13 @@ Offset_0x047806:
                 beq.s   Offset_0x047812
                 neg.w   D0
 Offset_0x047812:
-                add.w   D0, Obj_X(A0)                                    ; $0010
+                add.w   D0, x_pos(A0)                                    ; $0010
                 jsr     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C  
 ;-------------------------------------------------------------------------------
 Offset_0x04781E:
                 move.l  #Offset_0x04782C, (A0)
-                move.b  #$82, Obj_Col_Flags(A0)                          ; $0028
+                move.b  #$82, collision_flags(A0)                          ; $0028
                 rts 
 ;-------------------------------------------------------------------------------  
 Offset_0x04782C:
@@ -42,7 +42,7 @@ Offset_0x04782C:
                 tst.w   D1
                 bpl.s   Offset_0x047856
                 move.l  #Offset_0x04785A, (A0)
-                clr.b   Obj_Col_Flags(A0)                                ; $0028
+                clr.b   collision_flags(A0)                                ; $0028
                 lea     Offset_0x0478C4(PC), A2
                 jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 moveq   #Floor_Thump_Sfx, D0                               ; $68
@@ -59,20 +59,20 @@ Offset_0x047862:
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Animate_Raw_Delete_Sprite_Check_X_Y, (A0) ; Offset_0x042FB2
                 move.l  #Offset_0x047196, Obj_Child_Data(A0)             ; $0030
-                cmpi.b  #$06, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$06, subtype(A0)                            ; $002C
                 bcc.s   Offset_0x047888
                 move.l  #Offset_0x04718E, Obj_Child_Data(A0)             ; $0030
 Offset_0x047888:
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
                 andi.b  #$03, D0
-                move.b  D0, Obj_Ani_Frame(A0)                            ; $0023
+                move.b  D0, anim_frame(A0)                            ; $0023
                 moveq   #$00, D0
                 jmp     Set_Indexed_Velocity(PC)               ; Offset_0x042D5A
 Offset_0x04789C:
                 moveq   #$1B, D1
                 moveq   #$20, D2
                 moveq   #$20, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jmp     (Solid_Object)                         ; Offset_0x013556   
 ;-------------------------------------------------------------------------------  
 Stalactite_Setup_Data:                                         ; Offset_0x0478AC

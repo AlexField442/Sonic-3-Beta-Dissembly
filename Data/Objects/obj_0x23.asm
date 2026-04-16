@@ -8,16 +8,16 @@
                 move.b  #$80, height_pixels(A0)                             ; $0006
                 move.b  #$00, priority(A0)                           ; $0008
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$03, D0
                 move.w  D0, Obj_Timer(A0)                                ; $002E
                 move.l  #Offset_0x020138, (A0)
 Offset_0x020138:                
-                move.w  Obj_X(A0), D1                                    ; $0010
+                move.w  x_pos(A0), D1                                    ; $0010
                 move.w  D1, D2
                 subi.w  #$0010, D1
                 addi.w  #$0010, D2
-                move.w  Obj_Y(A0), D3                                    ; $0014
+                move.w  y_pos(A0), D3                                    ; $0014
                 move.w  D3, D4
                 sub.w   Obj_Timer(A0), D3                                ; $002E
                 add.w   Obj_Timer(A0), D4                                ; $002E
@@ -27,26 +27,26 @@ Offset_0x020138:
                 bsr.s   Offset_0x020166
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E
 Offset_0x020166:
-                move.w  Obj_X(A1), D0                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
                 cmp.w   D1, D0
                 bcs.s   Offset_0x0201B6
                 cmp.w   D2, D0
                 bcc.s   Offset_0x0201B6
-                move.w  Obj_Y(A1), D0                                    ; $0014
+                move.w  y_pos(A1), D0                                    ; $0014
                 cmp.w   D3, D0
                 bcs.s   Offset_0x0201B6
                 cmp.w   D4, D0
                 bcc.s   Offset_0x0201B6
-                cmpi.b  #$1A, Obj_Ani_Number(A1)                         ; $0020
+                cmpi.b  #$1A, anim(A1)                         ; $0020
                 beq.s   Offset_0x0201B6
-                move.w  #$0000, Obj_Speed_X(A1)                          ; $0018
-                move.w  #$0400, Obj_Speed_Y(A1)                          ; $001A
-                move.w  #$0000, Obj_Inertia(A1)                          ; $001C
-                bset    #$01, Obj_Status(A1)                             ; $002A
+                move.w  #$0000, x_vel(A1)                          ; $0018
+                move.w  #$0400, y_vel(A1)                          ; $001A
+                move.w  #$0000, inertia(A1)                          ; $001C
+                bset    #$01, status(A1)                             ; $002A
                 move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
-                bclr    #$03, Obj_Status(A1)                             ; $002A
-                bclr    #$02, Obj_Status(A1)                             ; $002A
-                move.b  #$1A, Obj_Ani_Number(A1)                         ; $0020
+                bclr    #$03, status(A1)                             ; $002A
+                bclr    #$02, status(A1)                             ; $002A
+                move.b  #$1A, anim(A1)                         ; $0020
 Offset_0x0201B6:
                 rts                                                                                                                                       
 ;===============================================================================

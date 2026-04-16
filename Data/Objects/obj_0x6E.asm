@@ -4,20 +4,20 @@
 ;===============================================================================
 ; Offset_0x02E0A8:
                 move.l  #Waterfall_Mappings, mappings(A0) ; Offset_0x02E1E8, $000C
-                move.w  #$235C, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$235C, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0000, priority(A0)                         ; $0008
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$08, height_pixels(A0)                             ; $0006
                 move.b  #$08, x_radius(A0)                            ; $001F
                 move.b  #$07, y_radius(A0)                           ; $001E
-                move.b  #$06, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$06, mapping_frame(A0)                             ; $0022
                 move.l  #Offset_0x02E0E6, (A0)
 Offset_0x02E0E6:                
                 subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
                 bpl.s   Offset_0x02E122
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$02, D0
                 move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
                 tst.b   render_flags(A0)                                    ; $0004
@@ -30,7 +30,7 @@ Offset_0x02E10A:
                 subq.w  #$02, D0
                 bcc.s   Offset_0x02E10A
                 move.l  #Offset_0x02E128, (A1)
-                move.b  #$C7, Obj_Col_Flags(A1)                          ; $0028
+                move.b  #$C7, collision_flags(A1)                          ; $0028
                 moveq   #$00, D0
 Offset_0x02E122:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2  
@@ -39,16 +39,16 @@ Offset_0x02E128:
                 tst.b   routine(A0)                                  ; $0005
                 beq.s   Offset_0x02E162
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                addi.w  #$0008, Obj_Speed_Y(A0)                          ; $001A
+                addi.w  #$0008, y_vel(A0)                          ; $001A
                 jsr     (ObjHitFloor)                          ; Offset_0x009D84
                 tst.w   D1
                 bpl.s   Offset_0x02E162
-                add.w   D1, Obj_Y(A0)                                    ; $0014
-                clr.w   Obj_Speed_Y(A0)                                  ; $001A
-                move.w  #$0101, Obj_Ani_Number(A0)                       ; $0020
+                add.w   D1, y_pos(A0)                                    ; $0014
+                clr.w   y_vel(A0)                                  ; $001A
+                move.w  #$0101, anim(A0)                       ; $0020
                 move.l  #Offset_0x02E162, (A0)
-                move.b  #$01, Obj_Ani_Time(A0)                           ; $0024
-                clr.b   Obj_Ani_Frame(A0)                                ; $0023
+                move.b  #$01, anim_frame_duration(A0)                           ; $0024
+                clr.b   anim_frame(A0)                                ; $0023
 Offset_0x02E162:
                 lea     (Waterfall_Animate_Data), A1           ; Offset_0x02E1D6
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
@@ -56,30 +56,30 @@ Offset_0x02E162:
                 bne.s   Offset_0x02E17C
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x02E17C:
-                tst.b   Obj_Col_Prop(A0)                                 ; $0029
+                tst.b   collision_property(A0)                                 ; $0029
                 beq.s   Offset_0x02E1A2
                 lea     (Obj_Player_One).w, A2                       ; $FFFFB000
-                bclr    #$00, Obj_Col_Prop(A0)                           ; $0029
+                bclr    #$00, collision_property(A0)                           ; $0029
                 beq.s   Offset_0x02E190
                 bsr.s   Offset_0x02E1AE
 Offset_0x02E190:
                 lea     (Obj_Player_Two).w, A2                       ; $FFFFB04A
-                bclr    #$01, Obj_Col_Prop(A0)                           ; $0029
+                bclr    #$01, collision_property(A0)                           ; $0029
                 beq.s   Offset_0x02E19E
                 bsr.s   Offset_0x02E1AE
 Offset_0x02E19E:
-                clr.b   Obj_Col_Prop(A0)                                 ; $0029
+                clr.b   collision_property(A0)                                 ; $0029
 Offset_0x02E1A2:
                 jsr     (Add_SpriteToCollisionResponseList)       ; Offset_0x00A540
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x02E1AE:
-                cmpi.b  #$05, Obj_Ani_Number(A2)                         ; $0020
+                cmpi.b  #$05, anim(A2)                         ; $0020
                 bne.s   Offset_0x02E1BC
-                move.b  #$00, Obj_Ani_Flag(A2)                           ; $0021
+                move.b  #$00, prev_anim(A2)                           ; $0021
 Offset_0x02E1BC:
-                move.b  #$01, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$01, anim(A0)                         ; $0020
                 move.l  #Offset_0x02E162, (A0)
-                move.b  #$00, Obj_Col_Flags(A0)                          ; $0028
+                move.b  #$00, collision_flags(A0)                          ; $0028
                 move.b  #$02, routine(A0)                            ; $0005
                 rts        
 ;------------------------------------------------------------------------------- 

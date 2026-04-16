@@ -4,23 +4,23 @@
 ;===============================================================================
 ; Offset_0x02C13C:
                 move.l  #Elephant_Block_Mappings, mappings(A0) ; Offset_0x02C29E, $000C
-                move.w  #$0300, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$0300, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$30, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
-                move.w  Obj_X(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
+                move.w  x_pos(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
                 bset    #$06, render_flags(A0)                              ; $0004
-                move.w  #$0001, Obj_Sub_Y(A0)                            ; $0016
-                lea     Obj_Speed_X(A0), A2                              ; $0018
-                move.w  Obj_X(A0), (A2)+                                 ; $0010
-                move.w  Obj_Y(A0), (A2)+                                 ; $0014
+                move.w  #$0001, y_sub(A0)                            ; $0016
+                lea     x_vel(A0), A2                              ; $0018
+                move.w  x_pos(A0), (A2)+                                 ; $0010
+                move.w  y_pos(A0), (A2)+                                 ; $0014
                 move.w  #$0000, (A2)+
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$08, D0
                 move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
-                bset    #$07, Obj_Status(A0)                             ; $002A
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                bset    #$07, status(A0)                             ; $002A
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x02C1B0
                 move.w  D0, Obj_Control_Var_04(A0)                       ; $0034
                 move.b  #$01, Obj_Control_Var_0A(A0)                     ; $003A
@@ -30,7 +30,7 @@ Offset_0x02C1B0:
                 move.l  #Offset_0x02C1B6, (A0)
 Offset_0x02C1B6:                
                 bsr     Offset_0x02C266
-                lea     Obj_Speed_X(A0), A2                              ; $0018
+                lea     x_vel(A0), A2                              ; $0018
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 move.b  Obj_Control_Var_04(A0), D1                       ; $0034
                 ext.w   D1
@@ -39,7 +39,7 @@ Offset_0x02C1B6:
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 asr.w   #$01, D1
                 sub.w   D1, D0
-                move.w  D0, Obj_X(A0)                                    ; $0010
+                move.w  D0, x_pos(A0)                                    ; $0010
                 addq.w  #$08, D1
                 move.b  D1, width_pixels(A0)                                ; $0007
                 move.w  #$0000, render_flags(A2)                            ; $0004
@@ -52,12 +52,12 @@ Offset_0x02C1F0:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x02C20E:
                 bsr     Offset_0x02C266
-                lea     Obj_Speed_X(A0), A2                              ; $0018
+                lea     x_vel(A0), A2                              ; $0018
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 move.b  Obj_Control_Var_04(A0), D1                       ; $0034
                 ext.w   D1
@@ -66,7 +66,7 @@ Offset_0x02C20E:
                 move.w  Obj_Control_Var_00(A0), D0                       ; $0030
                 asr.w   #$01, D1
                 add.w   D1, D0
-                move.w  D0, Obj_X(A0)                                    ; $0010
+                move.w  D0, x_pos(A0)                                    ; $0010
                 addq.w  #$08, D1
                 move.b  D1, width_pixels(A0)                                ; $0007
                 move.w  #$0000, render_flags(A2)                            ; $0004
@@ -79,7 +79,7 @@ Offset_0x02C248:
                 move.b  height_pixels(A0), D2                               ; $0006
                 move.w  D2, D3
                 addq.w  #$01, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x02C266:

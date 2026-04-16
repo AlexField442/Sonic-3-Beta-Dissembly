@@ -17,7 +17,7 @@ Boss_Explosion_Control:                                        ; Offset_0x041BDE
                 lea     Offset_0x041D3E(PC), A1
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Obj_Normal_Explode, Obj_Control_Var_04(A0) ; Offset_0x041C30, $0034
-                cmpi.b  #$08, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$08, subtype(A0)                            ; $002C
                 bne.s   Offset_0x041BFE
                 move.l  #Offset_0x041C7A, Obj_Control_Var_04(A0)         ; $0034
 Offset_0x041BFE:
@@ -28,13 +28,13 @@ Offset_0x041C08:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
 ;-------------------------------------------------------------------------------
 Offset_0x041C0C:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$05, Obj_Control_Var_08(A1)                     ; $0038
                 bne     Offset_0x041C76
                 tst.l   (A1)
                 beq     Offset_0x041C76
-                move.w  Obj_X(A1), Obj_X(A0)                      ; $0010, $0010
-                move.w  Obj_Y(A1), Obj_Y(A0)                      ; $0014, $0014
+                move.w  x_pos(A1), x_pos(A0)                      ; $0010, $0010
+                move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2                
 ;-------------------------------------------------------------------------------
 Obj_Normal_Explode:                                            ; Offset_0x041C30
@@ -55,11 +55,11 @@ Offset_0x041C50:
                 subq.w  #$01, D2
                 and.w   D2, D0
                 sub.w   D1, D0
-                add.w   D0, Obj_X(A1)                                    ; $0010
+                add.w   D0, x_pos(A1)                                    ; $0010
                 swap.w  D0
                 and.w   D2, D0
                 sub.w   D1, D0
-                add.w   D0, Obj_Y(A1)                                    ; $0014
+                add.w   D0, y_pos(A1)                                    ; $0014
                 rts
 Offset_0x041C76:
                 jmp     Go_Delete_Object_A0(PC)                ; Offset_0x042D3E       
@@ -75,7 +75,7 @@ Offset_0x041C7A:
                 bra.s   Offset_0x041C50
 Offset_0x041C9A:
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lea     Offset_0x041CB6(PC), A1
                 adda.w  $00(A1, D0), A1
                 move.b  (A1)+, Obj_Control_Var_09(A0)                    ; $0039
@@ -114,15 +114,15 @@ Offset_0x041CE2:
                 dc.w    Offset_0x041C08-Offset_0x041CE2     
 ;-------------------------------------------------------------------------------
 Offset_0x041CE6:
-                move.b  #$02, Obj_Subtype(A0)                            ; $002C
+                move.b  #$02, subtype(A0)                            ; $002C
                 bsr     Boss_Explosion_Control                 ; Offset_0x041BDE
                 move.w  #$0002, Obj_Timer(A0)                            ; $002E
                 move.w  (Camera_X).w, D0                             ; $FFFFEE78
                 addi.w  #$00A0, D0
-                move.w  D0, Obj_X(A0)                                    ; $0010
+                move.w  D0, x_pos(A0)                                    ; $0010
                 move.w  (Camera_Y).w, D0                             ; $FFFFEE7C
                 addi.w  #$0070, D0
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
 ;-------------------------------------------------------------------------------               
 Offset_0x041D0E:
                 rts    

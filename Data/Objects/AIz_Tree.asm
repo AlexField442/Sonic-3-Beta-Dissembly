@@ -6,14 +6,14 @@
                 move.l  #Tree_Mappings, mappings(A0)     ; Offset_0x0234F0, $000C
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  subtype(A0), D0                              ; $002C
+                move.b  D0, mapping_frame(A0)                               ; $0022
                 add.w   D0, D0
                 move.w  D0, D1
                 add.w   D0, D0
                 add.w   D1, D0
                 lea     Offset_0x0234EA(PC, D0), A1
-                move.w  (A1)+, Obj_Art_VRAM(A0)                          ; $000A
+                move.w  (A1)+, art_tile(A0)                          ; $000A
                 move.w  (A1)+, priority(A0)                          ; $0008
                 move.b  (A1)+, width_pixels(A0)                             ; $0007
                 move.b  (A1)+, height_pixels(A0)                            ; $0006

@@ -56,38 +56,38 @@ width_pixels:		equ 7		; 1 byte
 priority:		equ 8		; 2 bytes ; 8/9
 art_tile:		equ $A		; 2 bytes ; $A/$B
 mappings:		equ $C		; 4 bytes ; $C/$D/$E/$F
-
 x_pos:			equ $10		; 2 bytes ; $10/$11
 x_sub:			equ $12		; 2 bytes ; $12/$13
 y_pos:			equ $14		; 2 bytes ; $14/$15
 y_sub:			equ $16		; 2 bytes ; $16/$17
 x_vel:			equ $18		; 2 bytes ; $18/$19
 y_vel:			equ $1A		; 2 bytes ; $1A/$1B
+inertia:		equ $1C		; 2 bytes ; $1C/$1D
 y_radius:		equ $1E		; 1 byte
 x_radius:		equ $1F		; 1 byte
+anim:			equ $20		; 1 byte
+prev_anim:		equ $21		; 1 byte
+mapping_frame:		equ $22		; 1 byte
+anim_frame:		equ $23		; 1 byte
+anim_frame_duration:	equ $24		; 1 byte
+anim_frame_delay:	equ $25		; 1 byte
+angle:			equ $26		; 1 byte
+status:			equ $2A		; 1 byte
+object_size:		equ $4A		; 1 byte
+
+; non-Sonic/Tails variables
+collision_flags:	equ $28		; 1 byte
+collision_property:	equ $29		; 1 byte
+subtype:		equ $2C		; 1 byte
+parent3:		equ $46		; 2 bytes
+respawn_index:		equ $48		; 2 bytes ; $48/$49
+
+; Sonic/Tails variables (needs to be cleaned out of other objects later...)
+default_y_radius:	equ $44		; 1 byte
+default_x_radius:	equ $45		; 1 byte
 
 ; OLD! To deprecate!
-Obj_Art_VRAM          equ art_tile
-Obj_X                 equ x_pos
-Obj_Sub_X             equ x_sub
-Obj_Y                 equ y_pos
-Obj_Sub_Y             equ y_sub
-Obj_Speed_X           equ x_vel
-Obj_Speed_Y           equ y_vel
-Obj_Inertia           equ $1C     ; Word          ; 14..15      ; 1C..1D
-Obj_Ani_Number        equ $20     ; Byte          ; 1C          ; 20
-Obj_Ani_Flag          equ $21     ; Byte          ; 1D          ; 21
-Obj_Map_Id            equ $22     ; Byte          ; 1A          ; 22
-Obj_Ani_Frame         equ $23     ; Byte          ; 1B          ; 23
-Obj_Ani_Time          equ $24     ; Byte          ; 1E..1F      ; 24..25
-Obj_Ani_Time_2        equ $25     ; Byte          ; 1F          ; 25   ; Usado por alguns objetos do Sonic 1
-Obj_Angle             equ $26     ; Byte          ; $26         ; $26
 Obj_Flip_Angle        equ $27     ; Byte          ; $27         ; $27
-Obj_Col_Flags         equ $28     ; Byte          ; 20          ; 28   ; Collision Flags
-Obj_Col_Prop          equ $29     ; Byte          ; 21          ; 29 
-Obj_Status            equ $2A     ; Byte          ; 22          ; 2A
-Obj_Status_2          equ $2B     ; Byte
-Obj_Subtype           equ $2C     ; Byte          ; 28          ; 2C
 Obj_Flags_2           equ $2D     ; Byte          ; 29          ; 2D
 Obj_Timer             equ $2E     ; Word          ; 2A..2B      ; 2E..2F
 Obj_Timer_2           equ $2F 
@@ -95,12 +95,6 @@ Obj_Child_Data        equ $30
 Obj_Child             equ $34 
 Obj_Destr_Flag        equ $3D     ; Byte          ; 39          ; 3D
 Obj_Parent_Ref        equ $3E     ; Word          ; 3E..3F      ; 3E..3F     
-Obj_Height_3          equ $44 
-Obj_Width_3           equ $45 
-Obj_Child_Ref         equ $46
-Obj_Respaw_Ref        equ $48     ; Word          ; None        ; 48..49
-
-Obj_Size              equ $4A
 
 ; Variaveis locais de objectos
 Obj_Control_Var_00      equ $30
@@ -401,24 +395,24 @@ Sprite_Table_Input_End:		equ	M68K_RAM_Start+$B000
 Obj_Memory_Address:		equ	M68K_RAM_Start+$B000
 Obj_Player_One                   equ Obj_Memory_Address
 Obj_Player_Two                   equ Obj_Memory_Address+$004A   
-Obj_02_Mem_Address               equ Obj_Memory_Address+(Obj_Size*$02)
-Obj_04_Mem_Address               equ Obj_Memory_Address+(Obj_Size*$04)
-Obj_05_Mem_Address               equ Obj_Memory_Address+(Obj_Size*$05)
-Obj_08_Mem_Address               equ Obj_Memory_Address+(Obj_Size*$08)
-Obj_Dynamic_RAM                  equ Obj_Memory_Address+(Obj_Size*$03) 
-Obj_Dynamic_RAM_End              equ Obj_Memory_Address+(Obj_Size*$5D) 
-Obj_Fixed_RAM                    equ Obj_Memory_Address+(Obj_Size*$5E)
+Obj_02_Mem_Address               equ Obj_Memory_Address+(object_size*$02)
+Obj_04_Mem_Address               equ Obj_Memory_Address+(object_size*$04)
+Obj_05_Mem_Address               equ Obj_Memory_Address+(object_size*$05)
+Obj_08_Mem_Address               equ Obj_Memory_Address+(object_size*$08)
+Obj_Dynamic_RAM                  equ Obj_Memory_Address+(object_size*$03) 
+Obj_Dynamic_RAM_End              equ Obj_Memory_Address+(object_size*$5D) 
+Obj_Fixed_RAM                    equ Obj_Memory_Address+(object_size*$5E)
 Obj_P1_Underwater_Control        equ Obj_Fixed_RAM                ; $5E
-Obj_P2_Underwater_Control        equ Obj_Fixed_RAM+(Obj_Size*$01) ; $5F
-Obj_Super_Sonic_Stars_RAM        equ Obj_Fixed_RAM+(Obj_Size*$02) ; $60
-Obj_Miles_Tails_RAM              equ Obj_Fixed_RAM+(Obj_Size*$03) ; $61
-Obj_P1_Dust_Water_Splash         equ Obj_Fixed_RAM+(Obj_Size*$04) ; $62
-Obj_P2_Dust_Water_Splash         equ Obj_Fixed_RAM+(Obj_Size*$05) ; $63
-Obj_P1_Shield                    equ Obj_Fixed_RAM+(Obj_Size*$06) ; $64
-Obj_P2_Shield                    equ Obj_Fixed_RAM+(Obj_Size*$07) ; $65
-Obj_P1_Invincibility             equ Obj_Fixed_RAM+(Obj_Size*$08) ; $66
-Obj_P2_Invincibility             equ Obj_Fixed_RAM+(Obj_Size*$0C) ; $6A
-Obj_Fixed_RAM_End                equ Obj_Fixed_RAM+(Obj_Size*$0F) ; $6D
+Obj_P2_Underwater_Control        equ Obj_Fixed_RAM+(object_size*$01) ; $5F
+Obj_Super_Sonic_Stars_RAM        equ Obj_Fixed_RAM+(object_size*$02) ; $60
+Obj_Miles_Tails_RAM              equ Obj_Fixed_RAM+(object_size*$03) ; $61
+Obj_P1_Dust_Water_Splash         equ Obj_Fixed_RAM+(object_size*$04) ; $62
+Obj_P2_Dust_Water_Splash         equ Obj_Fixed_RAM+(object_size*$05) ; $63
+Obj_P1_Shield                    equ Obj_Fixed_RAM+(object_size*$06) ; $64
+Obj_P2_Shield                    equ Obj_Fixed_RAM+(object_size*$07) ; $65
+Obj_P1_Invincibility             equ Obj_Fixed_RAM+(object_size*$08) ; $66
+Obj_P2_Invincibility             equ Obj_Fixed_RAM+(object_size*$0C) ; $6A
+Obj_Fixed_RAM_End                equ Obj_Fixed_RAM+(object_size*$0F) ; $6D
 
 Conveyor_Belt_Data_Array         equ M68K_RAM_Start+$CFE0            
 Obj_Memory_Address_End:		equ	M68K_RAM_Start+$D000

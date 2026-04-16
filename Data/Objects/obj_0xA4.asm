@@ -52,7 +52,7 @@ Offset_0x0451E4:
 ;-------------------------------------------------------------------------------
 Offset_0x0451FC:
                 jsr     AnimateRaw(PC)                        ; Offset_0x04208E
-                subq.w  #$01, Obj_Y(A0)                                  ; $0014
+                subq.w  #$01, y_pos(A0)                                  ; $0014
                 jsr     (Object_HitCeiling)                    ; Offset_0x009FB4
                 tst.w   D1
                 bpl.s   Offset_0x045214
@@ -76,7 +76,7 @@ Offset_0x045230:
                 beq.s   Offset_0x045242
                 moveq   #$01, D0
 Offset_0x045242:
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
                 andi.b  #$07, D1
                 bne.s   Offset_0x045250
                 bsr     Offset_0x04570C

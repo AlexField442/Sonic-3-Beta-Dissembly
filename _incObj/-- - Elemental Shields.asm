@@ -34,7 +34,7 @@ FireShield_Main:
 		beq.s	FireShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)
-		move.b	Obj_Status(a2),Obj_Status(a0)
+		move.b	status(a2),status(a0)
 		andi.w	#$7FFF,art_tile(a0)
 		tst.w	art_tile(A2)
 		bpl.s	FireShield_Display
@@ -83,7 +83,7 @@ LightningShield_Main:
 		beq.s	LightningShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)
-		move.b	Obj_Status(a2),Obj_Status(a0)
+		move.b	status(a2),status(a0)
 		andi.w	#$7FFF,art_tile(a0)
 		tst.w	art_tile(A2)
 		bpl.s	LightningShield_Display
@@ -132,7 +132,7 @@ BubbleShield_Main:
 		beq.s	BubbleShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)
-		move.b	Obj_Status(a2),Obj_Status(a0)
+		move.b	status(a2),status(a0)
 		andi.w	#$7FFF,art_tile(a0)
 		tst.w	art_tile(A2)
 		bpl.s	BubbleShield_Display
@@ -158,7 +158,7 @@ BubbleShield_Delete:
 ; Offset_0x0105B8: Load_Shield_Dynamic_PLC:
 LoadShieldDynamicPLC:
 		moveq	#0,d0
-		move.b	Obj_Map_Id(a0),d0
+		move.b	mapping_frame(a0),d0
 		cmp.b	shield_lastloadedDPLC(a0),d0
 		beq.s	Offset_0x010606
 		move.b	d0,shield_lastloadedDPLC(a0)

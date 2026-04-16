@@ -21,8 +21,8 @@ Explosion_Init:
 		jsr	(AllocateObject).l
 		bne.s	Explosion_Main
 		move.l	#Obj_Flickies,(a1)
-		move.w	Obj_X(a0),Obj_X(a1)
-		move.w	Obj_Y(a0),Obj_Y(a1)
+		move.w	x_pos(a0),x_pos(a1)
+		move.w	y_pos(a0),y_pos(a1)
 		move.w	Obj_Control_Var_0E(a0),Obj_Control_Var_0E(a1)
 ; Offset_0x013DB4:
 Explosion_Main:
@@ -34,21 +34,21 @@ Explosion_Main:
 		move.w	d0,art_tile(a0)
 		move.b	#4,render_flags(a0)
 		move.w	#$80,priority(a0)
-		move.b	#0,Obj_Col_Flags(a0)
+		move.b	#0,collision_flags(a0)
 		move.b	#$C,width_pixels(a0)
 		move.b	#$C,height_pixels(a0)
-		move.b	#3,Obj_Ani_Time(a0)
-		move.b	#0,Obj_Map_Id(a0)
+		move.b	#3,anim_frame_duration(a0)
+		move.b	#0,mapping_frame(a0)
 		moveq	#Object_Hit_Sfx,d0
 		jsr	(PlaySound).l
 		move.l	#Explosion_Animate,(a0)
 ; Offset_0x013E08:
 Explosion_Animate:
-		subq.b	#1,Obj_Ani_Time(a0)
+		subq.b	#1,anim_frame_duration(a0)
 		bpl.s	Explosion_Display
-		move.b	#7,Obj_Ani_Time(a0)
-		addq.b	#1,Obj_Map_Id(a0)
-		cmpi.b	#5,Obj_Map_Id(a0)
+		move.b	#7,anim_frame_duration(a0)
+		addq.b	#1,mapping_frame(a0)
+		cmpi.b	#5,mapping_frame(a0)
 		beq.w	DeleteObject
 ; Offset_0x013E22:
 Explosion_Display:
@@ -67,17 +67,17 @@ Obj_FireShield_Dissipate:
 		move.w	#$280,priority(a0)
 		move.b	#$C,width_pixels(a0)
 		move.b	#$C,height_pixels(a0)
-		move.b	#3,Obj_Ani_Time(a0)
-		move.b	#1,Obj_Map_Id(a0)
+		move.b	#3,anim_frame_duration(a0)
+		move.b	#1,mapping_frame(a0)
 		move.l	#FireShieldDissipate_Animate,(a0)
 ; Offset_0x013E60:
 FireShieldDissipate_Animate:
 		jsr	(SpeedToPos).l
-		subq.b	#1,Obj_Ani_Time(a0)
+		subq.b	#1,anim_frame_duration(a0)
 		bpl.s	FireShieldDissipate_Display
-		move.b	#3,Obj_Ani_Time(a0)
-		addq.b	#1,Obj_Map_Id(a0)
-		cmpi.b	#5,Obj_Map_Id(a0)
+		move.b	#3,anim_frame_duration(a0)
+		addq.b	#1,mapping_frame(a0)
+		cmpi.b	#5,mapping_frame(a0)
 		beq.w	DeleteObject
 ; Offset_0x013E80:
 FireShieldDissipate_Display:
@@ -95,25 +95,25 @@ Obj_Dissipate:
 		move.w	#$100,priority(a0)
 		move.b	#$C,width_pixels(a0)
 		move.b	#$C,height_pixels(a0)
-		move.b	#0,Obj_Map_Id(a0)
+		move.b	#0,mapping_frame(a0)
 		move.l	#Dissipate_Main,(a0)
 ; Offset_0x013EB8:                
 Dissipate_Main:
-		subq.b	#1,Obj_Ani_Time(a0)
+		subq.b	#1,anim_frame_duration(a0)
 		bmi.s	Offset_0x013EC0
 		rts
 
 Offset_0x013EC0:
-		move.b	#3,Obj_Ani_Time(a0)
+		move.b	#3,anim_frame_duration(a0)
 		move.l	#Dissipate_Animate,(a0)
 ; Offset_0x013ECC:                
 Dissipate_Animate:
 		jsr	(SpeedToPos).l
-		subq.b	#1,Obj_Ani_Time(a0)
+		subq.b	#1,anim_frame_duration(a0)
 		bpl.s	Dissipate_Display
-		move.b	#7,Obj_Ani_Time(a0)
-		addq.b	#1,Obj_Map_Id(a0)
-		cmpi.b	#5,Obj_Map_Id(a0)
+		move.b	#7,anim_frame_duration(a0)
+		addq.b	#1,mapping_frame(a0)
+		cmpi.b	#5,mapping_frame(a0)
 		beq.w	DeleteObject
 ; Offset_0x013EEC:
 Dissipate_Display:

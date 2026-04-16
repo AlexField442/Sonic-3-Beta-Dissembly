@@ -7,23 +7,23 @@
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$80, height_pixels(A0)                             ; $0006
-                move.w  Obj_Y(A0), Obj_Control_Var_0C(A0)         ; $0014, $003C
+                move.w  y_pos(A0), Obj_Control_Var_0C(A0)         ; $0014, $003C
                 move.l  #Hook_Mappings, mappings(A0)     ; Offset_0x01FA5E, $000C
-                move.w  #$42EA, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.w  #$42EA, art_tile(A0)                         ; $000A
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$007F, D0
                 lsl.w   #$03, D0
                 move.w  D0, Obj_Timer(A0)                                ; $002E
                 move.w  #$0002, Obj_Control_Var_0A(A0)                   ; $003A
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x01F8F2
                 move.w  Obj_Timer(A0), D0                                ; $002E
                 move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
                 move.b  #$01, Obj_Control_Var_06(A0)                     ; $0036
-                add.w   D0, Obj_Y(A0)                                    ; $0014
+                add.w   D0, y_pos(A0)                                    ; $0014
                 lsr.w   #$04, D0
                 addq.w  #$01, D0
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  D0, mapping_frame(A0)                               ; $0022
 Offset_0x01F8F2:
                 move.l  #Offset_0x01F8F8, (A0)
 Offset_0x01F8F8:                
@@ -49,13 +49,13 @@ Offset_0x01F926:
                 move.w  D2, Obj_Control_Var_08(A0)                       ; $0038
                 move.w  Obj_Control_Var_0C(A0), D0                       ; $003C
                 add.w   D2, D0
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 move.w  D2, D0
                 beq.s   Offset_0x01F93C
                 lsr.w   #$04, D0
                 addq.w  #$01, D0
 Offset_0x01F93C:
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  D0, mapping_frame(A0)                               ; $0022
 Offset_0x01F940:
                 lea     Obj_Control_Var_00(A0), A2                       ; $0030
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
@@ -84,14 +84,14 @@ Offset_0x01F964:
 Offset_0x01F99A:
                 btst    #$0A, D0
                 beq.s   Offset_0x01F9A6
-                move.w  #$FE00, Obj_Speed_X(A1)                          ; $0018
+                move.w  #$FE00, x_vel(A1)                          ; $0018
 Offset_0x01F9A6:
                 btst    #$0B, D0
                 beq.s   Offset_0x01F9B2
-                move.w  #$0200, Obj_Speed_X(A1)                          ; $0018
+                move.w  #$0200, x_vel(A1)                          ; $0018
 Offset_0x01F9B2:
-                move.w  #$FC80, Obj_Speed_Y(A1)                          ; $001A
-                bset    #$01, Obj_Status(A1)                             ; $002A
+                move.w  #$FC80, y_vel(A1)                          ; $001A
+                bset    #$01, status(A1)                             ; $002A
                 rts
 Offset_0x01F9C0:
                 clr.b   Obj_Timer(A1)                                    ; $002E
@@ -99,8 +99,8 @@ Offset_0x01F9C0:
                 move.b  #$3C, $0002(A2)
                 rts
 Offset_0x01F9CE:
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                addi.w  #$0094, Obj_Y(A1)                                ; $0014
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
+                addi.w  #$0094, y_pos(A1)                                ; $0014
                 rts
 Offset_0x01F9DC:
                 tst.b   $0002(A2)
@@ -108,13 +108,13 @@ Offset_0x01F9DC:
                 subq.b  #$01, $0002(A2)
                 bne     Offset_0x01FA5C
 Offset_0x01F9EA:
-                move.w  Obj_X(A1), D0                                    ; $0010
-                sub.w   Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
+                sub.w   x_pos(A0), D0                                    ; $0010
                 addi.w  #$0010, D0
                 cmpi.w  #$0020, D0
                 bcc     Offset_0x01FA5C
-                move.w  Obj_Y(A1), D1                                    ; $0014
-                sub.w   Obj_Y(A0), D1                                    ; $0014
+                move.w  y_pos(A1), D1                                    ; $0014
+                sub.w   y_pos(A0), D1                                    ; $0014
                 subi.w  #$0088, D1
                 cmpi.w  #$0018, D1
                 bcc     Offset_0x01FA5C
@@ -124,13 +124,13 @@ Offset_0x01F9EA:
                 bcc.s   Offset_0x01FA5C
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x01FA5C
-                clr.w   Obj_Speed_X(A1)                                  ; $0018
-                clr.w   Obj_Speed_Y(A1)                                  ; $001A
-                clr.w   Obj_Inertia(A1)                                  ; $001C
-                move.w  Obj_X(A0), Obj_X(A1)                      ; $0010, $0010
-                move.w  Obj_Y(A0), Obj_Y(A1)                      ; $0014, $0014
-                addi.w  #$0094, Obj_Y(A1)                                ; $0014
-                move.b  #$14, Obj_Ani_Number(A1)                         ; $0020
+                clr.w   x_vel(A1)                                  ; $0018
+                clr.w   y_vel(A1)                                  ; $001A
+                clr.w   inertia(A1)                                  ; $001C
+                move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
+                move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
+                addi.w  #$0094, y_pos(A1)                                ; $0014
+                move.b  #$14, anim(A1)                         ; $0020
                 move.b  #$01, Obj_Timer(A1)                              ; $002E
                 move.b  #$01, (A2)
                 moveq   #Switch_Blip_Sfx, D0                               ; $64

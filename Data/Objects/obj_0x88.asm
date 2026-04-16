@@ -18,7 +18,7 @@ Offset_0x048772:
                 lea     Ribot_Setup_Data(PC), A1               ; Offset_0x048A2C
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 subq.b  #$02, D0
                 beq.s   Offset_0x04879A
                 bpl.s   Offset_0x0487AA
@@ -49,8 +49,8 @@ Offset_0x0487D8:
 ;-------------------------------------------------------------------------------   
 Offset_0x0487DC:
                 moveq   #$00, D2
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.b  Obj_Subtype(A1), D2                              ; $002C
+                move.w  parent3(A0), A1                            ; $0046
+                move.b  subtype(A1), D2                              ; $002C
                 moveq   #$00, D0
                 move.b  routine(A0), D0                              ; $0005
                 move.w  Offset_0x0487F8(PC, D0), D1
@@ -69,8 +69,8 @@ Offset_0x048802:
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.b  #$08, y_radius(A0)                           ; $001E
                 move.b  #$F0, Obj_Control_Var_13(A0)                     ; $0043
-                move.w  Obj_X(A0), Obj_Control_Var_0E(A0)         ; $0010, $003E
-                move.w  Obj_Y(A0), Obj_Control_Var_10(A0)         ; $0014, $0040
+                move.w  x_pos(A0), Obj_Control_Var_0E(A0)         ; $0010, $003E
+                move.w  y_pos(A0), Obj_Control_Var_10(A0)         ; $0014, $0040
                 bra     Offset_0x0489FC       
 ;-------------------------------------------------------------------------------
 Offset_0x048826:
@@ -84,7 +84,7 @@ Offset_0x04882E:
 ;-------------------------------------------------------------------------------
 Offset_0x048834:
                 moveq   #$00, D0
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 bne.s   Offset_0x04883E
                 moveq   #$01, D0
 Offset_0x04883E:
@@ -99,7 +99,7 @@ Offset_0x048846:
 Offset_0x048856:
                 moveq   #$00, D0
                 move.w  #$0400, D1
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 bne.s   Offset_0x048866
                 moveq   #$01, D0
                 neg.w   D1
@@ -109,7 +109,7 @@ Offset_0x048866:
                 rts
 Offset_0x04886E:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.w  D1, Obj_Speed_X(A0)                              ; $0018
+                move.w  D1, x_vel(A0)                              ; $0018
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x0488D4, Obj_Child(A0)                  ; $0034
                 rts   
@@ -129,28 +129,28 @@ Offset_0x04889A:
                 dc.w    Offset_0x0488A0-Offset_0x04889A    
 ;-------------------------------------------------------------------------------
 Offset_0x0488A0:
-                move.w  Obj_Y(A0), D0                                    ; $0014
+                move.w  y_pos(A0), D0                                    ; $0014
                 sub.w   Obj_Control_Var_10(A0), D0                       ; $0040
                 cmpi.w  #$0080, D0
                 bcc.s   Offset_0x0488D4
                 jsr     (ObjectFall)                           ; Offset_0x0110FE
-                tst.w   Obj_Speed_Y(A0)                                  ; $001A
+                tst.w   y_vel(A0)                                  ; $001A
                 bmi     Offset_0x0488EC
                 jmp     Run_Object_Hit_Floor_A0(PC)            ; Offset_0x0423E0 
 ;-------------------------------------------------------------------------------
 Offset_0x0488C0:
-                move.w  Obj_Speed_Y(A0), D0                              ; $001A
+                move.w  y_vel(A0), D0                              ; $001A
                 cmpi.w  #$0100, D0
                 bcs.s   Offset_0x0488D4
                 asr.w   #$02, D0
                 neg.w   D0
-                move.w  D0, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D0, y_vel(A0)                              ; $001A
                 rts
 Offset_0x0488D4:
                 move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0010, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x04890A, Obj_Child(A0)                  ; $0034
-                clr.w   Obj_Speed_Y(A0)                                  ; $001A
+                clr.w   y_vel(A0)                                  ; $001A
 Offset_0x0488EC:
                 rts 
 ;-------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ Offset_0x048906:
 ;-------------------------------------------------------------------------------  
 Offset_0x04890A:
                 move.b  #$08, routine(A0)                            ; $0005
-                neg.w   Obj_Speed_X(A0)                                  ; $0018
+                neg.w   x_vel(A0)                                  ; $0018
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x048944, Obj_Child(A0)                  ; $0034
                 rts            
@@ -187,17 +187,17 @@ Offset_0x04892C:
                 dc.w    Offset_0x048932-Offset_0x04892C    
 ;-------------------------------------------------------------------------------
 Offset_0x048932:
-                move.w  Obj_Y(A0), D0                                    ; $0014
+                move.w  y_pos(A0), D0                                    ; $0014
                 subq.w  #$02, D0
                 cmp.w   Obj_Control_Var_10(A0), D0                       ; $0040
                 bls.s   Offset_0x048944
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 rts
 Offset_0x048944:
                 move.b  #$02, routine(A0)                            ; $0005
-                move.w  Obj_Control_Var_0E(A0), Obj_X(A0)         ; $003E, $0010
-                move.w  Obj_Control_Var_10(A0), Obj_Y(A0)         ; $0040, $0014
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  Obj_Control_Var_0E(A0), x_pos(A0)         ; $003E, $0010
+                move.w  Obj_Control_Var_10(A0), y_pos(A0)         ; $0040, $0014
+                move.w  parent3(A0), A1                            ; $0046
                 bset    #$02, Obj_Control_Var_08(A1)                     ; $0038
                 rts    
 ;-------------------------------------------------------------------------------
@@ -209,18 +209,18 @@ Offset_0x04896C:
                 lea     Ribot_Setup_Data_3(PC), A1             ; Offset_0x048A3E
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.l  #Offset_0x04898A, (A0)
-                move.w  Obj_X(A0), Obj_Control_Var_0E(A0)         ; $0010, $003E
-                move.w  Obj_Y(A0), Obj_Control_Var_10(A0)         ; $0014, $0040
+                move.w  x_pos(A0), Obj_Control_Var_0E(A0)         ; $0010, $003E
+                move.w  y_pos(A0), Obj_Control_Var_10(A0)         ; $0014, $0040
                 jmp     Child_Display_Or_Delete(PC)            ; Offset_0x04245C 
 ;-------------------------------------------------------------------------------  
 Offset_0x04898A:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.w  Obj_X(A1), D2                                    ; $0010
-                move.w  Obj_Y(A1), D3                                    ; $0014
+                move.w  parent3(A0), A1                            ; $0046
+                move.w  x_pos(A1), D2                                    ; $0010
+                move.w  y_pos(A1), D3                                    ; $0014
                 sub.w   Obj_Control_Var_0E(A0), D2                       ; $003E
                 sub.w   Obj_Control_Var_10(A0), D3                       ; $0040
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.w  Offset_0x0489B0(PC, D0), D1
                 jsr     Offset_0x0489B0(PC, D1)
                 jmp     Child_Display_Or_Delete(PC)            ; Offset_0x04245C  
@@ -233,35 +233,35 @@ Offset_0x0489B0:
 Offset_0x0489B6:
                 asr.w   #$02, D2
                 neg.w   D2
-                add.w   Obj_X(A1), D2                                    ; $0010
-                move.w  D2, Obj_X(A0)                                    ; $0010
+                add.w   x_pos(A1), D2                                    ; $0010
+                move.w  D2, x_pos(A0)                                    ; $0010
                 asr.w   #$02, D3
                 neg.w   D3
-                add.w   Obj_Y(A1), D3                                    ; $0014
-                move.w  D3, Obj_Y(A0)                                    ; $0014
+                add.w   y_pos(A1), D3                                    ; $0014
+                move.w  D3, y_pos(A0)                                    ; $0014
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x0489D0:
                 asr.w   #$01, D2
                 add.w   Obj_Control_Var_0E(A0), D2                       ; $003E
-                move.w  D2, Obj_X(A0)                                    ; $0010
+                move.w  D2, x_pos(A0)                                    ; $0010
                 asr.w   #$01, D3
                 add.w   Obj_Control_Var_10(A0), D3                       ; $0040
-                move.w  D3, Obj_Y(A0)                                    ; $0014
+                move.w  D3, y_pos(A0)                                    ; $0014
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x0489E6:
                 asr.w   #$02, D2
                 add.w   Obj_Control_Var_0E(A0), D2                       ; $003E
-                move.w  D2, Obj_X(A0)                                    ; $0010
+                move.w  D2, x_pos(A0)                                    ; $0010
                 asr.w   #$02, D3
                 add.w   Obj_Control_Var_10(A0), D3                       ; $0040
-                move.w  D3, Obj_Y(A0)                                    ; $0014
+                move.w  D3, y_pos(A0)                                    ; $0014
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x0489FC:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.b  Obj_Subtype(A1), D0                              ; $002C
+                move.w  parent3(A0), A1                            ; $0046
+                move.b  subtype(A1), D0                              ; $002C
                 subq.b  #$02, D0
                 beq.s   Offset_0x048A12
                 bpl.s   Offset_0x048A24
@@ -269,7 +269,7 @@ Offset_0x0489FC:
                 jmp     SetupChildObject_Repeat(PC)        ; Offset_0x041E4E
 Offset_0x048A12:
                 lea     Offset_0x048A70(PC), A2
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 beq.s   Offset_0x048A20
                 lea     Offset_0x048A78(PC), A2
 Offset_0x048A20:

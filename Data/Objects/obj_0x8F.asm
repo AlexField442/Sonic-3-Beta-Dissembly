@@ -103,32 +103,32 @@ Offset_0x03C3A2:
 Offset_0x03C3A6:
                 lea     Gapsule_Setup_Data_8(PC), A1           ; Offset_0x03CDD6
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.w  Obj_Y(A0), Obj_Control_Var_0E(A0)         ; $0014, $003E
+                move.w  y_pos(A0), Obj_Control_Var_0E(A0)         ; $0014, $003E
                 rts     
 ;-------------------------------------------------------------------------------
 Offset_0x03C3B6:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                btst    #$07, Obj_Status(A1)                             ; $002A
+                move.w  parent3(A0), A1                            ; $0046
+                btst    #$07, status(A1)                             ; $002A
                 bne.s   Offset_0x03C3F0
                 move.w  Obj_Control_Var_0E(A0), D0                       ; $003E
-                btst    #$03, Obj_Status(A0)                             ; $002A
+                btst    #$03, status(A0)                             ; $002A
                 bne.s   Offset_0x03C3E2
                 btst    #$02, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C3E2
                 bclr    #$00, Obj_Control_Var_08(A1)                     ; $0038
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 rts
 Offset_0x03C3E2:
                 bset    #$00, Obj_Control_Var_08(A1)                     ; $0038
                 addq.w  #$04, D0
-                move.w  D0, Obj_Y(A0)                                    ; $0014
+                move.w  D0, y_pos(A0)                                    ; $0014
                 rts
 Offset_0x03C3F0:
                 move.l  #Offset_0x03C410, (A0)
                 move.l  #Egg_Prison_Mappings, mappings(A0) ; Offset_0x043A34, $000C
-                move.w  #$844E, Obj_Art_VRAM(A0)                         ; $000A
-                move.b  #$05, Obj_Map_Id(A0)                             ; $0022
-                addq.w  #$08, Obj_Y(A0)                                  ; $0014
+                move.w  #$844E, art_tile(A0)                         ; $000A
+                move.b  #$05, mapping_frame(A0)                             ; $0022
+                addq.w  #$08, y_pos(A0)                                  ; $0014
                 rts
 ;-------------------------------------------------------------------------------  
 Offset_0x03C410:
@@ -153,7 +153,7 @@ Offset_0x03C434:
                 jmp     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A  
 ;-------------------------------------------------------------------------------
 Offset_0x03C43C:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$00, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C44A
                 rts
@@ -174,7 +174,7 @@ Offset_0x03C46C:
                 btst    #$02, (Vint_runcount+$03).w       ; $FFFFFE0F
                 jsr     Find_Player_Eight_Way(PC)              ; Offset_0x042DC2
                 addi.w  #$0009, D4
-                move.b  D4, Obj_Map_Id(A0)                               ; $0022
+                move.b  D4, mapping_frame(A0)                               ; $0022
                 rts     
 ;-------------------------------------------------------------------------------      
 Offset_0x03C480:
@@ -211,14 +211,14 @@ Offset_0x03C4CE:
 Offset_0x03C4D6:
                 lea     Gapsule_Setup_Data_2(PC), A1           ; Offset_0x03CDB2
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lsr.b   #$01, D0
                 addq.b  #$01, D0
-                move.b  D0, Obj_Map_Id(A0)                               ; $0022
+                move.b  D0, mapping_frame(A0)                               ; $0022
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x03C4EC:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$00, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C4FA
                 rts
@@ -263,18 +263,18 @@ Offset_0x03C54E:
                 lea     Gapsule_Setup_Data_3(PC), A1           ; Offset_0x03CDB8
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.w  #$FEC0, D0
-                subi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                subi.b  #$0A, subtype(A0)                            ; $002C
                 beq.s   Offset_0x03C570
                 neg.w   D0
                 bset    #$00, render_flags(A0)                              ; $0004
                 move.w  #$003F, Obj_Timer(A0)                            ; $002E
 Offset_0x03C570:
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
-                move.w  #$FF30, Obj_Speed_Y(A0)                          ; $001A
+                move.w  D0, x_vel(A0)                              ; $0018
+                move.w  #$FF30, y_vel(A0)                          ; $001A
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x03C57C:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$00, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C58A
                 rts
@@ -308,7 +308,7 @@ Offset_0x03C5E2:
                 move.b  #$0A, routine(A0)                            ; $0005
                 bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
                 bclr    #$03, Obj_Control_Var_08(A0)                     ; $0038
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 bclr    #$01, Obj_Control_Var_08(A1)                     ; $0038
                 bclr    #$01, Obj_Control_Var_08(A0)                     ; $0038
                 bclr    #$06, Obj_Control_Var_08(A1)                     ; $0038
@@ -330,7 +330,7 @@ Offset_0x03C640:
 ;-------------------------------------------------------------------------------
 Offset_0x03C648:
                 move.w  #$00F0, Obj_Timer(A0)                            ; $002E
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$00, Obj_Control_Var_08(A1)                     ; $0038
                 beq.s   Offset_0x03C684
                 btst    #$01, Obj_Control_Var_08(A1)                     ; $0038
@@ -347,8 +347,8 @@ Offset_0x03C684:
                 lea     (Obj_Player_One).w, A2                       ; $FFFFB000
                 tst.b   Obj_Control_Var_10(A2)                           ; $0040
                 bne     Offset_0x03C346
-                move.w  Obj_X(A2), D0                                    ; $0010
-                cmp.w   Obj_X(A1), D0                                    ; $0010
+                move.w  x_pos(A2), D0                                    ; $0010
+                cmp.w   x_pos(A1), D0                                    ; $0010
                 bcc.s   Offset_0x03C6AE
                 btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x03C6B8
@@ -378,7 +378,7 @@ Offset_0x03C6E4:
 Offset_0x03C700:
                 move.b  #$10, routine(A0)                            ; $0005
                 bclr    #$03, Obj_Control_Var_08(A0)                     ; $0038
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 bclr    #$02, Obj_Control_Var_08(A1)                     ; $0038
                 rts      
 ;-------------------------------------------------------------------------------  
@@ -403,7 +403,7 @@ Offset_0x03C744:
                 rts   
 ;-------------------------------------------------------------------------------     
 Offset_0x03C752:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$04, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C764
                 jmp     (DisplaySprite)                        ; Offset_0x011148
@@ -441,8 +441,8 @@ Offset_0x03C792:
                 dc.w    Offset_0x03CA9E-Offset_0x03C792    
 ;-------------------------------------------------------------------------------
 Offset_0x03C7B2:
-                addq.b  #$02, Obj_Subtype(A0)                            ; $002C
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                addq.b  #$02, subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 beq.s   Offset_0x03C7CC
                 lea     Gapsule_Setup_Data_4(PC), A1           ; Offset_0x03CDBE
                 move.w  #$0004, Obj_Control_Var_0E(A0)                   ; $003E
@@ -451,20 +451,20 @@ Offset_0x03C7CC:
                 lea     Gapsule_Setup_Data_5(PC), A1           ; Offset_0x03CDC4
                 move.w  #$0003, Obj_Control_Var_0E(A0)                   ; $003E
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.b  #$86, Obj_Col_Flags(A0)                          ; $0028
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.w  Obj_Child_Ref(A1), A1                            ; $0046
-                move.w  Obj_Child_Ref(A1), A1                            ; $0046
-                move.w  Obj_Child_Ref(A1), A1                            ; $0046
-                move.w  Obj_Child_Ref(A1), A1                            ; $0046
-                move.w  A1, Obj_Height_3(A0)                             ; $0044
+                move.b  #$86, collision_flags(A0)                          ; $0028
+                move.w  parent3(A0), A1                            ; $0046
+                move.w  parent3(A1), A1                            ; $0046
+                move.w  parent3(A1), A1                            ; $0046
+                move.w  parent3(A1), A1                            ; $0046
+                move.w  parent3(A1), A1                            ; $0046
+                move.w  A1, default_y_radius(A0)                             ; $0044
                 move.w  A1, Obj_Child_Data(A1)                           ; $0030
                 move.w  A0, Obj_Control_Var_02(A1)                       ; $0032
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x03C802:
                 jsr     Refresh_Child_Position(PC)             ; Offset_0x042016
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$03, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C814
                 rts
@@ -474,13 +474,13 @@ Offset_0x03C814:
                 bsr     Offset_0x03CB3C
                 move.w  #$000F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03C860, Obj_Child(A0)                  ; $0034
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 move.w  Obj_Child_Data(A1), Obj_Child_Data(A0)    ; $0030, $0030
                 move.w  Obj_Control_Var_02(A1), Obj_Control_Var_02(A0) ; $0032, $0032
                 btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x03C854
                 bset    #$00, render_flags(A0)                              ; $0004
-                neg.w   Obj_Speed_X(A0)                                  ; $0018
+                neg.w   x_vel(A0)                                  ; $0018
 Offset_0x03C854:
                 rts 
 ;-------------------------------------------------------------------------------
@@ -491,17 +491,17 @@ Offset_0x03C856:
 Offset_0x03C860:
                 move.b  #$06, routine(A0)                            ; $0005
                 bclr    #$03, Obj_Control_Var_08(A0)                     ; $0038
-                clr.w   Obj_Speed_X(A0)                                  ; $0018
-                clr.w   Obj_Speed_Y(A0)                                  ; $001A
+                clr.w   x_vel(A0)                                  ; $0018
+                clr.w   y_vel(A0)                                  ; $001A
                 move.w  #$0080, priority(A0)                         ; $0008
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 beq.s   Offset_0x03C888
                 move.w  #$0180, priority(A0)                         ; $0008
 Offset_0x03C888:
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x03C88A:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$02, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C898
                 rts
@@ -513,7 +513,7 @@ Offset_0x03C898:
                 bclr    #$01, Obj_Control_Var_08(A0)                     ; $0038
                 move.b  Obj_Control_Var_0C(A1), Obj_Control_Var_0C(A0) ; $003C, $003C
                 move.b  Obj_Control_Var_10(A1), Obj_Control_Var_10(A0) ; $0040, $0040
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 add.b   D0, D0
                 move.b  D0, Obj_Control_Var_0B(A0)                       ; $003B
                 move.b  D0, Obj_Control_Var_0A(A0)                       ; $003A
@@ -531,7 +531,7 @@ Offset_0x03C8E6:
                 bsr     Offset_0x03CB5C
                 move.w  Obj_Control_Var_0E(A0), D2                       ; $003E
                 jsr     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$01, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C908
                 btst    #$06, Obj_Control_Var_08(A1)                     ; $0038
@@ -546,11 +546,11 @@ Offset_0x03C91C:
                 move.b  #$18, routine(A0)                            ; $0005
                 bset    #$06, Obj_Control_Var_08(A0)                     ; $0038
                 bclr    #$02, Obj_Control_Var_08(A0)                     ; $0038
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 bne.s   Offset_0x03C946
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                move.w  Obj_X(A1), Obj_Child_Data(A0)             ; $0010, $0030
-                move.w  Obj_Y(A1), Obj_Control_Var_02(A0)         ; $0014, $0032
+                move.w  x_pos(A1), Obj_Child_Data(A0)             ; $0010, $0030
+                move.w  y_pos(A1), Obj_Control_Var_02(A0)         ; $0014, $0032
 Offset_0x03C946:
                 rts  
 ;-------------------------------------------------------------------------------
@@ -558,16 +558,16 @@ Offset_0x03C948:
                 bsr     Offset_0x03CB9A
                 beq.s   Offset_0x03C966
                 move.b  #$0E, routine(A0)                            ; $0005
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 bne.s   Offset_0x03C966
-                move.w  Obj_Height_3(A0), A1                             ; $0044
+                move.w  default_y_radius(A0), A1                             ; $0044
                 bset    #$03, Obj_Control_Var_08(A1)                     ; $0038
 Offset_0x03C966:
                 move.w  Obj_Control_Var_0E(A0), D2                       ; $003E
                 jmp     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2   
 ;-------------------------------------------------------------------------------
 Offset_0x03C96E:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$03, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03C982
                 move.w  Obj_Control_Var_0E(A0), D2                       ; $003E
@@ -593,7 +593,7 @@ Offset_0x03C9AA:
                 jmp     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2  
 ;-------------------------------------------------------------------------------
 Offset_0x03C9BA:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$03, Obj_Control_Var_08(A1)                     ; $0038
                 beq.s   Offset_0x03C9C8
                 rts
@@ -603,14 +603,14 @@ Offset_0x03C9C8:
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x03C9D6:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$02, Obj_Control_Var_08(A1)                     ; $0038
                 bne     Offset_0x03C898
                 bsr     Offset_0x03CC32
                 beq.s   Offset_0x03C9FC
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 bne.s   Offset_0x03C9FC
-                move.w  Obj_Height_3(A0), A1                             ; $0044
+                move.w  default_y_radius(A0), A1                             ; $0044
                 bset    #$02, Obj_Control_Var_08(A1)                     ; $0038
 Offset_0x03C9FC:
                 move.w  Obj_Control_Var_0E(A0), D2                       ; $003E
@@ -620,16 +620,16 @@ Offset_0x03CA04:
                 bsr     Offset_0x03CC5C
                 beq.s   Offset_0x03CA22
                 move.b  #$1A, routine(A0)                            ; $0005
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 bne.s   Offset_0x03CA22
-                move.w  Obj_Height_3(A0), A1                             ; $0044
+                move.w  default_y_radius(A0), A1                             ; $0044
                 bset    #$03, Obj_Control_Var_08(A1)                     ; $0038
 Offset_0x03CA22:
                 move.w  Obj_Control_Var_0E(A0), D2                       ; $003E
                 jmp     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2  
 ;-------------------------------------------------------------------------------
 Offset_0x03CA2A:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 btst    #$03, Obj_Control_Var_08(A1)                     ; $0038
                 bne.s   Offset_0x03CA3E
                 move.w  Obj_Control_Var_0E(A0), D2                       ; $003E
@@ -639,12 +639,12 @@ Offset_0x03CA3E:
                 bset    #$03, Obj_Control_Var_08(A0)                     ; $0038
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03CA80, Obj_Child(A0)                  ; $0034
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 bne     Offset_0x03C346
                 bra     Offset_0x03CC86  
 ;-------------------------------------------------------------------------------
 Offset_0x03CA66:
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 beq.s   Offset_0x03CA76
                 bsr     Offset_0x03CCA4
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
@@ -666,8 +666,8 @@ Offset_0x03CA9E:
                 jsr     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2
 Offset_0x03CAA2:                
                 move.b  #$1C, routine(A0)                            ; $0005
-                neg.w   Obj_Speed_X(A0)                                  ; $0018
-                neg.w   Obj_Speed_Y(A0)                                  ; $001A
+                neg.w   x_vel(A0)                                  ; $0018
+                neg.w   y_vel(A0)                                  ; $001A
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03CA96, Obj_Child(A0)                  ; $0034
                 rts   
@@ -679,7 +679,7 @@ Offset_0x03CAC0:
 ;-------------------------------------------------------------------------------
 Offset_0x03CACE:
                 bsr     Offset_0x03CAF0
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0
@@ -691,17 +691,17 @@ Offset_0x03CAF0:
                 moveq   #$23, D1
                 moveq   #$20, D2
                 moveq   #$1C, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jmp     (Solid_Object)                         ; Offset_0x013556
 Offset_0x03CB00:
                 moveq   #$13, D1
                 moveq   #$10, D2
                 moveq   #$08, D3
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jmp     (Solid_Object)                         ; Offset_0x013556
 Offset_0x03CB10:
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.w  Offset_0x03CB2A(PC, D0), Obj_Timer(A0)           ; $002E
                 add.w   D0, D0
                 lea     Offset_0x03CB30(PC, D0), A1
@@ -717,10 +717,10 @@ Offset_0x03CB30:
 ;-------------------------------------------------------------------------------
 Offset_0x03CB3C:
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.w  (Offset_0x03CB50-$02)(PC, D0), D0
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
-                move.w  D0, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D0, x_vel(A0)                              ; $0018
+                move.w  D0, y_vel(A0)                              ; $001A
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x03CB50:
@@ -776,8 +776,8 @@ Offset_0x03CBC0:
 Offset_0x03CBC4:
                 move.b  Obj_Control_Var_0C(A0), D0                       ; $003C
                 moveq   #$00, D1
-                move.b  Obj_Subtype(A0), D1                              ; $002C
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.b  subtype(A0), D1                              ; $002C
+                move.w  parent3(A0), A1                            ; $0046
                 move.b  Obj_Control_Var_10(A1), D2                       ; $0040
                 move.b  D2, Obj_Control_Var_10(A0)                       ; $0040
                 lsr.w   #$01, D1
@@ -797,10 +797,10 @@ Offset_0x03CBFC:
                 move.b  D3, D0
                 move.b  D4, routine(A0)                              ; $0005
                 addq.b  #$02, Obj_Control_Var_10(A0)                     ; $0040
-                cmpi.b  #$0A, Obj_Subtype(A0)                            ; $002C
+                cmpi.b  #$0A, subtype(A0)                            ; $002C
                 bne.s   Offset_0x03CC22
-                move.w  Obj_Height_3(A0), A1                             ; $0044
-                move.w  Obj_Child_Ref(A1), A1                            ; $0046
+                move.w  default_y_radius(A0), A1                             ; $0044
+                move.w  parent3(A1), A1                            ; $0046
                 bset    #$02, Obj_Control_Var_08(A1)                     ; $0038
                 bset    #$06, Obj_Control_Var_0A(A1)                     ; $003A
 Offset_0x03CC22:
@@ -853,24 +853,24 @@ Offset_0x03CC82:
 ;-------------------------------------------------------------------------------
 Offset_0x03CC86:
                 move.w  Obj_Child_Data(A0), D0                           ; $0030
-                sub.w   Obj_X(A0), D0                                    ; $0010
+                sub.w   x_pos(A0), D0                                    ; $0010
                 lsl.w   #$03, D0
-                move.w  D0, Obj_Speed_X(A0)                              ; $0018
+                move.w  D0, x_vel(A0)                              ; $0018
                 move.w  Obj_Control_Var_02(A0), D0                       ; $0032
-                sub.w   Obj_Y(A0), D0                                    ; $0014
+                sub.w   y_pos(A0), D0                                    ; $0014
                 lsl.w   #$03, D0
-                move.w  D0, Obj_Speed_Y(A0)                              ; $001A
+                move.w  D0, y_vel(A0)                              ; $001A
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x03CCA4:
                 move.w  Obj_Control_Var_02(A0), A1                       ; $0032
                 move.w  Obj_Child_Data(A0), A2                           ; $0030
                 moveq   #$00, D2
-                move.b  Obj_Subtype(A0), D2                              ; $002C
+                move.b  subtype(A0), D2                              ; $002C
                 lsr.w   #$01, D2
                 moveq   #$00, D0
-                move.w  Obj_X(A1), D0                                    ; $0010
-                move.w  Obj_X(A2), D3                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
+                move.w  x_pos(A2), D3                                    ; $0010
                 sub.w   D3, D0
                 smi     D1
                 bpl.s   Offset_0x03CCC6
@@ -883,10 +883,10 @@ Offset_0x03CCC6:
                 neg.w   D0
 Offset_0x03CCD2:
                 add.w   D0, D3
-                move.w  D3, Obj_X(A0)                                    ; $0010
+                move.w  D3, x_pos(A0)                                    ; $0010
                 moveq   #$00, D0
-                move.w  Obj_Y(A1), D0                                    ; $0014
-                move.w  Obj_Y(A2), D3                                    ; $0014
+                move.w  y_pos(A1), D0                                    ; $0014
+                move.w  y_pos(A2), D3                                    ; $0014
                 sub.w   D3, D0
                 smi     D1
                 bpl.s   Offset_0x03CCEA
@@ -899,29 +899,29 @@ Offset_0x03CCEA:
                 neg.w   D0
 Offset_0x03CCF6:
                 add.w   D0, D3
-                move.w  D3, Obj_Y(A0)                                    ; $0014
+                move.w  D3, y_pos(A0)                                    ; $0014
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x03CCFE:
                 btst    #$06, Obj_Control_Var_0A(A0)                     ; $003A
                 beq.s   Offset_0x03CD44
-                tst.b   Obj_Ani_Number(A0)                               ; $0020
+                tst.b   anim(A0)                               ; $0020
                 bne.s   Offset_0x03CD20
                 subq.b  #$01, Obj_Boss_Hit(A0)                           ; $0029
                 beq.s   Offset_0x03CD46
-                move.b  #$20, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$20, anim(A0)                         ; $0020
                 moveq   #Boss_Hit_Sfx, D0                                  ; $7C
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x03CD20:
                 moveq   #$00, D0
-                btst    #$00, Obj_Ani_Number(A0)                         ; $0020
+                btst    #$00, anim(A0)                         ; $0020
                 bne.s   Offset_0x03CD2C
                 addq.w  #$08, D0
 Offset_0x03CD2C:
                 lea     Offset_0x03CD6E(PC), A1
                 lea     Offset_0x03CD76(PC, D0), A2
                 jsr     Move_0x08_Bytes_A2_A1(PC)              ; Offset_0x04325C
-                subq.b  #$01, Obj_Ani_Number(A0)                         ; $0020
+                subq.b  #$01, anim(A0)                         ; $0020
                 bne.s   Offset_0x03CD44
                 bclr    #$06, Obj_Control_Var_0A(A0)                     ; $003A
 Offset_0x03CD44:
@@ -929,7 +929,7 @@ Offset_0x03CD44:
 Offset_0x03CD46:
                 move.l  #Display_Sprite_Wait, (A0)             ; Offset_0x042F8E
                 clr.b   (Update_HUD_timer).w                   ; $FFFFFE1E
-                bset    #$07, Obj_Status(A0)                             ; $002A
+                bset    #$07, status(A0)                             ; $002A
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03C36C, Obj_Child(A0)                  ; $0034
                 lea     (Offset_0x041D62), A2
@@ -945,14 +945,14 @@ Offset_0x03CD76:
                 dc.w    $0222, $0644, $0020, $0020, $0AAA, $0AAA, $0EEE, $0EEE 
 ;-------------------------------------------------------------------------------
 Offset_0x03CD86:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                btst    #$07, Obj_Status(A1)                             ; $002A
+                move.w  parent3(A0), A1                            ; $0046
+                btst    #$07, status(A1)                             ; $002A
                 bne.s   Offset_0x03CD94
                 rts
 Offset_0x03CD94:
                 move.l  #Offset_0x03C752, (A0)
-                bset    #$07, Obj_Status(A0)                             ; $002A
-                clr.b   Obj_Col_Flags(A0)                                ; $0028
+                bset    #$07, status(A0)                             ; $002A
+                clr.b   collision_flags(A0)                                ; $0028
                 rts            
 ;-------------------------------------------------------------------------------  
 Gapsule_Setup_Data:                                            ; Offset_0x03CDA6

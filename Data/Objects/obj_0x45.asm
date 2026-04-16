@@ -4,7 +4,7 @@
 ;===============================================================================
 ; Offset_0x027FDA:
                 move.l  #Light_Bulb_Mappings, mappings(A0) ; Offset_0x028030, $000C
-                move.w  #$4404, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$4404, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
@@ -17,9 +17,9 @@ Offset_0x02800E:
                 move.l  #Offset_0x028014, (A0)
 Offset_0x028014:                
                 move.w  (Water_Level_Move).w, D0                     ; $FFFFF646
-                cmp.w   Obj_Y(A0), D0                                    ; $0014
+                cmp.w   y_pos(A0), D0                                    ; $0014
                 bcc.s   Offset_0x02802A
-                move.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$01, mapping_frame(A0)                             ; $0022
                 move.l  #Offset_0x02802A, (A0)
 Offset_0x02802A:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2

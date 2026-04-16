@@ -4,24 +4,24 @@
 ;===============================================================================
 ; Offset_0x02C47E:
                 move.l  #Dissolving_Sand_Bar_Mappings, mappings(A0) ; Offset_0x02C5DE, $000C
-                move.w  #$4280, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$4280, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$10, height_pixels(A0)                             ; $0006
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 beq.s   Offset_0x02C4BE
                 move.l  #Dissolving_Sand_Bar_Mappings_2, mappings(A0) ; Offset_0x02C61A, $000C
                 move.b  #$30, width_pixels(A0)                              ; $0007
                 move.b  #$0F, Obj_Control_Var_0D(A0)                     ; $003D
 Offset_0x02C4BE:
                 move.b  Obj_Control_Var_0D(A0), Obj_Control_Var_0C(A0) ; $003D, $003C
-                bset    #$07, Obj_Status(A0)                             ; $002A
+                bset    #$07, status(A0)                             ; $002A
                 move.l  #Offset_0x02C4D0, (A0)
 Offset_0x02C4D0:                
-                tst.b   Obj_Ani_Number(A0)                               ; $0020
+                tst.b   anim(A0)                               ; $0020
                 bne.s   Offset_0x02C50A
-                move.b  Obj_Status(A0), D0                               ; $002A
+                move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 beq.s   Offset_0x02C4E6
                 move.b  #$01, Obj_Control_Var_0A(A0)                     ; $003A
@@ -30,35 +30,35 @@ Offset_0x02C4E6:
                 beq.s   Offset_0x02C50A
                 subq.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
                 bpl.s   Offset_0x02C50A
-                tst.b   Obj_Ani_Number(A0)                               ; $0020
+                tst.b   anim(A0)                               ; $0020
                 bne.s   Offset_0x02C50A
                 move.b  Obj_Control_Var_0D(A0), Obj_Control_Var_0C(A0) ; $003D, $003C
                 move.b  #$00, Obj_Control_Var_0A(A0)                     ; $003A
-                move.b  #$01, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$01, anim(A0)                         ; $0020
 Offset_0x02C50A:
                 lea     (Dissolving_Sand_Bar_Animate_Data), A1 ; Offset_0x02C58A
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
                 moveq   #$00, D0
-                move.b  Obj_Map_Id(A0), D0                               ; $0022
+                move.b  mapping_frame(A0), D0                               ; $0022
                 move.b  Offset_0x02C56A(PC, D0), D3
                 bne.s   Offset_0x02C554
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                bclr    #$03, Obj_Status(A0)                             ; $002A
+                bclr    #$03, status(A0)                             ; $002A
                 beq.s   Offset_0x02C53A
-                bclr    #$03, Obj_Status(A1)                             ; $002A
-                bset    #$01, Obj_Status(A1)                             ; $002A
+                bclr    #$03, status(A1)                             ; $002A
+                bset    #$01, status(A1)                             ; $002A
 Offset_0x02C53A:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
-                bclr    #$04, Obj_Status(A0)                             ; $002A
+                bclr    #$04, status(A0)                             ; $002A
                 beq.s   Offset_0x02C552
-                bclr    #$03, Obj_Status(A1)                             ; $002A
-                bset    #$01, Obj_Status(A1)                             ; $002A
+                bclr    #$03, status(A1)                             ; $002A
+                bset    #$01, status(A1)                             ; $002A
 Offset_0x02C552:
                 bra.s   Offset_0x02C564
 Offset_0x02C554:
                 moveq   #$00, D1
                 move.b  width_pixels(A0), D1                                ; $0007
-                move.w  Obj_X(A0), D4                                    ; $0010
+                move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
 Offset_0x02C564:
                 jmp     (DisplaySprite)                        ; Offset_0x011148

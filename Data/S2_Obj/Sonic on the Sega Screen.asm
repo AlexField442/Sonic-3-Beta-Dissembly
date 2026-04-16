@@ -23,12 +23,12 @@ SegaSonic_Init:
 		lea	S2_Obj_0xB0_Setup_Data(pc),a1
 		jsr	(SetupObjectAttributes).l
 		move.b	#0,render_flags(a0)
-		move.w  #$1E8,Obj_X(a0)
-		move.w  #$F0,Obj_Y(a0)
+		move.w  #$1E8,x_pos(a0)
+		move.w  #$F0,y_pos(a0)
 		move.w  #$B,Obj_Timer(a0)
 		move.w  #2,(VBlank_Subroutine).w
 		bset	#0,render_flags(a0)
-		bset	#0,Obj_Status(a0)
+		bset	#0,status(a0)
 
 		; Initialize streak horizontal offsets for Sonic going left.
 		; 9 full lines (8 pixels) + 6 pixels, 2-byte interleaved entries for PNT A and PNT B
@@ -116,7 +116,7 @@ SegaScreenScaledSpriteDataStart:
 ; ===========================================================================
 ; Offset_0x0345AC:
 SegaSonic_RunLeft:
-		subi.w	#$20,Obj_X(a0)
+		subi.w	#$20,x_pos(a0)
 		subq.w	#1,Obj_Timer(a0)
 		bmi.s	Offset_0x0345CE
 		bsr.w	Offset_0x0346F8
@@ -150,9 +150,9 @@ Offset_0x034604:
 		bchg	#0,render_flags(a0)
 		move.w	#$B,Obj_Timer(a0)
 		move.w	#4,(VBlank_Subroutine).w
-		subi.w	#$28,Obj_X(a0)
+		subi.w	#$28,x_pos(a0)
 		bchg	#0,render_flags(a0)
-		bchg	#0,Obj_Status(a0)
+		bchg	#0,status(a0)
 
 		; The loop counter here is erroniously set to $400 instead of ($400/4)-1; this didn't cause issues
 		; in Sonic 2, but in Sonic 3, it causes the entire color RAM to be cleared.
@@ -176,7 +176,7 @@ Null_Sub_3:
 SegaSonic_RunRight:
 		subq.w	#1,Obj_Timer(a0)
 		bmi.s	Offset_0x034676
-		addi.w	#$20,Obj_X(a0)
+		addi.w	#$20,x_pos(a0)
 		bsr.w	Offset_0x03470C
 		lea	(Sonic_SEGA_Logo_Animate_Data).l,a1
 		jsr	(AnimateSprite).l

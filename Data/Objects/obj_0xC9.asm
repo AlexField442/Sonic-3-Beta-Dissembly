@@ -6,7 +6,7 @@
                 lea     Knuckles_Switch_Setup_Data(PC), A1     ; Offset_0x03555A
                 jsr     (SetupObjectAttributes)                      ; Offset_0x041D72
                 move.l  #Offset_0x0354AA, (A0)
-                addq.w  #$04, Obj_Y(A0)                                  ; $0014
+                addq.w  #$04, y_pos(A0)                                  ; $0014
                 lea     Knuckles_Switch_PLC_Data(PC), A1       ; Offset_0x0354A2
                 jmp     (LoadPLC_Direct)                           ; Offset_0x001502    
 ;-------------------------------------------------------------------------------
@@ -20,16 +20,16 @@ Offset_0x0354AA:
                 beq.s   Offset_0x0354FC
                 move.w  D0, A1
                 lea     Offset_0x035502(PC), A2
-                move.w  Obj_X(A0), D0                                    ; $0010
-                move.w  Obj_X(A1), D1                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
+                move.w  x_pos(A1), D1                                    ; $0010
                 add.w   (A2)+, D0
                 cmp.w   D0, D1
                 bcs.s   Offset_0x0354FC
                 add.w   (A2)+, D0
                 cmp.w   D0, D1
                 bcc.s   Offset_0x0354FC
-                move.w  Obj_Y(A0), D0                                    ; $0014
-                move.w  Obj_Y(A1), D1                                    ; $0014
+                move.w  y_pos(A0), D0                                    ; $0014
+                move.w  y_pos(A1), D1                                    ; $0014
                 add.w   (A2)+, D0
                 cmp.w   D0, D1
                 bcs.s   Offset_0x0354FC
@@ -37,10 +37,10 @@ Offset_0x0354AA:
                 cmp.w   D0, D1
                 bcc.s   Offset_0x0354FC
                 move.l  #Offset_0x035510, (A0)
-                move.b  #$01, Obj_Map_Id(A0)                             ; $0022
+                move.b  #$01, mapping_frame(A0)                             ; $0022
                 st      (Knuckles_Control_Lock_Flag).w               ; $FFFFFAA9
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.w  Offset_0x03550A(PC, D0), D0
                 jsr     Offset_0x03550A(PC, D0)
 Offset_0x0354FC:
@@ -71,7 +71,7 @@ Offset_0x035536:
                 rts     
 ;-------------------------------------------------------------------------------
 Offset_0x035538:
-                subq.w  #$01, Obj_Height_3(A0)                           ; $0044
+                subq.w  #$01, default_y_radius(A0)                           ; $0044
                 bne.s   Offset_0x035546
                 moveq   #Knuckles_Theme_Snd, D0                            ; $1F
                 jsr     (Play_Music)                           ; Offset_0x001176

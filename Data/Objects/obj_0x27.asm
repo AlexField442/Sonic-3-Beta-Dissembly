@@ -7,24 +7,24 @@ Offset_0x0141EE:
 ;-------------------------------------------------------------------------------
 Obj_0x27_Lava_Attributes:                                      ; Offset_0x0141F2
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
-                move.b  Offset_0x0141EE(PC, D0), Obj_Col_Flags(A0)       ; $0028
+                move.b  subtype(A0), D0                              ; $002C
+                move.b  Offset_0x0141EE(PC, D0), collision_flags(A0)       ; $0028
                 move.l  #Lava_Attributes_Mappings_No_Display, mappings(A0) ; Offset_0x014278, $000C
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 beq.s   Offset_0x014214
                 move.l  #Lava_Attributes_Mappings, mappings(A0) ; Offset_0x014280, $000C
 Offset_0x014214:
-                move.w  #$86BC, Obj_Art_VRAM(A0)                         ; $000A
+                move.w  #$86BC, art_tile(A0)                         ; $000A
                 move.b  #$84, render_flags(A0)                              ; $0004
                 move.b  #$80, width_pixels(A0)                              ; $0007
                 move.b  #$80, height_pixels(A0)                             ; $0006
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.b  Obj_Subtype(A0), Obj_Map_Id(A0)           ; $002C, $0022
+                move.b  subtype(A0), mapping_frame(A0)           ; $002C, $0022
                 move.l  #Offset_0x01423E, (A0)
 Offset_0x01423E:                
                 tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
                 bne.s   Offset_0x014258
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0
@@ -36,7 +36,7 @@ Offset_0x014258:
 Offset_0x014264:
                 rts
 Offset_0x014266:
-                move.w  Obj_Respaw_Ref(A0), D0                           ; $0048
+                move.w  respawn_index(A0), D0                           ; $0048
                 beq.s   Offset_0x014272
                 move.w  D0, A2
                 bclr    #$07, (A2)

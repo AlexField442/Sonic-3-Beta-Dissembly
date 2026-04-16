@@ -23,9 +23,9 @@ Offset_0x032A94:
                 beq.s   Offset_0x032AA0
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x032AA0:
-                cmp.w   (Obj_Player_One+Obj_Y).w, D1                 ; $FFFFB014
+                cmp.w   (Obj_Player_One+y_pos).w, D1                 ; $FFFFB014
                 bcc.s   Offset_0x032AAC
-                cmp.w   (Obj_Player_One+Obj_X).w, D2                 ; $FFFFB010
+                cmp.w   (Obj_Player_One+x_pos).w, D2                 ; $FFFFB010
                 bcs.s   Offset_0x032AAE
 Offset_0x032AAC:
                 rts
@@ -43,8 +43,8 @@ Offset_0x032AC8:
                 move.w  #$000E, (Earthquake_Flag).w                  ; $FFFFEECC
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x032ADE:
-                move.w  (Obj_Player_One+Obj_X).w, D2                 ; $FFFFB010
-                move.w  (Obj_Player_One+Obj_Y).w, D3                 ; $FFFFB014
+                move.w  (Obj_Player_One+x_pos).w, D2                 ; $FFFFB010
+                move.w  (Obj_Player_One+y_pos).w, D3                 ; $FFFFB014
                 tst.b   Obj_Control_Var_09(A0)                           ; $0039
                 beq.s   Offset_0x032AF2
                 move.w  D0, D1
@@ -71,8 +71,8 @@ Offset_0x032B10:
 Offset_0x032B1E:
                 move.w  D1, (Background_Events+$02).w                ; $FFFFEED4
                 sub.w   D0, D1
-                sub.w   D1, (Obj_Player_One+Obj_Y).w                 ; $FFFFB014
-                sub.w   D1, (Obj_Player_Two+Obj_Y).w                 ; $FFFFB05E
+                sub.w   D1, (Obj_Player_One+y_pos).w                 ; $FFFFB014
+                sub.w   D1, (Obj_Player_Two+y_pos).w                 ; $FFFFB05E
                 rts
 ;-------------------------------------------------------------------------------
 ; Objeto de controle do caminho para o chefe na Marble Garden 2

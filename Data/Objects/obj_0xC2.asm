@@ -5,7 +5,7 @@
 ; Offset_0x047B4E:
                 jsr     Object_Check_Range(PC)                 ; Offset_0x04326E
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 lea     Offset_0x047B64(PC, D0), A2
                 move.l  (A2)+, (A0)
                 move.l  (A2)+, A1
@@ -40,11 +40,11 @@ Offset_0x047B9E:
 ;-------------------------------------------------------------------------------
 Offset_0x047BA6:
                 move.w  D0, A3
-                cmpi.b  #$09, Obj_Ani_Number(A3)                         ; $0020
+                cmpi.b  #$09, anim(A3)                         ; $0020
                 beq.s   Offset_0x047BD0
-                btst    #$01, Obj_Status(A3)                             ; $002A
+                btst    #$01, status(A3)                             ; $002A
                 bne.s   Offset_0x047BCE
-                move.w  Obj_Speed_X(A3), D2                              ; $0018
+                move.w  x_vel(A3), D2                              ; $0018
                 move.w  D2, D3
                 bpl.s   Offset_0x047BC2
                 neg.w   D2
@@ -52,11 +52,11 @@ Offset_0x047BC2:
                 cmpi.w  #$0600, D2
                 bcc.s   Offset_0x047BD0
                 asr.w   #$01, D3
-                move.w  D3, Obj_Inertia(A3)                              ; $001C
+                move.w  D3, inertia(A3)                              ; $001C
 Offset_0x047BCE:
                 rts
 Offset_0x047BD0:
-                move.w  A3, Obj_Height_3(A0)                             ; $0044
+                move.w  A3, default_y_radius(A0)                             ; $0044
                 lea     Offset_0x047CF8(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 jsr     (Go_Delete_Object_A0)                  ; Offset_0x042D3E
@@ -80,8 +80,8 @@ Offset_0x047C02:
 ;-------------------------------------------------------------------------------
 Offset_0x047C0A:
                 move.w  D0, A1
-                move.w  #$0800, Obj_Speed_X(A1)                          ; $0018
-                move.w  #$0800, Obj_Inertia(A1)                          ; $001C
+                move.w  #$0800, x_vel(A1)                          ; $0018
+                move.w  #$0800, inertia(A1)                          ; $001C
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 jmp     (Go_Delete_Object_A0)                  ; Offset_0x042D3E  
 ;-------------------------------------------------------------------------------
@@ -120,19 +120,19 @@ Offset_0x047C74:
                 jsr     Move_Light_Gravity(PC)                 ; Offset_0x0426C2
                 jmp     Delete_Sprite_Check_X_Y(PC)            ; Offset_0x042AD0
 Offset_0x047C7C:
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
-                move.w  Obj_Height_3(A1), A2                             ; $0044
+                move.w  parent3(A0), A1                            ; $0046
+                move.w  default_y_radius(A1), A2                             ; $0044
                 lea     Offset_0x047CB4(PC), A3
                 moveq   #$00, D0
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 move.w  D0, Obj_Timer(A0)                                ; $002E
                 add.w   D0, D0
-                move.l  $00(A3, D0), Obj_Speed_X(A0)                     ; $0018
+                move.l  $00(A3, D0), x_vel(A0)                     ; $0018
                 btst    #$00, render_flags(A2)                              ; $0004
                 beq.s   Offset_0x047CB2
                 bset    #$00, render_flags(A0)                              ; $0004
                 bset    #$00, render_flags(A1)                              ; $0004
-                neg.w   Obj_Speed_X(A0)                                  ; $0018
+                neg.w   x_vel(A0)                                  ; $0018
 Offset_0x047CB2:
                 rts  
 ;-------------------------------------------------------------------------------

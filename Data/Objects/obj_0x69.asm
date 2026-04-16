@@ -37,7 +37,7 @@ Offset_0x02EEAA:
                 dc.l    Offset_0x02EE7C
 ;-------------------------------------------------------------------------------
 Obj_0x69_Hz_Curved_Twisting_Pipe:                              ; Offset_0x02EEEA
-                move.b  Obj_Subtype(A0), D0                              ; $002C
+                move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$007F, D0
                 lsl.w   #$03, D0
                 lea     Offset_0x02EEAA(PC, D0), A1
@@ -89,102 +89,102 @@ Offset_0x02EF60:
 Offset_0x02EF70:
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne     Offset_0x02F004
-                tst.b   Obj_Subtype(A0)                                  ; $002C
+                tst.b   subtype(A0)                                  ; $002C
                 bmi     Offset_0x02F006
-                move.w  Obj_X(A1), D0                                    ; $0010
-                sub.w   Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
+                sub.w   x_pos(A0), D0                                    ; $0010
                 addi.w  #$0008, D0
                 cmpi.w  #$0010, D0
                 bcc.s   Offset_0x02F004
-                move.w  Obj_Y(A1), D1                                    ; $0014
-                sub.w   Obj_Y(A0), D1                                    ; $0014
+                move.w  y_pos(A1), D1                                    ; $0014
+                sub.w   y_pos(A0), D1                                    ; $0014
                 cmpi.w  #$0030, D1
                 bcc.s   Offset_0x02F004
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x02F004
-                btst    #$00, Obj_Status(A0)                             ; $002A
+                btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x02EFC0
-                tst.w   Obj_Inertia(A1)                                  ; $001C
+                tst.w   inertia(A1)                                  ; $001C
                 bpl.s   Offset_0x02F004
-                tst.w   Obj_Speed_X(A1)                                  ; $0018
+                tst.w   x_vel(A1)                                  ; $0018
                 bpl.s   Offset_0x02F004
-                neg.w   Obj_Inertia(A1)                                  ; $001C
+                neg.w   inertia(A1)                                  ; $001C
                 bra.s   Offset_0x02EFC6
 Offset_0x02EFC0:
-                tst.w   Obj_Inertia(A1)                                  ; $001C
+                tst.w   inertia(A1)                                  ; $001C
                 bmi.s   Offset_0x02F004
 Offset_0x02EFC6:
                 addq.b  #$02, (A4)
                 move.b  #$01, Obj_Timer(A1)                              ; $002E
-                move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
+                move.b  #$02, anim(A1)                         ; $0020
                 move.b  #$0E, y_radius(A1)                           ; $001E
                 move.b  #$07, x_radius(A1)                            ; $001F
-                move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
-                bset    #$02, Obj_Status(A1)                             ; $002A
-                bclr    #$05, Obj_Status(A1)                             ; $002A
-                move.b  #$28, Obj_Angle(A1)                              ; $0026
-                move.w  Obj_Y(A1), D1                                    ; $0014
+                move.b  #$02, anim(A1)                         ; $0020
+                bset    #$02, status(A1)                             ; $002A
+                bclr    #$05, status(A1)                             ; $002A
+                move.b  #$28, angle(A1)                              ; $0026
+                move.w  y_pos(A1), D1                                    ; $0014
                 sub.w   Obj_Control_Var_02(A0), D1                       ; $0032
                 move.w  D1, $0002(A4)
 Offset_0x02F004:
                 rts
 Offset_0x02F006:
-                move.w  Obj_X(A1), D0                                    ; $0010
-                sub.w   Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A1), D0                                    ; $0010
+                sub.w   x_pos(A0), D0                                    ; $0010
                 addi.w  #$0010, D0
                 cmpi.w  #$0020, D0
                 bcc.s   Offset_0x02F004
-                move.w  Obj_Y(A1), D1                                    ; $0014
-                sub.w   Obj_Y(A0), D1                                    ; $0014
+                move.w  y_pos(A1), D1                                    ; $0014
+                sub.w   y_pos(A0), D1                                    ; $0014
                 addi.w  #$0010, D1
                 cmpi.w  #$0010, D1
                 bcc.s   Offset_0x02F004
                 tst.b   Obj_Timer(A1)                                    ; $002E
                 bne.s   Offset_0x02F004
-                tst.w   Obj_Inertia(A1)                                  ; $001C
+                tst.w   inertia(A1)                                  ; $001C
                 bpl.s   Offset_0x02F004
                 addq.b  #$02, (A4)
                 move.b  #$01, Obj_Timer(A1)                              ; $002E
-                move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
+                move.b  #$02, anim(A1)                         ; $0020
                 move.b  #$0E, y_radius(A1)                           ; $001E
                 move.b  #$07, x_radius(A1)                            ; $001F
-                move.b  #$02, Obj_Ani_Number(A1)                         ; $0020
-                bset    #$02, Obj_Status(A1)                             ; $002A
-                bclr    #$05, Obj_Status(A1)                             ; $002A
-                move.b  #$28, Obj_Angle(A1)                              ; $0026
-                move.w  Obj_Y(A1), D1                                    ; $0014
+                move.b  #$02, anim(A1)                         ; $0020
+                bset    #$02, status(A1)                             ; $002A
+                bclr    #$05, status(A1)                             ; $002A
+                move.b  #$28, angle(A1)                              ; $0026
+                move.w  y_pos(A1), D1                                    ; $0014
                 sub.w   Obj_Control_Var_02(A0), D1                       ; $0032
                 move.w  D1, $0002(A4)
                 rts
 Offset_0x02F076:
-                move.b  Obj_Angle(A1), D0                                ; $0026
+                move.b  angle(A1), D0                                ; $0026
                 jsr     (CalcSine)                             ; Offset_0x001B20
-                muls.w  Obj_Inertia(A1), D1                              ; $001C
+                muls.w  inertia(A1), D1                              ; $001C
                 asr.l   #$08, D1
-                move.w  D1, Obj_Speed_X(A1)                              ; $0018
-                muls.w  Obj_Inertia(A1), D0                              ; $001C
+                move.w  D1, x_vel(A1)                              ; $0018
+                muls.w  inertia(A1), D0                              ; $001C
                 asr.l   #$08, D0
-                move.w  D0, Obj_Speed_Y(A1)                              ; $001A
-                move.b  Obj_Angle(A1), D0                                ; $0026
+                move.w  D0, y_vel(A1)                              ; $001A
+                move.b  angle(A1), D0                                ; $0026
                 jsr     (CalcSine)                             ; Offset_0x001B20
                 muls.w  #$0050, D0
                 asr.l   #$08, D0
-                tst.w   Obj_Inertia(A1)                                  ; $001C
+                tst.w   inertia(A1)                                  ; $001C
                 bmi.s   Offset_0x02F0BE
                 tst.w   D0
                 bpl.s   Offset_0x02F0B0
                 asr.l   #$02, D0
 Offset_0x02F0B0:
-                cmpi.w  #$1800, Obj_Inertia(A1)                          ; $001C
+                cmpi.w  #$1800, inertia(A1)                          ; $001C
                 bge.s   Offset_0x02F0C8
-                add.w   D0, Obj_Inertia(A1)                              ; $001C
+                add.w   D0, inertia(A1)                              ; $001C
                 rts
 Offset_0x02F0BE:
                 tst.w   D0
                 bmi.s   Offset_0x02F0C4
                 asr.l   #$02, D0
 Offset_0x02F0C4:
-                add.w   D0, Obj_Inertia(A1)                              ; $001C
+                add.w   D0, inertia(A1)                              ; $001C
 Offset_0x02F0C8:
                 rts    
 ;-------------------------------------------------------------------------------
@@ -192,11 +192,11 @@ Offset_0x02F0CA:
                 move.w  $0002(A4), D0
                 subi.w  #$0016, D0
                 bcc.s   Offset_0x02F0F0
-                tst.w   Obj_Inertia(A1)                                  ; $001C
+                tst.w   inertia(A1)                                  ; $001C
                 bpl.s   Offset_0x02F0EE
                 move.b  #$00, (A4)
                 move.b  #$00, Obj_Timer(A1)                              ; $002E
-                move.b  #$70, Obj_Angle(A1)                              ; $0026
+                move.b  #$70, angle(A1)                              ; $0026
                 bra     Offset_0x02F076
 Offset_0x02F0EE:
                 moveq   #$00, D0
@@ -207,11 +207,11 @@ Offset_0x02F0F0:
                 muls.w  #$D800, D0
                 swap.w  D0
                 add.w   Obj_Control_Var_00(A0), D0                       ; $0030
-                move.w  D0, Obj_X(A1)                                    ; $0010
+                move.w  D0, x_pos(A1)                                    ; $0010
                 move.w  $0002(A4), D0
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  Obj_Speed_Y(A1), D0                              ; $001A
+                move.w  D0, y_pos(A1)                                    ; $0014
+                move.w  y_vel(A1), D0                              ; $001A
                 ext.l   D0
                 asl.l   #$08, D0
                 add.l   D0, $0002(A4)
@@ -225,11 +225,11 @@ Offset_0x02F124:
                 muls.w  #$D800, D0
                 swap.w  D0
                 add.w   Obj_Control_Var_00(A0), D0                       ; $0030
-                move.w  D0, Obj_X(A1)                                    ; $0010
+                move.w  D0, x_pos(A1)                                    ; $0010
                 move.w  $0002(A4), D0
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  Obj_Speed_Y(A1), D0                              ; $001A
+                move.w  D0, y_pos(A1)                                    ; $0014
+                move.w  y_vel(A1), D0                              ; $001A
                 ext.l   D0
                 asl.l   #$08, D0
                 add.l   D0, $0002(A4)
@@ -241,11 +241,11 @@ Offset_0x02F15C:
                 muls.w  #$00AA, D0
                 asr.l   #$08, D0
                 add.w   Obj_Control_Var_00(A0), D0                       ; $0030
-                move.w  D0, Obj_X(A1)                                    ; $0010
+                move.w  D0, x_pos(A1)                                    ; $0010
                 move.w  $0002(A4), D0
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  Obj_Speed_Y(A1), D0                              ; $001A
+                move.w  D0, y_pos(A1)                                    ; $0014
+                move.w  y_vel(A1), D0                              ; $001A
                 ext.l   D0
                 asl.l   #$08, D0
                 add.l   D0, $0002(A4)
@@ -261,11 +261,11 @@ Offset_0x02F18C:
                 swap.w  D0
                 addi.w  #$0100, D0
                 add.w   Obj_Control_Var_00(A0), D0                       ; $0030
-                move.w  D0, Obj_X(A1)                                    ; $0010
+                move.w  D0, x_pos(A1)                                    ; $0010
                 move.w  $0002(A4), D0
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  Obj_Speed_Y(A1), D0                              ; $001A
+                move.w  D0, y_pos(A1)                                    ; $0014
+                move.w  y_vel(A1), D0                              ; $001A
                 ext.l   D0
                 asl.l   #$08, D0
                 add.l   D0, $0002(A4)
@@ -277,11 +277,11 @@ Offset_0x02F1CC:
                 muls.w  #$00AA, D0
                 asr.l   #$08, D0
                 add.w   Obj_Control_Var_00(A0), D0                       ; $0030
-                move.w  D0, Obj_X(A1)                                    ; $0010
+                move.w  D0, x_pos(A1)                                    ; $0010
                 move.w  $0002(A4), D0
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  Obj_Speed_Y(A1), D0                              ; $001A
+                move.w  D0, y_pos(A1)                                    ; $0014
+                move.w  y_vel(A1), D0                              ; $001A
                 ext.l   D0
                 asl.l   #$08, D0
                 add.l   D0, $0002(A4)
@@ -293,11 +293,11 @@ Offset_0x02F1FC:
                 muls.w  #$00AA, D0
                 asr.l   #$08, D0
                 add.w   Obj_Control_Var_00(A0), D0                       ; $0030
-                move.w  D0, Obj_X(A1)                                    ; $0010
+                move.w  D0, x_pos(A1)                                    ; $0010
                 move.w  $0002(A4), D0
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  Obj_Speed_Y(A1), D0                              ; $001A
+                move.w  D0, y_pos(A1)                                    ; $0014
+                move.w  y_vel(A1), D0                              ; $001A
                 ext.l   D0
                 asl.l   #$08, D0
                 add.l   D0, $0002(A4)
@@ -309,11 +309,11 @@ Offset_0x02F22C:
                 muls.w  #$00AA, D0
                 asr.l   #$08, D0
                 add.w   Obj_Control_Var_00(A0), D0                       ; $0030
-                move.w  D0, Obj_X(A1)                                    ; $0010
+                move.w  D0, x_pos(A1)                                    ; $0010
                 move.w  $0002(A4), D0
                 add.w   Obj_Control_Var_02(A0), D0                       ; $0032
-                move.w  D0, Obj_Y(A1)                                    ; $0014
-                move.w  Obj_Speed_Y(A1), D0                              ; $001A
+                move.w  D0, y_pos(A1)                                    ; $0014
+                move.w  y_vel(A1), D0                              ; $001A
                 ext.l   D0
                 asl.l   #$08, D0
                 add.l   D0, $0002(A4)

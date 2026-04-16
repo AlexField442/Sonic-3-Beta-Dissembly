@@ -18,9 +18,9 @@ Offset_0x0346CE:
                 lea     S2_Obj_0xB1_Setup_Data(PC), A1                ; Offset_0x034864
                 jsr     (SetupObjectAttributes)                      ; Offset_0x041D72
                 move.b  #$00, render_flags(A0)                              ; $0004
-                move.b  #$04, Obj_Map_Id(A0)                             ; $0022
-                move.w  #$0174, Obj_X(A0)                                ; $0010
-                move.w  #$00D8, Obj_Y(A0)                                ; $0014
+                move.b  #$04, mapping_frame(A0)                             ; $0022
+                move.w  #$0174, x_pos(A0)                                ; $0010
+                move.w  #$00D8, y_pos(A0)                                ; $0014
                 rts
 ;-------------------------------------------------------------------------------                
 Offset_0x0346F2:

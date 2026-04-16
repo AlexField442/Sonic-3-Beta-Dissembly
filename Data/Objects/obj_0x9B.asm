@@ -73,7 +73,7 @@ Offset_0x044856:
 ;-------------------------------------------------------------------------------
 Offset_0x044868:
                 jsr     AnimateRaw(PC)                        ; Offset_0x04208E
-                move.w  Obj_Child_Ref(A0), A1                            ; $0046
+                move.w  parent3(A0), A1                            ; $0046
                 cmpi.l  #Offset_0x0447AC, (A1)
                 beq.s   Offset_0x04487E
                 bsr     Offset_0x0448D8
@@ -91,15 +91,15 @@ Offset_0x044892:
                 jmp     (SpeedToPos)                           ; Offset_0x01111E
 Offset_0x0448A6:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.w  Obj_X(A0), D0                                    ; $0010
+                move.w  x_pos(A0), D0                                    ; $0010
                 move.w  #$0200, D1
                 bset    #$00, render_flags(A0)                              ; $0004
-                cmp.w   (Obj_Player_One+Obj_X).w, D0                 ; $FFFFB010
+                cmp.w   (Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
                 bcc.s   Offset_0x0448C8
                 neg.w   D1
                 bclr    #$00, render_flags(A0)                              ; $0004
 Offset_0x0448C8:
-                move.w  D1, Obj_Speed_X(A0)                              ; $0018
+                move.w  D1, x_vel(A0)                              ; $0018
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x0448CE:
@@ -112,7 +112,7 @@ Offset_0x0448E0:
                 cmpi.l  #Offset_0x0447AC, (A2)
                 beq.s   Offset_0x0448F4
 Offset_0x0448E8:
-                lea     Obj_Size(A2), A2                                 ; $004A
+                lea     object_size(A2), A2                                 ; $004A
                 dbra    D0, Offset_0x0448E0
                 moveq   #$00, D0
                 rts
@@ -122,16 +122,16 @@ Offset_0x0448F4:
                 cmpi.b  #$04, D1
                 bhi.s   Offset_0x0448E8
                 move.b  D1, Obj_Control_Var_09(A2)                       ; $0039
-                move.w  A2, Obj_Child_Ref(A0)                            ; $0046
+                move.w  A2, parent3(A0)                            ; $0046
                 rts
 ;-------------------------------------------------------------------------------
 Offset_0x04490A:
-                move.w  Obj_Y(A0), D0                                    ; $0014
+                move.w  y_pos(A0), D0                                    ; $0014
                 move.w  (Water_Level_Move).w, D1                     ; $FFFFF646
                 subi.w  #$0008, D1
                 cmp.w   D1, D0
                 bcs.s   Offset_0x044920
-                move.w  #$FE00, Obj_Speed_Y(A0)                          ; $001A
+                move.w  #$FE00, y_vel(A0)                          ; $001A
 Offset_0x044920:
                 rts      
 ;------------------------------------------------------------------------------- 
