@@ -12,7 +12,7 @@
                 rts
 ;-------------------------------------------------------------------------------
 Offset_0x047352:
-                btst    #$03, Obj_Control_Var_08(A0)                     ; $0038
+                btst    #$03, objoff_38(A0)                     ; $0038
                 beq.s   Offset_0x04736E
                 move.l  #Offset_0x047372, (A0)
                 btst    #$00, render_flags(A0)                              ; $0004
@@ -22,10 +22,10 @@ Offset_0x04736E:
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_2(PC) ; Offset_0x042B5C 
 ;-------------------------------------------------------------------------------
 Offset_0x047372:
-                move.w  Obj_Control_Var_0E(A0), D0                       ; $003E
+                move.w  objoff_3E(A0), D0                       ; $003E
                 subi.w  #$0010, D0
-                move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
-                move.w  Obj_Control_Var_0C(A0), D1                       ; $003C
+                move.w  D0, objoff_3E(A0)                       ; $003E
+                move.w  objoff_3C(A0), D1                       ; $003C
                 add.w   D0, D1
                 scc     D2
                 tst.w   D0
@@ -33,7 +33,7 @@ Offset_0x047372:
                 tst.b   D2
                 bne.s   Offset_0x0473B4
 Offset_0x04738E:
-                move.w  D1, Obj_Control_Var_0C(A0)                       ; $003C
+                move.w  D1, objoff_3C(A0)                       ; $003C
                 tst.b   subtype(A0)                                  ; $002C
                 beq.s   Offset_0x0473A4
                 cmpi.w  #$4800, D1
@@ -49,14 +49,14 @@ Offset_0x0473B0:
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_2(PC) ; Offset_0x042B5C
 Offset_0x0473B4:
                 move.l  #Offset_0x047352, (A0)
-                bclr    #$03, Obj_Control_Var_08(A0)                     ; $0038
-                clr.w   Obj_Control_Var_0C(A0)                           ; $003C
+                bclr    #$03, objoff_38(A0)                     ; $0038
+                clr.w   objoff_3C(A0)                           ; $003C
                 moveq   #$01, D2
                 jsr     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_2(PC) ; Offset_0x042B5C
 Offset_0x0473CE:
                 move.l  #Offset_0x04743E, (A0)
-                bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
+                bset    #$02, objoff_38(A0)                     ; $0038
                 move.b  #$10, y_radius(A0)                           ; $001E
                 move.w  #$0400, D0
                 btst    #$00, render_flags(A0)                              ; $0004
@@ -68,10 +68,10 @@ Offset_0x0473EE:
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_2(PC) ; Offset_0x042B5C   
 ;-------------------------------------------------------------------------------
 Offset_0x0473FC:
-                move.w  Obj_Control_Var_0E(A0), D0                       ; $003E
+                move.w  objoff_3E(A0), D0                       ; $003E
                 addi.w  #$0010, D0
-                move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
-                move.w  Obj_Control_Var_0C(A0), D1                       ; $003C
+                move.w  D0, objoff_3E(A0)                       ; $003E
+                move.w  objoff_3C(A0), D1                       ; $003C
                 add.w   D0, D1
                 scs     D2
                 tst.w   D0
@@ -79,7 +79,7 @@ Offset_0x0473FC:
                 tst.b   D2
                 bne.s   Offset_0x0473B4
 Offset_0x047418:
-                move.w  D1, Obj_Control_Var_0C(A0)                       ; $003C
+                move.w  D1, objoff_3C(A0)                       ; $003C
                 tst.b   subtype(A0)                                  ; $002C
                 beq.s   Offset_0x04742E
                 cmpi.w  #$B800, D1
@@ -119,14 +119,14 @@ Offset_0x047476:
                 bmi.s   Offset_0x047488
                 neg.w   D0
 Offset_0x047488:
-                move.w  D0, Obj_Control_Var_10(A0)                       ; $0040
+                move.w  D0, objoff_40(A0)                       ; $0040
                 clr.w   y_vel(A0)                                  ; $001A
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_2(PC) ; Offset_0x042B5C   
 ;-------------------------------------------------------------------------------
 Offset_0x047494:
                 move.w  x_vel(A0), D0                              ; $0018
                 move.w  D0, D1
-                add.w   Obj_Control_Var_10(A0), D0                       ; $0040
+                add.w   objoff_40(A0), D0                       ; $0040
                 eor.w   D0, D1
                 bmi.s   Offset_0x0474C8
                 move.w  D0, x_vel(A0)                              ; $0018
@@ -157,7 +157,7 @@ Offset_0x0474E4:
 ;-------------------------------------------------------------------------------
 Offset_0x0474EC:
                 move.w  parent3(A0), A1                            ; $0046
-                btst    #$03, Obj_Control_Var_08(A1)                     ; $0038
+                btst    #$03, objoff_38(A1)                     ; $0038
                 bne.s   Offset_0x0474FE
                 move.l  #Offset_0x0474E4, (A0)
 Offset_0x0474FE:
@@ -347,9 +347,9 @@ Offset_0x04769C:
                 jmp     (Solid_Object)                         ; Offset_0x013556  
 ;-------------------------------------------------------------------------------   
 Offset_0x0476B2:
-                move.b  status(A0), Obj_Control_Var_09(A0)    ; $002A, $0039
+                move.b  status(A0), objoff_39(A0)    ; $002A, $0039
                 bsr.s   Offset_0x047686
-                move.b  Obj_Control_Var_09(A0), D0                       ; $0039
+                move.b  objoff_39(A0), D0                       ; $0039
                 move.b  status(A0), D1                               ; $002A
                 andi.b  #$18, D1
                 beq.s   Offset_0x0476E0
@@ -383,7 +383,7 @@ Offset_0x047708:
                 tst.b   D4
                 bne.s   Offset_0x0476E0
                 move.l  #Offset_0x0474EC, (A0)
-                bset    #$03, Obj_Control_Var_08(A2)                     ; $0038
+                bset    #$03, objoff_38(A2)                     ; $0038
                 asr.w   #$01, D3
                 bmi.s   Offset_0x04772A
                 cmpi.w  #$0400, D3
@@ -395,7 +395,7 @@ Offset_0x04772A:
                 bge.s   Offset_0x047734
                 move.w  #$FC00, D3
 Offset_0x047734:
-                move.w  D3, Obj_Control_Var_0E(A2)                       ; $003E
+                move.w  D3, objoff_3E(A2)                       ; $003E
                 asl.w   #$01, D3
                 move.w  D3, x_vel(A1)                              ; $0018
                 move.w  D3, inertia(A1)                              ; $001C
@@ -404,7 +404,7 @@ Offset_0x047744:
                 rts
 Offset_0x047746:
                 move.w  parent3(A0), A1                            ; $0046
-                btst    #$02, Obj_Control_Var_08(A1)                     ; $0038
+                btst    #$02, objoff_38(A1)                     ; $0038
                 beq.s   Offset_0x047744
                 move.w  x_pos(A0), status(A0)                 ; $0010, $002A
                 move.w  y_pos(A0), subtype(A0)                ; $0014, $002C

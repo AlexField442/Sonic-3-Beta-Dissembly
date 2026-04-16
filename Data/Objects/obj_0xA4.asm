@@ -34,8 +34,8 @@ Offset_0x0451A4:
                 cmpi.w  #$0060, D2
                 bcc     Offset_0x0451D2
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x045841, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x0451E4, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045841, child_data(A0)             ; $0030
+                move.l  #Offset_0x0451E4, child(A0)                  ; $0034
 Offset_0x0451D2:
                 rts 
 ;-------------------------------------------------------------------------------
@@ -46,8 +46,8 @@ Offset_0x0451D4:
 ;-------------------------------------------------------------------------------
 Offset_0x0451E4:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.l  #Offset_0x045847, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x045216, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045847, child_data(A0)             ; $0030
+                move.l  #Offset_0x045216, child(A0)                  ; $0034
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x0451FC:
@@ -56,7 +56,7 @@ Offset_0x0451FC:
                 jsr     (Object_HitCeiling)                    ; Offset_0x009FB4
                 tst.w   D1
                 bpl.s   Offset_0x045214
-                move.l  Obj_Child(A0), A1                                ; $0034
+                move.l  child(A0), A1                                ; $0034
                 jsr     (A1)
 Offset_0x045214:
                 rts   
@@ -64,8 +64,8 @@ Offset_0x045214:
 Offset_0x045216:
                 move.b  #$08, routine(A0)                            ; $0005
                 st      (Earthquake_Flag).w                          ; $FFFFEECC
-                move.w  #$00BF, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x045254, Obj_Child(A0)                  ; $0034
+                move.w  #$00BF, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x045254, child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x045230:

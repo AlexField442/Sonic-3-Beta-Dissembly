@@ -9,8 +9,8 @@
                 move.w  #$0180, priority(A0)                         ; $0008
                 move.b  #$08, width_pixels(A0)                              ; $0007
                 move.b  #$30, height_pixels(A0)                             ; $0006
-                move.w  x_pos(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
-                move.w  y_pos(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
+                move.w  x_pos(A0), objoff_30(A0)         ; $0010, $0030
+                move.w  y_pos(A0), objoff_32(A0)         ; $0014, $0032
                 move.b  #$03, mapping_frame(A0)                             ; $0022
                 tst.b   subtype(A0)                                  ; $002C
                 beq.s   Offset_0x01DF5A

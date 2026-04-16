@@ -4,15 +4,15 @@
 ;------------------------------------------------------------------------------- 
 ; Offset_0x0311BC:
                 move.l  #Obj_AIz_FBz_Battleship_Main, (A0)     ; Offset_0x031208
-                move.l  #AIz_FBz_Bomb_Script, Obj_Timer(A0) ; Offset_0x031A6C, $002E
-                move.w  #$01A4, Obj_Control_Var_02(A0)                   ; $0032
+                move.l  #AIz_FBz_Bomb_Script, objoff_2E(A0) ; Offset_0x031A6C, $002E
+                move.w  #$01A4, objoff_32(A0)                   ; $0032
                 move.w  #$3FBC, D1
                 moveq   #$01, D2
 Offset_0x0311D6:
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x0311F0
                 move.l  #Obj_AIz_Battleship_Propeller, (A1)    ; Offset_0x031288
-                move.w  D1, Obj_Timer(A1)                                ; $002E
+                move.w  D1, objoff_2E(A1)                                ; $002E
                 move.w  #$3DCC, D1
                 dbra    D2, Offset_0x0311D6
 Offset_0x0311F0:
@@ -54,16 +54,16 @@ Offset_0x03124A:
                 add.w   (AIz_Flying_Battery_Rounded_Y).w, D1         ; $FFFFEEA2
                 move.w  D1, (AIz_Flying_Battery_Y).w                 ; $FFFFEE9C
 Offset_0x031260:
-                subq.w  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                subq.w  #$01, objoff_32(A0)                     ; $0032
                 bcc.s   Offset_0x031286
-                move.l  Obj_Timer(A0), A2                                ; $002E
-                move.w  (A2)+, Obj_Control_Var_02(A0)                    ; $0032
+                move.l  objoff_2E(A0), A2                                ; $002E
+                move.w  (A2)+, objoff_32(A0)                    ; $0032
                 bmi.s   Offset_0x031286
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x031286
                 move.l  #Obj_AIz_FBz_Ship_Bomb, (A1)           ; Offset_0x0312DC
-                move.w  (A2)+, Obj_Timer(A1)                             ; $002E
-                move.l  A2, Obj_Timer(A0)                                ; $002E
+                move.w  (A2)+, objoff_2E(A1)                             ; $002E
+                move.l  A2, objoff_2E(A0)                                ; $002E
 Offset_0x031286:
                 rts              
 ;-------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Obj_AIz_Battleship_Propeller:                                  ; Offset_0x031288
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.w  #$0500, art_tile(A0)                         ; $000A
                 move.l  #AIz_Battleship_Propeller_Mappings, mappings(A0) ; Offset_0x031B48, $000C
-                move.w  #$0A71, Obj_Control_Var_00(A0)                   ; $0030
+                move.w  #$0A71, objoff_30(A0)                   ; $0030
 ;-------------------------------------------------------------------------------                
 Obj_AIz_Battleship_Propeller_Main:                             ; Offset_0x0312BA                
                 cmpi.w  #$000C, (Level_Events_Routine).w             ; $FFFFEEC0
@@ -95,8 +95,8 @@ Obj_AIz_FBz_Ship_Bomb:                                         ; Offset_0x0312DC
                 move.w  #$0500, art_tile(A0)                         ; $000A
                 move.l  #AIz_FBz_Ship_Bomb_Main_Mappings, mappings(A0) ; Offset_0x031B78, $000C
                 move.b  #$10, y_radius(A0)                           ; $001E
-                move.w  #$0A60, Obj_Control_Var_00(A0)                   ; $0030
-                move.w  #$0006, Obj_Control_Var_02(A0)                   ; $0032
+                move.w  #$0A60, objoff_30(A0)                   ; $0030
+                move.w  #$0006, objoff_32(A0)                   ; $0032
 ;-------------------------------------------------------------------------------                
 Obj_AIz_FBz_Ship_Bomb_Main;                                    ; Offset_0x031314                
                 moveq   #$00, D0
@@ -109,14 +109,14 @@ Offset_0x03131E:
                 bra     AIz_FBz_Ship_Bomb_Drop                 ; Offset_0x031358   
 ;-------------------------------------------------------------------------------
 AIz_FBz_Ship_Bomb_Ready_Drop:                                  ; Offset_0x03132A
-                addq.w  #$02, Obj_Control_Var_00(A0)                     ; $0030
-                cmpi.w  #$0A80, Obj_Control_Var_00(A0)                   ; $0030
+                addq.w  #$02, objoff_30(A0)                     ; $0030
+                cmpi.w  #$0A80, objoff_30(A0)                   ; $0030
                 bcs.s   Offset_0x03134E
                 addq.b  #$04, routine(A0)                            ; $0005
                 bra.s   Offset_0x03134E 
 ;-------------------------------------------------------------------------------
 AIz_FBz_Ship_Bomb_Delay:                                       ; Offset_0x03133C
-                subq.w  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                subq.w  #$01, objoff_32(A0)                     ; $0032
                 bne.s   Offset_0x03134E
                 addq.b  #$04, routine(A0)                            ; $0005
                 moveq   #Missile_Throw_Sfx, D0                             ; $56
@@ -152,7 +152,7 @@ Offset_0x0313A0:
                 move.w  (A2)+, D2
                 add.w   D2, y_pos(A1)                                    ; $0014
                 move.w  (A2)+, anim(A1)                        ; $0020
-                move.w  (A2)+, Obj_Timer(A1)                             ; $002E
+                move.w  (A2)+, objoff_2E(A1)                             ; $002E
                 jsr     (AllocateObject_Immediate)               ; Offset_0x011DC8
                 dbne    D1, Offset_0x0313A0
 Offset_0x0313D0:
@@ -161,14 +161,14 @@ Offset_0x0313D6:
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x0313D8:
-                move.w  Obj_Control_Var_00(A0), D0                       ; $0030
+                move.w  objoff_30(A0), D0                       ; $0030
                 sub.w   (AIz_Flying_Battery_Y).w, D0                 ; $FFFFEE9C
                 add.w   (Screen_Pos_Buffer_Y).w, D0                  ; $FFFFEE84
 Offset_0x0313E4:                
                 sub.w   (Earthquake_Last_Offset).w, D0               ; $FFFFEED0
                 add.w   (Earthquake_Offset).w, D0                    ; $FFFFEECE
                 move.w  D0, y_pos(A0)                                    ; $0014
-                move.w  Obj_Timer(A0), D0                                ; $002E
+                move.w  objoff_2E(A0), D0                                ; $002E
                 sub.w   (AIz_Flying_Battery_X).w, D0                 ; $FFFFEE98
                 add.w   (Screen_Pos_Buffer_X).w, D0                  ; $FFFFEE80
                 move.w  D0, x_pos(A0)                                    ; $0010
@@ -177,7 +177,7 @@ Offset_0x0313E4:
 Obj_AIz_FBz_Bomb_Explosion:                                    ; Offset_0x031402
                 move.w  (Level_Repeat_Offset).w, D0                  ; $FFFFEEBC
                 sub.w   D0, x_pos(A0)                                    ; $0010
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bmi.s   Offset_0x031412
                 rts
 Offset_0x031412:
@@ -213,23 +213,23 @@ Obj_AIz_Make_Tree:                                             ; Offset_0x031470
                 rts
 Offset_0x03147A:
                 move.l  #Offset_0x03148E, (A0)
-                move.w  (Level_Events_Buffer_1).w, Obj_Timer(A0) ; $FFFFEEB6, $002E
-                move.l  #AIz_Make_Tree_Script, Obj_Control_Var_00(A0) ; Offset_0x031B02, $0030
+                move.w  (Level_Events_Buffer_1).w, objoff_2E(A0) ; $FFFFEEB6, $002E
+                move.l  #AIz_Make_Tree_Script, objoff_30(A0) ; Offset_0x031B02, $0030
 Offset_0x03148E:                
-                move.l  Obj_Control_Var_00(A0), A2                       ; $0030
+                move.l  objoff_30(A0), A2                       ; $0030
                 tst.w   (A2)
                 bpl.s   Offset_0x03149C
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x03149C:
                 move.w  (Level_Events_Buffer_1).w, D0                ; $FFFFEEB6
-                sub.w   Obj_Timer(A0), D0                                ; $002E
+                sub.w   objoff_2E(A0), D0                                ; $002E
                 cmp.w   (A2)+, D0
                 bcs.s   Offset_0x0314BE
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x0314BE
                 move.l  #Obj_AIz_Background_Tree, (A1)         ; Offset_0x0314C0
                 move.w  (A2)+, priority(A1)                          ; $0008
-                move.l  A2, Obj_Control_Var_00(A0)                       ; $0030
+                move.l  A2, objoff_30(A0)                       ; $0030
 Offset_0x0314BE:
                 rts         
 ;-------------------------------------------------------------------------------
@@ -238,8 +238,8 @@ Obj_AIz_Background_Tree:                                       ; Offset_0x0314C0
                 move.w  #$043F, art_tile(A0)                         ; $000A
                 move.l  #AIz_Background_Tree_Mappings, mappings(A0) ; Offset_0x031C0E, $000C
                 move.w  #$00E9, y_pos(A0)                                ; $0014
-                move.w  #$01C0, Obj_Timer(A0)                            ; $002E
-                move.w  (Level_Events_Buffer_1).w, Obj_Control_Var_00(A0) ; $FFFFEEB6, $0030    
+                move.w  #$01C0, objoff_2E(A0)                            ; $002E
+                move.w  (Level_Events_Buffer_1).w, objoff_30(A0) ; $FFFFEEB6, $0030    
 ;-------------------------------------------------------------------------------
 Obj_AIz_Background_Tree_Move:                                  ; Offset_0x0314E6                
                 cmpi.w  #$4880, (Screen_Pos_Buffer_X).w              ; $FFFFEE80
@@ -247,11 +247,11 @@ Obj_AIz_Background_Tree_Move:                                  ; Offset_0x0314E6
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x0314F4:
                 move.w  (Level_Events_Buffer_1).w, D0                ; $FFFFEEB6
-                sub.w   Obj_Control_Var_00(A0), D0                       ; $0030
+                sub.w   objoff_30(A0), D0                       ; $0030
                 move.w  D0, D1
                 asr.w   #$02, D0
                 sub.w   D0, D1
-                move.w  Obj_Timer(A0), D0                                ; $002E
+                move.w  objoff_2E(A0), D0                                ; $002E
                 sub.w   D1, D0
                 move.w  D0, x_pos(A0)                                    ; $0010
                 cmpi.w  #$01C0, D0
@@ -268,7 +268,7 @@ Obj_AIz_Boss_Small:                                            ; Offset_0x03151A
                 move.w  #$0030, x_pos(A0)                                ; $0010
                 move.w  #$00D8, y_pos(A0)                                ; $0014
                 move.w  #$0005, x_vel(A0)                          ; $0018
-                clr.w   Obj_Timer(A0)                                    ; $002E
+                clr.w   objoff_2E(A0)                                    ; $002E
                 lea     (Palette_Row_1_Offset+$02).w, A1             ; $FFFFED22
                 lea     Pal_AIz_Boss_Small(PC), A5             ; Offset_0x031A40
                 moveq   #$06, D0
@@ -277,11 +277,11 @@ Offset_0x031554:
                 dbra    D0, Offset_0x031554
 ;-------------------------------------------------------------------------------                
 Obj_AIz_Boss_Small_Main:                                       ; Offset_0x03155A                
-                tst.b   Obj_Timer(A0)                                    ; $002E
+                tst.b   objoff_2E(A0)                                    ; $002E
                 bne.s   Offset_0x031574
                 cmpi.w  #$4670, (Screen_Pos_Buffer_X).w              ; $FFFFEE80
                 bcs.s   Offset_0x0315CA
-                st      Obj_Timer(A0)                                    ; $002E
+                st      objoff_2E(A0)                                    ; $002E
                 moveq   #Robotnik_Buzzer_Sfx, D0                           ; $57
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x031574:

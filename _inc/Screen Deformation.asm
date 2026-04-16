@@ -1791,20 +1791,20 @@ Offset_0x030644:
 		rts
 ;-------------------------------------------------------------------------------
 Obj_AIz_Tree_Reveal_Control:                                   ; Offset_0x03064C
-		tst.w	Obj_Timer(A0)                                    ; $002E
+		tst.w	objoff_2E(A0)                                    ; $002E
 		beq.s	Offset_0x03065E
 		tst.w	(Foreground_Events_Y_Counter).w              ; $FFFFEEC4
 		bne.s	Offset_0x03065E
 		jmp	(DeleteObject)                         ; Offset_0x011138
 Offset_0x03065E:
-		subq.w	#$01, Obj_Timer(A0)                              ; $002E
+		subq.w	#$01, objoff_2E(A0)                              ; $002E
 		move.w	#$0480, D0
 		sub.w	(Obj_Player_One+y_pos).w, D0                 ; $FFFFB014
 		lsr.w	#$03, D0
 		addq.w	#$03, D0
 		cmp.w	(Foreground_Events_Y_Counter).w, D0          ; $FFFFEEC4
 		bcc.s	Offset_0x03067C
-		btst	#Classic_Type, Obj_Player_Status(A0)        ; $00, $002F
+		btst	#Classic_Type, status_secondary(A0)        ; $00, $002F
 		beq.s	Offset_0x030680
 Offset_0x03067C:
 		addq.w	#$01, (Foreground_Events_Y_Counter).w        ; $FFFFEEC4
@@ -3509,15 +3509,15 @@ Offset_0x0321B4:
 Offset_0x0321DA:
 		move.l	#Obj_Earthquake_Tiles_Attributes, (A1) ; Offset_0x0325CE
 		move.w	D1, x_pos(A1)                                    ; $0010
-		move.w	D2, Obj_Timer(A1)                                ; $002E
-		move.l	D3, Obj_Control_Var_00(A1)                       ; $0030
+		move.w	D2, objoff_2E(A1)                                ; $002E
+		move.l	D3, objoff_30(A1)                       ; $0030
                 swap.w  D2
 		jsr	(AllocateObject_Immediate)               ; Offset_0x011DC8
 		bne.s	Offset_0x03221A
 		move.l	#Obj_Earthquake_Tiles_Attributes, (A1) ; Offset_0x0325CE
 		move.w	D1, x_pos(A1)                                    ; $0010
-		move.w	D2, Obj_Timer(A1)                                ; $002E
-		move.l	D3, Obj_Control_Var_00(A1)                       ; $0030
+		move.w	D2, objoff_2E(A1)                                ; $002E
+		move.l	D3, objoff_30(A1)                       ; $0030
 		addi.w	#$0020, D1
                 swap.w  D2
 		addq.l	#$04, D3

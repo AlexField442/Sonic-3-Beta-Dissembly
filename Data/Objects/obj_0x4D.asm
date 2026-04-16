@@ -10,7 +10,7 @@
 Offset_0x0296B0:
                 move.l  #Offset_0x0296B6, (A0)
 Offset_0x0296B6:                
-                lea     Obj_Control_Var_00(A0), A2                       ; $0030
+                lea     objoff_30(A0), A2                       ; $0030
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 moveq   #$03, D6
                 bsr.s   Offset_0x0296D2
@@ -40,7 +40,7 @@ Offset_0x0296D2:
                 sub.w   D0, D1
                 cmpi.w  #$0010, D1
                 bcc.s   Offset_0x029762
-                tst.b   Obj_Player_Control(A1)                           ; $002E
+                tst.b   obj_control(A1)                           ; $002E
                 bne.s   Offset_0x029762
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x029762
@@ -81,14 +81,14 @@ Offset_0x029764:
                 sub.w   D0, D1
                 cmpi.w  #$0010, D1
                 bcc.s   Offset_0x0297E8
-                tst.b   Obj_Player_Control(A1)                           ; $002E
+                tst.b   obj_control(A1)                           ; $002E
                 bne.s   Offset_0x0297E8
                 btst    #$01, status(A1)                             ; $002A
                 beq.s   Offset_0x0297AC
                 tst.w   y_vel(A1)                                  ; $001A
                 bmi.s   Offset_0x0297E8
 Offset_0x0297AC:
-                move.w  Obj_Player_Last(A1), A3                          ; $0042
+                move.w  parent(A1), A3                          ; $0042
                 cmpi.l  #Offset_0x0296B6, (A3)
                 bne.s   Offset_0x0297E8
                 move.l  x_pos(A1), (A2)                                  ; $0010
@@ -136,8 +136,8 @@ Offset_0x029806:
 Offset_0x02982E:
                 bclr    #$03, status(A1)                             ; $002A
                 bclr    D6, status(A0)                               ; $002A
-                move.b  #$00, Obj_P_Flips_Remaining(A1)                  ; $0030
-                move.b  #$04, Obj_Player_Flip_Speed(A1)                  ; $0031
+                move.b  #$00, flips_remaining(A1)                  ; $0030
+                move.b  #$04, flip_speed(A1)                  ; $0031
                 andi.w  #$7FFF, art_tile(A1)                         ; $000A
                 rts
 Offset_0x02984C:
@@ -164,7 +164,7 @@ Offset_0x029888:
                 moveq   #$00, D0
 Offset_0x029890:
                 add.w   D0, D0
-                move.b  D0, Obj_Flip_Angle(A1)                           ; $0027
+                move.b  D0, flip_angle(A1)                           ; $0027
                 jsr     (CalcSine)                             ; Offset_0x001B20
                 move.w  D1, D4
                 asr.w   #$04, D1
@@ -192,7 +192,7 @@ Offset_0x029890:
 Offset_0x0298DA:
                 rts
 Offset_0x0298DC:
-                lea     Obj_Control_Var_00(A0), A2                       ; $0030
+                lea     objoff_30(A0), A2                       ; $0030
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 moveq   #$03, D6
                 bsr.s   Offset_0x0298F8
@@ -221,7 +221,7 @@ Offset_0x0298F8:
                 add.w   D0, D1
                 cmpi.w  #$0010, D1
                 bcc.s   Offset_0x029986
-                tst.b   Obj_Player_Control(A1)                           ; $002E
+                tst.b   obj_control(A1)                           ; $002E
                 bne.s   Offset_0x029986
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   Offset_0x029986
@@ -261,14 +261,14 @@ Offset_0x029988:
                 add.w   D0, D1
                 cmpi.w  #$0010, D1
                 bcc.s   Offset_0x029A0A
-                tst.b   Obj_Player_Control(A1)                           ; $002E
+                tst.b   obj_control(A1)                           ; $002E
                 bne.s   Offset_0x029A0A
                 btst    #$01, status(A1)                             ; $002A
                 beq.s   Offset_0x0299CE
                 tst.w   y_vel(A1)                                  ; $001A
                 bmi.s   Offset_0x029A0A
 Offset_0x0299CE:
-                move.w  Obj_Player_Last(A1), A3                          ; $0042
+                move.w  parent(A1), A3                          ; $0042
                 cmpi.l  #Offset_0x0298DC, (A3)
                 bne.s   Offset_0x029A0A
                 move.l  x_pos(A1), (A2)                                  ; $0010
@@ -315,8 +315,8 @@ Offset_0x029A28:
 Offset_0x029A4E:
                 bclr    #$03, status(A1)                             ; $002A
                 bclr    D6, status(A0)                               ; $002A
-                move.b  #$00, Obj_P_Flips_Remaining(A1)                  ; $0030
-                move.b  #$04, Obj_Player_Flip_Speed(A1)                  ; $0031
+                move.b  #$00, flips_remaining(A1)                  ; $0030
+                move.b  #$04, flip_speed(A1)                  ; $0031
                 andi.w  #$7FFF, art_tile(A1)                         ; $000A
                 rts
 Offset_0x029A6C:
@@ -344,7 +344,7 @@ Offset_0x029AA8:
 Offset_0x029AB0:
                 neg.b   D0
                 add.w   D0, D0
-                move.b  D0, Obj_Flip_Angle(A1)                           ; $0027
+                move.b  D0, flip_angle(A1)                           ; $0027
                 jsr     (CalcSine)                             ; Offset_0x001B20
                 move.w  D1, D4
                 asr.w   #$04, D1
@@ -375,10 +375,10 @@ Offset_0x029AFE:
 Offset_0x029B00:
                 btst    #$03, status(A1)                             ; $002A
                 beq.s   Offset_0x029B10
-                move.w  Obj_Player_Last(A1), A3                          ; $0042
+                move.w  parent(A1), A3                          ; $0042
                 bclr    D6, status(A3)                               ; $002A
 Offset_0x029B10:
-                move.w  A0, Obj_Player_Last(A1)                          ; $0042
+                move.w  A0, parent(A1)                          ; $0042
                 btst    #$01, status(A1)                             ; $002A
                 beq.s   Offset_0x029B4C
                 move.w  #$0000, y_vel(A1)                          ; $001A

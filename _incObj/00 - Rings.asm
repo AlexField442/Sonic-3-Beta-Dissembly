@@ -58,7 +58,7 @@ Rings_Delete:
 ; ---------------------------------------------------------------------------
 ; Offset_0x010A20: Add_Rings_Check_Ring_Status:
 CollectRing:
-		tst.b	Obj_Player_One_Or_Two(a0)
+		tst.b	parent2+1(a0)
 		bne.s	CollectRing_Tails
 ; Offset_0x010A26: Add_Rings:
 CollectRing_Sonic:

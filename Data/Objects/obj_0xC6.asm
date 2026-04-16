@@ -38,11 +38,11 @@ Offset_0x0434DE:
                 move.w  (Camera_X).w, D0                             ; $FFFFEE78
                 addi.w  #$00A0, D0
                 move.w  D0, x_pos(A0)                                    ; $0010
-                move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
+                move.w  D0, objoff_3E(A0)                       ; $003E
                 move.w  (Camera_Y).w, D0                             ; $FFFFEE7C
                 subi.w  #$0040, D0
                 move.w  D0, y_pos(A0)                                    ; $0014
-                move.w  #$0001, Obj_Control_Var_0A(A0)                   ; $003A
+                move.w  #$0001, objoff_3A(A0)                   ; $003A
                 jsr     (Swing_Setup)                          ; Offset_0x03669A
                 lea     Offset_0x04399C(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
@@ -50,13 +50,13 @@ Offset_0x0434DE:
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A 
 ;-------------------------------------------------------------------------------
 Offset_0x04351C:
-                btst    #$01, Obj_Control_Var_08(A0)                     ; $0038
+                btst    #$01, objoff_38(A0)                     ; $0038
                 beq.s   Offset_0x043558
                 move.b  #$04, routine(A0)                            ; $0005   
 ;-------------------------------------------------------------------------------
 Offset_0x04352A:                
                 move.b  #$01, mapping_frame(A0)                             ; $0022
-                move.w  #$0040, Obj_Timer(A0)                            ; $002E
+                move.w  #$0040, objoff_2E(A0)                            ; $002E
                 lea     Offset_0x0439B2(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 lea     Offset_0x0439D2(PC), A2
@@ -76,7 +76,7 @@ Offset_0x043562:
 ;-------------------------------------------------------------------------------         
 Offset_0x043564:
                 move.w  (Camera_X).w, D0                             ; $FFFFEE78
-                move.w  Obj_Control_Var_0A(A0), D1                       ; $003A
+                move.w  objoff_3A(A0), D1                       ; $003A
                 bmi.s   Offset_0x04357C
                 addi.w  #$0110, D0
                 cmp.w   x_pos(A0), D0                                    ; $0010
@@ -89,7 +89,7 @@ Offset_0x04357C:
 Offset_0x043586:
                 neg.w   D1
 Offset_0x043588:
-                move.w  D1, Obj_Control_Var_0A(A0)                       ; $003A
+                move.w  D1, objoff_3A(A0)                       ; $003A
                 add.w   D1, x_pos(A0)                                    ; $0010
                 move.w  (Camera_Y).w, D0                             ; $FFFFEE7C
                 addi.w  #$0040, D0
@@ -99,7 +99,7 @@ Offset_0x043588:
                 neg.l   D1
 Offset_0x0435A6:
                 add.l   D1, y_pos(A0)                                    ; $0014
-                btst    #$01, Obj_Control_Var_08(A0)                     ; $0038
+                btst    #$01, objoff_38(A0)                     ; $0038
                 beq.s   Offset_0x0435CE
                 move.b  #$0A, routine(A0)                            ; $0005
                 cmpi.b  #$02, (Current_Zone).w                           ; $FFFFFE10
@@ -141,7 +141,7 @@ Offset_0x04360A:
                 move.l  #Offset_0x043630, (A0)
                 addq.w  #$08, y_pos(A0)                                  ; $0014
                 move.w  parent3(A0), A1                            ; $0046
-                bset    #$01, Obj_Control_Var_08(A1)                     ; $0038
+                bset    #$01, objoff_38(A1)                     ; $0038
 Offset_0x04362C:
                 jmp     Child_Display_Or_Delete_2(PC)          ; Offset_0x0424A8
 ;-------------------------------------------------------------------------------
@@ -179,9 +179,9 @@ Offset_0x043676:
                 bne.s   Offset_0x04369C
 Offset_0x043688:
                 move.l  #Offset_0x0436A8, (A0)
-                subq.b  #$08, Obj_Control_Var_13(A0)                     ; $0043
+                subq.b  #$08, objoff_43(A0)                     ; $0043
                 move.w  parent3(A0), A1                            ; $0046
-                bset    #$01, Obj_Control_Var_08(A1)                     ; $0038
+                bset    #$01, objoff_38(A1)                     ; $0038
 Offset_0x04369C:
                 jmp     Child_Display_Or_Delete_2(PC)          ; Offset_0x0424A8   
 ;-------------------------------------------------------------------------------
@@ -226,7 +226,7 @@ Offset_0x043700:
                 jmp     (DisplaySprite)                        ; Offset_0x011148   
 ;-------------------------------------------------------------------------------
 Offset_0x04371E:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x043730
                 move.l  #Offset_0x043734, (A0)
                 move.w  #$0080, priority(A0)                         ; $0008
@@ -239,7 +239,7 @@ Offset_0x043734:
                 tst.w   D1
                 bpl.s   Offset_0x043768
                 add.w   D1, y_pos(A0)                                    ; $0014
-                move.w  Obj_Control_Var_0E(A0), y_vel(A0)   ; $003E, $001A
+                move.w  objoff_3E(A0), y_vel(A0)   ; $003E, $001A
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 move.w  #$FE00, D1
                 tst.b   (Player_Control_Lock_Flag).w                 ; $FFFFFAA8
@@ -261,7 +261,7 @@ Offset_0x043774:
 ;-------------------------------------------------------------------------------
 Offset_0x04377C:
                 jsr     Refresh_Child_Position(PC)             ; Offset_0x042016
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x043792
                 move.l  #Offset_0x043796, (A0)
                 move.w  #$0080, priority(A0)                         ; $0008
@@ -291,7 +291,7 @@ Offset_0x0437D2:
                 bra.s   Offset_0x043768  
 ;-------------------------------------------------------------------------------
 Offset_0x0437D8:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl     Offset_0x043558
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 btst    #$01, status(A1)                             ; $002A
@@ -300,8 +300,8 @@ Offset_0x0437D8:
 Offset_0x0437EE:                
                 move.b  #$1A, anim(A1)                         ; $0020
                 move.b  D0, routine(A0)                              ; $0005
-                move.b  #$81, Obj_Timer(A1)                              ; $002E
-                clr.b   Obj_Control_Var_0D(A1)                           ; $003D
+                move.b  #$81, objoff_2E(A1)                              ; $002E
+                clr.b   objoff_3D(A1)                           ; $003D
                 clr.w   x_vel(A1)                                  ; $0018
                 clr.w   y_vel(A1)                                  ; $001A
                 clr.w   inertia(A1)                                  ; $001C
@@ -318,7 +318,7 @@ Set_End_Pose_And_Load_Level_Results:                           ; Offset_0x04381E
                 rts    
 ;-------------------------------------------------------------------------------  
 Offset_0x04382C:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl     Offset_0x043558
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 btst    #$01, status(A1)                             ; $002A
@@ -392,13 +392,13 @@ Offset_0x0438C8:
                 andi.w  #$0006, D0
                 move.w  Offset_0x04393E(PC, D0), D2
                 move.w  D2, y_vel(A0)                              ; $001A
-                move.w  D2, Obj_Control_Var_0E(A0)                       ; $003E
+                move.w  D2, objoff_3E(A0)                       ; $003E
                 move.w  parent3(A0), A1                            ; $0046
                 btst    #$01, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x0438FC
                 move.l  #Offset_0x04377C, (A0)
                 moveq   #$00, D0
-                addq.b  #$08, Obj_Control_Var_13(A0)                     ; $0043
+                addq.b  #$08, objoff_43(A0)                     ; $0043
                 clr.w   y_vel(A0)                                  ; $001A
 Offset_0x0438FC:
                 andi.w  #$0002, D0
@@ -411,7 +411,7 @@ Offset_0x04390C:
                 add.w   D0, D0
                 move.l  Offset_0x04394E(PC, D0), mappings(A0)             ; $000C
                 lsl.w   #$02, D1
-                move.w  D1, Obj_Timer(A0)                                ; $002E
+                move.w  D1, objoff_2E(A0)                                ; $002E
                 move.w  parent3(A0), A1                            ; $0046
                 move.w  x_pos(A0), D0                                    ; $0010
                 move.w  #$0200, D1

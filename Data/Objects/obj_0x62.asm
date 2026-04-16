@@ -13,9 +13,9 @@
                 beq.s   Offset_0x02C4BE
                 move.l  #Dissolving_Sand_Bar_Mappings_2, mappings(A0) ; Offset_0x02C61A, $000C
                 move.b  #$30, width_pixels(A0)                              ; $0007
-                move.b  #$0F, Obj_Control_Var_0D(A0)                     ; $003D
+                move.b  #$0F, objoff_3D(A0)                     ; $003D
 Offset_0x02C4BE:
-                move.b  Obj_Control_Var_0D(A0), Obj_Control_Var_0C(A0) ; $003D, $003C
+                move.b  objoff_3D(A0), objoff_3C(A0) ; $003D, $003C
                 bset    #$07, status(A0)                             ; $002A
                 move.l  #Offset_0x02C4D0, (A0)
 Offset_0x02C4D0:                
@@ -24,16 +24,16 @@ Offset_0x02C4D0:
                 move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 beq.s   Offset_0x02C4E6
-                move.b  #$01, Obj_Control_Var_0A(A0)                     ; $003A
+                move.b  #$01, objoff_3A(A0)                     ; $003A
 Offset_0x02C4E6:
-                tst.b   Obj_Control_Var_0A(A0)                           ; $003A
+                tst.b   objoff_3A(A0)                           ; $003A
                 beq.s   Offset_0x02C50A
-                subq.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
+                subq.b  #$01, objoff_3C(A0)                     ; $003C
                 bpl.s   Offset_0x02C50A
                 tst.b   anim(A0)                               ; $0020
                 bne.s   Offset_0x02C50A
-                move.b  Obj_Control_Var_0D(A0), Obj_Control_Var_0C(A0) ; $003D, $003C
-                move.b  #$00, Obj_Control_Var_0A(A0)                     ; $003A
+                move.b  objoff_3D(A0), objoff_3C(A0) ; $003D, $003C
+                move.b  #$00, objoff_3A(A0)                     ; $003A
                 move.b  #$01, anim(A0)                         ; $0020
 Offset_0x02C50A:
                 lea     (Dissolving_Sand_Bar_Animate_Data), A1 ; Offset_0x02C58A

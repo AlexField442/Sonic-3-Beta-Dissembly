@@ -37,7 +37,7 @@ Offset_0x048336:
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C
 Offset_0x04833A:
                 move.l  #Offset_0x04834A, (A0)
-                bset    #$01, Obj_Control_Var_08(A0)                     ; $0038
+                bset    #$01, objoff_38(A0)                     ; $0038
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C  
 ;-------------------------------------------------------------------------------
 Offset_0x04834A:
@@ -52,7 +52,7 @@ Offset_0x048354:
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
                 lsr.b   #$01, D0
-                move.b  Offset_0x048378(PC, D0), Obj_Control_Var_0C(A0)  ; $003C
+                move.b  Offset_0x048378(PC, D0), objoff_3C(A0)  ; $003C
                 rts               
 ;-------------------------------------------------------------------------------
 Offset_0x048378:
@@ -64,23 +64,23 @@ Offset_0x04837C:
                 move.w  parent3(A0), A1                            ; $0046
                 btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x048398
-                addq.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
+                addq.b  #$01, objoff_3C(A0)                     ; $003C
                 bra     Offset_0x04839C
 Offset_0x048398:
-                subq.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
+                subq.b  #$01, objoff_3C(A0)                     ; $003C
 Offset_0x04839C:
                 bne.s   Offset_0x0483DC
-                btst    #$01, Obj_Control_Var_08(A1)                     ; $0038
+                btst    #$01, objoff_38(A1)                     ; $0038
                 beq.s   Offset_0x0483DC
                 move.l  #Offset_0x0483E6, (A0)
-                move.l  #Offset_0x0483FA, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x0483FA, child(A0)                  ; $0034
                 move.w  x_vel(A1), D0                              ; $0018
                 asl.w   #$01, D0
-                move.l  #Run_Object_Hit_Wall_Right_A0, Obj_Child_Data(A0) ; Offset_0x042424, $0030
+                move.l  #Run_Object_Hit_Wall_Right_A0, child_data(A0) ; Offset_0x042424, $0030
                 move.w  #$0008, default_y_radius(A0)                         ; $0044
                 move.w  D0, x_vel(A0)                              ; $0018
                 bpl.s   Offset_0x0483DC
-                move.l  #Run_Object_Hit_Wall_Left_A0, Obj_Child_Data(A0) ; Offset_0x04243A, $0030
+                move.l  #Run_Object_Hit_Wall_Left_A0, child_data(A0) ; Offset_0x04243A, $0030
                 move.w  #$FFF8, default_y_radius(A0)                         ; $0044
 Offset_0x0483DC:
                 moveq   #$04, D2
@@ -89,14 +89,14 @@ Offset_0x0483DC:
 ;-------------------------------------------------------------------------------
 Offset_0x0483E6:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                move.l  Obj_Child_Data(A0), A1                           ; $0030
+                move.l  child_data(A0), A1                           ; $0030
                 move.w  default_y_radius(A0), D3                             ; $0044
                 jsr     (A1)
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_Y(PC) ; Offset_0x042B96    
 ;-------------------------------------------------------------------------------
 Offset_0x0483FA:
                 move.l  #Offset_0x04840A, (A0)
-                move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
+                move.l  #Go_Delete_Object_A0, child(A0) ; Offset_0x042D3E, $0034
                 rts        
 ;-------------------------------------------------------------------------------
 Offset_0x04840A:

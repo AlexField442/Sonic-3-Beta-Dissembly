@@ -19,7 +19,7 @@ Offset_0x049DEE:
 Offset_0x049DF2:
                 lea     Butterdroid_Setup_Data(PC), A1         ; Offset_0x049E34
                 jsr     (SetupSlottedObjectAttributes)              ; Offset_0x04298C
-                move.l  #Offset_0x049E46, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x049E46, child_data(A0)             ; $0030
                 rts     
 ;-------------------------------------------------------------------------------
 Offset_0x049E06:

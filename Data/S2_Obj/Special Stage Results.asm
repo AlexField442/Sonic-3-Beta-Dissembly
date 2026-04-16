@@ -55,8 +55,8 @@ Offset_0x024C1A:
 Offset_0x024C22:
 		move.l  (A0), (A1)
 		move.w  (A2), x_pos(A1)
-		move.w  (A2)+, Obj_Control_Var_02(A1)
-		move.w  (A2)+, Obj_Control_Var_00(A1)
+		move.w  (A2)+, objoff_32(A1)
+		move.w  (A2)+, objoff_30(A1)
 		move.w  (A2)+, y_pos(A1)
 		move.b  (A2)+, routine(A1)
 		move.b  (A2)+, mapping_frame(A1)
@@ -73,7 +73,7 @@ Offset_0x024C5E:
 		bne.s   Offset_0x024C6C
 		move.b  #$19, mapping_frame(A0)
 Offset_0x024C6C:
-		move.w  Obj_Control_Var_00(A0), D0
+		move.w  objoff_30(A0), D0
 		cmp.w   x_pos(A0), D0
 		bne.s   Offset_0x024C82
 		move.b  #$1C, routine(A0)
@@ -284,7 +284,7 @@ Offset_0x024E98:
 Offset_0x024EA2:
 		move.b  #$32, object_size+routine(A0)		   ; $004F
 		move.w  x_pos(A0), D0				    ; $0010
-		cmp.w   Obj_Control_Var_02(A0), D0		       ; $0032
+		cmp.w   objoff_32(A0), D0		       ; $0032
 		bne.s   Offset_0x024F04
 		move.b  #$14, object_size+routine(A0)		   ; $004F
 		subq.w  #$08, object_size+y_pos(A0)		         ; $005E
@@ -294,7 +294,7 @@ Offset_0x024EA2:
 		move.b  #$1B, mapping_frame(A0)		             ; $0022
 		move.l  (A0), (A1)
 		clr.w   x_pos(A1)				        ; $0010
-		move.w  #$0120, Obj_Control_Var_00(A1)		   ; $0030
+		move.w  #$0120, objoff_30(A1)		   ; $0030
 		move.w  #$00B4, y_pos(A1)				; $0014
 		move.b  #$14, routine(A1)		            ; $0005
 		move.b  #$1C, mapping_frame(A1)		             ; $0022
@@ -305,7 +305,7 @@ Offset_0x024EA2:
 Offset_0x024F04:
 		moveq   #$20, D0
 		move.w  x_pos(A0), D1				    ; $0010
-		cmp.w   Obj_Control_Var_02(A0), D1		       ; $0032
+		cmp.w   objoff_32(A0), D1		       ; $0032
 		beq.s   Offset_0x024F20
 		bhi.s   Offset_0x024F14
 		neg.w   D0
@@ -320,7 +320,7 @@ Offset_0x024F26:
 ;-------------------------------------------------------------------------------		  
 Offset_0x024F28:
 		move.w  x_pos(A0), D0
-		cmp.w   Obj_Control_Var_00(A0), D0
+		cmp.w   objoff_30(A0), D0
 		bne     S2Obj6F_SSResults
 		move.w  #$00B4, anim_frame_duration(A0)
 		move.b  #$20, routine(A0)

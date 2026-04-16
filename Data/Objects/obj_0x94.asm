@@ -31,8 +31,8 @@ Offset_0x0499F8:
                 rts
 Offset_0x049A06:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x049B12, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x049A30, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x049B12, child_data(A0)             ; $0030
+                move.l  #Offset_0x049A30, child(A0)                  ; $0034
 Offset_0x049A1C:                
                 rts 
 ;-------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ Offset_0x049A2A:
 Offset_0x049A30:
                 move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$FD00, y_vel(A0)                          ; $001A
-                move.l  #Offset_0x049A8C, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x049A8C, child(A0)                  ; $0034
                 move.w  #$FF00, D4
                 jmp     Set_Velocity_X_Track_Player_One(PC)    ; Offset_0x042E4C 
 ;-------------------------------------------------------------------------------
@@ -75,8 +75,8 @@ Offset_0x049A7E:
 ;-------------------------------------------------------------------------------
 Offset_0x049A8C:
                 move.b  #$08, routine(A0)                            ; $0005
-                move.l  #Offset_0x049B19, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x049A30, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x049B19, child_data(A0)             ; $0030
+                move.l  #Offset_0x049A30, child(A0)                  ; $0034
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x049AA4:

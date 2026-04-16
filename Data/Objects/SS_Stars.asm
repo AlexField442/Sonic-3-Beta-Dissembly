@@ -17,7 +17,7 @@ Offset_0x0102DE:
 Offset_0x0102E4:                
                 tst.b   (Super_Sonic_flag).w                         ; $FFFFFE19
                 beq.s   Offset_0x010364
-                tst.b   Obj_P_Invunerblt_Time(A0)                        ; $0034
+                tst.b   invulnerable_time(A0)                        ; $0034
                 beq.s   Offset_0x010334
                 subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x01031C
@@ -26,11 +26,11 @@ Offset_0x0102E4:
                 cmpi.b  #$06, mapping_frame(A0)                             ; $0022
                 bcs.s   Offset_0x01031C
                 move.b  #$00, mapping_frame(A0)                             ; $0022
-                move.b  #$00, Obj_P_Invunerblt_Time(A0)                  ; $0034
-                move.b  #$01, Obj_P_Invcbility_Time(A0)                  ; $0035
+                move.b  #$00, invulnerable_time(A0)                  ; $0034
+                move.b  #$01, invincibility_time(A0)                  ; $0035
                 rts
 Offset_0x01031C:
-                tst.b   Obj_P_Invcbility_Time(A0)                        ; $0035
+                tst.b   invincibility_time(A0)                        ; $0035
                 bne.s   Offset_0x01032E
 Offset_0x010322:
                 move.w  (Obj_Player_One+x_pos).w, x_pos(A0)   ; $FFFFB010, $0010
@@ -38,7 +38,7 @@ Offset_0x010322:
 Offset_0x01032E:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x010334:
-                tst.b   (Obj_Player_One+Obj_Timer).w                 ; $FFFFB02E
+                tst.b   (Obj_Player_One+objoff_2E).w                 ; $FFFFB02E
                 bne.s   Offset_0x010356
                 move.w  (Obj_Player_One+inertia).w, D0           ; $FFFFB01C
                 bpl.s   Offset_0x010342
@@ -47,11 +47,11 @@ Offset_0x010342:
                 cmpi.w  #$0800, D0
                 bcs.s   Offset_0x010356
                 move.b  #$00, mapping_frame(A0)                             ; $0022
-                move.b  #$01, Obj_P_Invunerblt_Time(A0)                  ; $0034
+                move.b  #$01, invulnerable_time(A0)                  ; $0034
                 bra.s   Offset_0x010322
 Offset_0x010356:
-                move.b  #$00, Obj_P_Invunerblt_Time(A0)                  ; $0034
-                move.b  #$00, Obj_P_Invcbility_Time(A0)                  ; $0035
+                move.b  #$00, invulnerable_time(A0)                  ; $0034
+                move.b  #$00, invincibility_time(A0)                  ; $0035
                 rts
 Offset_0x010364:
                 jmp     (DeleteObject)                         ; Offset_0x011138

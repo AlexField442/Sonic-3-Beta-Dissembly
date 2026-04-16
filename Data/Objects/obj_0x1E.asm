@@ -15,7 +15,7 @@ Offset_0x01F628:
                 move.w  #$0010, D2
                 move.w  x_pos(A0), D4                                    ; $0010
                 lea     (Offset_0x01F838), A2
-                lea     Obj_Timer(A0), A4                                ; $002E
+                lea     objoff_2E(A0), A4                                ; $002E
                 tst.b   (A4)
                 beq.s   Offset_0x01F646
                 subq.b  #$01, (A4)
@@ -50,7 +50,7 @@ Offset_0x01F680:
                 move.b  D6, D0
                 andi.b  #$08, D0
                 beq.s   Offset_0x01F6A0
-                lea     Obj_Timer(A0), A4                                ; $002E
+                lea     objoff_2E(A0), A4                                ; $002E
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 moveq   #$03, D6
                 bsr     Offset_0x01F784
@@ -79,7 +79,7 @@ Offset_0x01F6BA:
                 move.w  #$F600, y_vel(A1)                          ; $001A
                 move.w  #$0800, inertia(A1)                          ; $001C
                 bset    #$01, status(A1)                             ; $002A
-                move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
+                move.b  #$00, objoff_40(A1)                     ; $0040
                 bset    #$02, status(A1)                             ; $002A
                 move.b  #$0E, y_radius(A1)                           ; $001E
                 move.b  #$07, x_radius(A1)                            ; $001F
@@ -102,7 +102,7 @@ Offset_0x01F722:
                 move.w  #$F600, y_vel(A1)                          ; $001A
                 move.w  #$0800, inertia(A1)                          ; $001C
                 bset    #$01, status(A1)                             ; $002A
-                move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
+                move.b  #$00, objoff_40(A1)                     ; $0040
                 bset    #$02, status(A1)                             ; $002A
                 move.b  #$0E, y_radius(A1)                           ; $001E
                 move.b  #$07, x_radius(A1)                            ; $001F
@@ -123,7 +123,7 @@ Offset_0x01F784:
                 move.w  #$0000, y_vel(A1)                          ; $001A
                 move.w  #$0000, inertia(A1)                          ; $001C
                 bset    #$01, status(A1)                             ; $002A
-                move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
+                move.b  #$00, objoff_40(A1)                     ; $0040
                 bclr    #$03, status(A1)                             ; $002A
                 bclr    #$02, status(A1)                             ; $002A
                 move.b  #$00, anim(A1)                         ; $0020
@@ -143,7 +143,7 @@ Offset_0x01F7E0:
                 move.w  #$0000, y_vel(A1)                          ; $001A
                 move.w  #$0000, inertia(A1)                          ; $001C
                 bset    #$01, status(A1)                             ; $002A
-                move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
+                move.b  #$00, objoff_40(A1)                     ; $0040
                 bclr    #$03, status(A1)                             ; $002A
                 bclr    #$02, status(A1)                             ; $002A
                 move.b  #$00, anim(A1)                         ; $0020

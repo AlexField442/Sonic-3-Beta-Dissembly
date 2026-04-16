@@ -23,16 +23,16 @@ Offset_0x048E1A:
 Offset_0x048E26:
                 lea     Flybot_767_Setup_Data(PC), A1          ; Offset_0x048F66
                 jsr     SetupSlottedObjectAttributes(PC)            ; Offset_0x04298C
-                move.l  #Offset_0x048F80, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x048F80, child_data(A0)             ; $0030
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 move.w  #$FF00, D4
                 jsr     Set_Velocity_X_Track_Player_One(PC)    ; Offset_0x042E4C
 Offset_0x048E42:                
                 move.w  #$0080, D0
-                move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
+                move.w  D0, objoff_3E(A0)                       ; $003E
                 move.w  D0, y_vel(A0)                              ; $001A
-                move.w  #$0008, Obj_Control_Var_10(A0)                   ; $0040
-                bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                move.w  #$0008, objoff_40(A0)                   ; $0040
+                bclr    #$00, objoff_38(A0)                     ; $0038
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x048E5C:
@@ -51,8 +51,8 @@ Offset_0x048E7C:
                 move.w  y_pos(A0), default_y_radius(A0)               ; $0014, $0044
                 clr.b   anim_frame(A0)                                ; $0023
                 clr.b   anim_frame_duration(A0)                                 ; $0024
-                move.l  #Offset_0x048F8C, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x048EB0, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x048F8C, child_data(A0)             ; $0030
+                move.l  #Offset_0x048EB0, child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x048EA6:
@@ -61,15 +61,15 @@ Offset_0x048EA6:
 ;-------------------------------------------------------------------------------  
 Offset_0x048EB0:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.l  #Offset_0x048F95, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x048F95, child_data(A0)             ; $0030
                 asl.w   x_vel(A0)                                  ; $0018
                 move.w  #$0200, y_vel(A0)                          ; $001A
-                move.w  #$0020, Obj_Timer(A0)                            ; $002E
+                move.w  #$0020, objoff_2E(A0)                            ; $002E
                 rts   
 ;------------------------------------------------------------------------------- 
 Offset_0x048ED0:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x048EE4
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 tst.w   D1
@@ -78,7 +78,7 @@ Offset_0x048EE4:
                 jmp     AnimateRaw(PC)                        ; Offset_0x04208E
 Offset_0x048EE8:
                 move.b  #$08, routine(A0)                            ; $0005
-                move.l  #Offset_0x048FA1, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x048FA1, child_data(A0)             ; $0030
                 neg.w   y_vel(A0)                                  ; $001A
                 rts    
 ;------------------------------------------------------------------------------- 
@@ -90,9 +90,9 @@ Offset_0x048EFC:
                 jmp     (AnimateRaw)                          ; Offset_0x04208E
 Offset_0x048F12:
                 move.b  #$0A, routine(A0)                            ; $0005
-                move.l  #Offset_0x048F80, Obj_Child_Data(A0)             ; $0030
-                move.w  #$003B, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x048F5E, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x048F80, child_data(A0)             ; $0030
+                move.w  #$003B, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x048F5E, child(A0)                  ; $0034
                 asr.w   x_vel(A0)                                  ; $0018
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 move.w  x_pos(A0), D0                                    ; $0010

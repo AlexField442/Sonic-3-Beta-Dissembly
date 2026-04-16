@@ -6,7 +6,7 @@
                 lea     Trampoline_Setup_Data(PC), A1          ; Offset_0x047F68
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Offset_0x047D62, (A0)
-                move.w  y_pos(A0), Obj_Child_Data(A0)             ; $0014, $0030
+                move.w  y_pos(A0), child_data(A0)             ; $0014, $0030
                 lea     Offset_0x047F7C(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A
 ;-------------------------------------------------------------------------------
@@ -68,21 +68,21 @@ Offset_0x047DDC:
                 move.w  D2, (A2)
                 rts
 Offset_0x047DFC:
-                btst    #$02, Obj_Control_Var_08(A0)                     ; $0038
+                btst    #$02, objoff_38(A0)                     ; $0038
                 beq.s   Offset_0x047E82
                 move.w  #$0080, D0
                 move.w  y_pos(A0), D1                                    ; $0014
                 move.w  y_vel(A0), D2                              ; $001A
-                move.b  Obj_Control_Var_09(A0), D3                       ; $0039
-                sub.w   Obj_Control_Var_02(A0), D1                       ; $0032
-                scs     Obj_Control_Var_09(A0)                           ; $0039
+                move.b  objoff_39(A0), D3                       ; $0039
+                sub.w   objoff_32(A0), D1                       ; $0032
+                scs     objoff_39(A0)                           ; $0039
                 bcs.s   Offset_0x047E24
                 neg.w   D0
                 bra     Offset_0x047E26
 Offset_0x047E24:
                 neg.w   D1
 Offset_0x047E26:
-                cmp.b   Obj_Control_Var_09(A0), D3                       ; $0039
+                cmp.b   objoff_39(A0), D3                       ; $0039
                 beq.s   Offset_0x047E56
                 add.w   D0, D2
                 add.w   D0, D2
@@ -97,7 +97,7 @@ Offset_0x047E44:
                 bgt.s   Offset_0x047E56
                 cmpi.w  #$0001, D1
                 bhi.s   Offset_0x047E56
-                bclr    #$02, Obj_Control_Var_08(A0)                     ; $0038
+                bclr    #$02, objoff_38(A0)                     ; $0038
 Offset_0x047E56:
                 add.w   D0, D2
                 move.w  #$F700, D3
@@ -119,7 +119,7 @@ Offset_0x047E6C:
 Offset_0x047E82:
                 rts
 Offset_0x047E84:
-                move.b  Obj_Control_Var_0A(A0), D3                       ; $003A
+                move.b  objoff_3A(A0), D3                       ; $003A
                 andi.b  #$18, D3
                 beq.s   Offset_0x047EC6
                 btst    #$03, D3
@@ -134,13 +134,13 @@ Offset_0x047EA6:
                 move.w  D2, y_vel(A1)                              ; $001A
                 bset    #$01, status(A1)                             ; $002A
                 bclr    #$03, status(A1)                             ; $002A
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 move.b  #$10, anim(A1)                         ; $0020
                 move.b  #$02, routine(A1)                            ; $0005
 Offset_0x047EC6:
                 rts
 Offset_0x047EC8:
-                move.b  status(A0), Obj_Control_Var_0A(A0)    ; $002A, $003A
+                move.b  status(A0), objoff_3A(A0)    ; $002A, $003A
                 move.w  (Obj_Player_One+y_vel).w, -(A7)        ; $FFFFB01A
                 move.w  (Obj_Player_Two+y_vel).w, -(A7)        ; $FFFFB064
                 moveq   #$23, D1
@@ -150,14 +150,14 @@ Offset_0x047EC8:
                 jsr     (Platform_Object)                      ; Offset_0x013AF6
                 move.l  (A7)+, D0
                 move.b  status(A0), D1                               ; $002A
-                move.b  Obj_Control_Var_0A(A0), D2                       ; $003A
-                move.b  D1, Obj_Control_Var_0A(A0)                       ; $003A
+                move.b  objoff_3A(A0), D2                       ; $003A
+                move.b  D1, objoff_3A(A0)                       ; $003A
                 eor.b   D1, D2
                 andi.b  #$18, D2
                 beq.s   Offset_0x047F28
                 bsr     Offset_0x047F4A
-                bset    #$02, Obj_Control_Var_08(A0)                     ; $0038
-                clr.b   Obj_Control_Var_09(A0)                           ; $0039
+                bset    #$02, objoff_38(A0)                     ; $0038
+                clr.b   objoff_39(A0)                           ; $0039
                 moveq   #$03, D4
                 btst    D4, D2
                 beq.s   Offset_0x047F18
@@ -197,9 +197,9 @@ Offset_0x047F54:
                 beq.s   Offset_0x047F5C
                 addq.w  #$08, D5
 Offset_0x047F5C:
-                move.w  Obj_Child_Data(A0), D3                           ; $0030
+                move.w  child_data(A0), D3                           ; $0030
                 add.w   D5, D3
-                move.w  D3, Obj_Control_Var_02(A0)                       ; $0032
+                move.w  D3, objoff_32(A0)                       ; $0032
                 rts 
 ;-------------------------------------------------------------------------------
 Trampoline_Setup_Data:                                         ; Offset_0x047F68

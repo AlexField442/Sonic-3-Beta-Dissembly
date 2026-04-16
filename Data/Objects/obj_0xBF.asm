@@ -10,8 +10,8 @@
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 ;-------------------------------------------------------------------------------
 Offset_0x0479A2:
-                move.b  (Obj_Player_One+anim).w, Obj_Control_Var_0A(A0) ; $FFFFB020, $003A
-                move.b  (Obj_Player_Two+anim).w, Obj_Control_Var_0B(A0) ; $FFFFB06A, $003B
+                move.b  (Obj_Player_One+anim).w, objoff_3A(A0) ; $FFFFB020, $003A
+                move.b  (Obj_Player_Two+anim).w, objoff_3B(A0) ; $FFFFB06A, $003B
                 moveq   #$23, D1
                 moveq   #$10, D2
                 moveq   #$10, D3
@@ -24,13 +24,13 @@ Offset_0x0479C8:
                 btst    #$03, D0
                 beq.s   Offset_0x0479DE
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                cmpi.b  #$02, Obj_Control_Var_0A(A0)                     ; $003A
+                cmpi.b  #$02, objoff_3A(A0)                     ; $003A
                 beq.s   Offset_0x0479F0
 Offset_0x0479DE:
                 btst    #$04, D0
                 beq.s   Offset_0x047A36
                 lea     (Obj_Player_One).w, A2                       ; $FFFFB000
-                cmpi.b  #$02, Obj_Control_Var_0B(A0)                     ; $003B
+                cmpi.b  #$02, objoff_3B(A0)                     ; $003B
                 bne.s   Offset_0x047A36
 Offset_0x0479F0:
                 bset    #$02, status(A1)                             ; $002A
@@ -53,10 +53,10 @@ Offset_0x047A38:
                 lea     Ice_Cube_Setup_Data_2(PC), A1          ; Offset_0x047A7E
                 jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Animate_Raw_Delete_Sprite_Check_X_Y, (A0) ; Offset_0x042FB2
-                move.l  #Offset_0x047184, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x047184, child_data(A0)             ; $0030
                 cmpi.b  #$0C, subtype(A0)                            ; $002C
                 bcs.s   Offset_0x047A5E
-                move.l  #Offset_0x04718E, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x04718E, child_data(A0)             ; $0030
 Offset_0x047A5E:
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
                 andi.b  #$03, D0

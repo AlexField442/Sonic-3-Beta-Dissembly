@@ -31,13 +31,13 @@ Offset_0x026780:
                 move.w  #$2500, art_tile(A0)                         ; $000A
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
-                move.w  #$0008, Obj_Control_Var_00(A0)                   ; $0030
+                move.w  #$0008, objoff_30(A0)                   ; $0030
                 move.l  #Offset_0x0267B2, (A0)
 Offset_0x0267B2:                
-                tst.w   Obj_Control_Var_00(A0)                           ; $0030
+                tst.w   objoff_30(A0)                           ; $0030
                 beq.s   Offset_0x0267C8
                 addq.w  #$08, y_pos(A0)                                  ; $0014
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bne.s   Offset_0x0267C8
                 move.b  #$00, (Wind_Tunnels_Flag).w                  ; $FFFFF7C7
 Offset_0x0267C8:

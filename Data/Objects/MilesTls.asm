@@ -10,7 +10,7 @@
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.l  #Offset_0x00F1CC, (A0)
 Offset_0x00F1CC:                
-                move.w  Obj_P_Flips_Remaining(A0), A2                    ; $0030
+                move.w  flips_remaining(A0), A2                    ; $0030
                 move.b  angle(A2), angle(A0)              ; $0026, $0026
                 move.b  status(A2), status(A0)            ; $002A, $002A
                 move.w  x_pos(A2), x_pos(A0)                      ; $0010, $0010
@@ -27,9 +27,9 @@ Offset_0x00F200:
                 beq.s   Offset_0x00F210
                 moveq   #$04, D0
 Offset_0x00F210:
-                cmp.b   Obj_P_Invunerblt_Time(A0), D0                    ; $0034
+                cmp.b   invulnerable_time(A0), D0                    ; $0034
                 beq.s   Offset_0x00F220
-                move.b  D0, Obj_P_Invunerblt_Time(A0)                    ; $0034
+                move.b  D0, invulnerable_time(A0)                    ; $0034
                 move.b  Offset_0x00F234(PC, D0), anim(A0)      ; $0020
 Offset_0x00F220:
                 lea     (Miles_Tails_Animate_Data), A1         ; Offset_0x00F256

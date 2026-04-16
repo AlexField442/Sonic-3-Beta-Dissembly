@@ -73,80 +73,72 @@ anim_frame_duration:	equ $24		; 1 byte
 anim_frame_delay:	equ $25		; 1 byte
 angle:			equ $26		; 1 byte
 status:			equ $2A		; 1 byte
+parent2:		equ $3E		; 2 bytes ; $3E/$3F
 object_size:		equ $4A		; 1 byte
 
 ; non-Sonic/Tails variables
 collision_flags:	equ $28		; 1 byte
 collision_property:	equ $29		; 1 byte
 subtype:		equ $2C		; 1 byte
+child_data:		equ $30		; 4 bytes ; $30/$31/$32/$33
+child:			equ $34		; 4 bytes ; $34/$35/$36/$37
 parent3:		equ $46		; 2 bytes
 respawn_index:		equ $48		; 2 bytes ; $48/$49
 
 ; Sonic/Tails variables (needs to be cleaned out of other objects later...)
+flip_angle:		equ $27		; 1 byte
+flip_type:		equ $2D		; 1 byte
+obj_control:		equ $2E		; 1 byte
+status_secondary:	equ $2F		; 1 byte
+flips_remaining:	equ $30		; 1 byte
+flip_speed:		equ $31		; 1 byte
+move_lock:		equ $32		; 2 bytes ; $32/$33
+invulnerable_time:	equ $34		; 1 byte
+invincibility_time:	equ $35		; 1 byte
+speedshoes_time:	equ $36		; 1 byte
+status_tertiary:	equ $37		; 1 byte
+character_id:		equ $38		; 1 byte
+scroll_delay_counter:	equ $39		; 1 byte
+next_tilt:		equ $3A		; 1 byte
+tilt:			equ $3B		; 1 byte
+stick_to_convex:	equ $3C		; 1 byte
+spindash_flag:		equ $3D		; 1 byte
+spindash_counter:	equ $3E		; 2 bytes ; $3E/$3F
+jumping:		equ $40		; 1 byte
+angle_flag:		equ $41		; 1 byte
+parent:			equ $42		; 2 bytes ; $42/$43
 default_y_radius:	equ $44		; 1 byte
 default_x_radius:	equ $45		; 1 byte
+top_solid_bit:		equ $46		; 1 byte
+lrb_solid_bit:		equ $47		; 1 byte
 
-; OLD! To deprecate!
-Obj_Flip_Angle        equ $27     ; Byte          ; $27         ; $27
-Obj_Flags_2           equ $2D     ; Byte          ; 29          ; 2D
-Obj_Timer             equ $2E     ; Word          ; 2A..2B      ; 2E..2F
-Obj_Timer_2           equ $2F 
-Obj_Child_Data        equ $30  
-Obj_Child             equ $34 
-Obj_Destr_Flag        equ $3D     ; Byte          ; 39          ; 3D
-Obj_Parent_Ref        equ $3E     ; Word          ; 3E..3F      ; 3E..3F     
-
-; Variaveis locais de objectos
-Obj_Control_Var_00      equ $30
-Obj_Control_Var_01      equ $31
-Obj_Control_Var_02      equ $32
-Obj_Control_Var_03      equ $33
-Obj_Control_Var_04      equ $34 
-Obj_Control_Var_05      equ $35
-Obj_Control_Var_06      equ $36
-Obj_Control_Var_07      equ $37
-Obj_Control_Var_08      equ $38
-Obj_Control_Var_09      equ $39
-Obj_Control_Var_0A      equ $3A
-Obj_Control_Var_0B      equ $3B
-Obj_Control_Var_0C      equ $3C
-Obj_Control_Var_0D      equ $3D
-Obj_Control_Var_0E      equ $3E
-Obj_Control_Var_0F      equ $3F
-Obj_Player_One_Or_Two   equ $3F
-Obj_Control_Var_10      equ $40
-Obj_Control_Var_11      equ $41
-Obj_Control_Var_12      equ $42
-Obj_Control_Var_13      equ $43  
-Obj_Player_One_Or_Two_2 equ $43
-Obj_Control_Var_14      equ $44  
-Obj_Control_Var_16      equ $46  
-Obj_Control_Var_18      equ $48
-
-
-; Variaveis usadas pelos jogadores
-Obj_Player_Flip_Flag  equ $2D     ; Byte          ; 29          ; 2D
-Obj_Player_Control    equ $2E     ; Byte          ; 2A          ; 2E 
-Obj_Player_Status     equ $2F     ; Byte          ; 2B          ; 2F
-Obj_P_Flips_Remaining equ $30     ; Byte          ; 2C          ; 30   
-Obj_Player_Flip_Speed equ $31     ; Byte          ; 2D          ; 31
-Obj_P_Horiz_Ctrl_Lock equ $32     ; Word          ; 2E..2F      ; 32..33  
-Obj_P_Invunerblt_Time equ $34     ; Word / Byte   ; 30..31      ; 34
-Obj_P_Invcbility_Time equ $35     ; Word / Byte   ; 32..33      ; 35
-Obj_P_Spd_Shoes_Time  equ $36     ; Word / Byte   ; 34..35      ; 36
-Obj_Player_Hit_Flag   equ $37     ; Byte                        ; 37
-Obj_Player_Selected   equ $38     ; Byte                        ; 38  0 Sonic 1 Miles 2 Knuckles
-Obj_Look_Up_Down_Time equ $39     ; Byte                        ; 39 
-Obj_Player_Next_Tilt  equ $3A     ; Byte          ; 36          ; 3A
-Obj_Player_Tilt       equ $3B     ; Byte          ; 37          ; 3B
-Obj_Player_St_Convex  equ $3C     ; Byte          ; 38          ; 3C
-Obj_Player_Spdsh_Flag equ $3D     ; Byte          ; 39          ; 3D
-Obj_Player_Spdsh_Cnt  equ $3E     ; Byte          ; 3A          ; 3E
-Obj_Player_Jump       equ $40     ; Byte          ; 3C          ; 40   
-Obj_Player_Angle_Flag equ $41
-Obj_Player_Last       equ $42     ; Byte / Word   ; 3D          ; 42..43
-Obj_Player_Top_Solid  equ $46     ; Byte          ; 3E          ; 46
-Obj_Player_LRB_Solid  equ $47     ; Byte          ; 3F          ; 47 ; Left / Right / Bottom
+; Local variables for objects
+objoff_2D:		equ $2D
+objoff_2E:		equ $2E
+objoff_2F:		equ $2F
+objoff_30:		equ $30
+objoff_31:		equ $31
+objoff_32:		equ $32
+objoff_33:		equ $33
+objoff_34:		equ $34
+objoff_35:		equ $35
+objoff_36:		equ $36
+objoff_37:		equ $37
+objoff_38:		equ $38
+objoff_39:		equ $39
+objoff_3A:		equ $3A
+objoff_3B:		equ $3B
+objoff_3C:		equ $3C
+objoff_3D:		equ $3D
+objoff_3E:		equ $3E
+objoff_3F:		equ $3F
+objoff_40:		equ $40
+objoff_41:		equ $41
+objoff_42:		equ $42
+objoff_43:		equ $43
+objoff_44:		equ $44
+objoff_46:		equ $46
+objoff_48:		equ $48
 
 ; Variables used by bosses
 Obj_LeftLock		equ $1C

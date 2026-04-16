@@ -16,8 +16,8 @@ Offset_0x0477E0:
                 cmpi.w  #$0070, D2
                 bcc.s   Offset_0x047802
                 move.l  #Offset_0x047806, (A0)
-                move.w  #$000F, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x04781E, Obj_Child(A0)                  ; $0034
+                move.w  #$000F, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x04781E, child(A0)                  ; $0034
 Offset_0x047802:
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C 
 ;-------------------------------------------------------------------------------
@@ -58,10 +58,10 @@ Offset_0x047862:
                 lea     Offset_0x0478B8(PC), A1
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Animate_Raw_Delete_Sprite_Check_X_Y, (A0) ; Offset_0x042FB2
-                move.l  #Offset_0x047196, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x047196, child_data(A0)             ; $0030
                 cmpi.b  #$06, subtype(A0)                            ; $002C
                 bcc.s   Offset_0x047888
-                move.l  #Offset_0x04718E, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x04718E, child_data(A0)             ; $0030
 Offset_0x047888:
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
                 andi.b  #$03, D0

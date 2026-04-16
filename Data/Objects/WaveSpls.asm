@@ -30,7 +30,7 @@ Offset_0x014980:
                 move.w  x_pos(A0), (A2)                                  ; $0010
                 addi.w  #$00C0, (A2)+
                 move.w  y_pos(A0), (A2)+                                 ; $0014
-                tst.b   Obj_Control_Var_02(A0)                           ; $0032
+                tst.b   objoff_32(A0)                           ; $0032
                 bne.s   Offset_0x0149BA
                 tst.b   (Control_Ports_Logical_Data+$01).w           ; $FFFFF603
                 bmi.s   Offset_0x0149AE
@@ -38,12 +38,12 @@ Offset_0x014980:
                 bpl.s   Offset_0x0149CA
 Offset_0x0149AE:
                 addq.b  #$03, mapping_frame(A0)                             ; $0022
-                move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$01, objoff_32(A0)                     ; $0032
                 bra.s   Offset_0x0149E8
 Offset_0x0149BA:
                 tst.w   (Pause_Status).w                             ; $FFFFF63A
                 bne.s   Offset_0x0149E8
-                move.b  #$00, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$00, objoff_32(A0)                     ; $0032
                 subq.b  #$03, mapping_frame(A0)                             ; $0022
 Offset_0x0149CA:
                 subq.b  #$01, anim_frame_duration(A0)                           ; $0024

@@ -28,8 +28,8 @@ Offset_0x045E74:
                 rts
 Offset_0x045E80:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x045FF0, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x045E9C, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045FF0, child_data(A0)             ; $0030
+                move.l  #Offset_0x045E9C, child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x045E98:
@@ -37,8 +37,8 @@ Offset_0x045E98:
 ;-------------------------------------------------------------------------------
 Offset_0x045E9C:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.w  #$0004, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x045EBC, Obj_Child(A0)                  ; $0034
+                move.w  #$0004, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x045EBC, child(A0)                  ; $0034
                 lea     Offset_0x045FE0(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A    
 ;-------------------------------------------------------------------------------
@@ -53,8 +53,8 @@ Offset_0x045EBC:
                 neg.w   D0
 Offset_0x045ECE:
                 add.w   D0, y_pos(A0)                                    ; $0014
-                move.w  #$0020, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x045EE8, Obj_Child(A0)                  ; $0034
+                move.w  #$0020, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x045EE8, child(A0)                  ; $0034
                 lea     Offset_0x045FE8(PC), A2
                 jmp     SetupChildObject_Repeat(PC)        ; Offset_0x041E4E  
 ;-------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ Offset_0x045F02:
 Offset_0x045F06:
                 lea     Sparkle_Setup_Data_2(PC), A1           ; Offset_0x045FD4
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
+                move.l  #Go_Delete_Object_A0, child(A0) ; Offset_0x042D3E, $0034
                 move.w  parent3(A0), A1                            ; $0046
                 moveq   #$34, D0
                 btst    #$01, render_flags(A1)                              ; $0004

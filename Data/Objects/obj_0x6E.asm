@@ -14,12 +14,12 @@
                 move.b  #$06, mapping_frame(A0)                             ; $0022
                 move.l  #Offset_0x02E0E6, (A0)
 Offset_0x02E0E6:                
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bpl.s   Offset_0x02E122
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$02, D0
-                move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
+                move.w  D0, objoff_30(A0)                       ; $0030
                 tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x02E122
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0

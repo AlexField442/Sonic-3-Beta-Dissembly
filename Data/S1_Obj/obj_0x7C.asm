@@ -39,13 +39,13 @@ Offset_0x010D7E:
                 bcc.s   Offset_0x010DC6
                 cmpi.b  #$03, mapping_frame(A0)                             ; $0022
                 bne.s   Offset_0x010DC4
-                move.l  Obj_Control_Var_10(A0), A1                       ; $0040
+                move.l  objoff_40(A0), A1                       ; $0040
                 move.b  #$06, routine(A1)                            ; $0005
                 move.b  #$1C, (Obj_Player_One+anim).w      ; $FFFFB020
                 move.b  #$01, (Special_Stage_Entry_Flag).w           ; $FFFFF7CD
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                bclr    #$01, Obj_Player_Status(A1)                      ; $002F
-                bclr    #$00, Obj_Player_Status(A1)                      ; $002F
+                bclr    #$01, status_secondary(A1)                      ; $002F
+                bclr    #$00, status_secondary(A1)                      ; $002F
 Offset_0x010DC4:
                 rts
 Offset_0x010DC6:

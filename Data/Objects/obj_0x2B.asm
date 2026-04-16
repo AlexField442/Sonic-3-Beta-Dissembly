@@ -9,16 +9,16 @@
                 move.b  #$04, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.w  y_pos(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
-                move.l  #Offset_0x021C8E, Obj_Control_Var_02(A0)         ; $0032
+                move.w  y_pos(A0), objoff_30(A0)         ; $0014, $0030
+                move.l  #Offset_0x021C8E, objoff_32(A0)         ; $0032
                 move.b  subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x021B5E
-                move.l  #Offset_0x021D0E, Obj_Control_Var_02(A0)         ; $0032
+                move.l  #Offset_0x021D0E, objoff_32(A0)         ; $0032
 Offset_0x021B5E:
                 move.b  D0, D1
                 andi.w  #$000F, D0
                 addi.w  #$0010, D0
-                move.b  D0, Obj_Control_Var_07(A0)                       ; $0037
+                move.b  D0, objoff_37(A0)                       ; $0037
                 lsr.b   #$04, D1
                 andi.w  #$0007, D1
                 move.b  D1, anim_frame_delay(A0)                           ; $0025
@@ -26,9 +26,9 @@ Offset_0x021B5E:
                 btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x021B86
                 moveq   #-$01, D1
-                subq.b  #$01, Obj_Control_Var_07(A0)                     ; $0037
+                subq.b  #$01, objoff_37(A0)                     ; $0037
 Offset_0x021B86:
-                move.b  D1, Obj_Control_Var_06(A0)                       ; $0036
+                move.b  D1, objoff_36(A0)                       ; $0036
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x021C20
                 move.l  #Offset_0x021C48, (A1)
@@ -65,15 +65,15 @@ Offset_0x021C06:
                 addi.w  #$0020, D3
                 sub.w   D4, D2
                 dbra    D6, Offset_0x021C06
-                move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C
+                move.w  A1, objoff_3C(A0)                       ; $003C
 Offset_0x021C20:
                 move.l  #Offset_0x021C26, (A0)
 Offset_0x021C26:                
-                move.w  Obj_Control_Var_0C(A0), A3                       ; $003C
+                move.w  objoff_3C(A0), A3                       ; $003C
                 bsr     Offset_0x021C4E
                 moveq   #$00, D1
                 move.b  width_pixels(A0), D1                                ; $0007
-                move.l  Obj_Control_Var_02(A0), A2                       ; $0032
+                move.l  objoff_32(A0), A2                       ; $0032
                 move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Offset_0x021D8E)
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E  
@@ -88,8 +88,8 @@ Offset_0x021C4E:
                 lea     $001D(A3), A2
                 move.w  y_sub(A3), D6                                ; $0016
                 subq.w  #$01, D6
-                move.b  Obj_Control_Var_07(A0), D2                       ; $0037
-                move.b  Obj_Control_Var_06(A0), D1                       ; $0036
+                move.b  objoff_37(A0), D2                       ; $0037
+                move.b  objoff_36(A0), D1                       ; $0036
                 bmi.s   Offset_0x021C80
 Offset_0x021C6E:
                 add.b   D1, (A2)
@@ -216,7 +216,7 @@ Offset_0x021E1E:
                 bhi.s   Offset_0x021E76
                 cmpi.w  #$FFF0, D0
                 bcs.s   Offset_0x021E76
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x021E76
                 cmpi.b  #$06, routine(A1)                            ; $0005
                 bcc.s   Offset_0x021E76

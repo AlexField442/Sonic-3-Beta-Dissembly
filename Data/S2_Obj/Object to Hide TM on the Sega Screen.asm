@@ -45,18 +45,18 @@ Offset_0x034714:
                 rts
 ;-------------------------------------------------------------------------------                
 Offset_0x034720: ; Usado pelo objeto 0xB0
-                subq.b  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.b  #$01, objoff_30(A0)                     ; $0030
                 bne.s   Offset_0x034766
                 moveq   #$00, D0
-                move.b  Obj_Control_Var_01(A0), D0                       ; $0031
+                move.b  objoff_31(A0), D0                       ; $0031
                 addq.b  #$01, D0
                 cmp.b   $0001(A1), D0
                 bcs.s   Offset_0x03473A
                 tst.b   $0003(A1)
                 bne.s   Offset_0x03476A
 Offset_0x03473A:
-                move.b  D0, Obj_Control_Var_01(A0)                       ; $0031
-                move.b  (A1), Obj_Control_Var_00(A0)                     ; $0030
+                move.b  D0, objoff_31(A0)                       ; $0031
+                move.b  (A1), objoff_30(A0)                     ; $0030
                 lea     $0006(A1), A2 
                 moveq   #$00, D1
                 move.b  $0002(A1), D1

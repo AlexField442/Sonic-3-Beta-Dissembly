@@ -104,7 +104,7 @@ Offset_0x047C44:
                 lea     Snow_Pile_Setup_Data_4(PC), A1         ; Offset_0x047CF0
                 jsr     SetupObjectAttributes.UsrMap(PC)                  ; Offset_0x041D76
                 move.l  #Offset_0x047C62, (A0)
-                move.l  #Offset_0x047C6C, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x047C6C, child(A0)                  ; $0034
                 bsr     Offset_0x047C7C
                 jsr     Refresh_Child_Position_Adjusted(PC)    ; Offset_0x04203C
 Offset_0x047C62:                
@@ -125,7 +125,7 @@ Offset_0x047C7C:
                 lea     Offset_0x047CB4(PC), A3
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
-                move.w  D0, Obj_Timer(A0)                                ; $002E
+                move.w  D0, objoff_2E(A0)                                ; $002E
                 add.w   D0, D0
                 move.l  $00(A3, D0), x_vel(A0)                     ; $0018
                 btst    #$00, render_flags(A2)                              ; $0004

@@ -40,14 +40,14 @@ Offset_0x048AE8:
                 move.l  #Offset_0x048B18, (A0)
                 move.b  subtype(A0), D0                              ; $002C
                 lsl.b   #$05, D0
-                move.b  D0, Obj_Control_Var_0C(A0)                       ; $003C
+                move.b  D0, objoff_3C(A0)                       ; $003C
                 move.w  parent3(A0), A1                            ; $0046
                 moveq   #$08, D0
                 btst    #$00, render_flags(A1)                              ; $0004
                 beq.s   Offset_0x048B10
                 moveq   #-$08, D0
 Offset_0x048B10:
-                move.b  D0, Obj_Control_Var_10(A0)                       ; $0040
+                move.b  D0, objoff_40(A0)                       ; $0040
                 jmp     Child_Display_Touch_Or_Delete(PC)      ; Offset_0x042472   
 ;-------------------------------------------------------------------------------
 Offset_0x048B18:
@@ -57,12 +57,12 @@ Offset_0x048B18:
                 bsr     Offset_0x048B7A
                 beq.s   Offset_0x048B30
 Offset_0x048B28:
-                move.b  Obj_Control_Var_10(A0), D0                       ; $0040
-                add.b   D0, Obj_Control_Var_0C(A0)                       ; $003C
+                move.b  objoff_40(A0), D0                       ; $0040
+                add.b   D0, objoff_3C(A0)                       ; $003C
 Offset_0x048B30:
                 moveq   #$04, D2
                 jsr     Move_Sprite_Circular_Simple(PC)        ; Offset_0x0426E2
-                cmpi.b  #$80, Obj_Control_Var_0C(A0)                     ; $003C
+                cmpi.b  #$80, objoff_3C(A0)                     ; $003C
                 bne.s   Offset_0x048B4A
                 move.w  parent3(A0), A1                            ; $0046
                 cmpi.b  #$04, subtype(A1)                            ; $002C
@@ -72,15 +72,15 @@ Offset_0x048B4A:
 Offset_0x048B4E:
                 move.l  #Offset_0x048B6E, (A0)
                 move.w  parent3(A0), A1                            ; $0046
-                move.w  #$0001, Obj_Control_Var_10(A0)                   ; $0040
+                move.w  #$0001, objoff_40(A0)                   ; $0040
                 tst.w   x_vel(A1)                                  ; $0018
                 bpl.s   Offset_0x048B6A
-                move.w  #$FFFF, Obj_Control_Var_10(A0)                   ; $0040
+                move.w  #$FFFF, objoff_40(A0)                   ; $0040
 Offset_0x048B6A:
                 jmp     Child_Display_Touch_Or_Delete(PC)      ; Offset_0x042472   
 ;-------------------------------------------------------------------------------
 Offset_0x048B6E:
-                move.w  Obj_Control_Var_10(A0), D0                       ; $0040
+                move.w  objoff_40(A0), D0                       ; $0040
                 add.w   D0, x_pos(A0)                                    ; $0010
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X_Y(PC) ; Offset_0x042B96
 Offset_0x048B7A:

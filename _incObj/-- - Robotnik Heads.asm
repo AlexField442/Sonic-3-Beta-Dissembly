@@ -64,7 +64,7 @@ Obj_AIZRobotnikHead:
 		move.b	routine(a0),d0
 		move.w	AIZRobotnikHead_Index(pc,d0.w),d1
 		jsr	AIZRobotnikHead_Index(pc,d1.w)
-		btst	#6,Obj_Control_Var_08(a0)
+		btst	#6,objoff_38(a0)
 		bne.w	Offset_0x036098
 		jmp	(Child_Display_Or_Delete_2).l
 ; ===========================================================================
@@ -115,7 +115,7 @@ Offset_0x036156:
 		move.w	default_y_radius(a0),a1
 		; This should be using a1; as a result, the forward-facing
 		; Robotnik head goes unused, OOPS
-		btst	#2,Obj_Control_Var_08(a0)	; is Robotnik swinging round and round?
+		btst	#2,objoff_38(a0)	; is Robotnik swinging round and round?
 		beq.s	Offset_0x03616C			; if yes, branch
 		move.b	#1,mapping_frame(a0)		; use "forward" frame
 

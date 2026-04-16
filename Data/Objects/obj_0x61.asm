@@ -52,7 +52,7 @@ Offset_0x02C372:
                 bset    #$01, status(A1)                             ; $002A
                 bclr    #$04, status(A1)                             ; $002A
                 bclr    #$05, status(A1)                             ; $002A
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 moveq   #Small_Bumper_Sfx, D0                             ; -$75
                 jmp     (Play_Music)                           ; Offset_0x001176
 Offset_0x02C390:

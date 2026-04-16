@@ -14,9 +14,9 @@
                 move.w  #$002B, (Art_Scaling_Index_0).w              ; $FFFFF744
                 move.w  #$0000, (Art_Scaling_Index_1).w              ; $FFFFF746
                 move.w  #$0000, (Art_Scaling_Index_2).w              ; $FFFFF748
-                move.w  #$2B00, Obj_Control_Var_10(A1)                   ; $0040
-                move.w  #$0000, Obj_Control_Var_12(A1)                   ; $0042
-                move.w  #$0000, Obj_Control_Var_14(A1)                   ; $0044
+                move.w  #$2B00, objoff_40(A1)                   ; $0040
+                move.w  #$0000, objoff_42(A1)                   ; $0042
+                move.w  #$0000, objoff_44(A1)                   ; $0044
                 move.w  #$FF90, D3
                 moveq   #$07, D1
                 move.w  #$FF90, D4
@@ -35,10 +35,10 @@ Offset_0x0072C0:
                 move.l  #SS_Obj_Eosian_Sphere_2, (A1)          ; Offset_0x00753A
 Offset_0x0072D0:
                 bsr     Offset_0x0072FE
-                move.w  D3, Obj_Control_Var_04(A1)                       ; $0034
-                move.w  D4, Obj_Control_Var_06(A1)                       ; $0036
-                move.w  #$0000, Obj_Control_Var_08(A1)                   ; $0038
-                move.l  A6, Obj_Control_Var_0A(A1)                       ; $003A
+                move.w  D3, objoff_34(A1)                       ; $0034
+                move.w  D4, objoff_36(A1)                       ; $0036
+                move.w  #$0000, objoff_38(A1)                   ; $0038
+                move.l  A6, objoff_3A(A1)                       ; $003A
                 adda.w  #$0002, A6
                 addi.w  #$0020, D4
                 dbra    D2, Offset_0x0072C0
@@ -55,9 +55,9 @@ Offset_0x0072FE:
                 move.l  #Spheres_2_Mappings, mappings(A1) ; Offset_0x0078EC, $000C
                 move.w  #$A400, art_tile(A1)                         ; $000A
                 move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
-                move.w  x_pos(A0), Obj_Control_Var_00(A1)         ; $0010, $0030
+                move.w  x_pos(A0), objoff_30(A1)         ; $0010, $0030
                 move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
-                move.w  y_pos(A0), Obj_Control_Var_02(A1)         ; $0014, $0032
+                move.w  y_pos(A0), objoff_32(A1)         ; $0014, $0032
                 rts
 ;-------------------------------------------------------------------------------                
 Branch_To_SS_Obj_Sphere_Test_Main_2:                           ; Offset_0x00733E
@@ -65,7 +65,7 @@ Branch_To_SS_Obj_Sphere_Test_Main_2:                           ; Offset_0x00733E
 ;-------------------------------------------------------------------------------
 ; Offset_0x007342:
                 move.b  (Control_Ports_Buffer_Data).w, D2            ; $FFFFF604
-                move.w  Obj_Control_Var_16(A0), D0                       ; $0046
+                move.w  objoff_46(A0), D0                       ; $0046
                 btst    #$00, D2
                 beq.s   Offset_0x00735E
                 subi.w  #$0010, D0
@@ -80,27 +80,27 @@ Offset_0x00735E:
                 blt.s   Offset_0x007372
                 move.w  #$0100, D0
 Offset_0x007372:
-                move.w  D0, Obj_Control_Var_16(A0)                       ; $0046
-                move.w  Obj_Control_Var_16(A0), D0                       ; $0046
-                add.w   D0, Obj_Control_Var_10(A0)                       ; $0040
-                move.b  Obj_Control_Var_10(A0), (Art_Scaling_Index_0+$01).w ; $0040, $FFFFF745
+                move.w  D0, objoff_46(A0)                       ; $0046
+                move.w  objoff_46(A0), D0                       ; $0046
+                add.w   D0, objoff_40(A0)                       ; $0040
+                move.b  objoff_40(A0), (Art_Scaling_Index_0+$01).w ; $0040, $FFFFF745
                 move.w  (Art_Scaling_Index_0).w, D0                  ; $FFFFF744
                 bsr     CalcSine                               ; Offset_0x001B20
                 add.w   D0, D0
                 add.w   D1, D1
                 btst    #$02, D2
                 beq.s   Offset_0x0073AA
-                add.w   D1, Obj_Control_Var_12(A0)                       ; $0042
-                add.w   D0, Obj_Control_Var_14(A0)                       ; $0044
-                move.b  Obj_Control_Var_12(A0), (Art_Scaling_Index_1+$01).w ; $0042, $FFFFF747
-                move.b  Obj_Control_Var_14(A0), (Art_Scaling_Index_2+$01).w ; $0044, $FFFFF749
+                add.w   D1, objoff_42(A0)                       ; $0042
+                add.w   D0, objoff_44(A0)                       ; $0044
+                move.b  objoff_42(A0), (Art_Scaling_Index_1+$01).w ; $0042, $FFFFF747
+                move.b  objoff_44(A0), (Art_Scaling_Index_2+$01).w ; $0044, $FFFFF749
 Offset_0x0073AA:
                 btst    #$03, D2
                 beq.s   Offset_0x0073C4
-                sub.w   D1, Obj_Control_Var_12(A0)                       ; $0042
-                sub.w   D0, Obj_Control_Var_14(A0)                        ; $0044
-                move.b  Obj_Control_Var_12(A0), (Art_Scaling_Index_1+$01).w ; $0042, $FFFFF747
-                move.b  Obj_Control_Var_14(A0), (Art_Scaling_Index_2+$01).w ; $0044, $FFFFF749
+                sub.w   D1, objoff_42(A0)                       ; $0042
+                sub.w   D0, objoff_44(A0)                        ; $0044
+                move.b  objoff_42(A0), (Art_Scaling_Index_1+$01).w ; $0042, $FFFFF747
+                move.b  objoff_44(A0), (Art_Scaling_Index_2+$01).w ; $0044, $FFFFF749
 Offset_0x0073C4:
                 move.b  (Control_Ports_Buffer_Data).w, D1            ; $FFFFF604
                 bra.s   Offset_0x0073F6
@@ -138,10 +138,10 @@ Offset_0x00740A:
                 move.w  #$002B, (Art_Scaling_Index_0).w              ; $FFFFF744
                 move.w  #$0000, (Art_Scaling_Index_1).w              ; $FFFFF746
                 move.w  #$0000, (Art_Scaling_Index_2).w              ; $FFFFF748
-                move.w  #$2B00, Obj_Control_Var_10(A0)                   ; $0040
-                move.w  #$0000, Obj_Control_Var_12(A0)                   ; $0042
-                move.w  #$0000, Obj_Control_Var_14(A0)                   ; $0044
-                move.w  #$0000, Obj_Control_Var_16(A0)                   ; $0046
+                move.w  #$2B00, objoff_40(A0)                   ; $0040
+                move.w  #$0000, objoff_42(A0)                   ; $0042
+                move.w  #$0000, objoff_44(A0)                   ; $0044
+                move.w  #$0000, objoff_46(A0)                   ; $0046
 Offset_0x007444:
                 move.b  (Control_Ports_Buffer_Data+$02).w, D1        ; $FFFFF606
                 btst    #$06, D1
@@ -156,7 +156,7 @@ Offset_0x00745A:
                 bcs.s   Offset_0x00746C
                 subq.w  #$08, (Art_Scaling_Data_Buffer+$1A).w        ; $FFFFF75A
 Offset_0x00746C:
-                tst.w   Obj_Control_Var_0E(A0)                           ; $003E
+                tst.w   objoff_3E(A0)                           ; $003E
                 bne.s   Offset_0x007490
                 btst    #$00, D1
                 beq.s   Offset_0x00747C
@@ -175,14 +175,14 @@ Offset_0x007490:
                 btst    #$07, (Control_Ports_Buffer_Data+$03).w      ; $FFFFF607
                 beq.s   Offset_0x0074DE
 Offset_0x0074A0:
-                eori.w  #$FFFF, Obj_Control_Var_0E(A0)                   ; $003E
+                eori.w  #$FFFF, objoff_3E(A0)                   ; $003E
                 move.w  #$002B, (Art_Scaling_Index_0).w              ; $FFFFF744
                 move.w  #$0000, (Art_Scaling_Index_1).w              ; $FFFFF746
                 move.w  #$0000, (Art_Scaling_Index_2).w              ; $FFFFF748
-                move.w  #$2B00, Obj_Control_Var_10(A0)                   ; $0040
-                move.w  #$0000, Obj_Control_Var_12(A0)                   ; $0042
-                move.w  #$0000, Obj_Control_Var_14(A0)                   ; $0044
-                move.w  #$0000, Obj_Control_Var_16(A0)                   ; $0046
+                move.w  #$2B00, objoff_40(A0)                   ; $0040
+                move.w  #$0000, objoff_42(A0)                   ; $0042
+                move.w  #$0000, objoff_44(A0)                   ; $0044
+                move.w  #$0000, objoff_46(A0)                   ; $0046
                 btst    #$06, (Control_Ports_Buffer_Data).w          ; $FFFFF604
                 beq.s   Offset_0x0074DE
                 move.b  #$04, (Game_Mode).w                          ; $FFFFF600
@@ -212,19 +212,19 @@ Offset_0x007506:
                 move.w  (Art_Scaling_Index_0).w, D0                  ; $FFFFF744
                 lea     (Art_Scaling_Result_0).w, A1                 ; $FFFFF74A
                 bsr     SS_2_Get_Scalars                       ; Offset_0x0076D4
-                move.w  Obj_Timer(A0), D0                                ; $002E
+                move.w  objoff_2E(A0), D0                                ; $002E
                 bsr     CalcSine                               ; Offset_0x001B20
                 move.w  D0, (Art_Scaling_Address+$02).w              ; $FFFFF75E
-                addq.w  #$04, Obj_Timer(A0)                              ; $002E
+                addq.w  #$04, objoff_2E(A0)                              ; $002E
 ;-------------------------------------------------------------------------------                
 SS_Obj_Eosian_Sphere_2:                                        ; Offset_0x00753A                
-                move.l  Obj_Control_Var_0A(A0), A6                       ; $003A
+                move.l  objoff_3A(A0), A6                       ; $003A
                 move.w  (A6), D0
                 move.w  (Art_Scaling_Address+$02).w, D3              ; $FFFFF75E
                 muls.w  D3, D0
                 asr.w   #$08, D0
-                move.w  Obj_Control_Var_04(A0), D1                       ; $0034
-                move.w  Obj_Control_Var_06(A0), D2                       ; $0036
+                move.w  objoff_34(A0), D1                       ; $0034
+                move.w  objoff_36(A0), D2                       ; $0036
                 tst.w   (Art_Scaling_Address).w                      ; $FFFFF75C
                 beq.s   Offset_0x00755E
                 muls.w  D3, D2
@@ -245,9 +245,9 @@ Offset_0x00757C:
                 blt.s   Offset_0x0075C6
                 add.w   (Art_Scaling_Data_Buffer+$18).w, D2          ; $FFFFF758
                 bsr     Offset_0x007648
-                add.w   Obj_Control_Var_00(A0), D1                       ; $0030
+                add.w   objoff_30(A0), D1                       ; $0030
                 move.w  D1, x_pos(A0)                                    ; $0010
-                add.w   Obj_Control_Var_02(A0), D2                       ; $0032
+                add.w   objoff_32(A0), D2                       ; $0032
                 move.w  D2, y_pos(A0)                                    ; $0014
                 subi.w  #$0080, D0
                 lsr.w   #$05, D0

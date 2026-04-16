@@ -16,7 +16,7 @@ Obj_MGz_2_Move_Bg_Sonic_Path:                                  ; Offset_0x032A7E
                 move.w  #$36D0, D2
                 move.w  #$01D0, D3
                 move.w  #$6000, D4
-                st      Obj_Control_Var_08(A0)                           ; $0038
+                st      objoff_38(A0)                           ; $0038
 ;-------------------------------------------------------------------------------                 
 Offset_0x032A94:
                 cmp.w   (Background_Events).w, D0                    ; $FFFFEED2
@@ -30,28 +30,28 @@ Offset_0x032AA0:
 Offset_0x032AAC:
                 rts
 Offset_0x032AAE:
-                move.w  D3, Obj_Timer(A0)                                ; $002E
-                move.w  D4, Obj_Control_Var_02(A0)                       ; $0032
+                move.w  D3, objoff_2E(A0)                                ; $002E
+                move.w  D4, objoff_32(A0)                       ; $0032
                 move.w  (Screen_Pos_Buffer_X).w, D0                  ; $FFFFEE80
                 move.w  D0, (Sonic_Level_Limits_Min_X).w             ; $FFFFEE14
                 move.w  D0, (Level_Limits_Min_X).w                   ; $FFFFEE0C
                 move.l  #Offset_0x032AC8, (A0)
 Offset_0x032AC8:                
                 move.w  (Background_Events+$02).w, D0                ; $FFFFEED4
-                cmp.w   Obj_Timer(A0), D0                                ; $002E
+                cmp.w   objoff_2E(A0), D0                                ; $002E
                 bcs.s   Offset_0x032ADE
                 move.w  #$000E, (Earthquake_Flag).w                  ; $FFFFEECC
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x032ADE:
                 move.w  (Obj_Player_One+x_pos).w, D2                 ; $FFFFB010
                 move.w  (Obj_Player_One+y_pos).w, D3                 ; $FFFFB014
-                tst.b   Obj_Control_Var_09(A0)                           ; $0039
+                tst.b   objoff_39(A0)                           ; $0039
                 beq.s   Offset_0x032AF2
                 move.w  D0, D1
                 addq.w  #$01, D1
                 bra.s   Offset_0x032B1E
 Offset_0x032AF2:
-                tst.b   Obj_Control_Var_08(A0)                           ; $0038
+                tst.b   objoff_38(A0)                           ; $0038
                 bne.s   Offset_0x032B06
                 cmpi.w  #$0200, D3
                 bcc.s   Offset_0x032B10
@@ -62,11 +62,11 @@ Offset_0x032B06:
                 cmpi.w  #$3D50, D2
                 bcs.s   Offset_0x032B10
 Offset_0x032B0C:
-                st      Obj_Control_Var_09(A0)                           ; $0039
+                st      objoff_39(A0)                           ; $0039
 Offset_0x032B10:
-                move.l  Obj_Control_Var_04(A0), D1                       ; $0034
-                add.l   Obj_Control_Var_00(A0), D1                       ; $0030
-                move.l  D1, Obj_Control_Var_04(A0)                       ; $0034
+                move.l  objoff_34(A0), D1                       ; $0034
+                add.l   objoff_30(A0), D1                       ; $0030
+                move.l  D1, objoff_34(A0)                       ; $0034
                 swap.w  D1
 Offset_0x032B1E:
                 move.w  D1, (Background_Events+$02).w                ; $FFFFEED4

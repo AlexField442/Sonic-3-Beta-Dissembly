@@ -24,7 +24,7 @@
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0280, priority(A1)                         ; $0008
                 move.b  #$01, mapping_frame(A1)                             ; $0022
-                move.w  A1, Obj_Control_Var_0C(A0)                       ; $003C
+                move.w  A1, objoff_3C(A0)                       ; $003C
 Offset_0x0259E8:
                 move.b  #$03, (Wind_Tunnels_Flag).w                  ; $FFFFF7C7
                 move.l  #Offset_0x0259F4, (A0)

@@ -9,24 +9,24 @@
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
-                move.w  y_pos(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
+                move.w  y_pos(A0), objoff_30(A0)         ; $0014, $0030
                 move.l  #Offset_0x01E6F8, (A0)
 Offset_0x01E6F8:                
-                tst.b   Obj_Timer(A0)                                    ; $002E
+                tst.b   objoff_2E(A0)                                    ; $002E
                 beq.s   Offset_0x01E72E
                 move.w  y_vel(A0), D0                              ; $001A
                 addi.w  #$0008, y_vel(A0)                          ; $001A
                 ext.l   D0
                 lsl.l   #$08, D0
                 add.l   D0, y_pos(A0)                                    ; $0014
-                move.w  Obj_Control_Var_00(A0), D0                       ; $0030
+                move.w  objoff_30(A0), D0                       ; $0030
                 addq.w  #$02, D0
                 cmp.w   y_pos(A0), D0                                    ; $0014
                 bcc.s   Offset_0x01E72E
-                move.w  Obj_Control_Var_00(A0), y_pos(A0)         ; $0030, $0014
+                move.w  objoff_30(A0), y_pos(A0)         ; $0030, $0014
                 clr.w   y_sub(A0)                                    ; $0016
                 clr.w   y_vel(A0)                                  ; $001A
-                clr.b   Obj_Timer(A0)                                    ; $002E
+                clr.b   objoff_2E(A0)                                    ; $002E
 Offset_0x01E72E:
                 move.w  #$001B, D1
                 move.w  #$0010, D2
@@ -67,7 +67,7 @@ Offset_0x01E796:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 Offset_0x01E7A8:
                 move.w  #$FFC0, y_vel(A0)                          ; $001A
-                move.b  #$01, Obj_Timer(A0)                              ; $002E
+                move.b  #$01, objoff_2E(A0)                              ; $002E
                 rts     
 ;-------------------------------------------------------------------------------
 LBz_Unknow_Animate_Data:                                       ; Offset_0x01E7B6

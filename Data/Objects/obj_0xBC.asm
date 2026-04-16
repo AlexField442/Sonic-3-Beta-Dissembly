@@ -29,7 +29,7 @@ Offset_0x0471DE:
 ;-------------------------------------------------------------------------------   
 Offset_0x0471E8:
                 move.w  parent3(A0), A1                            ; $0046
-                btst    #$00, Obj_Control_Var_08(A1)                     ; $0038
+                btst    #$00, objoff_38(A1)                     ; $0038
                 bne.s   Offset_0x04722A
                 move.w  (Obj_Player_One+x_vel).w, -(A7)        ; $FFFFB018
                 move.w  (Obj_Player_Two+x_vel).w, -(A7)        ; $FFFFB062
@@ -50,13 +50,13 @@ Offset_0x047226:
                 bra     Offset_0x047300
 Offset_0x04722A:
                 move.l  #Offset_0x047250, (A0)
-                bset    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                bset    #$00, objoff_38(A0)                     ; $0038
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$02, D0
                 addi.w  #$000F, D0
-                move.w  D0, Obj_Timer(A0)                                ; $002E
-                move.l  #Offset_0x04725C, Obj_Child(A0)                  ; $0034
+                move.w  D0, objoff_2E(A0)                                ; $002E
+                move.l  #Offset_0x04725C, child(A0)                  ; $0034
                 rts
 ;-------------------------------------------------------------------------------
 Offset_0x047250:
@@ -66,8 +66,8 @@ Offset_0x047250:
 ;-------------------------------------------------------------------------------
 Offset_0x04725C:
                 move.l  #Offset_0x047276, (A0)
-                move.w  #$0007, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x047286, Obj_Child(A0)                  ; $0034
+                move.w  #$0007, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x047286, child(A0)                  ; $0034
                 subq.b  #$02, subtype(A0)                            ; $002C
                 rts                      
 ;-------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ Offset_0x047276:
 ;-------------------------------------------------------------------------------
 Offset_0x047286:
                 move.l  #Offset_0x0471E8, (A0)
-                bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                bclr    #$00, objoff_38(A0)                     ; $0038
                 move.w  #$0010, (Earthquake_Flag).w                  ; $FFFFEECC
                 moveq   #Slide_Thunk_Sfx, D0                              ; -$50
                 jsr     (Play_Music)                           ; Offset_0x001176
@@ -107,7 +107,7 @@ Offset_0x0472C0:
                 move.w  D0, inertia(A1)                              ; $001C
                 bclr    D1, status(A0)                               ; $002A
                 bclr    D1, status(A1)                               ; $002A
-                bset    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                bset    #$00, objoff_38(A0)                     ; $0038
                 lea     Offset_0x04713A(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 jsr     Displace_Player_Offset(PC)             ; Offset_0x04315A
@@ -120,7 +120,7 @@ Offset_0x0472FE:
 ;-------------------------------------------------------------------------------
 Offset_0x047300:
                 move.w  default_y_radius(A0), A1                             ; $0044
-                btst    #$04, Obj_Control_Var_08(A1)                     ; $0038
+                btst    #$04, objoff_38(A1)                     ; $0038
                 bne     Go_Delete_Object_A0_2                  ; Offset_0x042D4C
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 ;-------------------------------------------------------------------------------

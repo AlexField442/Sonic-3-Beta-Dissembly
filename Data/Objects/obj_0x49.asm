@@ -3,10 +3,10 @@
 ; ->>>           
 ;===============================================================================
 ; Offset_0x028C62:
-                move.b  #$60, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$60, objoff_32(A0)                     ; $0032
                 move.l  #Offset_0x028C6E, (A0)
 Offset_0x028C6E:                
-                lea     Obj_Control_Var_06(A0), A2                       ; $0036
+                lea     objoff_36(A0), A2                       ; $0036
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 bsr.s   Offset_0x028C86
                 addq.w  #$01, A2
@@ -15,7 +15,7 @@ Offset_0x028C6E:
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E
 Offset_0x028C86:
                 moveq   #$00, D2
-                move.b  Obj_Control_Var_02(A0), D2                       ; $0032
+                move.b  objoff_32(A0), D2                       ; $0032
                 move.w  D2, D3
                 add.w   D3, D3
                 move.w  x_pos(A1), D0                                    ; $0010
@@ -35,7 +35,7 @@ Offset_0x028C86:
 Offset_0x028CB8:
                 tst.b   (A2)
                 beq.s   Offset_0x028CC2
-                clr.b   Obj_Control_Var_0C(A1)                           ; $003C
+                clr.b   objoff_3C(A1)                           ; $003C
                 clr.b   (A2)
 Offset_0x028CC2:
                 rts
@@ -49,7 +49,7 @@ Offset_0x028CC4:
 Offset_0x028CD8:
                 bclr    #$05, status(A1)                             ; $002A
                 move.b  #$01, prev_anim(A1)                           ; $0021
-                move.b  #$01, Obj_Control_Var_0C(A1)                     ; $003C
+                move.b  #$01, objoff_3C(A1)                     ; $003C
 Offset_0x028CEA:
                 move.w  inertia(A1), D0                              ; $001C
                 btst    #$00, status(A0)                             ; $002A

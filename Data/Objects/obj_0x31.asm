@@ -5,9 +5,9 @@
 ; Offset_0x02350C:
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
-                move.w  D0, Obj_Control_Var_02(A0)                       ; $0032
+                move.w  D0, objoff_32(A0)                       ; $0032
                 neg.w   D0
-                move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
+                move.w  D0, objoff_30(A0)                       ; $0030
                 move.b  #$80, width_pixels(A0)                              ; $0007
                 move.l  #Offset_0x023528, (A0)
 Offset_0x023528:                
@@ -25,9 +25,9 @@ Offset_0x023546:
                 bne     Offset_0x0235BC
                 move.w  x_pos(A1), D0                                    ; $0010
                 sub.w   x_pos(A0), D0                                    ; $0010
-                cmp.w   Obj_Control_Var_00(A0), D0                       ; $0030
+                cmp.w   objoff_30(A0), D0                       ; $0030
                 blt.s   Offset_0x0235BA
-                cmp.w   Obj_Control_Var_02(A0), D0                       ; $0032
+                cmp.w   objoff_32(A0), D0                       ; $0032
                 bge.s   Offset_0x0235BA
                 move.w  y_pos(A1), D0                                    ; $0014
                 sub.w   y_pos(A0), D0                                    ; $0014
@@ -63,15 +63,15 @@ Offset_0x0235BC:
                 bne.s   Offset_0x0235D8
                 move.w  x_pos(A1), D0                                    ; $0010
                 sub.w   x_pos(A0), D0                                    ; $0010
-                cmp.w   Obj_Control_Var_00(A0), D0                       ; $0030
+                cmp.w   objoff_30(A0), D0                       ; $0030
                 blt.s   Offset_0x0235D8
-                cmp.w   Obj_Control_Var_02(A0), D0                       ; $0032
+                cmp.w   objoff_32(A0), D0                       ; $0032
                 blt.s   Offset_0x023610
 Offset_0x0235D8:
                 bclr    #$03, status(A1)                             ; $002A
                 bclr    D6, status(A0)                               ; $002A
                 move.b  #$00, subtype(A1)                            ; $002C
-                move.b  #$04, Obj_Flags_2(A1)                            ; $002D
+                move.b  #$04, objoff_2D(A1)                            ; $002D
                 bset    #$01, status(A1)                             ; $002A
                 rts   
 ;-------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ Offset_0x023610:
                 move.w  D1, y_pos(A1)                                    ; $0014
                 move.b  (A2), D0
                 addi.b  #$80, D0
-                move.b  D0, Obj_Flip_Angle(A1)                           ; $0027
+                move.b  D0, flip_angle(A1)                           ; $0027
                 addq.b  #$02, (A2)
                 tst.w   inertia(A1)                                  ; $001C
                 bne.s   Offset_0x023650

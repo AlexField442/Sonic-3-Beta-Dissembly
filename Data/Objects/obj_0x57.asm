@@ -17,14 +17,14 @@ Obj_0x57_MGz_Trigger_Platform:                                 ; Offset_0x02A884
                 move.b  (A1)+, mapping_frame(A0)                            ; $0022
                 moveq   #$00, D0
                 move.b  (A1)+, D0
-                move.w  D0, Obj_Control_Var_00(A0)                       ; $0030
+                move.w  D0, objoff_30(A0)                       ; $0030
                 lsr.w   #$02, D1
-                move.w  D1, Obj_Control_Var_04(A0)                       ; $0034
+                move.w  D1, objoff_34(A0)                       ; $0034
                 move.l  #Trigger_Platform_Mappings, mappings(A0) ; Offset_0x02A9C2, $000C
                 move.w  #$4001, art_tile(A0)                         ; $000A
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
-                move.w  x_pos(A0), Obj_Control_Var_06(A0)         ; $0010, $0036
+                move.w  x_pos(A0), objoff_36(A0)         ; $0010, $0036
                 tst.w   D1
                 beq.s   Offset_0x02A8DA
                 move.l  #Offset_0x02A94E, (A0)
@@ -44,10 +44,10 @@ Offset_0x02A8E0:
 Offset_0x02A8FE:
                 add.w   D0, x_pos(A0)                                    ; $0010
                 move.w  #$FFFF, (Earthquake_Flag).w                  ; $FFFFEECC
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bne.s   Offset_0x02A926
                 move.w  #$7F00, x_pos(A0)                                ; $0010
-                move.w  #$7F00, Obj_Control_Var_06(A0)                   ; $0036
+                move.w  #$7F00, objoff_36(A0)                   ; $0036
                 move.w  #$0000, respawn_index(A0)                       ; $0048
                 move.w  #$0000, (Earthquake_Flag).w                  ; $FFFFEECC
 Offset_0x02A926:
@@ -60,7 +60,7 @@ Offset_0x02A926:
                 addq.w  #$01, D3
                 move.w  x_pos(A0), D4                                    ; $0010
                 jsr     (Solid_Object)                         ; Offset_0x013556
-                move.w  Obj_Control_Var_06(A0), D0                       ; $0036
+                move.w  objoff_36(A0), D0                       ; $0036
                 jmp     (MarkObjGone_2)                        ; Offset_0x011B1A
 Offset_0x02A94E:
                 move.b  subtype(A0), D0                              ; $002C
@@ -68,23 +68,23 @@ Offset_0x02A94E:
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 tst.b   $00(A3, D0)
                 beq.s   Offset_0x02A96C
-                tst.b   Obj_Control_Var_02(A0)                           ; $0032
+                tst.b   objoff_32(A0)                           ; $0032
                 bmi.s   Offset_0x02A99E
-                move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$01, objoff_32(A0)                     ; $0032
 Offset_0x02A96C:
-                tst.b   Obj_Control_Var_02(A0)                           ; $0032
+                tst.b   objoff_32(A0)                           ; $0032
                 beq.s   Offset_0x02A99E
                 bmi.s   Offset_0x02A99E
-                move.w  Obj_Control_Var_04(A0), D0                       ; $0034
+                move.w  objoff_34(A0), D0                       ; $0034
                 btst    #$00, status(A0)                             ; $002A
                 beq.s   Offset_0x02A982
                 neg.w   D0
 Offset_0x02A982:
                 add.w   D0, y_pos(A0)                                    ; $0014
                 move.w  #$FFFF, (Earthquake_Flag).w                  ; $FFFFEECC
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bne.s   Offset_0x02A99E
-                move.b  #$FF, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$FF, objoff_32(A0)                     ; $0032
                 move.w  #$0000, (Earthquake_Flag).w                  ; $FFFFEECC
 Offset_0x02A99E:
                 moveq   #$00, D1

@@ -12,7 +12,7 @@ Obj_0x29_AIz_Disappearing_Platform:                            ; Offset_0x020EE0
                 andi.w  #$000F, D0
                 move.w  D0, D2
                 add.w   D0, D0
-                move.w  Offset_0x020EC0(PC, D0), Obj_Control_Var_02(A0)  ; $0032
+                move.w  Offset_0x020EC0(PC, D0), objoff_32(A0)  ; $0032
                 subq.w  #$03, D2
                 bcc.s   Offset_0x020EFA
                 moveq   #$00, D2
@@ -20,7 +20,7 @@ Offset_0x020EFA:
                 lsr.w   #$04, D1
                 andi.w  #$000F, D1
                 lsl.w   D2, D1
-                move.w  D1, Obj_Control_Var_04(A0)                       ; $0034
+                move.w  D1, objoff_34(A0)                       ; $0034
                 move.l  #AIz_Disappearing_Platform_Mappings, mappings(A0) ; Offset_0x021050, $000C
                 move.w  #$42F0, art_tile(A0)                         ; $000A
                 move.w  #$4001, art_tile(A0)                         ; $000A
@@ -29,8 +29,8 @@ Offset_0x020EFA:
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0280, priority(A0)                         ; $0008
                 move.w  (Level_Frame_Count).w, D0                    ; $FFFFFE04
-                add.w   Obj_Control_Var_04(A0), D0                       ; $0034
-                and.w   Obj_Control_Var_02(A0), D0                       ; $0032
+                add.w   objoff_34(A0), D0                       ; $0034
+                and.w   objoff_32(A0), D0                       ; $0032
                 beq.s   Offset_0x020F5E
                 subi.w  #$00C8, D0
                 bcc.s   Offset_0x020F5E
@@ -43,19 +43,19 @@ Offset_0x020F5E:
                 move.l  #Offset_0x020F64, (A0)
 Offset_0x020F64:                
                 move.w  (Level_Frame_Count).w, D0                    ; $FFFFFE04
-                add.w   Obj_Control_Var_04(A0), D0                       ; $0034
-                and.w   Obj_Control_Var_02(A0), D0                       ; $0032
+                add.w   objoff_34(A0), D0                       ; $0034
+                and.w   objoff_32(A0), D0                       ; $0032
                 bne     Offset_0x020F80
                 move.w  #$0100, anim(A0)                       ; $0020
-                move.b  #$00, Obj_Control_Var_06(A0)                     ; $0036
+                move.b  #$00, objoff_36(A0)                     ; $0036
 Offset_0x020F80:
                 lea     (AIz_Disappearing_Platform_Animate_Data), A1 ; Offset_0x021030
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
                 cmpi.b  #$05, mapping_frame(A0)                             ; $0022
                 bne.s   Offset_0x020FE6
-                tst.b   Obj_Control_Var_06(A0)                           ; $0036
+                tst.b   objoff_36(A0)                           ; $0036
                 bne.s   Offset_0x020FE6
-                move.b  #$01, Obj_Control_Var_06(A0)                     ; $0036
+                move.b  #$01, objoff_36(A0)                     ; $0036
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x020FE6
                 move.l  #Offset_0x020FEC, (A1)
@@ -67,12 +67,12 @@ Offset_0x020F80:
                 move.b  #$20, height_pixels(A1)                             ; $0006
                 move.b  #$04, render_flags(A1)                              ; $0004
                 move.w  #$0200, priority(A1)                         ; $0008
-                move.w  A0, Obj_Control_Var_0C(A1)                       ; $003C
+                move.w  A0, objoff_3C(A1)                       ; $003C
 Offset_0x020FE6:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2  
 ;-------------------------------------------------------------------------------
 Offset_0x020FEC:
-                move.w  Obj_Control_Var_0C(A0), A1                       ; $003C
+                move.w  objoff_3C(A0), A1                       ; $003C
                 cmpi.b  #$03, mapping_frame(A1)                             ; $0022
                 bne.s   Offset_0x020FFE
                 move.w  #$7FF0, x_pos(A0)                                ; $0010

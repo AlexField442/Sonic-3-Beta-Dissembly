@@ -17,22 +17,22 @@ Offset_0x044FA8:
 Offset_0x044FAC:
                 lea     Pointdexter_Setup_Data(PC), A1         ; Offset_0x045034
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                move.l  #Offset_0x045040, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x045040, child_data(A0)             ; $0030
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
                 add.w   D0, D0
                 add.w   D0, D0
-                move.w  D0, Obj_Timer(A0)                                ; $002E
+                move.w  D0, objoff_2E(A0)                                ; $002E
                 add.w   D0, D0
-                move.w  D0, Obj_Control_Var_0A(A0)                       ; $003A
-                move.l  #Offset_0x045022, Obj_Child(A0)                  ; $0034
+                move.w  D0, objoff_3A(A0)                       ; $003A
+                move.l  #Offset_0x045022, child(A0)                  ; $0034
                 move.w  #$FFC0, D4
                 jsr     Set_Velocity_X_Track_Player_One(PC)    ; Offset_0x042E4C
                 move.w  #$0020, D0
-                move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
+                move.w  D0, objoff_3E(A0)                       ; $003E
                 move.w  D0, y_vel(A0)                              ; $001A
-                move.w  #$0001, Obj_Control_Var_10(A0)                   ; $0040
-                bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                move.w  #$0001, objoff_40(A0)                   ; $0040
+                bclr    #$00, objoff_38(A0)                     ; $0038
                 rts     
 ;-------------------------------------------------------------------------------
 Offset_0x044FFA:
@@ -50,7 +50,7 @@ Offset_0x045020:
 Offset_0x045022:
                 neg.w   x_vel(A0)                                  ; $0018
                 bchg    #00, render_flags(A0)                               ; $0004
-                move.w  Obj_Control_Var_0A(A0), Obj_Timer(A0)     ; $003A, $002E
+                move.w  objoff_3A(A0), objoff_2E(A0)     ; $003A, $002E
                 rts                                               
 ;-------------------------------------------------------------------------------
 Pointdexter_Setup_Data:                                        ; Offset_0x045034

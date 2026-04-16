@@ -26,11 +26,11 @@ Offset_0x01C3EE:
                 move.b  (A2)+, width_pixels(A0)                             ; $0007
                 move.b  (A2)+, height_pixels(A0)                            ; $0006
                 move.b  (A2)+, mapping_frame(A0)                            ; $0022
-                move.w  x_pos(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
-                move.w  x_pos(A0), Obj_Control_Var_02(A0)         ; $0010, $0032
-                move.w  y_pos(A0), Obj_Control_Var_04(A0)         ; $0014, $0034
-                move.b  status(A0), Obj_Timer(A0)             ; $002A, $002E
-                move.w  #$0280, Obj_Control_Var_12(A0)                   ; $0042
+                move.w  x_pos(A0), objoff_30(A0)         ; $0010, $0030
+                move.w  x_pos(A0), objoff_32(A0)         ; $0010, $0032
+                move.w  y_pos(A0), objoff_34(A0)         ; $0014, $0034
+                move.b  status(A0), objoff_2E(A0)             ; $002A, $002E
+                move.w  #$0280, objoff_42(A0)                   ; $0042
                 move.w  x_pos(A0), default_y_radius(A0)               ; $0010, $0044
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
@@ -44,10 +44,10 @@ Offset_0x01C3EE:
                 lea     $00(A2, D0), A2
                 tst.w   (A2)
                 bpl.s   Offset_0x01C470
-                bchg    #00, Obj_Timer(A0)                               ; $002E
+                bchg    #00, objoff_2E(A0)                               ; $002E
                 bra.s   Offset_0x01C470
 Offset_0x01C464:
-                move.w  #$0380, Obj_Control_Var_12(A0)                   ; $0042
+                move.w  #$0380, objoff_42(A0)                   ; $0042
                 addi.w  #$0100, default_y_radius(A0)                         ; $0044
 Offset_0x01C470:
                 move.b  subtype(A0), D0                              ; $002C
@@ -75,7 +75,7 @@ Offset_0x01C4B8:
                 move.w  default_y_radius(A0), D0                             ; $0044
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
-                cmp.w   Obj_Control_Var_12(A0), D0                       ; $0042
+                cmp.w   objoff_42(A0), D0                       ; $0042
                 bhi     Offset_0x01C4D2
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x01C4D2:

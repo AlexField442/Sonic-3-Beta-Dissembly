@@ -16,17 +16,17 @@
                 move.b  D0, mapping_frame(A0)                               ; $0022
                 andi.w  #$0003, D0
                 add.w   D0, D0
-                move.w  Offset_0x01401A(PC, D0), Obj_Control_Var_02(A0)  ; $0032
+                move.w  Offset_0x01401A(PC, D0), objoff_32(A0)  ; $0032
                 move.w  y_pos(A0), D1                                    ; $0014
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 cmp.w   y_pos(A1), D1                                    ; $0014
                 bcc.s   Offset_0x014000
-                move.b  #$01, Obj_Control_Var_04(A0)                     ; $0034
+                move.b  #$01, objoff_34(A0)                     ; $0034
 Offset_0x014000:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 cmp.w   y_pos(A1), D1                                    ; $0014
                 bcc.s   Offset_0x014010
-                move.b  #$01, Obj_Control_Var_05(A0)                     ; $0035
+                move.b  #$01, objoff_35(A0)                     ; $0035
 Offset_0x014010:
                 move.l  #Offset_0x01413A, (A0)
                 bra     Offset_0x01413A 
@@ -38,24 +38,24 @@ Offset_0x014022:
                 andi.w  #$0003, D0
                 move.b  D0, mapping_frame(A0)                               ; $0022
                 add.w   D0, D0
-                move.w  Offset_0x01401A(PC, D0), Obj_Control_Var_02(A0)  ; $0032
+                move.w  Offset_0x01401A(PC, D0), objoff_32(A0)  ; $0032
                 move.w  x_pos(A0), D1                                    ; $0010
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 cmp.w   x_pos(A1), D1                                    ; $0010
                 bcc.s   Offset_0x014046
-                move.b  #$01, Obj_Control_Var_04(A0)                     ; $0034
+                move.b  #$01, objoff_34(A0)                     ; $0034
 Offset_0x014046:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 cmp.w   x_pos(A1), D1                                    ; $0010
                 bcc.s   Offset_0x014056
-                move.b  #$01, Obj_Control_Var_05(A0)                     ; $0035
+                move.b  #$01, objoff_35(A0)                     ; $0035
 Offset_0x014056:
                 move.l  #Offset_0x01405C, (A0)
 Offset_0x01405C:                
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne     Offset_0x0140FC
                 move.w  x_pos(A0), D1                                    ; $0010
-                lea     Obj_Control_Var_04(A0), A2                       ; $0034
+                lea     objoff_34(A0), A2                       ; $0034
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 bsr.s   Offset_0x01407E
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
@@ -69,7 +69,7 @@ Offset_0x01407E:
                 move.b  #$01, -1(A2)
                 move.w  y_pos(A0), D2                                    ; $0014
                 move.w  D2, D3
-                move.w  Obj_Control_Var_02(A0), D4                       ; $0032
+                move.w  objoff_32(A0), D4                       ; $0032
                 sub.w   D4, D2
                 add.w   D4, D3
                 move.w  y_pos(A1), D4                                    ; $0014
@@ -79,10 +79,10 @@ Offset_0x01407E:
                 bcc.s   Offset_0x0140FC
                 btst    #$00, render_flags(A0)                              ; $0004
                 bne.s   Offset_0x0140B8
-                move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$01, spindash_flag(A1)                  ; $003D
                 bra.s   Offset_0x01410A
 Offset_0x0140B8:
-                move.b  #$00, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$00, spindash_flag(A1)                  ; $003D
                 bra.s   Offset_0x0140FC
 Offset_0x0140C0:
                 cmp.w   x_pos(A1), D1                                    ; $0010
@@ -90,7 +90,7 @@ Offset_0x0140C0:
                 move.b  #$00, -1(A2)
                 move.w  y_pos(A0), D2                                    ; $0014
                 move.w  D2, D3
-                move.w  Obj_Control_Var_02(A0), D4                       ; $0032
+                move.w  objoff_32(A0), D4                       ; $0032
                 sub.w   D4, D2
                 add.w   D4, D3
                 move.w  y_pos(A1), D4                                    ; $0014
@@ -100,10 +100,10 @@ Offset_0x0140C0:
                 bcc.s   Offset_0x0140FC
                 btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0140F6
-                move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$01, spindash_flag(A1)                  ; $003D
                 bra.s   Offset_0x01410A
 Offset_0x0140F6:
-                move.b  #$00, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$00, spindash_flag(A1)                  ; $003D
 Offset_0x0140FC:
                 tst.w   (Debug_Mode_Active).w                        ; $FFFFFFFA
                 beq     MarkObjGone_3                          ; Offset_0x011B3E
@@ -125,7 +125,7 @@ Offset_0x01413A:
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne     Offset_0x0141E0
                 move.w  y_pos(A0), D1                                    ; $0014
-                lea     Obj_Control_Var_04(A0), A2                       ; $0034
+                lea     objoff_34(A0), A2                       ; $0034
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 bsr.s   Offset_0x01415E
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
@@ -139,7 +139,7 @@ Offset_0x01415E:
                 move.b  #$01, -1(A2)
                 move.w  x_pos(A0), D2                                    ; $0010
                 move.w  D2, D3
-                move.w  Obj_Control_Var_02(A0), D4                       ; $0032
+                move.w  objoff_32(A0), D4                       ; $0032
                 sub.w   D4, D2
                 add.w   D4, D3
                 move.w  x_pos(A1), D4                                    ; $0010
@@ -149,10 +149,10 @@ Offset_0x01415E:
                 bcc.s   Offset_0x0141E0
                 btst    #$00, render_flags(A0)                              ; $0004
                 bne.s   Offset_0x01419A
-                move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$01, spindash_flag(A1)                  ; $003D
                 bra     Offset_0x01410A
 Offset_0x01419A:
-                move.b  #$00, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$00, spindash_flag(A1)                  ; $003D
                 bra.s   Offset_0x0141E0
 Offset_0x0141A2:
                 cmp.w   y_pos(A1), D1                                    ; $0014
@@ -160,7 +160,7 @@ Offset_0x0141A2:
                 move.b  #$00, -1(A2)
                 move.w  x_pos(A0), D2                                    ; $0010
                 move.w  D2, D3
-                move.w  Obj_Control_Var_02(A0), D4                       ; $0032
+                move.w  objoff_32(A0), D4                       ; $0032
                 sub.w   D4, D2
                 add.w   D4, D3
                 move.w  x_pos(A1), D4                                    ; $0010
@@ -170,10 +170,10 @@ Offset_0x0141A2:
                 bcc.s   Offset_0x0141E0
                 btst    #$00, render_flags(A0)                              ; $0004
                 beq.s   Offset_0x0141DA
-                move.b  #$01, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$01, spindash_flag(A1)                  ; $003D
                 bra     Offset_0x01410A
 Offset_0x0141DA:
-                move.b  #$00, Obj_Player_Spdsh_Flag(A1)                  ; $003D
+                move.b  #$00, spindash_flag(A1)                  ; $003D
 Offset_0x0141E0:
                 tst.w   (Debug_Mode_Active).w                        ; $FFFFFFFA
                 beq     MarkObjGone_3                          ; Offset_0x011B3E

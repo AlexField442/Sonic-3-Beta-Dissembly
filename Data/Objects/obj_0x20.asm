@@ -18,26 +18,26 @@
                 move.w  #$0280, priority(A0)                         ; $0008
 Offset_0x01FDFE:
                 move.b  #$04, render_flags(A0)                              ; $0004
-                move.w  y_pos(A0), Obj_Control_Var_00(A0)         ; $0014, $0030
+                move.w  y_pos(A0), objoff_30(A0)         ; $0014, $0030
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$03, D0
-                move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
+                move.w  D0, objoff_38(A0)                       ; $0038
                 move.l  #Offset_0x01FE1C, (A0)
 Offset_0x01FE1C:                
-                tst.b   Obj_Control_Var_02(A0)                           ; $0032
+                tst.b   objoff_32(A0)                           ; $0032
                 bne.s   Offset_0x01FE68
                 move.w  y_vel(A0), D0                              ; $001A
                 addi.w  #$0080, y_vel(A0)                          ; $001A
                 ext.l   D0
                 lsl.l   #$08, D0
-                add.l   D0, Obj_Control_Var_04(A0)                       ; $0034
-                move.w  Obj_Control_Var_04(A0), D2                       ; $0034
-                cmp.w   Obj_Control_Var_08(A0), D2                       ; $0038
+                add.l   D0, objoff_34(A0)                       ; $0034
+                move.w  objoff_34(A0), D2                       ; $0034
+                cmp.w   objoff_38(A0), D2                       ; $0038
                 bcs.s   Offset_0x01FE7C
                 clr.w   y_vel(A0)                                  ; $001A
-                move.w  Obj_Control_Var_08(A0), Obj_Control_Var_04(A0) ; $0038, $0034
-                move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                move.w  objoff_38(A0), objoff_34(A0) ; $0038, $0034
+                move.b  #$01, objoff_32(A0)                     ; $0032
                 tst.b   render_flags(A0)                                    ; $0004
                 bpl.s   Offset_0x01FE7C
                 moveq   #Crash_Sfx, D0                                     ; $6C
@@ -48,16 +48,16 @@ Offset_0x01FE60:
                 jsr     (PlaySound)                           ; Offset_0x001176
                 bra.s   Offset_0x01FE7C
 Offset_0x01FE68:
-                move.w  Obj_Control_Var_04(A0), D2                       ; $0034
+                move.w  objoff_34(A0), D2                       ; $0034
                 beq.s   Offset_0x01FE76
                 subq.w  #$01, D2
-                move.w  D2, Obj_Control_Var_04(A0)                       ; $0034
+                move.w  D2, objoff_34(A0)                       ; $0034
                 bra.s   Offset_0x01FE7C
 Offset_0x01FE76:
-                move.b  #$00, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$00, objoff_32(A0)                     ; $0032
 Offset_0x01FE7C:
-                move.w  Obj_Control_Var_00(A0), D0                       ; $0030
-                add.w   Obj_Control_Var_04(A0), D0                       ; $0034
+                move.w  objoff_30(A0), D0                       ; $0030
+                add.w   objoff_34(A0), D0                       ; $0034
                 move.w  D0, y_pos(A0)                                    ; $0014
                 moveq   #$00, D1
                 move.b  width_pixels(A0), D1                                ; $0007

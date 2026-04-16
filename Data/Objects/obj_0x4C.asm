@@ -4,13 +4,13 @@
 ;===============================================================================
 ; Offset_0x029408:
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                lea     Obj_Control_Var_00(A0), A4                       ; $0030
+                lea     objoff_30(A0), A4                       ; $0030
                 bsr.s   Offset_0x02942E
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
-                lea     Obj_Control_Var_0A(A0), A4                       ; $003A
+                lea     objoff_3A(A0), A4                       ; $003A
                 bsr.s   Offset_0x02942E
-                move.b  Obj_Control_Var_00(A0), D0                       ; $0030
-                add.b   Obj_Control_Var_0A(A0), D0                       ; $003A
+                move.b  objoff_30(A0), D0                       ; $0030
+                add.b   objoff_3A(A0), D0                       ; $003A
                 beq.s   Offset_0x029428
                 rts
 Offset_0x029428:
@@ -40,10 +40,10 @@ Offset_0x029442:
                 addi.w  #$0010, D1
                 cmpi.w  #$0020, D1
                 bcc.s   Offset_0x0294CC
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x0294CC
                 addq.b  #$02, (A4)
-                move.b  #$81, Obj_Timer(A1)                              ; $002E
+                move.b  #$81, objoff_2E(A1)                              ; $002E
                 move.b  #$02, anim(A1)                         ; $0020
                 move.w  #$0800, inertia(A1)                          ; $001C
                 move.w  #$0000, x_vel(A1)                          ; $0018
@@ -144,8 +144,8 @@ Offset_0x02957A:
 Offset_0x0295A0:
                 andi.w  #$0FFF, y_pos(A1)                                ; $0014
                 clr.b   (A4)
-                clr.b   Obj_Timer(A1)                                    ; $002E
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_2E(A1)                                    ; $002E
+                clr.b   objoff_40(A1)                           ; $0040
                 bra.s   Offset_0x02957A
 Offset_0x0295B2:
                 andi.w  #$000F, D0

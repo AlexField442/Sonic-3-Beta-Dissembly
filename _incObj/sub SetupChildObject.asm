@@ -19,13 +19,13 @@ Offset_0x041D9E:
 		move.b	d2,subtype(a1)			; index of child object
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1				; x positional offset
-		move.b	d1,Obj_Control_Var_12(a1)
+		move.b	d1,objoff_42(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,x_pos(a1)				; apply offset to new x position
 		move.w	y_pos(a0),d0
 		move.b	(a2)+,d1				; y positional offset
-		move.b	d1,Obj_Control_Var_13(a1)
+		move.b	d1,objoff_43(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,y_pos(a1)				; apply offset to new y position
@@ -55,19 +55,19 @@ Offset_0x041DEE:
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(A0),art_tile(a1)
 		move.l	(a2)+,(a1)
-		move.l	(a2)+,Obj_Control_Var_0E(a1)
-		move.l	(a2)+,Obj_Control_Var_00(a1)
-		move.l	(a2)+,Obj_Control_Var_04(a1)
+		move.l	(a2)+,objoff_3E(a1)
+		move.l	(a2)+,objoff_30(a1)
+		move.l	(a2)+,objoff_34(a1)
 		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_12(a1)
+		move.b	d1,objoff_42(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,x_pos(a1)
 		move.w	y_pos(a0),d0
 		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_13(a1)
+		move.b	d1,objoff_43(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,y_pos(a1)
@@ -102,13 +102,13 @@ Offset_0x041E52:
 		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a3)+,d1
-		move.b	d1,Obj_Control_Var_12(a1)
+		move.b	d1,objoff_42(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,x_pos(a1)
 		move.w	y_pos(a0),d0
 		move.b	(a3)+,d1
-		move.b	d1,Obj_Control_Var_13(a1)
+		move.b	d1,objoff_43(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,y_pos(a1)
@@ -167,13 +167,13 @@ Offset_0x041EE4:
 		move.l	mappings(a0),mappings(a1)
 		move.l	art_tile(a0),art_tile(a1)
 		move.l	(a2)+,(a1)
-		move.l	(a2)+,Obj_Control_Var_0E(a1)
-		move.l	(a2)+,Obj_Control_Var_00(a1)
-		move.l	(a2)+,Obj_Control_Var_04(a1)
+		move.l	(a2)+,objoff_3E(a1)
+		move.l	(a2)+,objoff_30(a1)
+		move.l	(a2)+,objoff_34(a1)
 		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_12(a1)
+		move.b	d1,objoff_42(a1)
 		ext.w	d1
 		btst	#0,render_flags(a0)
 		beq.s	Offset_0x041F24
@@ -184,7 +184,7 @@ Offset_0x041F24:
 		move.w	d0,x_pos(a1)
 		move.w	y_pos(a0),d0
 		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_13(a1)
+		move.b	d1,objoff_43(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,y_pos(a1)
@@ -249,13 +249,13 @@ Offset_0x041F8A:
 		move.b	d2,subtype(a1)
 		move.w	x_pos(a0),d0
 		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_12(a1)
+		move.b	d1,objoff_42(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,x_pos(a1)
 		move.w	y_pos(a0),d0
 		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_13(a1)
+		move.b	d1,objoff_43(a1)
 		ext.w	d1
 		add.w	d1,d0
 		move.w	d0,y_pos(a1)

@@ -1,8 +1,8 @@
 ; OST:
-shield_lastloadedDPLC:	equ Obj_Control_Var_04
-shield_art:		equ Obj_Control_Var_08
-shield_DPLC:		equ Obj_Control_Var_0C
-shield_VRAM:		equ Obj_Control_Var_10
+shield_lastloadedDPLC:	equ objoff_34
+shield_art:		equ objoff_38
+shield_DPLC:		equ objoff_3C
+shield_VRAM:		equ objoff_40
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
@@ -27,10 +27,10 @@ Obj_FireShield:
 		move.l	#FireShield_Main,(a0)
 ; Offset_0x010416:
 FireShield_Main:
-		move.w	Obj_Player_Last(a0),a2
-		btst	#Invincibility_Type,Obj_Player_Status(a2)
+		move.w	parent(a0),a2
+		btst	#Invincibility_Type,status_secondary(a2)
 		bne.s	Offset_0x010464
-		btst	#Classic_Type,Obj_Player_Status(a2)
+		btst	#Classic_Type,status_secondary(a2)
 		beq.s	FireShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)
@@ -76,10 +76,10 @@ Obj_LightningShield:
 		move.l	#LightningShield_Main,(a0)
 ; Offset_0x0104BC:
 LightningShield_Main:
-		move.w	Obj_Player_Last(a0),a2
-		btst	#Invincibility_Type,Obj_Player_Status(a2)
+		move.w	parent(a0),a2
+		btst	#Invincibility_Type,status_secondary(a2)
 		bne.s	Offset_0x01050A
-		btst	#Classic_Type,Obj_Player_Status(a2)
+		btst	#Classic_Type,status_secondary(a2)
 		beq.s	LightningShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)
@@ -125,10 +125,10 @@ Obj_BubbleShield:
 		move.l	#BubbleShield_Main,(a0)
 ; Offset_0x010562:
 BubbleShield_Main:
-		move.w	Obj_Player_Last(a0),a2
-		btst	#Invincibility_Type,Obj_Player_Status(a2)
+		move.w	parent(a0),a2
+		btst	#Invincibility_Type,status_secondary(a2)
 		bne.s	Offset_0x0105B0
-		btst	#Classic_Type,Obj_Player_Status(a2)
+		btst	#Classic_Type,status_secondary(a2)
 		beq.s	BubbleShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)

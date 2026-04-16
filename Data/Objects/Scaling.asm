@@ -14,36 +14,36 @@ Offset_0x01AA42:
 ;-------------------------------------------------------------------------------
 Offset_0x01AA46:
                 addq.b  #$02, routine(A0)                            ; $0005
-                move.w  x_pos(A0), Obj_Control_Var_04(A0)         ; $0010, $0034
-                move.w  y_pos(A0), Obj_Control_Var_06(A0)         ; $0014, $0036
+                move.w  x_pos(A0), objoff_34(A0)         ; $0010, $0034
+                move.w  y_pos(A0), objoff_36(A0)         ; $0014, $0036
                 move.l  #Scaling_Mappings, mappings(A0)  ; Offset_0x01B1B8, $000C
                 move.w  #$6500, art_tile(A0)                         ; $000A
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$0200, priority(A0)                         ; $0008
                 move.b  #$40, width_pixels(A0)                              ; $0007
                 move.b  #$40, height_pixels(A0)                             ; $0006
-                move.b  #$04, Obj_Control_Var_10(A0)                     ; $0040
-                move.l  #M68K_Dev_RAM_Start, Obj_Control_Var_12(A0) ; $FFFE0000,  $0042
+                move.b  #$04, objoff_40(A0)                     ; $0040
+                move.l  #M68K_Dev_RAM_Start, objoff_42(A0) ; $FFFE0000,  $0042
 ;-------------------------------------------------------------------------------                
 Offset_0x01AA8A:
-                tst.w   Obj_Control_Var_02(A0)                           ; $0032
+                tst.w   objoff_32(A0)                           ; $0032
                 beq.s   Offset_0x01AA96
-                subq.w  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                subq.w  #$01, objoff_32(A0)                     ; $0032
                 bra.s   Offset_0x01AADA
 Offset_0x01AA96:
-                tst.b   Obj_Control_Var_00(A0)                           ; $0030
+                tst.b   objoff_30(A0)                           ; $0030
                 bne.s   Offset_0x01AAB0
-                addq.b  #$01, Obj_Control_Var_10(A0)                     ; $0040
-                cmpi.b  #$80, Obj_Control_Var_10(A0)                     ; $0040
+                addq.b  #$01, objoff_40(A0)                     ; $0040
+                cmpi.b  #$80, objoff_40(A0)                     ; $0040
                 bne.s   Offset_0x01AADA
-                move.b  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                move.b  #$01, objoff_30(A0)                     ; $0030
                 bra.s   Offset_0x01AADA
 Offset_0x01AAB0:
-                subq.b  #$01, Obj_Control_Var_10(A0)                     ; $0040
+                subq.b  #$01, objoff_40(A0)                     ; $0040
                 bcc.s   Offset_0x01AADA
-                move.b  #$00, Obj_Control_Var_10(A0)                     ; $0040
-                move.b  #$00, Obj_Control_Var_00(A0)                     ; $0030
-                move.w  #$003C, Obj_Control_Var_02(A0)                   ; $0032
+                move.b  #$00, objoff_40(A0)                     ; $0040
+                move.b  #$00, objoff_30(A0)                     ; $0030
+                move.w  #$003C, objoff_32(A0)                   ; $0032
                 move.b  anim(A0), D0                           ; $0020
                 addq.b  #$01, D0
                 cmpi.b  #$05, D0
@@ -52,10 +52,10 @@ Offset_0x01AAB0:
 Offset_0x01AAD6:
                 move.b  D0, anim(A0)                           ; $0020
 Offset_0x01AADA:
-                move.w  Obj_Control_Var_04(A0), D2                       ; $0034
-                move.w  Obj_Control_Var_06(A0), D3                       ; $0036
+                move.w  objoff_34(A0), D2                       ; $0034
+                move.w  objoff_36(A0), D3                       ; $0036
                 moveq   #$00, D0
-                move.b  Obj_Control_Var_10(A0), D0                       ; $0040
+                move.b  objoff_40(A0), D0                       ; $0040
                 addq.w  #$04, D0
                 move.l  #$00000100, D4
                 divu.w  D0, D4
@@ -64,7 +64,7 @@ Offset_0x01AADA:
                 move.w  D2, x_pos(A0)                                    ; $0010
                 move.w  D3, y_pos(A0)                                    ; $0014
                 clr.w   (Art_Scaling_Data_Buffer).w                  ; $FFFFF740
-                tst.w   Obj_Control_Var_02(A0)                           ; $0032
+                tst.w   objoff_32(A0)                           ; $0032
                 bne.s   Offset_0x01AB32
                 move.l  A0, -(A7)
                 bsr     Init_Art_Scaling                       ; Offset_0x01AB3C
@@ -79,7 +79,7 @@ Offset_0x01AADA:
                 move.w  #$A000, D2
                 jsr     (QueueDMATransfer)                        ; Offset_0x0012FC
 Offset_0x01AB32:
-                move.w  Obj_Control_Var_04(A0), D0                       ; $0034
+                move.w  objoff_34(A0), D0                       ; $0034
                 jmp     (MarkObjGone_2)                        ; Offset_0x011B1A
 ;-------------------------------------------------------------------------------                
 Init_Art_Scaling:                                              ; Offset_0x01AB3C
@@ -124,7 +124,7 @@ Offset_0x01ABA2:
 ;-------------------------------------------------------------------------------    
 Perform_Scaling:                                               ; Offset_0x01ABE2
                 moveq   #$00, D1
-                move.b  Obj_Control_Var_10(A0), D1                       ; $0040
+                move.b  objoff_40(A0), D1                       ; $0040
                 cmpi.b  #$1C, D1
                 bcs.s   Offset_0x01ABF2
                 move.b  #$1C, D1
@@ -165,10 +165,10 @@ Offset_0x01AC46:
                 rts
 Offset_0x01AC4E:
                 moveq   #$00, D0
-                move.b  Obj_Control_Var_10(A0), D0                       ; $0040
+                move.b  objoff_40(A0), D0                       ; $0040
                 moveq   #$00, D1
                 move.b  anim(A0), D1                           ; $0020
-                move.l  Obj_Control_Var_12(A0), A1                       ; $0042
+                move.l  objoff_42(A0), A1                       ; $0042
                 ror.w   #$04, D1
                 adda.l  D1, A1
                 move.l  A1, A0

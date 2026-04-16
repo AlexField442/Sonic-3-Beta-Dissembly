@@ -10,7 +10,7 @@
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
                 lsl.w   #$03, D0
-                move.w  D0, Obj_Timer(A0)                                ; $002E
+                move.w  D0, objoff_2E(A0)                                ; $002E
                 move.l  #Offset_0x020138, (A0)
 Offset_0x020138:                
                 move.w  x_pos(A0), D1                                    ; $0010
@@ -19,8 +19,8 @@ Offset_0x020138:
                 addi.w  #$0010, D2
                 move.w  y_pos(A0), D3                                    ; $0014
                 move.w  D3, D4
-                sub.w   Obj_Timer(A0), D3                                ; $002E
-                add.w   Obj_Timer(A0), D4                                ; $002E
+                sub.w   objoff_2E(A0), D3                                ; $002E
+                add.w   objoff_2E(A0), D4                                ; $002E
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 bsr.s   Offset_0x020166
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
@@ -43,7 +43,7 @@ Offset_0x020166:
                 move.w  #$0400, y_vel(A1)                          ; $001A
                 move.w  #$0000, inertia(A1)                          ; $001C
                 bset    #$01, status(A1)                             ; $002A
-                move.b  #$00, Obj_Control_Var_10(A1)                     ; $0040
+                move.b  #$00, objoff_40(A1)                     ; $0040
                 bclr    #$03, status(A1)                             ; $002A
                 bclr    #$02, status(A1)                             ; $002A
                 move.b  #$1A, anim(A1)                         ; $0020

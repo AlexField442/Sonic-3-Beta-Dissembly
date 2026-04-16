@@ -25,7 +25,7 @@ SegaSonic_Init:
 		move.b	#0,render_flags(a0)
 		move.w  #$1E8,x_pos(a0)
 		move.w  #$F0,y_pos(a0)
-		move.w  #$B,Obj_Timer(a0)
+		move.w  #$B,objoff_2E(a0)
 		move.w  #2,(VBlank_Subroutine).w
 		bset	#0,render_flags(a0)
 		bset	#0,status(a0)
@@ -117,7 +117,7 @@ SegaScreenScaledSpriteDataStart:
 ; Offset_0x0345AC:
 SegaSonic_RunLeft:
 		subi.w	#$20,x_pos(a0)
-		subq.w	#1,Obj_Timer(a0)
+		subq.w	#1,objoff_2E(a0)
 		bmi.s	Offset_0x0345CE
 		bsr.w	Offset_0x0346F8
 		lea	(Sonic_SEGA_Logo_Animate_Data).l,a1
@@ -126,16 +126,16 @@ SegaSonic_RunLeft:
 
 Offset_0x0345CE:
 		addq.b	#2,routine(a0)
-		move.w	#$C,Obj_Timer(a0)
-		move.b	#1,Obj_Control_Var_00(a0)
-		move.b	#-1,Obj_Control_Var_01(a0)
+		move.w	#$C,objoff_2E(a0)
+		move.b	#1,objoff_30(a0)
+		move.b	#-1,objoff_31(a0)
 		jmp	(DisplaySprite).l
 ; ===========================================================================
 ; Offset_0x0345EA:
 SegaSonic_MidWipe:
-		tst.w	Obj_Timer(a0)
+		tst.w	objoff_2E(a0)
 		beq.s	Offset_0x0345F8
-		subq.w	#1,Obj_Timer(a0)
+		subq.w	#1,objoff_2E(a0)
 		bsr.w	Offset_0x0346F8
 
 Offset_0x0345F8:
@@ -148,7 +148,7 @@ Offset_0x0345F8:
 Offset_0x034604:
 		addq.b	#2,routine(a0)
 		bchg	#0,render_flags(a0)
-		move.w	#$B,Obj_Timer(a0)
+		move.w	#$B,objoff_2E(a0)
 		move.w	#4,(VBlank_Subroutine).w
 		subi.w	#$28,x_pos(a0)
 		bchg	#0,render_flags(a0)
@@ -174,7 +174,7 @@ Null_Sub_3:
 ; ===========================================================================
 ; Offset_0x034654:
 SegaSonic_RunRight:
-		subq.w	#1,Obj_Timer(a0)
+		subq.w	#1,objoff_2E(a0)
 		bmi.s	Offset_0x034676
 		addi.w	#$20,x_pos(a0)
 		bsr.w	Offset_0x03470C
@@ -184,16 +184,16 @@ SegaSonic_RunRight:
 
 Offset_0x034676:
 		addq.b	#2,routine(a0)
-		move.w	#$C,Obj_Timer(a0)
-		move.b	#1,Obj_Control_Var_00(a0)
-		move.b	#-1,Obj_Control_Var_01(a0)
+		move.w	#$C,objoff_2E(a0)
+		move.b	#1,objoff_30(a0)
+		move.b	#-1,objoff_31(a0)
 		rts
 ; ===========================================================================
 ; Offset_0x03468E:
 SegaSonic_EndWipe:
-		tst.w	Obj_Timer(a0)
+		tst.w	objoff_2E(a0)
 		beq.s	Offset_0x03469C
-		subq.w	#1,Obj_Timer(a0)
+		subq.w	#1,objoff_2E(a0)
 		bsr.w	Offset_0x03470C
 
 Offset_0x03469C:

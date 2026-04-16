@@ -34,7 +34,7 @@ Offset_0x049EA2:
                 rts
 Offset_0x049EA4:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x049ECA, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x049ECA, child(A0)                  ; $0034
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x049EB4:
@@ -47,11 +47,11 @@ Offset_0x049EC0:
 ;-------------------------------------------------------------------------------
 Offset_0x049ECA:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.w  #$0060, Obj_Timer(A0)                            ; $002E
+                move.w  #$0060, objoff_2E(A0)                            ; $002E
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x049ED8:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bmi.s   Offset_0x049EE0
                 rts
 Offset_0x049EE0:

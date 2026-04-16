@@ -19,14 +19,14 @@ Offset_0x0447BE:
 Offset_0x0447C4:
                 lea     Buggernaut_Setup_Data(PC), A1          ; Offset_0x044922
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                move.l  #Offset_0x04493C, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x04493C, child_data(A0)             ; $0030
                 lea     Offset_0x044934(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
-                addq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
+                addq.b  #$01, objoff_39(A0)                     ; $0039
 Offset_0x0447E0:                
                 move.b  #$02, routine(A0)                            ; $0005
-                move.w  #$003F, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x0447FE, Obj_Child(A0)                  ; $0034
+                move.w  #$003F, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x0447FE, child(A0)                  ; $0034
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x0447F6:
@@ -35,8 +35,8 @@ Offset_0x0447F6:
 ;-------------------------------------------------------------------------------
 Offset_0x0447FE:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.w  #$007F, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x0447E0, Obj_Child(A0)                  ; $0034
+                move.w  #$007F, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x0447E0, child(A0)                  ; $0034
 Offset_0x044812:
                 rts       
 ;-------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ Offset_0x044850:
 Offset_0x044856:
                 lea     Buggernaut_Setup_Data_2(PC), A1        ; Offset_0x04492E
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
-                move.l  #Offset_0x044941, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x044941, child_data(A0)             ; $0030
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x044868:
@@ -117,11 +117,11 @@ Offset_0x0448E8:
                 moveq   #$00, D0
                 rts
 Offset_0x0448F4:
-                move.b  Obj_Control_Var_09(A2), D1                       ; $0039
+                move.b  objoff_39(A2), D1                       ; $0039
                 addq.b  #$01, D1
                 cmpi.b  #$04, D1
                 bhi.s   Offset_0x0448E8
-                move.b  D1, Obj_Control_Var_09(A2)                       ; $0039
+                move.b  D1, objoff_39(A2)                       ; $0039
                 move.w  A2, parent3(A0)                            ; $0046
                 rts
 ;-------------------------------------------------------------------------------

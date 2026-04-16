@@ -10,9 +10,9 @@
                 move.b  #$D7, collision_flags(A0)                          ; $0028
                 move.l  #Offset_0x02007E, (A0)
 Offset_0x02007E:                
-                tst.w   Obj_Control_Var_00(A0)                           ; $0030
+                tst.w   objoff_30(A0)                           ; $0030
                 beq.s   Offset_0x020092
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bne.s   Offset_0x0200DE
                 move.w  #$0000, (Animate_Counters+$04).w             ; $FFFFF7F4
                 bra.s   Offset_0x0200F2
@@ -20,7 +20,7 @@ Offset_0x020092:
                 tst.b   collision_property(A0)                                 ; $0029
                 beq.s   Offset_0x0200F2
                 clr.b   collision_property(A0)                                 ; $0029
-                move.w  #$0081, Obj_Control_Var_00(A0)                   ; $0030
+                move.w  #$0081, objoff_30(A0)                   ; $0030
                 move.w  #$0001, (Animate_Counters+$04).w             ; $FFFFF7F4
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x0200DC
@@ -38,7 +38,7 @@ Offset_0x020092:
 Offset_0x0200DC:
                 rts
 Offset_0x0200DE:
-                move.w  Obj_Control_Var_00(A0), D0                       ; $0030
+                move.w  objoff_30(A0), D0                       ; $0030
                 andi.b  #$1F, D0
                 bne.s   Offset_0x0200F0
                 moveq   #Buzzer_Sfx, D0                                   ; -$65

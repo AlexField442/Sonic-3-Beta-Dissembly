@@ -49,7 +49,7 @@ Offset_0x010CDE:
                 move.l  #Obj_S1_0x7C_Big_Ring_Flash, (A1)      ; Offset_0x010D26
                 move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
                 move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
-                move.l  A0, Obj_Control_Var_10(A1)                       ; $0040
+                move.l  A0, objoff_40(A1)                       ; $0040
                 move.w  (Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
                 cmp.w   x_pos(A0), D0                                    ; $0010
                 bcs.s   Offset_0x010D16

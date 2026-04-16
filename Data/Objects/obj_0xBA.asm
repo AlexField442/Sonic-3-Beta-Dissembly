@@ -6,12 +6,12 @@ Offset_0x0468EC:
                 lea     Breakable_Wall_Setup_Data_2(PC), A1    ; Offset_0x046AE2
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Offset_0x046938, (A0)
-                move.l  #Offset_0x046B08, Obj_Child_Data(A0)             ; $0030
-                move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
-                move.w  #$005F, Obj_Timer(A0)                            ; $002E
+                move.l  #Offset_0x046B08, child_data(A0)             ; $0030
+                move.l  #Go_Delete_Object_A0, child(A0) ; Offset_0x042D3E, $0034
+                move.w  #$005F, objoff_2E(A0)                            ; $002E
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
-                move.w  Offset_0x046926(PC, D0), Obj_Control_Var_12(A0)  ; $0042
+                move.w  Offset_0x046926(PC, D0), objoff_42(A0)  ; $0042
                 jsr     Refresh_Child_Position(PC)             ; Offset_0x042016
                 moveq   #$00, D0
                 jmp     Set_Indexed_Velocity(PC)               ; Offset_0x042D5A

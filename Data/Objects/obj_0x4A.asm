@@ -10,8 +10,8 @@
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$D7, collision_flags(A0)                          ; $0028
-                move.w  x_pos(A0), Obj_Control_Var_00(A0)         ; $0010, $0030
-                move.w  y_pos(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
+                move.w  x_pos(A0), objoff_30(A0)         ; $0010, $0030
+                move.w  y_pos(A0), objoff_32(A0)         ; $0014, $0032
                 tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
                 beq.s   Offset_0x0291DE
                 move.l  #Bumper_Mappings_2P, mappings(A0) ; Offset_0x00293F4, $000C
@@ -34,8 +34,8 @@ Offset_0x029202:
                 jsr     (CalcSine)                             ; Offset_0x001B20
                 asr.w   #$02, D1
                 asr.w   #$02, D0
-                add.w   Obj_Control_Var_00(A0), D1                       ; $0030
-                add.w   Obj_Control_Var_02(A0), D0                       ; $0032
+                add.w   objoff_30(A0), D1                       ; $0030
+                add.w   objoff_32(A0), D0                       ; $0032
                 move.w  D1, x_pos(A0)                                    ; $0010
                 move.w  D0, y_pos(A0)                                    ; $0014
 Offset_0x029220:
@@ -72,7 +72,7 @@ Offset_0x02924C:
                 bset    #$01, status(A1)                             ; $002A
                 bclr    #$04, status(A1)                             ; $002A
                 bclr    #$05, status(A1)                             ; $002A
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 move.b  #$01, anim(A0)                         ; $0020
                 moveq   #Small_Bumper_Sfx, D0                             ; -$75
                 jsr     (Play_Music)                           ; Offset_0x001176
@@ -97,7 +97,7 @@ Offset_0x0292E4:
 Offset_0x0292E6:
                 lea     (Bumper_Animate_Data), A1              ; Offset_0x0293C6
                 jsr     (AnimateSprite)                        ; Offset_0x01115E
-                move.w  Obj_Control_Var_00(A0), D0                       ; $0030
+                move.w  objoff_30(A0), D0                       ; $0030
                 andi.w  #$FF80, D0
                 sub.w   (Camera_X_Left).w, D0                        ; $FFFFF7DA
                 cmpi.w  #$0280, D0
@@ -145,7 +145,7 @@ Offset_0x02934E:
                 bset    #$01, status(A1)                             ; $002A
                 bclr    #$04, status(A1)                             ; $002A
                 bclr    #$05, status(A1)                             ; $002A
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 move.b  #$01, anim(A0)                         ; $0020
                 moveq   #Small_Bumper_Sfx, D0                             ; -$75
                 jsr     (Play_Music)                           ; Offset_0x001176

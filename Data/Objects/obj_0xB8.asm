@@ -33,8 +33,8 @@ Offset_0x046B4A:
                 lea     Crushing_Column_Setup_Data(PC), A1     ; Offset_0x046CD8
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.b  #$70, y_radius(A0)                           ; $001E
-                move.w  y_pos(A0), Obj_Control_Var_0E(A0)         ; $0014, $003E
-                move.w  #$001F, Obj_Timer(A0)                            ; $002E
+                move.w  y_pos(A0), objoff_3E(A0)         ; $0014, $003E
+                move.w  #$001F, objoff_2E(A0)                            ; $002E
                 cmpi.b  #$03, subtype(A0)                            ; $002C
                 bcc.s   Offset_0x046B7A
                 move.b  #$0C, mapping_frame(A0)                             ; $0022
@@ -56,7 +56,7 @@ Offset_0x046B90:
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x046B98:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bmi.s   Offset_0x046B90
                 rts  
 ;-------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ Offset_0x046BBE:
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x046BC6:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bmi.s   Offset_0x046BBE
                 rts  
 ;-------------------------------------------------------------------------------
@@ -94,8 +94,8 @@ Offset_0x046BE0:
 Offset_0x046BF2:
                 add.w   D1, y_pos(A0)                                    ; $0014
                 move.b  #$10, routine(A0)                            ; $0005
-                move.w  #$001F, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x046C4C, Obj_Child(A0)                  ; $0034
+                move.w  #$001F, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x046C4C, child(A0)                  ; $0034
                 moveq   #Slide_Thunk_Sfx, D0                              ; -$50
                 jsr     (Play_Music)                           ; Offset_0x001176
                 rts     
@@ -135,23 +135,23 @@ Offset_0x046C5A:
 Offset_0x046C5E:
                 move.w  y_pos(A0), D0                                    ; $0014
                 subq.w  #$01, D0
-                cmp.w   Obj_Control_Var_0E(A0), D0                       ; $003E
+                cmp.w   objoff_3E(A0), D0                       ; $003E
                 bls.s   Offset_0x046C70
                 move.w  D0, y_pos(A0)                                    ; $0014
                 rts
 Offset_0x046C70:
-                move.w  #$005F, Obj_Timer(A0)                            ; $002E
+                move.w  #$005F, objoff_2E(A0)                            ; $002E
                 bra     Offset_0x046B7A   
 ;-------------------------------------------------------------------------------
 Offset_0x046C7A:
                 move.w  y_pos(A0), D0                                    ; $0014
                 addq.w  #$01, D0
-                cmp.w   Obj_Control_Var_0E(A0), D0                       ; $003E
+                cmp.w   objoff_3E(A0), D0                       ; $003E
                 bcc.s   Offset_0x046C8C
                 move.w  D0, y_pos(A0)                                    ; $0014
                 rts
 Offset_0x046C8C:
-                move.w  #$005F, Obj_Timer(A0)                            ; $002E
+                move.w  #$005F, objoff_2E(A0)                            ; $002E
                 bra     Offset_0x046B7A     
 ;-------------------------------------------------------------------------------
 Offset_0x046C96:

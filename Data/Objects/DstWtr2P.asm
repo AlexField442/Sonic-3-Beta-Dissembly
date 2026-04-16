@@ -21,13 +21,13 @@ Offset_0x0100F0:
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$07E0, art_tile(A0)                         ; $000A
-                move.w  #Obj_Player_One, Obj_Player_Last(A0)      ; $B000, $0042
+                move.w  #Obj_Player_One, parent(A0)      ; $B000, $0042
                 cmpa.w  #Obj_P1_Dust_Water_Splash, A0                    ; $CC54
                 beq.s   Offset_0x010126
-                move.w  #Obj_Player_Two, Obj_Player_Last(A0)      ; $B04A, $0042
+                move.w  #Obj_Player_Two, parent(A0)      ; $B04A, $0042
 ;-------------------------------------------------------------------------------
 Offset_0x010126:
-                move.w  Obj_Player_Last(A0), A2                          ; $0042
+                move.w  parent(A0), A2                          ; $0042
                 moveq   #$00, D0
                 move.b  anim(A0), D0                           ; $0020
                 add.w   D0, D0
@@ -49,7 +49,7 @@ Offset_0x01014A:
                 bcs.s   Offset_0x0101AC
                 cmpi.b  #$04, routine(A2)                            ; $0005
                 bcc.s   Offset_0x0101AC
-                tst.b   Obj_Player_Spdsh_Flag(A2)                        ; $003D
+                tst.b   spindash_flag(A2)                        ; $003D
                 beq.s   Offset_0x0101AC
                 move.w  x_pos(A2), x_pos(A0)                      ; $0010, $0010
                 move.w  y_pos(A2), y_pos(A0)                      ; $0014, $0014
@@ -76,17 +76,17 @@ Offset_0x0101AC:
 Offset_0x0101B4:
                 bra     DeleteObject                           ; Offset_0x011138
 Offset_0x0101B8:
-                move.w  Obj_Player_Last(A0), A2                          ; $0042
+                move.w  parent(A0), A2                          ; $0042
                 cmpi.b  #$0D, anim(A2)                         ; $0020
                 beq.s   Offset_0x0101D2
                 move.b  #$02, routine(A0)                            ; $0005
-                move.b  #$00, Obj_Control_Var_06(A0)                     ; $0036
+                move.b  #$00, objoff_36(A0)                     ; $0036
                 rts
 Offset_0x0101D2:
                 move.b  #$00, mapping_frame(A0)                             ; $0022
-                subq.b  #$01, Obj_Control_Var_06(A0)                     ; $0036
+                subq.b  #$01, objoff_36(A0)                     ; $0036
                 bpl.s   Offset_0x010244
-                move.b  #$03, Obj_Control_Var_06(A0)                     ; $0036
+                move.b  #$03, objoff_36(A0)                     ; $0036
                 bsr     AllocateObject                       ; Offset_0x011DD8
                 bne.s   Offset_0x010244
                 move.l  (A0), (A1)
@@ -101,7 +101,7 @@ Offset_0x0101D2:
                 move.w  #$0080, priority(A1)                         ; $0008
                 move.b  #$04, width_pixels(A1)                              ; $0007
                 move.w  art_tile(A0), art_tile(A1)        ; $000A, $000A
-                move.w  Obj_Player_Last(A0), Obj_Player_Last(A1)  ; $0042, $0042
+                move.w  parent(A0), parent(A1)  ; $0042, $0042
                 andi.w  #$7FFF, art_tile(A1)                         ; $000A
                 tst.w   art_tile(A2)                                 ; $000A
                 bpl.s   Offset_0x010244

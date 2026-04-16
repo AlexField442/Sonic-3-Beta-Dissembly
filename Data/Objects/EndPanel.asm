@@ -24,7 +24,7 @@ Offset_0x041838:
                 move.w  A0, (Obj_End_Panel_Mem_Address).w            ; $FFFFFAA6
                 move.b  #$18, x_radius(A0)                            ; $001F
                 move.b  #$1E, y_radius(A0)                           ; $001E
-                move.l  #Offset_0x041AB2, Obj_Control_Var_00(A0)         ; $0030
+                move.l  #Offset_0x041AB2, objoff_30(A0)         ; $0030
                 cmpi.b  #$06, (Current_Zone).w                           ; $FFFFFE10
                 bne.s   Offset_0x041866
                 move.w  #$3EC0, x_pos(A0)                                ; $0010
@@ -54,19 +54,19 @@ Offset_0x04188C:
                 bpl.s   Offset_0x0418CA
                 add.w   D1, y_pos(A0)                                    ; $0014
                 move.b  #$04, routine(A0)                            ; $0005
-                bset    #$00, Obj_Control_Var_08(A0)                     ; $0038
-                move.w  #$0040, Obj_Timer(A0)                            ; $002E
+                bset    #$00, objoff_38(A0)                     ; $0038
+                move.w  #$0040, objoff_2E(A0)                            ; $002E
 Offset_0x0418CA:
                 rts       
 ;-------------------------------------------------------------------------------
 Offset_0x0418CC:
                 jsr     AnimateRaw(PC)                        ; Offset_0x04208E
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x0418E2
                 move.b  #$06, routine(A0)                            ; $0005
                 move.b  (Player_Selected_Flag+$01).w, mapping_frame(A0) ; $FFFFFF09, $0022
 Offset_0x0418E2:
-                btst    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                btst    #$00, objoff_38(A0)                     ; $0038
                 bne.s   Offset_0x0418FC
                 move.b  #$02, routine(A0)                            ; $0005
                 move.b  #$20, anim(A0)                         ; $0020
@@ -106,14 +106,14 @@ Offset_0x041934:
                 andi.w  #$001F, D0
                 subi.w  #$0010, D0
                 add.w   D0, y_pos(A0)                                    ; $0014
-                move.w  x_pos(A0), Obj_Control_Var_0A(A0)         ; $0010, $003A
+                move.w  x_pos(A0), objoff_3A(A0)         ; $0010, $003A
                 move.w  #$1000, x_vel(A0)                          ; $0018
-                move.w  #$0020, Obj_Timer(A0)                            ; $002E
-                move.l  #Go_Delete_Object_A0, Obj_Control_Var_04(A0) ; Offset_0x042D3E, $0034
+                move.w  #$0020, objoff_2E(A0)                            ; $002E
+                move.l  #Go_Delete_Object_A0, objoff_34(A0) ; Offset_0x042D3E, $0034
 Offset_0x04196E:                
                 move.w  #$0400, D0
                 move.w  x_pos(A0), D1                                    ; $0010
-                cmp.w   Obj_Control_Var_0A(A0), D1                       ; $003A
+                cmp.w   objoff_3A(A0), D1                       ; $003A
                 bcs.s   Offset_0x04197E
                 neg.w   D0
 Offset_0x04197E:

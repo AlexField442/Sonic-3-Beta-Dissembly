@@ -13,9 +13,9 @@
                 andi.w  #$000F, D0
                 addq.w  #$08, D0
                 lsl.w   #$04, D0
-                move.w  D0, Obj_Control_Var_06(A0)                       ; $0036
+                move.w  D0, objoff_36(A0)                       ; $0036
                 addi.w  #$0030, D0
-                move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
+                move.w  D0, objoff_38(A0)                       ; $0038
                 move.l  #Offset_0x0269A4, (A0)
 Offset_0x0269A4:                
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
@@ -31,7 +31,7 @@ Offset_0x0269C6:
 Offset_0x0269CC:
                 cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc     Offset_0x026A4E
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x026A4E
                 move.w  x_pos(A1), D0                                    ; $0010
                 sub.w   x_pos(A0), D0                                    ; $0010
@@ -41,29 +41,29 @@ Offset_0x0269CC:
                 moveq   #$00, D1
                 move.b  (Oscillate_Data_Buffer+$16).w, D1            ; $FFFFFE74
                 add.w   y_pos(A1), D1                                    ; $0014
-                add.w   Obj_Control_Var_06(A0), D1                       ; $0036
+                add.w   objoff_36(A0), D1                       ; $0036
                 sub.w   y_pos(A0), D1                                    ; $0014
                 bcs.s   Offset_0x026A4E
-                cmp.w   Obj_Control_Var_08(A0), D1                       ; $0038
+                cmp.w   objoff_38(A0), D1                       ; $0038
                 bcc.s   Offset_0x026A4E
-                sub.w   Obj_Control_Var_06(A0), D1                       ; $0036
+                sub.w   objoff_36(A0), D1                       ; $0036
                 bcs.s   Offset_0x026A12
                 not.w   D1
                 add.w   D1, D1
 Offset_0x026A12:
-                add.w   Obj_Control_Var_06(A0), D1                       ; $0036
+                add.w   objoff_36(A0), D1                       ; $0036
                 neg.w   D1
                 asr.w   #$06, D1
                 add.w   D1, y_pos(A1)                                    ; $0014
                 bset    #$01, status(A1)                             ; $002A
                 move.w  #$0000, y_vel(A1)                          ; $001A
                 move.w  #$0001, inertia(A1)                          ; $001C
-                tst.b   Obj_Flip_Angle(A1)                               ; $0027
+                tst.b   flip_angle(A1)                               ; $0027
                 bne.s   Offset_0x026A4E
-                move.b  #$01, Obj_Flip_Angle(A1)                         ; $0027
+                move.b  #$01, flip_angle(A1)                         ; $0027
                 move.b  #$00, anim(A1)                         ; $0020
-                move.b  #$7F, Obj_Control_Var_00(A1)                     ; $0030
-                move.b  #$08, Obj_Control_Var_01(A1)                     ; $0031
+                move.b  #$7F, objoff_30(A1)                     ; $0030
+                move.b  #$08, objoff_31(A1)                     ; $0031
 Offset_0x026A4E:
                 rts   
 ;-------------------------------------------------------------------------------

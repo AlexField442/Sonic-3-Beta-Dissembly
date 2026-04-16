@@ -18,8 +18,8 @@ Offset_0x043B58:
 Offset_0x043B5E:
                 lea     Bloominator_Setup_Data(PC), A1         ; Offset_0x043BE6
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                move.w  #$001F, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x043B82, Obj_Child(A0)                  ; $0034
+                move.w  #$001F, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x043B82, child(A0)                  ; $0034
 Offset_0x043B74:
                 rts  
 ;-------------------------------------------------------------------------------
@@ -30,8 +30,8 @@ Offset_0x043B76:
 ;-------------------------------------------------------------------------------
 Offset_0x043B82:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x043C16, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x043BD0, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x043C16, child_data(A0)             ; $0030
+                move.l  #Offset_0x043BD0, child(A0)                  ; $0034
                 rts
 ;-------------------------------------------------------------------------------
 Offset_0x043B9A:
@@ -47,8 +47,8 @@ Offset_0x043BAC:
                 lea     Offset_0x043BFE(PC), A2
                 jsr     SetupChildObject_Complex(PC)       ; Offset_0x041DEA
                 bne.s   Offset_0x043BCE
-                addq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
-                btst    #$00, Obj_Control_Var_09(A0)                     ; $0039
+                addq.b  #$01, objoff_39(A0)                     ; $0039
+                btst    #$00, objoff_39(A0)                     ; $0039
                 beq.s   Offset_0x043BCE
                 neg.w   x_vel(A1)                                  ; $0018
 Offset_0x043BCE:
@@ -56,8 +56,8 @@ Offset_0x043BCE:
 ;-------------------------------------------------------------------------------
 Offset_0x043BD0:
                 move.b  #$02, routine(A0)                            ; $0005
-                move.w  #$0078, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x043B82, Obj_Child(A0)                  ; $0034
+                move.w  #$0078, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x043B82, child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
 Bloominator_Setup_Data:                                        ; Offset_0x043BE6  

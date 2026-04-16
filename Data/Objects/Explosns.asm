@@ -16,12 +16,12 @@ Offset_0x041BD8:
 Boss_Explosion_Control:                                        ; Offset_0x041BDE
                 lea     Offset_0x041D3E(PC), A1
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
-                move.l  #Obj_Normal_Explode, Obj_Control_Var_04(A0) ; Offset_0x041C30, $0034
+                move.l  #Obj_Normal_Explode, objoff_34(A0) ; Offset_0x041C30, $0034
                 cmpi.b  #$08, subtype(A0)                            ; $002C
                 bne.s   Offset_0x041BFE
-                move.l  #Offset_0x041C7A, Obj_Control_Var_04(A0)         ; $0034
+                move.l  #Offset_0x041C7A, objoff_34(A0)         ; $0034
 Offset_0x041BFE:
-                move.w  #$0002, Obj_Timer(A0)                            ; $002E
+                move.w  #$0002, objoff_2E(A0)                            ; $002E
                 bra     Offset_0x041C9A 
 ;-------------------------------------------------------------------------------
 Offset_0x041C08:
@@ -29,7 +29,7 @@ Offset_0x041C08:
 ;-------------------------------------------------------------------------------
 Offset_0x041C0C:
                 move.w  parent3(A0), A1                            ; $0046
-                btst    #$05, Obj_Control_Var_08(A1)                     ; $0038
+                btst    #$05, objoff_38(A1)                     ; $0038
                 bne     Offset_0x041C76
                 tst.l   (A1)
                 beq     Offset_0x041C76
@@ -38,9 +38,9 @@ Offset_0x041C0C:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2                
 ;-------------------------------------------------------------------------------
 Obj_Normal_Explode:                                            ; Offset_0x041C30
-                subq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
+                subq.b  #$01, objoff_39(A0)                     ; $0039
                 bmi.s   Offset_0x041C76
-                move.w  #$0002, Obj_Timer(A0)                            ; $002E
+                move.w  #$0002, objoff_2E(A0)                            ; $002E
                 moveq   #Level_Projectile_Sfx, D0                          ; $75
                 jsr     (Play_Music)                           ; Offset_0x001176
                 lea     Offset_0x041D5A(PC), A2
@@ -49,7 +49,7 @@ Obj_Normal_Explode:                                            ; Offset_0x041C30
 Offset_0x041C50:                
                 jsr     (PseudoRandomNumber)                   ; Offset_0x001AFA
                 moveq   #$00, D1
-                move.b  Obj_Control_Var_0A(A0), D1                       ; $003A
+                move.b  objoff_3A(A0), D1                       ; $003A
                 move.w  D1, D2
                 add.w   D2, D2
                 subq.w  #$01, D2
@@ -65,9 +65,9 @@ Offset_0x041C76:
                 jmp     Go_Delete_Object_A0(PC)                ; Offset_0x042D3E       
 ;------------------------------------------------------------------------------- 
 Offset_0x041C7A:
-                subq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
+                subq.b  #$01, objoff_39(A0)                     ; $0039
                 bmi.s   Offset_0x041C76
-                move.w  #$0002, Obj_Timer(A0)                            ; $002E
+                move.w  #$0002, objoff_2E(A0)                            ; $002E
                 lea     Offset_0x041D6A(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 bne     Offset_0x041D0E
@@ -78,8 +78,8 @@ Offset_0x041C9A:
                 move.b  subtype(A0), D0                              ; $002C
                 lea     Offset_0x041CB6(PC), A1
                 adda.w  $00(A1, D0), A1
-                move.b  (A1)+, Obj_Control_Var_09(A0)                    ; $0039
-                move.b  (A1)+, Obj_Control_Var_0A(A0)                    ; $003A
+                move.b  (A1)+, objoff_39(A0)                    ; $0039
+                move.b  (A1)+, objoff_3A(A0)                    ; $003A
                 move.b  (A1)+, routine(A0)                           ; $0005
                 rts
 ;-------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ Offset_0x041CE2:
 Offset_0x041CE6:
                 move.b  #$02, subtype(A0)                            ; $002C
                 bsr     Boss_Explosion_Control                 ; Offset_0x041BDE
-                move.w  #$0002, Obj_Timer(A0)                            ; $002E
+                move.w  #$0002, objoff_2E(A0)                            ; $002E
                 move.w  (Camera_X).w, D0                             ; $FFFFEE78
                 addi.w  #$00A0, D0
                 move.w  D0, x_pos(A0)                                    ; $0010
@@ -131,8 +131,8 @@ Offset_0x041D10:
                 lea     Offset_0x041D3E(PC), A1
                 jsr     SetupObjectAttributes(PC)                    ; Offset_0x041D72
                 move.l  #Offset_0x041D34, (A0)                  
-                move.l  #Offset_0x041D4A, Obj_Child_Data(A0)             ; $0030
-                move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
+                move.l  #Offset_0x041D4A, child_data(A0)             ; $0030
+                move.l  #Go_Delete_Object_A0, child(A0) ; Offset_0x042D3E, $0034
                 jmp     (DisplaySprite)                        ; Offset_0x011148   
 ;-------------------------------------------------------------------------------   
 Offset_0x041D34:

@@ -31,34 +31,34 @@ Offset_0x01C978:
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 cmpi.b  #$09, anim(A1)                         ; $0020
                 bne.s   Offset_0x01C9CC
-                move.w  #$003C, Obj_Control_Var_00(A0)                   ; $0030
-                move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                move.w  #$003C, objoff_30(A0)                   ; $0030
+                move.b  #$01, objoff_32(A0)                     ; $0032
                 move.b  status(A1), D0                               ; $002A
                 add.b   status(A0), D0                               ; $002A
                 andi.b  #$01, D0
                 bne.s   Offset_0x01C9CC
-                move.b  #$FF, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$FF, objoff_32(A0)                     ; $0032
 Offset_0x01C9CC:
                 andi.b  #$22, D6
                 beq.s   Offset_0x01C9FE
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 cmpi.b  #$09, anim(A1)                         ; $0020
                 bne.s   Offset_0x01C9FE
-                move.w  #$003C, Obj_Control_Var_00(A0)                   ; $0030
-                move.b  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                move.w  #$003C, objoff_30(A0)                   ; $0030
+                move.b  #$01, objoff_32(A0)                     ; $0032
                 move.b  status(A1), D0                               ; $002A
                 add.b   status(A0), D0                               ; $002A
                 andi.b  #$01, D0
                 bne.s   Offset_0x01C9FE
-                move.b  #$FF, Obj_Control_Var_02(A0)                     ; $0032
+                move.b  #$FF, objoff_32(A0)                     ; $0032
 Offset_0x01C9FE:
-                tst.w   Obj_Control_Var_00(A0)                           ; $0030
+                tst.w   objoff_30(A0)                           ; $0030
                 beq.s   Offset_0x01CA7C
                 move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 lea     $00(A3, D0), A3
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bne.s   Offset_0x01CA26
                 move.b  #$00, (A3)
                 move.b  #$00, mapping_frame(A0)                             ; $0022
@@ -82,7 +82,7 @@ Offset_0x01CA4E:
                 subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x01CA68
                 move.b  #$01, anim_frame_duration(A0)                           ; $0024
-                move.b  Obj_Control_Var_02(A0), D0                       ; $0032
+                move.b  objoff_32(A0), D0                       ; $0032
                 add.b   D0, $001D(A0)
                 andi.b  #$03, $001D(A0)
 Offset_0x01CA68:
@@ -116,8 +116,8 @@ Offset_0x01CA96:
                 bset    #$01, status(A1)                             ; $002A
                 bclr    #$04, status(A1)                             ; $002A
                 bclr    #$05, status(A1)                             ; $002A
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
-                clr.b   Obj_Control_Var_0D(A1)                           ; $003D
+                clr.b   objoff_40(A1)                           ; $0040
+                clr.b   objoff_3D(A1)                           ; $003D
                 moveq   #Small_Bumper_Sfx, D0                             ; -$75
                 jsr     (PlaySound)                           ; Offset_0x001176
                 rts            

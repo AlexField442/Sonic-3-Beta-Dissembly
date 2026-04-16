@@ -8,8 +8,8 @@
                 lea     (Sonic_Max_Speed).w, A4                      ; $FFFFF760
                 lea     (Distance_From_Top).w, A5                    ; $FFFFEE2C
                 lea     (Obj_P1_Dust_Water_Splash).w, A6             ; $FFFFCC54
-                move.b  (Obj_Player_Two+Obj_Player_Selected).w, D0   ; $FFFFB082
-                cmp.b   Obj_Player_Selected(A0), D0                      ; $0038
+                move.b  (Obj_Player_Two+character_id).w, D0   ; $FFFFB082
+                cmp.b   character_id(A0), D0                      ; $0038
                 bne.s   Offset_0x00CC2C
                 bchg    #03, render_flags(A0)                               ; $0004
 Offset_0x00CC2C:
@@ -20,8 +20,8 @@ Offset_0x00CC38:
                 lea     (Miles_Max_Speed).w, A4                      ; $FFFFFEC0
                 lea     (Distance_From_Top_P2).w, A5                 ; $FFFFEE2E
                 lea     (Obj_P2_Dust_Water_Splash).w, A6             ; $FFFFCC9E
-                move.b  (Obj_Player_One+Obj_Player_Selected).w, D0   ; $FFFFB038
-                cmp.b   Obj_Player_Selected(A0), D0                      ; $0038
+                move.b  (Obj_Player_One+character_id).w, D0   ; $FFFFB038
+                cmp.b   character_id(A0), D0                      ; $0038
                 bne.s   Offset_0x00CC54
                 bchg    #04, render_flags(A0)                               ; $0004
 Offset_0x00CC54:
@@ -49,10 +49,10 @@ Offset_0x00CC6E:
                 move.b  #$0C, width_pixels(A0)                              ; $0007
                 move.b  #$0C, height_pixels(A0)                             ; $0006
                 move.b  #$84, render_flags(A0)                              ; $0004
-                move.b  #$01, Obj_Player_Selected(A0)                    ; $0038
+                move.b  #$01, character_id(A0)                    ; $0038
                 lea     (Player_Start_Speed_Array), A1         ; Offset_0x1F7000
                 moveq   #$00, D0
-                move.b  Obj_Player_Selected(A0), D0                      ; $0038
+                move.b  character_id(A0), D0                      ; $0038
                 lsl.w   #$03, D0
                 lea     $00(A1, D0), A1
                 move.w  (A1)+, (A4)
@@ -60,8 +60,8 @@ Offset_0x00CC6E:
                 move.w  (A1)+, render_flags(A4)                             ; $0004
                 tst.b   (Saved_Level_Flag).w                         ; $FFFFFE30
                 bne     Offset_0x00CD58
-                move.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $0046
-                move.b  #$0D, Obj_Player_LRB_Solid(A0)                   ; $0047
+                move.b  #$0C, top_solid_bit(A0)                   ; $0046
+                move.b  #$0D, lrb_solid_bit(A0)                   ; $0047
                 cmpa.w  #Obj_Player_One, A0                              ; $B000
                 bne.s   Offset_0x00CD20
                 move.w  #$0680, art_tile(A0)                         ; $000A
@@ -72,9 +72,9 @@ Offset_0x00CCFA:
                 move.w  x_pos(A0), (Saved_Obj_X_P1).w         ; $0010, $FFFFFE32
                 move.w  y_pos(A0), (Saved_Obj_Y_P1).w         ; $0014, $FFFFFE34
                 move.w  art_tile(A0), (Saved_Obj_Art_VRAM_P1).w ; $000A, $FFFFFE3C
-                move.w  Obj_Player_Top_Solid(A0), (Saved_Top_Solid_P1).w ; $0046, $FFFFFE3E
+                move.w  top_solid_bit(A0), (Saved_Top_Solid_P1).w ; $0046, $FFFFFE3E
                 move.l  #Obj_Miles_Tails_2P, (Obj_Super_Sonic_Stars_RAM).w ; Offset_0x00F2AE, $FFFFCBC0
-                move.w  A0, (Obj_Super_Sonic_Stars_RAM+Obj_Control_Var_00).w ; $FFFFCBF0
+                move.w  A0, (Obj_Super_Sonic_Stars_RAM+objoff_30).w ; $FFFFCBF0
                 bra.s   Offset_0x00CD58
 Offset_0x00CD20:
                 move.w  #$06A0, art_tile(A0)                         ; $000A
@@ -85,12 +85,12 @@ Offset_0x00CD34:
                 move.w  x_pos(A0), (Saved_Obj_X_P2).w         ; $0010, $FFFFFEE2
                 move.w  y_pos(A0), (Saved_Obj_Y_P2).w         ; $0014, $FFFFFEE4
                 move.w  art_tile(A0), (Saved_Obj_Art_VRAM_P2).w ; $000A, $FFFFFEEC
-                move.w  Obj_Player_Top_Solid(A0), (Saved_Top_Solid_P2).w ; $0046, $FFFFFEEE
+                move.w  top_solid_bit(A0), (Saved_Top_Solid_P2).w ; $0046, $FFFFFEEE
                 move.l  #Obj_Miles_Tails_2P, (Obj_Miles_Tails_RAM).w ; Offset_0x00F2AE, $FFFFCC0A
-                move.w  A0, (Obj_Miles_Tails_RAM+Obj_Control_Var_00).w ; $FFFFCC3A
+                move.w  A0, (Obj_Miles_Tails_RAM+objoff_30).w ; $FFFFCC3A
 Offset_0x00CD58:
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $0030
-                move.b  #$04, Obj_Player_Flip_Speed(A0)                  ; $0031
+                move.b  #$00, flips_remaining(A0)                  ; $0030
+                move.b  #$04, flip_speed(A0)                  ; $0031
                 move.b  #$1E, subtype(A0)                            ; $002C
                 move.w  #$0000, (Miles_CPU_Routine).w                ; $FFFFF708
                 move.w  #$0258, (Miles_CPU_Ctrl_Auto_Timer).w        ; $FFFFF702
@@ -121,7 +121,7 @@ Offset_0x00CDBC:
                 move.w  (Control_Ports_Buffer_Data+$02).w, (Control_Ports_Logical_Data_2).w ; $FFFFF606, $FFFFF66A
 Offset_0x00CDC8:
                 bsr     Miles_Display                          ; Offset_0x00D304
-                btst    #$00, Obj_Player_Control(A0)                     ; $002E
+                btst    #$00, obj_control(A0)                     ; $002E
                 bne.s   Offset_0x00CDE6
                 moveq   #$00, D0
                 move.b  status(A0), D0                               ; $002A
@@ -138,14 +138,14 @@ Offset_0x00CDF6:
                 and.w   D0, x_pos(A0)                                    ; $0010
                 addi.w  #$0400, x_pos(A0)                                ; $0010
                 bsr     Sonic_RecordPos                 ; Offset_0x00ACA2
-                move.b  (Primary_Angle).w, Obj_Player_Next_Tilt(A0) ; $FFFFF768, $003A
-                move.b  (Secondary_Angle).w, Obj_Player_Tilt(A0) ; $FFFFF76A, $003B
-                btst    #$01, Obj_Player_Control(A0)                     ; $002E
+                move.b  (Primary_Angle).w, next_tilt(A0) ; $FFFFF768, $003A
+                move.b  (Secondary_Angle).w, tilt(A0) ; $FFFFF76A, $003B
+                btst    #$01, obj_control(A0)                     ; $002E
                 bne.s   Offset_0x00CE24
                 bsr     Miles_Animate_Sprite_2P                ; Offset_0x00EDD0
                 bsr     Load_Miles_Dynamic_PLC_2P              ; Offset_0x00F150
 Offset_0x00CE24:
-                move.b  Obj_Player_Control(A0), D0                       ; $002E
+                move.b  obj_control(A0), D0                       ; $002E
                 andi.b  #$A0, D0
                 bne.s   Offset_0x00CE34
                 jsr     (Touch_Response_2P)                    ; Offset_0x00A168
@@ -233,7 +233,7 @@ Offset_0x00CF24:
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x00CF2C:
-                tst.b   Obj_Player_Spdsh_Flag(A0)                        ; $003D
+                tst.b   spindash_flag(A0)                        ; $003D
                 bne.s   Offset_0x00CF36
                 bsr     Miles_Jump                             ; Offset_0x00E238
 Offset_0x00CF36:
@@ -258,7 +258,7 @@ Offset_0x00CF6A:
                 movem.l (A7)+, A4-A6
                 rts
 Offset_0x00CF7C:
-                tst.b   Obj_Player_Status(A0)                            ; $002F
+                tst.b   status_secondary(A0)                            ; $002F
                 bmi.s   Offset_0x00CFA2
                 move.w  inertia(A0), D0                              ; $001C
                 bpl.s   Offset_0x00CF8A
@@ -291,7 +291,7 @@ Offset_0x00CFAE:
 Offset_0x00CFE0:
                 rts
 Offset_0x00CFE2:
-                tst.b   Obj_Player_Spdsh_Flag(A0)                        ; $003D
+                tst.b   spindash_flag(A0)                        ; $003D
                 bne.s   Offset_0x00D032
                 cmpi.b  #$08, anim(A0)                         ; $0020
                 bne.s   Offset_0x00D030
@@ -302,8 +302,8 @@ Offset_0x00CFE2:
                 move.w  #Rolling_Sfx, D0                                 ; $003C
                 jsr     (PlaySound)                           ; Offset_0x001176
                 addq.l  #$04, A7
-                move.b  #$01, Obj_Player_Spdsh_Flag(A0)                  ; $003D
-                move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
+                move.b  #$01, spindash_flag(A0)                  ; $003D
+                move.w  #$0000, spindash_counter(A0)                 ; $003E
                 cmpi.b  #$0C, subtype(A0)                            ; $002C
                 bcs.s   Offset_0x00D028
                 move.b  #$02, anim(A6)                         ; $0020
@@ -320,9 +320,9 @@ Offset_0x00D032:
                 move.b  #$03, x_radius(A0)                            ; $001F
                 move.b  #$02, anim(A0)                         ; $0020
                 addq.w  #$04, y_pos(A0)                                  ; $0014
-                move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $003D
+                move.b  #$00, spindash_flag(A0)                  ; $003D
                 moveq   #$00, D0
-                move.b  Obj_Player_Spdsh_Cnt(A0), D0                     ; $003E
+                move.b  spindash_counter(A0), D0                     ; $003E
                 add.w   D0, D0
                 move.w  Miles_Spindash_Speed_2P(PC, D0), inertia(A0) ; Offset_0x00D0B0, $001C
                 move.w  inertia(A0), D0                              ; $001C
@@ -352,13 +352,13 @@ Miles_Spindash_Speed_2P:                                       ; Offset_0x00D0B0
                 dc.w    $0C00  
 ;-------------------------------------------------------------------------------  
 Offset_0x00D0C2:
-                tst.w   Obj_Player_Spdsh_Cnt(A0)                         ; $003E
+                tst.w   spindash_counter(A0)                         ; $003E
                 beq.s   Offset_0x00D0DA
-                move.w  Obj_Player_Spdsh_Cnt(A0), D0                     ; $003E
+                move.w  spindash_counter(A0), D0                     ; $003E
                 lsr.w   #$05, D0
-                sub.w   D0, Obj_Player_Spdsh_Cnt(A0)                     ; $003E
+                sub.w   D0, spindash_counter(A0)                     ; $003E
                 bcc.s   Offset_0x00D0DA
-                move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
+                move.w  #$0000, spindash_counter(A0)                 ; $003E
 Offset_0x00D0DA:
                 move.b  (Control_Ports_Logical_Data_2+$01).w, D0     ; $FFFFF66B
                 andi.b  #$70, D0
@@ -366,10 +366,10 @@ Offset_0x00D0DA:
                 move.w  #$0900, anim(A0)                       ; $0020
                 move.w  #Rolling_Sfx, D0                                 ; $003C
                 jsr     (PlaySound)                           ; Offset_0x001176
-                addi.w  #$0200, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
-                cmpi.w  #$0800, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
+                addi.w  #$0200, spindash_counter(A0)                 ; $003E
+                cmpi.w  #$0800, spindash_counter(A0)                 ; $003E
                 bcs.s   Offset_0x00D10A
-                move.w  #$0800, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
+                move.w  #$0800, spindash_counter(A0)                 ; $003E
 Offset_0x00D10A:
                 addq.l  #$04, A7
                 cmpi.w  #$0060, (A5)

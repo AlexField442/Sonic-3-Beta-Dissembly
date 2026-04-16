@@ -25,7 +25,7 @@ Offset_0x0444B2:
                 jsr     SetupChildObject_Repeat(PC)        ; Offset_0x041E4E
 Offset_0x0444C8:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.b  #$03, Obj_Control_Var_09(A0)                     ; $0039
+                move.b  #$03, objoff_39(A0)                     ; $0039
                 jmp     Offset_0x04A096(PC) ; Código no objeto 0x90 - Fireworm
 ;-------------------------------------------------------------------------------
 Offset_0x0444D8:
@@ -36,10 +36,10 @@ Offset_0x0444D8:
 Offset_0x0444E8:
                 move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$0100, D0
-                move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
+                move.w  D0, objoff_3E(A0)                       ; $003E
                 move.w  D0, y_vel(A0)                              ; $001A
-                move.w  #$0008, Obj_Control_Var_10(A0)                   ; $0040
-                bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                move.w  #$0008, objoff_40(A0)                   ; $0040
+                bclr    #$00, objoff_38(A0)                     ; $0038
                 rts     
 ;-------------------------------------------------------------------------------
 Offset_0x044508:
@@ -81,7 +81,7 @@ Offset_0x04455C:
                 move.w  Offset_0x044576(PC, D0), D1
                 lea     Offset_0x044576(PC, D1), A1
                 lsr.w   #$01, D0
-                move.b  Offset_0x044582(PC, D0), Obj_Timer_2(A0)         ; $002F
+                move.b  Offset_0x044582(PC, D0), objoff_2F(A0)         ; $002F
                 jmp     SetupObjectAttributes(PC)                    ; Offset_0x041D72
 ;-------------------------------------------------------------------------------  
 Offset_0x044576:
@@ -96,7 +96,7 @@ Offset_0x044582:
                 dc.b    $0B, $17, $23, $2F, $37, $3F 
 ;-------------------------------------------------------------------------------   
 Offset_0x044588:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bmi.s   Offset_0x044590
                 rts
 Offset_0x044590:
@@ -107,8 +107,8 @@ Offset_0x044590:
                 addq.w  #$02, D0
                 lsl.w   #$02, D0
                 sub.w   D0, D1
-                move.w  D1, Obj_Timer(A0)                                ; $002E
-                move.l  #Offset_0x0445FE, Obj_Child(A0)                  ; $0034
+                move.w  D1, objoff_2E(A0)                                ; $002E
+                move.l  #Offset_0x0445FE, child(A0)                  ; $0034
                 move.w  #$FF00, x_vel(A0)                          ; $0018
                 bra     Offset_0x0444C8
 ;-------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ Offset_0x0445BA:
                 lea     Offset_0x04463C(PC), A1
                 jsr     SetupObjectAttributes3(PC)                  ; Offset_0x041D7A
                 move.l  #Offset_0x0445D6, (A0)
-                move.l  #Go_Delete_Object_A0, Obj_Child(A0) ; Offset_0x042D3E, $0034
+                move.l  #Go_Delete_Object_A0, child(A0) ; Offset_0x042D3E, $0034
                 jmp     (Child_Display_Or_Delete)              ; Offset_0x04245C  
 ;-------------------------------------------------------------------------------  
 Offset_0x0445D6:
@@ -135,7 +135,7 @@ Offset_0x0445FC:
                 rts                                         
 ;-------------------------------------------------------------------------------
 Offset_0x0445FE:
-                move.w  #$001A, Obj_Timer(A0)                            ; $002E
+                move.w  #$001A, objoff_2E(A0)                            ; $002E
                 lea     Offset_0x04464A(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A
 ;-------------------------------------------------------------------------------

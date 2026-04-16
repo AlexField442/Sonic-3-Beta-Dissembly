@@ -5,9 +5,9 @@
 ; Offset_0x028D2E:
                 moveq   #$00, D0
                 move.b  subtype(A0), D0                              ; $002C
-                move.w  D0, Obj_Control_Var_04(A0)                       ; $0034
+                move.w  D0, objoff_34(A0)                       ; $0034
                 add.w   D0, D0
-                move.w  D0, Obj_Control_Var_02(A0)                       ; $0032
+                move.w  D0, objoff_32(A0)                       ; $0032
                 move.l  #Offset_0x028D44, (A0)
 Offset_0x028D44:                
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
@@ -18,8 +18,8 @@ Offset_0x028D44:
 Offset_0x028D56:
                 move.w  x_pos(A1), D0                                    ; $0010
                 sub.w   x_pos(A0), D0                                    ; $0010
-                add.w   Obj_Control_Var_04(A0), D0                       ; $0034
-                cmp.w   Obj_Control_Var_02(A0), D0                       ; $0032
+                add.w   objoff_34(A0), D0                       ; $0034
+                cmp.w   objoff_32(A0), D0                       ; $0032
                 bcc.s   Offset_0x028D82
                 move.w  y_pos(A1), D1                                    ; $0014
                 sub.w   y_pos(A0), D1                                    ; $0014
@@ -43,23 +43,23 @@ Offset_0x028DA8:
                 beq.s   Offset_0x028DB4
                 neg.w   y_vel(A1)                                  ; $001A
 Offset_0x028DB4:
-                move.w  #$000F, Obj_Control_Var_02(A1)                   ; $0032
+                move.w  #$000F, objoff_32(A1)                   ; $0032
                 move.w  x_vel(A1), inertia(A1)          ; $0018, $001C
                 btst    #$02, status(A1)                             ; $002A
                 bne.s   Offset_0x028DCE
                 move.b  #$00, anim(A1)                         ; $0020
 Offset_0x028DCE:
-                tst.b   Obj_Flip_Angle(A1)                               ; $0027
+                tst.b   flip_angle(A1)                               ; $0027
                 bne.s   Offset_0x028DF8
-                move.b  #$01, Obj_Flip_Angle(A1)                         ; $0027
+                move.b  #$01, flip_angle(A1)                         ; $0027
                 move.b  #$00, anim(A1)                         ; $0020
-                move.b  #$03, Obj_Control_Var_00(A1)                     ; $0030
-                move.b  #$08, Obj_Control_Var_01(A1)                     ; $0031
+                move.b  #$03, objoff_30(A1)                     ; $0030
+                move.b  #$08, objoff_31(A1)                     ; $0031
                 btst    #$00, status(A1)                             ; $002A
                 beq.s   Offset_0x028DF8
-                neg.b   Obj_Flip_Angle(A1)                               ; $0027
+                neg.b   flip_angle(A1)                               ; $0027
 Offset_0x028DF8:
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 bset    #$01, status(A1)                             ; $002A
                 bclr    #$05, status(A1)                             ; $002A
                 move.w  #S2_Spring_Sfx, D0                               ; $00CC

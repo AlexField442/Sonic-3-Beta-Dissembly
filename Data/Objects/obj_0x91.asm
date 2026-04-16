@@ -26,8 +26,8 @@ Offset_0x04A2C6:
                 rts
 Offset_0x04A2D4:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x04A3A0, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x04A2F2, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x04A3A0, child_data(A0)             ; $0030
+                move.l  #Offset_0x04A2F2, child(A0)                  ; $0034
                 rts    
 ;-------------------------------------------------------------------------------
 Offset_0x04A2EC:
@@ -40,7 +40,7 @@ Offset_0x04A2F2:
                 jmp     (SetupChildObject_Complex)         ; Offset_0x041DEA    
 ;-------------------------------------------------------------------------------
 Offset_0x04A306:
-                move.l  Obj_Control_Var_0E(A0), A1                       ; $003E
+                move.l  objoff_3E(A0), A1                       ; $003E
                 jsr     (SetupObjectAttributes3)                    ; Offset_0x041D7A
                 move.l  #Offset_0x043B32, (A0)
                 move.b  subtype(A0), D0                              ; $002C

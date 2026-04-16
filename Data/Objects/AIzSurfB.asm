@@ -21,12 +21,12 @@
                 bne.s   Offset_0x018640
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 move.b  #$00, mapping_frame(A1)                             ; $0022
-                move.b  #$03, Obj_Player_Control(A1)                     ; $002E
+                move.b  #$03, obj_control(A1)                     ; $002E
 Offset_0x018640:
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Intro_Surfboard_Main                   ; Offset_0x018654
                 move.l  #Intro_Surfboard_Splash, (A1)          ; Offset_0x018AC4
-                move.w  A0, Obj_P_Flips_Remaining(A1)                    ; $0030
+                move.w  A0, flips_remaining(A1)                    ; $0030
 ;-------------------------------------------------------------------------------                
 Intro_Surfboard_Main:                                          ; Offset_0x018654
                 tst.b   subtype(A0)                                  ; $002C
@@ -42,7 +42,7 @@ Intro_Surfboard_Main:                                          ; Offset_0x018654
                 move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
                 move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 addi.w  #$000C, y_pos(A1)                                ; $0014
-                move.w  A0, Obj_P_Flips_Remaining(A1)                    ; $0030
+                move.w  A0, flips_remaining(A1)                    ; $0030
 Offset_0x018698:
                 move.w  #$0800, x_vel(A0)                          ; $0018
                 move.w  #$FC00, y_vel(A0)                          ; $001A
@@ -108,11 +108,11 @@ Offset_0x01877E:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 cmpi.w  #$13C0, x_pos(A0)                                ; $0010
                 bcs.s   Offset_0x0187AA
-                move.b  #$00, Obj_Player_Control(A0)                     ; $002E
+                move.b  #$00, obj_control(A0)                     ; $002E
                 move.l  #Intro_Surfboard_Stop, (A3)            ; Offset_0x0187CC
                 move.b  #$01, (Control_Locked_Flag_P1).w             ; $FFFFF7CC
                 move.w  #$0400, (Control_Ports_Logical_Data).w       ; $FFFFF602
-                move.w  #$000E, Obj_Player_Control(A3)                   ; $002E
+                move.w  #$000E, obj_control(A3)                   ; $002E
 Offset_0x0187AA:
                 jsr     (Sonic_Animate1P)                      ; Offset_0x00C2E0
                 move.l  A3, -(A7)
@@ -123,7 +123,7 @@ Offset_0x0187AA:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2   
 ;-------------------------------------------------------------------------------
 Intro_Surfboard_Stop:                                          ; Offset_0x0187CC
-                subq.w  #$01, Obj_Player_Control(A0)                     ; $002E
+                subq.w  #$01, obj_control(A0)                     ; $002E
                 bpl.s   Offset_0x0187FA
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 move.w  #$0000, inertia(A1)                          ; $001C
@@ -174,13 +174,13 @@ Offset_0x018860:
                 addq.b  #$01, D0
                 move.b  D0, mapping_frame(A0)                               ; $0022
                 jsr     (Intro_Surfboard_Load_PLC)             ; Offset_0x0188A8
-                subq.w  #$01, Obj_Player_Control(A0)                     ; $002E
+                subq.w  #$01, obj_control(A0)                     ; $002E
                 bpl.s   Offset_0x018892
-                move.w  #$0005, Obj_Player_Control(A0)                   ; $002E
+                move.w  #$0005, obj_control(A0)                   ; $002E
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x018892
                 move.l  #Surfboard_Waves, (A1)                 ; Offset_0x018A3C
-                move.w  A0, Obj_P_Flips_Remaining(A1)                    ; $0030
+                move.w  A0, flips_remaining(A1)                    ; $0030
 Offset_0x018892:
                 rts     
 ;-------------------------------------------------------------------------------
@@ -337,7 +337,7 @@ Surfboard_Waves:                                               ; Offset_0x018A3C
                 move.b  #$00, mapping_frame(A0)                             ; $0022
                 move.b  #$00, anim_frame(A0)                          ; $0023
                 bset    #$00, status(A0)                             ; $002A
-                move.w  Obj_P_Flips_Remaining(A0), A1                    ; $0030
+                move.w  flips_remaining(A0), A1                    ; $0030
                 move.w  x_pos(A1), x_pos(A0)                      ; $0010, $0010
                 move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
                 addi.w  #$FFD8, x_pos(A0)                                ; $0010
@@ -365,16 +365,16 @@ Intro_Surfboard_Splash:                                        ; Offset_0x018AC4
                 bsr.s   Offset_0x018B0C
                 move.l  #Offset_0x018BA8, (A1)
                 move.w  #$0080, priority(A1)                         ; $0008
-                move.w  #$FFEC, Obj_P_Horiz_Ctrl_Lock(A1)                ; $0032
-                move.w  #$0010, Obj_P_Invunerblt_Time(A1)                ; $0034
-                move.w  Obj_P_Flips_Remaining(A0), Obj_P_Flips_Remaining(A1) ; $0030, $0030
+                move.w  #$FFEC, move_lock(A1)                ; $0032
+                move.w  #$0010, invulnerable_time(A1)                ; $0034
+                move.w  flips_remaining(A0), flips_remaining(A1) ; $0030, $0030
 Offset_0x018AF2:
                 bra.s   Offset_0x018B34
 Offset_0x018AF4:
                 move.l  #Offset_0x018B34, (A1)
                 move.w  #$0180, priority(A1)                         ; $0008
-                move.w  #$0008, Obj_P_Horiz_Ctrl_Lock(A1)                ; $0032
-                move.w  #$0018, Obj_P_Invunerblt_Time(A1)                ; $0034
+                move.w  #$0008, move_lock(A1)                ; $0032
+                move.w  #$0018, invulnerable_time(A1)                ; $0034
 Offset_0x018B0C:
                 move.l  #Intro_Surfboard_Splash_Mappings, mappings(A1) ; Offset_0x018D0A,  $000C
                 move.b  #$1C, width_pixels(A1)                              ; $0007
@@ -384,14 +384,14 @@ Offset_0x018B0C:
                 bset    #$00, status(A1)                             ; $002A
                 rts
 Offset_0x018B34:
-                move.w  Obj_P_Flips_Remaining(A0), A1                    ; $0030
+                move.w  flips_remaining(A0), A1                    ; $0030
                 lea     (Offset_0x018B9A), A2
                 bsr     Offset_0x018C1A
                 move.w  x_pos(A1), x_pos(A0)                      ; $0010, $0010
                 move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
-                move.w  Obj_P_Horiz_Ctrl_Lock(A0), D0                    ; $0032
+                move.w  move_lock(A0), D0                    ; $0032
                 add.w   D0, x_pos(A0)                                    ; $0010
-                move.w  Obj_P_Invunerblt_Time(A0), D0                    ; $0034
+                move.w  invulnerable_time(A0), D0                    ; $0034
                 add.w   D0, y_pos(A0)                                    ; $0014
                 cmpi.b  #$07, mapping_frame(A1)                             ; $0022
                 bcs.s   Offset_0x018B6C
@@ -399,14 +399,14 @@ Offset_0x018B34:
 Offset_0x018B6C:
                 cmpi.b  #$05, mapping_frame(A1)                             ; $0022
                 bcs.s   Offset_0x018B82
-                tst.w   Obj_P_Spd_Shoes_Time(A0)                         ; $0036
+                tst.w   speedshoes_time(A0)                         ; $0036
                 beq.s   Offset_0x018B80
-                subq.w  #$01, Obj_P_Spd_Shoes_Time(A0)                   ; $0036
+                subq.w  #$01, speedshoes_time(A0)                   ; $0036
                 bra.s   Offset_0x018B88
 Offset_0x018B80:
                 rts
 Offset_0x018B82:
-                move.w  #$0003, Obj_P_Spd_Shoes_Time(A0)                 ; $0036
+                move.w  #$0003, speedshoes_time(A0)                 ; $0036
 Offset_0x018B88:
                 lea     (Intro_Surfboard_Splash_Animate_Data), A1 ; Offset_0x018C50
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
@@ -417,14 +417,14 @@ Offset_0x018B9A:
                 dc.b    $F8, $13, $F8, $13, $F8, $13      
 ;-------------------------------------------------------------------------------
 Offset_0x018BA8:
-                move.w  Obj_P_Flips_Remaining(A0), A1                    ; $0030
+                move.w  flips_remaining(A0), A1                    ; $0030
                 lea     (Offset_0x018C0C), A2
                 bsr.s   Offset_0x018C1A
                 move.w  x_pos(A1), x_pos(A0)                      ; $0010, $0010
                 move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
-                move.w  Obj_P_Horiz_Ctrl_Lock(A0), D0                    ; $0032
+                move.w  move_lock(A0), D0                    ; $0032
                 add.w   D0, x_pos(A0)                                    ; $0010
-                move.w  Obj_P_Invunerblt_Time(A0), D0                    ; $0034
+                move.w  invulnerable_time(A0), D0                    ; $0034
                 add.w   D0, y_pos(A0)                                    ; $0014
                 cmpi.b  #$07, mapping_frame(A1)                             ; $0022
                 bcs.s   Offset_0x018BDE
@@ -432,14 +432,14 @@ Offset_0x018BA8:
 Offset_0x018BDE:
                 cmpi.b  #$05, mapping_frame(A1)                             ; $0022
                 bcc.s   Offset_0x018BF4
-                tst.w   Obj_P_Spd_Shoes_Time(A0)                         ; $0036
+                tst.w   speedshoes_time(A0)                         ; $0036
                 beq.s   Offset_0x018BF2
-                subq.w  #$01, Obj_P_Spd_Shoes_Time(A0)                   ; $0036
+                subq.w  #$01, speedshoes_time(A0)                   ; $0036
                 bra.s   Offset_0x018BFA
 Offset_0x018BF2:
                 rts
 Offset_0x018BF4:
-                move.w  #$0003, Obj_P_Spd_Shoes_Time(A0)                 ; $0036
+                move.w  #$0003, speedshoes_time(A0)                 ; $0036
 Offset_0x018BFA:
                 lea     (Intro_Surfboard_Splash_Animate_Data), A1 ; Offset_0x018C50
                 jsr     (AnimateSprite_2)                      ; Offset_0x0111FE
@@ -456,22 +456,22 @@ Offset_0x018C1A:
                 move.b  $00(A2, D0), D1
                 ext.w   D1
                 moveq   #$01, D2
-                cmp.w   Obj_Control_Var_02(A0), D1                       ; $0032
+                cmp.w   objoff_32(A0), D1                       ; $0032
                 beq.s   Offset_0x018C38
                 bgt.s   Offset_0x018C34
                 neg.w   D2
 Offset_0x018C34:
-                add.w   D2, Obj_Control_Var_02(A0)                       ; $0032
+                add.w   D2, objoff_32(A0)                       ; $0032
 Offset_0x018C38:
                 move.b  $01(A2, D0), D1
                 ext.w   D1
                 moveq   #$01, D2
-                cmp.w   Obj_Control_Var_04(A0), D1                       ; $0034
+                cmp.w   objoff_34(A0), D1                       ; $0034
                 beq.s   Offset_0x018C4E
                 bgt.s   Offset_0x018C4A
                 neg.w   D2
 Offset_0x018C4A:
-                add.w   D2, Obj_Control_Var_04(A0)                       ; $0034
+                add.w   D2, objoff_34(A0)                       ; $0034
 Offset_0x018C4E:
                 rts  
 ;-------------------------------------------------------------------------------

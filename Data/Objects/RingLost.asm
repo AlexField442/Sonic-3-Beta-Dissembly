@@ -19,7 +19,7 @@ Offset_0x010AEE:
                 move.l  A0, A1
                 moveq   #$00, D5
                 move.w  (Ring_count).w, D5                   ; $FFFFFE20
-                tst.b   Obj_Player_One_Or_Two(A0)                        ; $003F
+                tst.b   parent2+1(A0)                        ; $003F
                 beq.s   Offset_0x010B00
                 move.w  (Ring_Count_Address_P2).w, D5                ; $FFFFFED0
 Offset_0x010B00:
@@ -73,7 +73,7 @@ Offset_0x010B8E:
 Offset_0x010B9E:
                 move.w  #Ring_Lost_Sfx, D0                               ; $0034
                 jsr     (PlaySound)                           ; Offset_0x001176
-                tst.b   Obj_Player_One_Or_Two(A0)                        ; $003F
+                tst.b   parent2+1(A0)                        ; $003F
                 bne.s   Offset_0x010BC2
                 move.w  #$0000, (Ring_count).w               ; $FFFFFE20
                 move.b  #$80, (Update_HUD_rings).w             ; $FFFFFE1D

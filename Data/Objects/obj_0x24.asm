@@ -16,13 +16,13 @@ Obj_0x24_Automatic_Tunnel:                                     ; Offset_0x0201C6
                 move.l  #Offset_0x0201DE, (A0)
 Offset_0x0201DE:                
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                lea     Obj_Control_Var_00(A0), A4                       ; $0030
+                lea     objoff_30(A0), A4                       ; $0030
                 bsr.s   Offset_0x020204
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
-                lea     Obj_Control_Var_0A(A0), A4                       ; $003A
+                lea     objoff_3A(A0), A4                       ; $003A
                 bsr.s   Offset_0x020204
-                move.b  Obj_Control_Var_00(A0), D0                       ; $0030
-                add.b   Obj_Control_Var_0A(A0), D0                       ; $003A
+                move.b  objoff_30(A0), D0                       ; $0030
+                add.b   objoff_3A(A0), D0                       ; $003A
                 beq.s   Offset_0x0201FE
                 rts
 Offset_0x0201FE:
@@ -51,12 +51,12 @@ Offset_0x020216:
                 addi.w  #$0018, D1
                 cmpi.w  #$0028, D1
                 bcc.s   Offset_0x02029A
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x02029A
                 addq.b  #$02, (A4)
-                move.b  #$81, Obj_Timer(A1)                              ; $002E
+                move.b  #$81, objoff_2E(A1)                              ; $002E
                 move.b  #$02, anim(A1)                         ; $0020
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 move.w  #$0800, inertia(A1)                          ; $001C
                 move.w  #$0000, x_vel(A1)                          ; $0018
                 move.w  #$0000, y_vel(A1)                          ; $001A
@@ -132,7 +132,7 @@ Offset_0x020330:
 Offset_0x020356:
                 subq.b  #$01, $0002(A4)
                 bne.s   Offset_0x020362
-                clr.b   Obj_Timer(A1)                                    ; $002E
+                clr.b   objoff_2E(A1)                                    ; $002E
                 clr.b   (A4)
 Offset_0x020362:
                 addi.w  #$0038, y_vel(A1)                          ; $001A
@@ -244,7 +244,7 @@ Obj_Tunnel_Exhaust_Control: ; usado também pelo objeto 0x1B    ; Offset_0x02044E
                 move.l  #Obj_Tunnel_Exhaust_Continuous, (A0)   ; Offset_0x02060C
                 bra     Obj_Tunnel_Exhaust_Continuous          ; Offset_0x02060C
 Offset_0x020484:
-                move.w  #$003C, Obj_Control_Var_00(A0)                   ; $0030
+                move.w  #$003C, objoff_30(A0)                   ; $0030
                 tst.w   y_vel(A0)                                  ; $001A
                 beq.s   Offset_0x02049A
                 bmi.s   Offset_0x0204AC
@@ -264,9 +264,9 @@ Offset_0x0204AC:
 Offset_0x0204BC:
                 move.l  #Obj_Tunnel_Exhaust_Control_Main, (A0) ; Offset_0x0204C2
 Obj_Tunnel_Exhaust_Control_Main:                               ; Offset_0x0204C2                
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x020538
-                move.w  #$0003, Obj_Timer(A0)                            ; $002E
+                move.w  #$0003, objoff_2E(A0)                            ; $002E
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x020538
                 move.l  #Obj_Tunnel_Exhaust_Up, (A1)           ; Offset_0x02057E
@@ -291,7 +291,7 @@ Offset_0x02051A:
                 move.l  #Obj_Tunnel_Exhaust_Horizontal, (A1)   ; Offset_0x0205DC
                 bsr.s   Offset_0x020562
 Offset_0x020538:
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bpl.s   Offset_0x020544
                 move.w  #$7FF0, x_pos(A0)                                ; $0010
 Offset_0x020544:
@@ -303,7 +303,7 @@ Offset_0x02054A:
 ;-------------------------------------------------------------------------------
 Offset_0x020562:
                 moveq   #$00, D0
-                move.w  Obj_Control_Var_00(A0), D0                       ; $0030
+                move.w  objoff_30(A0), D0                       ; $0030
                 subi.w  #$003C, D0
                 neg.w   D0
                 lsl.w   #$04, D0
@@ -377,14 +377,14 @@ Obj_Tunnel_Exhaust_Continuous:                                 ; Offset_0x02060C
                 move.w  #$0400, y_vel(A1)                          ; $001A
                 move.b  #$84, render_flags(A1)                              ; $0004
                 move.b  #$01, mapping_frame(A1)                             ; $0022
-                move.w  #$000B, Obj_Timer(A1)                            ; $002E
+                move.w  #$000B, objoff_2E(A1)                            ; $002E
 Offset_0x020670:
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E   
 ;-------------------------------------------------------------------------------  
 Obj_Tunnel_Exhaust_Timed:                                      ; Offset_0x020676
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x020688
-                move.w  #$000B, Obj_Timer(A0)                            ; $002E
+                move.w  #$000B, objoff_2E(A0)                            ; $002E
                 move.w  #$7FF0, x_pos(A0)                                ; $0010
 Offset_0x020688:
                 move.b  (Level_Frame_Count+$01).w, D0                ; $FFFFFE05
@@ -411,7 +411,7 @@ Obj_Tunnel_Exhaust_Smoke:                                      ; Offset_0x0206B0
                 move.w  x_vel(A0), x_vel(A1)          ; $0018, $0018
                 move.w  y_vel(A0), y_vel(A1)          ; $001A, $001A
 Offset_0x0206E2:
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bpl.s   Offset_0x0206EE
                 move.w  #$7FF0, x_pos(A0)                                ; $0010
 Offset_0x0206EE:
@@ -424,14 +424,14 @@ Offset_0x0206EE:
                 move.b  #$10, height_pixels(A0)                             ; $0006
                 ori.b   #$04, render_flags(A0)                              ; $0004
                 move.w  #$0180, priority(A0)                         ; $0008
-                move.w  #$0078, Obj_Control_Var_00(A0)                   ; $0030
+                move.w  #$0078, objoff_30(A0)                   ; $0030
                 move.l  #Offset_0x020726, (A0)
 Offset_0x020726:                
-                tst.b   Obj_Control_Var_02(A0)                           ; $0032
+                tst.b   objoff_32(A0)                           ; $0032
                 bne.s   Offset_0x0207A0
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x0207A0
-                move.w  #$0003, Obj_Timer(A0)                            ; $002E
+                move.w  #$0003, objoff_2E(A0)                            ; $002E
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x0207A0
                 move.l  #Offset_0x0207B8, (A1)
@@ -449,14 +449,14 @@ Offset_0x020726:
                 move.b  subtype(A0), D0                              ; $002C
                 addq.w  #$01, D0
                 add.w   D0, D0
-                move.w  D0, Obj_Timer(A1)                                ; $002E
+                move.w  D0, objoff_2E(A1)                                ; $002E
                 addi.w  #$0010, x_pos(A1)                                ; $0010
                 move.b  #$C6, collision_flags(A1)                          ; $0028
 Offset_0x0207A0:
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bpl.s   Offset_0x0207B2
-                move.w  #$0078, Obj_Control_Var_00(A0)                   ; $0030
-                eori.b  #$FF, Obj_Control_Var_02(A0)                     ; $0032
+                move.w  #$0078, objoff_30(A0)                   ; $0030
+                eori.b  #$FF, objoff_32(A0)                     ; $0032
 Offset_0x0207B2:
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E    
 ;-------------------------------------------------------------------------------
@@ -467,7 +467,7 @@ Offset_0x0207B8:
                 bchg    #01, render_flags(A0)                               ; $0004
 Offset_0x0207C8:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bpl.s   Offset_0x0207DA
                 move.w  #$7FF0, x_pos(A0)                                ; $0010
 Offset_0x0207DA:
@@ -485,13 +485,13 @@ Offset_0x0207F0:
 Offset_0x0207FE:
                 jmp     (MarkObjGone_5)                        ; Offset_0x011BCC
 Offset_0x020804:
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x020840
                 move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 cmpi.w  #$F000, x_vel(A1)                          ; $0018
                 beq.s   Offset_0x020840
                 move.b  #$1A, anim(A1)                         ; $0020
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 move.w  #$0000, inertia(A1)                          ; $001C
                 move.w  #$F000, x_vel(A1)                          ; $0018
                 move.w  #$0000, y_vel(A1)                          ; $001A

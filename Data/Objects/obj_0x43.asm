@@ -34,12 +34,12 @@ Offset_0x027E20:
                 dc.b    $03, $02, $01, $00, $FE, $01   
 ;-------------------------------------------------------------------------------
 Offset_0x027E26:
-                move.b  Obj_Control_Var_00(A0), D0                       ; $0030
+                move.b  objoff_30(A0), D0                       ; $0030
                 bne.s   Offset_0x027E68
                 move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 beq.s   Offset_0x027E42
-                move.b  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                move.b  #$01, objoff_30(A0)                     ; $0030
                 move.w  #$0100, anim(A0)                       ; $0020
 Offset_0x027E42:
                 tst.w   y_vel(A0)                                  ; $001A
@@ -72,7 +72,7 @@ Offset_0x027EA0:
 Offset_0x027EA2:
                 neg.w   y_vel(A0)                                  ; $001A
                 subi.w  #$0080, y_vel(A0)                          ; $001A
-                move.b  #$00, Obj_Control_Var_00(A0)                     ; $0030
+                move.b  #$00, objoff_30(A0)                     ; $0030
                 moveq   #Rising_Platform_Sfx, D0                          ; -$7D
                 jmp     (Play_Music)                           ; Offset_0x001176   
 ;-------------------------------------------------------------------------------

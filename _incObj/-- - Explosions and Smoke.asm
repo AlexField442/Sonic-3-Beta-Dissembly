@@ -23,7 +23,7 @@ Explosion_Init:
 		move.l	#Obj_Flickies,(a1)
 		move.w	x_pos(a0),x_pos(a1)
 		move.w	y_pos(a0),y_pos(a1)
-		move.w	Obj_Control_Var_0E(a0),Obj_Control_Var_0E(a1)
+		move.w	objoff_3E(a0),objoff_3E(a1)
 ; Offset_0x013DB4:
 Explosion_Main:
 		addq.b	#2,routine(a0)

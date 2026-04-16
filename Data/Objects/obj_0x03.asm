@@ -10,9 +10,9 @@ Offset_0x014E94:
                 move.b  status(A0), D0                               ; $002A
                 andi.b  #$18, D0
                 bne.s   Offset_0x014EF2
-                tst.w   Obj_Control_Var_08(A0)                           ; $0038
+                tst.w   objoff_38(A0)                           ; $0038
                 beq.s   Offset_0x014EF2
-                subq.w  #$01, Obj_Control_Var_08(A0)                     ; $0038
+                subq.w  #$01, objoff_38(A0)                     ; $0038
                 bne.s   Offset_0x014EBA
                 move.w  #$1300, (Sonic_Level_Limits_Min_X).w         ; $FFFFEE14
                 move.w  #$4000, (Sonic_Level_Limits_Max_X).w         ; $FFFFEE16
@@ -39,14 +39,14 @@ Offset_0x014EF2:
                 jmp     (MarkObjGone_3)                        ; Offset_0x011B3E
 Offset_0x014EF8:
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
-                lea     Obj_Control_Var_00(A0), A2                       ; $0030
+                lea     objoff_30(A0), A2                       ; $0030
                 moveq   #$03, D6
                 bsr.s   Offset_0x014F10
                 rts                    
 ;-------------------------------------------------------------------------------
 ; Offset_0x014F06:
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
-                lea     Obj_Control_Var_04(A0), A2                       ; $0034
+                lea     objoff_34(A0), A2                       ; $0034
                 addq.b  #$01, D6
 Offset_0x014F10:
                 btst    D6, status(A0)                               ; $002A
@@ -67,19 +67,19 @@ Offset_0x014F10:
                 bgt.s   Offset_0x014F90
                 cmpi.w  #$0600, x_vel(A1)                          ; $0018
                 blt.s   Offset_0x014F90
-                tst.b   Obj_Player_Control(A1)                           ; $002E
+                tst.b   obj_control(A1)                           ; $002E
                 bne.s   Offset_0x014F90
                 bsr     Ride_Object_Set_Ride                   ; Offset_0x013C80
                 move.l  #$00000000, (A2)
-                bset    #$06, Obj_Player_Control(A1)                     ; $002E
-                bset    #$01, Obj_Player_Control(A1)                     ; $002E
+                bset    #$06, obj_control(A1)                     ; $002E
+                bset    #$01, obj_control(A1)                     ; $002E
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x014F7E
                 move.l  #Obj_AIz_Tree_Reveal_Control, (A1)     ; Offset_0x03064C
 Offset_0x014F7E:
                 move.w  #$2C60, (Sonic_Level_Limits_Min_X).w         ; $FFFFEE14
                 move.w  #$2C60, (Sonic_Level_Limits_Max_X).w         ; $FFFFEE16
-                move.w  #$003C, Obj_Control_Var_08(A0)                   ; $0038
+                move.w  #$003C, objoff_38(A0)                   ; $0038
 Offset_0x014F90:
                 rts
 Offset_0x014F92:
@@ -105,10 +105,10 @@ Offset_0x014FBC:
                 move.w  #$0001, anim(A1)                       ; $0020
                 bclr    #$03, status(A1)                             ; $002A
                 bclr    D6, status(A0)                               ; $002A
-                move.b  #$00, Obj_P_Flips_Remaining(A1)                  ; $0030
-                move.b  #$04, Obj_Player_Flip_Speed(A1)                  ; $0031
-                bclr    #$06, Obj_Player_Control(A1)                     ; $002E
-                bclr    #$01, Obj_Player_Control(A1)                     ; $002E
+                move.b  #$00, flips_remaining(A1)                  ; $0030
+                move.b  #$04, flip_speed(A1)                  ; $0031
+                bclr    #$06, obj_control(A1)                     ; $002E
+                bclr    #$01, obj_control(A1)                     ; $002E
                 rts
 Offset_0x014FFE:
                 cmpi.w  #$0400, (A2)

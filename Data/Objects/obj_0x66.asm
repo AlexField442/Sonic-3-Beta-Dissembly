@@ -82,7 +82,7 @@ Offset_0x02E02C:
                 rol.w   #$04, D1
                 andi.w  #$000F, D1
                 addi.w  #$001A, D1
-                move.b  D1, Obj_Control_Var_0C(A1)                       ; $003C
+                move.b  D1, objoff_3C(A1)                       ; $003C
                 subi.w  #$0010, y_vel(A0)                          ; $001A
                 moveq   #$00, D0
 Offset_0x02E060:
@@ -91,7 +91,7 @@ Offset_0x02E060:
 Offset_0x02E062:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E
                 addi.w  #$0008, y_vel(A0)                          ; $001A
-                subq.b  #$01, Obj_Control_Var_0C(A0)                     ; $003C
+                subq.b  #$01, objoff_3C(A0)                     ; $003C
                 bne.s   Offset_0x02E07A
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x02E07A:

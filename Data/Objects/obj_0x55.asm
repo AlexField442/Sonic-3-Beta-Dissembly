@@ -20,24 +20,24 @@
                 move.w  #$0006, (A2)+
                 btst    #$00, status(A0)                             ; $002A
                 bne.s   Offset_0x02A61E
-                move.w  #$00C0, Obj_Control_Var_00(A0)                   ; $0030
+                move.w  #$00C0, objoff_30(A0)                   ; $0030
 Offset_0x02A61E:
                 move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0
                 lea     (Level_Trigger_Array).w, A3                  ; $FFFFF7E0
                 tst.b   $00(A3, D0)
                 beq.s   Offset_0x02A642
-                move.b  #$01, Obj_Control_Var_04(A0)                     ; $0034
+                move.b  #$01, objoff_34(A0)                     ; $0034
                 move.b  #$00, mapping_frame(A0)                             ; $0022
                 move.b  #$00, collision_flags(A0)                          ; $0028
 Offset_0x02A642:
                 move.l  #Offset_0x02A648, (A0)
 Offset_0x02A648:                
-                tst.b   Obj_Control_Var_04(A0)                           ; $0034
+                tst.b   objoff_34(A0)                           ; $0034
                 bne     Offset_0x02A7CC
                 move.w  (Obj_Player_One+x_pos).w, D0                 ; $FFFFB010
                 sub.w   x_pos(A0), D0                                    ; $0010
-                add.w   Obj_Control_Var_00(A0), D0                       ; $0030
+                add.w   objoff_30(A0), D0                       ; $0030
                 cmpi.w  #$00C0, D0
                 bcc.s   Offset_0x02A680
                 move.w  (Obj_Player_One+y_pos).w, D0                 ; $FFFFB014
@@ -51,14 +51,14 @@ Offset_0x02A648:
 Offset_0x02A680:
                 tst.b   collision_flags(A0)                                ; $0028
                 bne     Offset_0x02A736
-                tst.w   Obj_Control_Var_02(A0)                           ; $0032
+                tst.w   objoff_32(A0)                           ; $0032
                 beq.s   Offset_0x02A6A0
-                subq.w  #$01, Obj_Control_Var_02(A0)                     ; $0032
+                subq.w  #$01, objoff_32(A0)                     ; $0032
                 bne     Offset_0x02A736
                 move.b  #$17, collision_flags(A0)                          ; $0028
                 bra     Offset_0x02A736
 Offset_0x02A6A0:
-                move.w  #$003C, Obj_Control_Var_02(A0)                   ; $0032
+                move.w  #$003C, objoff_32(A0)                   ; $0032
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02A72E
                 move.l  #Offset_0x02A7F0, (A1)
@@ -67,7 +67,7 @@ Offset_0x02A6A0:
                 move.l  #Obj_Explosion, (A1)                      ; Offset_0x013D7C
                 move.w  #$8000, art_tile(A1)                         ; $000A
                 move.b  #$02, routine(A1)                            ; $0005
-                move.b  #$01, Obj_Control_Var_04(A0)                     ; $0034
+                move.b  #$01, objoff_34(A0)                     ; $0034
                 move.b  #$00, mapping_frame(A0)                             ; $0022
                 move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$000F, D0

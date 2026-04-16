@@ -37,20 +37,20 @@ Offset_0x01BC6C:
                 bgt.s   Offset_0x01BCF2
                 cmpi.w  #$0400, x_vel(A1)                          ; $0018
                 blt.s   Offset_0x01BCF2
-                tst.b   Obj_Player_Control(A1)                           ; $002E
+                tst.b   obj_control(A1)                           ; $002E
                 bne.s   Offset_0x01BCF2
                 move.w  #$F900, y_vel(A1)                          ; $001A
                 addi.w  #$0400, x_vel(A1)                          ; $0018
                 bset    #$01, status(A1)                             ; $002A
                 move.b  #$02, routine(A1)                            ; $0005
                 move.w  #$0001, inertia(A1)                          ; $001C
-                move.b  #$01, Obj_Flip_Angle(A1)                         ; $0027
+                move.b  #$01, flip_angle(A1)                         ; $0027
                 move.b  #$00, anim(A1)                         ; $0020
-                move.b  #$00, Obj_P_Flips_Remaining(A1)                  ; $0030
-                move.b  #$04, Obj_Player_Flip_Speed(A1)                  ; $0031
+                move.b  #$00, flips_remaining(A1)                  ; $0030
+                move.b  #$04, flip_speed(A1)                  ; $0031
                 btst    #$00, status(A1)                             ; $002A
                 beq.s   Offset_0x01BCF2
-                neg.b   Obj_Flip_Angle(A1)                               ; $0027
+                neg.b   flip_angle(A1)                               ; $0027
                 neg.w   inertia(A1)                                  ; $001C
 Offset_0x01BCF2:
                 rts                                                                                                                                                                                    

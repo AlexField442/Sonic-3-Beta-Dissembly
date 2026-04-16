@@ -24,10 +24,10 @@ ClassicShield_Init:
 		move.w	#$79C,art_tile(a0)
 ; Offset_0x00F9A8:
 ClassicShield_Main:
-		move.w	Obj_Player_Last(a0),a2
-		btst	#1,Obj_Player_Status(a2)
+		move.w	parent(a0),a2
+		btst	#1,status_secondary(a2)
 		bne.s	Offset_0x00F9F2
-		btst	#0,Obj_Player_Status(a2)
+		btst	#0,status_secondary(a2)
 		beq.s	ClassicShield_Delete
 		move.w	x_pos(a2),x_pos(a0)
 		move.w	y_pos(a2),y_pos(a0)
@@ -98,24 +98,24 @@ Offset_0x00FA2A:
 		bset	#6,render_flags(a1)
 		move.b	#$10,width_pixels(a1)
 		move.w	#2,y_sub(a1)
-		move.w	Obj_Player_Last(a0),Obj_Player_Last(a1)
-		move.b	d2,Obj_Control_Var_06(a1)
+		move.w	parent(a0),parent(a1)
+		move.b	d2,objoff_36(a1)
 		addq.w	#1,d2
-		move.l	(a2)+,Obj_Control_Var_00(a1)
-		move.w	(a2)+,Obj_Control_Var_04(a1)
+		move.l	(a2)+,objoff_30(a1)
+		move.w	(a2)+,objoff_34(a1)
 		lea	object_size(a1),a1
 		dbf	d1,Offset_0x00FA2A
 
 		move.b	#2,routine(a0)
-		move.b	#4,Obj_Control_Var_04(a0)
+		move.b	#4,objoff_34(a0)
 ; Offset_0x00FA86:
 Invincibility_BigStars:
 		; These two lines were added since Sonic 2, which fixes an oversight where transforming
 		; Super while invincible would keep the invincibility stars.
 		tst.b	(Super_Sonic_flag).w
 		bne.w	DeleteObject
-		move.w	Obj_Player_Last(a0),a1
-		btst	#Invincibility_Type,Obj_Player_Status(a1)
+		move.w	parent(a0),a1
+		btst	#Invincibility_Type,status_secondary(a1)
 		beq.w	DeleteObject
 		move.w	x_pos(a1),d0
 		move.w	D0, x_pos(a0)
@@ -126,16 +126,16 @@ Invincibility_BigStars:
 		moveq	#0,d5
 
 Offset_0x00FAB6:
-		move.w	Obj_Control_Var_08(a0),d2
+		move.w	objoff_38(a0),d2
 		move.b	(a3,d2.w),d5
 		bpl.s	Offset_0x00FAC6
-		clr.w	Obj_Control_Var_08(a0)
+		clr.w	objoff_38(a0)
 		bra.s	Offset_0x00FAB6
 
 Offset_0x00FAC6:
-		addq.w	#1,Obj_Control_Var_08(a0)
+		addq.w	#1,objoff_38(a0)
 		lea	Invincibility_StarPositions(pc),a6
-		move.b	Obj_Control_Var_04(a0),d6
+		move.b	objoff_34(a0),d6
 		jsr	Offset_0x00FBAE(pc)
 		move.w	d2,(a2)+
 		move.w	d3,(a2)+
@@ -151,7 +151,7 @@ Offset_0x00FAC6:
 		neg.w	d0
 
 Offset_0x00FAF6:
-		add.b	d0,Obj_Control_Var_04(a0)
+		add.b	d0,objoff_34(a0)
 		bra.w	DisplaySprite
 ; ===========================================================================
 ; Offset_0x00FAFE:
@@ -159,14 +159,14 @@ Invincibility_TrailingStars:
 		; Same thing as above, but for the smaller, trailing stars behind the player.
 		tst.b	(Super_Sonic_flag).w
 		bne.w	DeleteObject
-		move.w	Obj_Player_Last(a0),a1
-		btst	 #Invincibility_Type, Obj_Player_Status(a1)
+		move.w	parent(a0),a1
+		btst	 #Invincibility_Type, status_secondary(a1)
 		beq.w	DeleteObject
 		cmpi.w	#Miles_Alone, (Player_Selected_Flag).w
 		beq.s	Offset_0x00FB2A
 		lea	(Position_Table_Index).w,a5
 		lea	(Position_Table_Data).w,a6
-		tst.b	Obj_Player_One_Or_Two_2(a0)
+		tst.b	parent+1(a0)
 		beq.s	Offset_0x00FB32
 
 Offset_0x00FB2A:
@@ -174,7 +174,7 @@ Offset_0x00FB2A:
 		lea	(Position_Table_Data_P2).w,a6
 
 Offset_0x00FB32:
-		move.b	Obj_Control_Var_06(a0),d1
+		move.b	objoff_36(a0),d1
 		lsl.b	#2,d1
 		move.w	d1,d2
 		add.w	d1,d1
@@ -187,22 +187,22 @@ Offset_0x00FB32:
 		move.w	d0,x_pos(a0)
 		move.w	d1,y_pos(a0)
 		lea	x_vel(a0),a2
-		move.l	Obj_Control_Var_00(a0),a3
+		move.l	objoff_30(a0),a3
 
 Offset_0x00FB5A:
-		move.w	Obj_Control_Var_08(a0),d2
+		move.w	objoff_38(a0),d2
 		move.b	(a3,d2.w),d5
 		bpl.s	Offset_0x00FB6A
-		clr.w	Obj_Control_Var_08(A0)
+		clr.w	objoff_38(A0)
 		bra.s	Offset_0x00FB5A
 
 Offset_0x00FB6A:
 		swap.w	d5
-		add.b	Obj_P_Invcbility_Time(a0),d2
+		add.b	invincibility_time(a0),d2
 		move.b	(a3,d2.w),d5
-		addq.w	#1,Obj_Control_Var_08(a0)
+		addq.w	#1,objoff_38(a0)
 		lea	Invincibility_StarPositions(pc),a6
-		move.b	Obj_Control_Var_04(a0),d6
+		move.b	objoff_34(a0),d6
 		jsr	Offset_0x00FBAE(pc)
 		move.w	d2,(a2)+
 		move.w	d3,(a2)+
@@ -219,7 +219,7 @@ Offset_0x00FB6A:
 		neg.w	d0
 
 Offset_0x00FBA6:
-		add.b	d0,Obj_Control_Var_04(a0)
+		add.b	d0,objoff_34(a0)
 		bra.w	DisplaySprite
 ; ===========================================================================
 

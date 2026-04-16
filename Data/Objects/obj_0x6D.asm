@@ -11,7 +11,7 @@
                 move.w  #$0300, priority(A0)                         ; $0008
                 move.b  #$A0, width_pixels(A0)                              ; $0007
                 move.b  #$80, height_pixels(A0)                             ; $0006
-                move.b  #$FF, Obj_Control_Var_01(A0)                     ; $0031
+                move.b  #$FF, objoff_31(A0)                     ; $0031
                 move.b  #$00, status(A0)                             ; $002A
                 bset    #$06, render_flags(A0)                              ; $0004
                 move.w  #$0002, y_sub(A0)                            ; $0016
@@ -31,7 +31,7 @@ Offset_0x02E298:
                 move.w  #$0300, priority(A0)                         ; $0008
                 move.b  #$28, width_pixels(A0)                              ; $0007
                 move.b  #$20, height_pixels(A0)                             ; $0006
-                move.b  #$FF, Obj_Control_Var_00(A0)                     ; $0030
+                move.b  #$FF, objoff_30(A0)                     ; $0030
                 move.l  #Offset_0x02E2CA, (A0)
 Offset_0x02E2CA:                
                 subq.b  #$01, anim_frame_duration(A0)                           ; $0024
@@ -44,9 +44,9 @@ Offset_0x02E2E0:
                 bpl.s   Offset_0x02E312
                 moveq   #$00, D1
                 move.b  mapping_frame(A0), D1                               ; $0022
-                cmp.b   Obj_Control_Var_00(A0), D1                       ; $0030
+                cmp.b   objoff_30(A0), D1                       ; $0030
                 beq.s   Offset_0x02E312
-                move.b  D1, Obj_Control_Var_00(A0)                       ; $0030
+                move.b  D1, objoff_30(A0)                       ; $0030
                 lsl.w   #$08, D1
                 move.w  D1, D0
                 add.w   D0, D0
@@ -66,16 +66,16 @@ Offset_0x02E318:
                 subq.b  #$01, anim_frame_duration(A0)                           ; $0024
                 bpl.s   Offset_0x02E34A
                 move.b  #$02, anim_frame_duration(A0)                           ; $0024
-                addq.b  #$01, Obj_Control_Var_00(A0)                     ; $0030
-                cmpi.b  #$05, Obj_Control_Var_00(A0)                     ; $0030
+                addq.b  #$01, objoff_30(A0)                     ; $0030
+                cmpi.b  #$05, objoff_30(A0)                     ; $0030
                 bcs.s   Offset_0x02E34A
-                move.b  #$00, Obj_Control_Var_00(A0)                     ; $0030
+                move.b  #$00, objoff_30(A0)                     ; $0030
 Offset_0x02E34A:
                 moveq   #$00, D1
-                move.b  Obj_Control_Var_00(A0), D1                       ; $0030
-                cmp.b   Obj_Control_Var_01(A0), D1                       ; $0031
+                move.b  objoff_30(A0), D1                       ; $0030
+                cmp.b   objoff_31(A0), D1                       ; $0031
                 beq.s   Offset_0x02E376
-                move.b  D1, Obj_Control_Var_01(A0)                       ; $0031
+                move.b  D1, objoff_31(A0)                       ; $0031
                 lsl.w   #$07, D1
                 move.w  D1, D0
                 add.w   D0, D0
@@ -188,7 +188,7 @@ Offset_0x02E49A:
                 move.b  #$05, routine(A2)                            ; $0005
                 move.w  #$F980, y_vel(A1)                          ; $001A
                 bset    #$01, status(A1)                             ; $002A
-                move.b  #$01, Obj_Control_Var_10(A1)                     ; $0040
+                move.b  #$01, objoff_40(A1)                     ; $0040
                 move.b  #$0E, y_radius(A1)                           ; $001E
                 move.b  #$07, x_radius(A1)                            ; $001F
                 move.b  #$02, anim(A1)                         ; $0020

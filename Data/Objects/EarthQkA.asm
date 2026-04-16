@@ -7,8 +7,8 @@
                 bne.s   Offset_0x0325DC
                 jmp     (DeleteObject)                         ; Offset_0x011138
 Offset_0x0325DC:
-                move.l  Obj_Control_Var_00(A0), A1                       ; $0030
-                move.w  Obj_Timer(A0), D0                                ; $002E
+                move.l  objoff_30(A0), A1                       ; $0030
+                move.w  objoff_2E(A0), D0                                ; $002E
                 add.w   (A1), D0
                 move.w  D0, y_pos(A0)                                    ; $0014
                 move.b  #$10, width_pixels(A0)                              ; $0007

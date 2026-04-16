@@ -47,7 +47,7 @@ Offset_0x012FAE:
 		move.b	#9,anim(a0)			; use '?' icon
 ; Offset_0x012FC6:
 Monitors_Main:
-		move.b	Obj_Control_Var_0C(a0),d0
+		move.b	objoff_3C(a0),d0
 		beq.s	SolidObject_Monitor
 		; only when secondary routine isn't 0
 		; make monitor fall
@@ -59,7 +59,7 @@ Monitors_Main:
 		bpl.w	SolidObject_Monitor			; if not, branch
 		add.w	d1,y_pos(a0)				; move monitor out of ground
 		clr.w	y_vel(a0)
-		clr.b	Obj_Control_Var_0C(a0)			; stop monitor from falling
+		clr.b	objoff_3C(a0)			; stop monitor from falling
 ; Offset_0x012FEE:
 SolidObject_Monitor:
 		move.w	#$19,d1
@@ -157,7 +157,7 @@ Monitors_SpawnIcon:
 		move.w	x_pos(a0),x_pos(a1)			; set icon's position
 		move.w	y_pos(a0),y_pos(a1)
 		move.b	anim(a0),anim(a1)
-		move.w	Obj_Player_Last(a0),Obj_Player_Last(a1)	; parent gets item
+		move.w	parent(a0),parent(a1)	; parent gets item
 ; Offset_0x0130F6:
 Monitors_SpawnSmoke:
 		bsr.w	AllocateObject
@@ -250,7 +250,7 @@ MonitorContents_Move:
 MonitorContents_Main:
 		addq.b	#2,routine(a0)
 		move.w	#$1D,anim_frame_duration(a0)
-		move.w	Obj_Player_Last(a0),a1
+		move.w	parent(a0),a1
 		lea	(Monitors_Broken).w,a2
 		cmpa.w	#Obj_Player_One,a1			; did Sonic break the monitor?
 		beq.s	MonitorContents_CheckType		; if yes, branch
@@ -343,8 +343,8 @@ MonitorContents_SonicOrTails:
 ; Offset_0x013292: Monitor_Shoes:
 MonitorContents_SpeedShoes:
 		addq.w	#1,(a2)
-		bset	#Speed_Type, Obj_Player_Status(a1)
-		move.b	#$96,Obj_P_Spd_Shoes_Time(a1)
+		bset	#Speed_Type, status_secondary(a1)
+		move.b	#$96,speedshoes_time(a1)
 		cmpa.w	#Obj_Player_One,a1
 		bne.s	.notSonic
 		cmpi.w	#2,(Player_Selected_Flag).w
@@ -366,55 +366,55 @@ MonitorContents_SpeedShoes:
 ; Offset_0x0132DC: Monitor_Fire_Shield:
 MonitorContents_FireShield:
 		addq.w	#1,(a2)
-		bset	#Classic_Type,Obj_Player_Status(a1)
-		bset	#Fire_Type,Obj_Player_Status(a1)
+		bset	#Classic_Type,status_secondary(a1)
+		bset	#Fire_Type,status_secondary(a1)
 		moveq	#Got_Fire_Shield_Sfx,d0
 		jsr	(PlaySound).l
-		tst.b	Obj_Player_One_Or_Two_2(a0)
+		tst.b	parent+1(a0)
 		bne.s	.notSonic
 		move.l	#Obj_FireShield,(Obj_P1_Shield).w
-		move.w	a1,(Obj_P1_Shield+Obj_Player_Last).w
+		move.w	a1,(Obj_P1_Shield+parent).w
 		rts
 ; Offset_0x013306:
 .notSonic:
 		move.l	#Obj_FireShield,(Obj_P2_Shield).w
-		move.w	a1,(Obj_P2_Shield+Obj_Player_Last).w
+		move.w	a1,(Obj_P2_Shield+parent).w
 		rts
 ; ===========================================================================
 ; Offset_0x013314: Monitor_Lightning_Shield:
 MonitorContents_LightningShield:
 		addq.w	#1,(a2)
-		bset	#Classic_Type,Obj_Player_Status(a1)
-		bset	#Lightning_Type,Obj_Player_Status(a1)
+		bset	#Classic_Type,status_secondary(a1)
+		bset	#Lightning_Type,status_secondary(a1)
 		moveq	#Got_Lightning_Shield_Sfx,d0
 		jsr	(PlaySound).l
-		tst.b	Obj_Player_One_Or_Two_2(a0)
+		tst.b	parent+1(a0)
 		bne.s	.notSonic
 		move.l	#Obj_LightningShield,(Obj_P1_Shield).w
-		move.w	a1,(Obj_P1_Shield+Obj_Player_Last).w
+		move.w	a1,(Obj_P1_Shield+parent).w
 		rts
 ; Offset_0x01333E:
 .notSonic:
 		move.l	#Obj_LightningShield,(Obj_P2_Shield).w
-		move.w	a1,(Obj_P2_Shield+Obj_Player_Last).w
+		move.w	a1,(Obj_P2_Shield+parent).w
 		rts
 ; ===========================================================================
 ; Offset_0x01334C: Monitor_Water_Shield:
 MonitorContents_BubbleShield:
 		addq.w	#1,(a2)
-		bset	#Classic_Type,Obj_Player_Status(a1)
-		bset	#Water_Type,Obj_Player_Status(a1)
+		bset	#Classic_Type,status_secondary(a1)
+		bset	#Water_Type,status_secondary(a1)
 		moveq	#Got_Water_Shield_Sfx,d0
 		jsr	(PlaySound).l
-		tst.b	Obj_Player_One_Or_Two_2(a0)
+		tst.b	parent+1(a0)
 		bne.s	.notSonic
 		move.l	#Obj_BubbleShield,(Obj_P1_Shield).w
-		move.w	a1,(Obj_P1_Shield+Obj_Player_Last).w
+		move.w	a1,(Obj_P1_Shield+parent).w
 		rts
 ; Offset_0x013376:
 .notSonic:
 		move.l	#Obj_BubbleShield,(Obj_P2_Shield).w
-		move.w	a1,(Obj_P2_Shield+Obj_Player_Last).w
+		move.w	a1,(Obj_P2_Shield+parent).w
 		rts
 ; ===========================================================================
 ; Offset_0x013384: Monitor_Invincibility:
@@ -422,8 +422,8 @@ MonitorContents_Invincibility:
 		addq.w	#1,(a2)
 		tst.b	(Super_Sonic_flag).w
 		bne.s	Offset_0x0133CE
-		bset	#Invincibility_Type,Obj_Player_Status(a1)
-		move.b	#$96,Obj_P_Invcbility_Time(a1)
+		bset	#Invincibility_Type,status_secondary(a1)
+		move.b	#$96,invincibility_time(a1)
 		tst.b	(Boss_Flag).w
 		bne.s	Offset_0x0133AE
 		cmpi.b	#$C,subtype(a1)
@@ -432,15 +432,15 @@ MonitorContents_Invincibility:
 		jsr	(PlaySound).l
 
 Offset_0x0133AE:
-		tst.b	Obj_Player_One_Or_Two_2(a0)
+		tst.b	parent+1(a0)
 		bne.s	.notSonic
 		move.l	#Obj_Invincibility,(Obj_P1_Invincibility).w
-		move.w	a1,(Obj_P1_Invincibility+Obj_Player_Last).w
+		move.w	a1,(Obj_P1_Invincibility+parent).w
 		rts
 ; Offset_0x0133C2:
 .notSonic:
 		move.l	#Obj_Invincibility,(Obj_P2_Invincibility).w
-		move.w	a1,(Obj_P2_Invincibility+Obj_Player_Last).w
+		move.w	a1,(Obj_P2_Invincibility+parent).w
 
 Offset_0x0133CE:
 		rts
@@ -452,14 +452,14 @@ MonitorContents_SuperSonic:
 		move.b	#1,(Super_Sonic_Palette_Status).w
 		move.b	#$F,(Super_Sonic_Palette_Timer).w
 		move.b	#1,(Super_Sonic_flag).w
-		move.b	#$81,(Obj_Player_One+Obj_Timer).w
+		move.b	#$81,(Obj_Player_One+objoff_2E).w
 		move.b	#$1F,(Obj_Player_One+anim).w
 		move.l	#Obj_Super_Sonic_Stars,(Obj_Super_Sonic_Stars_RAM).w
 		move.w	#$A00,(Sonic_Max_Speed).w
 		move.w	#$30,(Sonic_Acceleration).w
 		move.w	#$100,(Sonic_Deceleration).w
-		move.b	#0,(Obj_Player_One+Obj_P_Invcbility_Time).w
-		bset	#Invincibility_Type,Obj_Player_Status(a1)
+		move.b	#0,(Obj_Player_One+invincibility_time).w
+		bset	#Invincibility_Type,status_secondary(a1)
 		moveq	#Hyper_Form_Change_Sfx,d0
 		jsr	(PlaySound).l
 		moveq	#Invincibility_Snd,d0

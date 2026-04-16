@@ -9,7 +9,7 @@
                 move.w  #$0280, priority(A0)                         ; $0008
                 move.b  #$20, width_pixels(A0)                              ; $0007
                 move.b  #$08, height_pixels(A0)                             ; $0006
-                move.w  y_pos(A0), Obj_Control_Var_02(A0)         ; $0014, $0032
+                move.w  y_pos(A0), objoff_32(A0)         ; $0014, $0032
                 bset    #$07, status(A0)                             ; $002A
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02C054
@@ -19,7 +19,7 @@
                 subi.w  #$0010, x_pos(A1)                                ; $0010
                 addi.w  #$000C, y_pos(A1)                                ; $0014
                 move.b  #$A6, collision_flags(A1)                          ; $0028
-                move.w  A0, Obj_Control_Var_0E(A1)                       ; $003E
+                move.w  A0, objoff_3E(A1)                       ; $003E
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x02C054
                 move.l  #Offset_0x02C0EA, (A1)
@@ -28,7 +28,7 @@
                 addi.w  #$0010, x_pos(A1)                                ; $0010
                 addi.w  #$0014, y_pos(A1)                                ; $0014
                 move.b  #$A6, collision_flags(A1)                          ; $0028
-                move.w  A0, Obj_Control_Var_0E(A1)                       ; $003E
+                move.w  A0, objoff_3E(A1)                       ; $003E
 Offset_0x02C054:
                 move.l  #Offset_0x02C05A, (A0)
 Offset_0x02C05A:                
@@ -40,21 +40,21 @@ Offset_0x02C05A:
                 bne.s   Offset_0x02C072
                 move.w  #$0100, D1
 Offset_0x02C072:
-                add.w   D1, Obj_Control_Var_06(A0)                       ; $0036
-                cmpi.w  #$8000, Obj_Control_Var_06(A0)                   ; $0036
+                add.w   D1, objoff_36(A0)                       ; $0036
+                cmpi.w  #$8000, objoff_36(A0)                   ; $0036
                 bcs.s   Offset_0x02C084
-                move.w  #$8000, Obj_Control_Var_06(A0)                   ; $0036
+                move.w  #$8000, objoff_36(A0)                   ; $0036
 Offset_0x02C084:
                 bra.s   Offset_0x02C09A
 Offset_0x02C086:
-                tst.w   Obj_Control_Var_06(A0)                           ; $0036
+                tst.w   objoff_36(A0)                           ; $0036
                 beq.s   Offset_0x02C09A
-                subi.w  #$0100, Obj_Control_Var_06(A0)                   ; $0036
+                subi.w  #$0100, objoff_36(A0)                   ; $0036
                 bcc.s   Offset_0x02C09A
-                move.w  #$0000, Obj_Control_Var_06(A0)                   ; $0036
+                move.w  #$0000, objoff_36(A0)                   ; $0036
 Offset_0x02C09A:
-                move.w  Obj_Control_Var_02(A0), D0                       ; $0032
-                add.b   Obj_Control_Var_06(A0), D0                       ; $0036
+                move.w  objoff_32(A0), D0                       ; $0032
+                add.b   objoff_36(A0), D0                       ; $0036
                 move.w  D0, y_pos(A0)                                    ; $0014
                 moveq   #$00, D1
                 move.b  width_pixels(A0), D1                                ; $0007
@@ -70,13 +70,13 @@ Offset_0x02C09A:
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 ;-------------------------------------------------------------------------------
 Offset_0x02C0D4:
-                move.w  Obj_Control_Var_0E(A0), A1                       ; $003E
+                move.w  objoff_3E(A0), A1                       ; $003E
                 move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
                 addi.w  #$0008, y_pos(A0)                                ; $0014
                 jmp     (Add_SpriteToCollisionResponseList)       ; Offset_0x00A540 
 ;-------------------------------------------------------------------------------
 Offset_0x02C0EA:
-                move.w  Obj_Control_Var_0E(A0), A1                       ; $003E
+                move.w  objoff_3E(A0), A1                       ; $003E
                 move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
                 addi.w  #$0010, y_pos(A0)                                ; $0014
                 jmp     (Add_SpriteToCollisionResponseList)       ; Offset_0x00A540 

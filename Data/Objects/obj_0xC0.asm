@@ -33,8 +33,8 @@ Offset_0x047920:
                 cmpi.w  #$0040, D2
                 bcc.s   Offset_0x04793E
                 move.l  #Offset_0x047942, (A0)
-                move.w  #$000F, Obj_Timer(A0)                            ; $002E
-                move.l  #Offset_0x04795A, Obj_Child(A0)                  ; $0034
+                move.w  #$000F, objoff_2E(A0)                            ; $002E
+                move.l  #Offset_0x04795A, child(A0)                  ; $0034
 Offset_0x04793E:
                 jmp     Delete_Sprite_Clear_Respaw_Flag_Check_X(PC) ; Offset_0x042B3C  
 ;-------------------------------------------------------------------------------

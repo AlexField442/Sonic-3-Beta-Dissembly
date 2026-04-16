@@ -6,7 +6,7 @@
                 move.b  subtype(A0), D0                              ; $002C
                 beq.s   Offset_0x02828E
                 add.b   D0, D0
-                move.b  D0, Obj_Control_Var_04(A0)                       ; $0034
+                move.b  D0, objoff_34(A0)                       ; $0034
                 move.l  #Offset_0x02833C, (A0)
                 bra     Offset_0x02833C
 Offset_0x02828E:
@@ -35,7 +35,7 @@ Offset_0x0282BC:
                 bcc.s   Offset_0x02833A
                 cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x02833A
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x02833A
                 subi.w  #$0050, D0
                 bcc.s   Offset_0x02830A
@@ -57,17 +57,17 @@ Offset_0x02831A:
                 neg.b   D0
                 asr.w   #$04, D0
                 add.w   D0, x_pos(A1)                                    ; $0010
-                move.w  Obj_Control_Var_06(A0), D0                       ; $0036
+                move.w  objoff_36(A0), D0                       ; $0036
                 bne.s   Offset_0x028330
                 moveq   #Tunnel_Booster_Sfx, D0                           ; -$7E
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x028330:
-                addq.w  #$01, Obj_Control_Var_06(A0)                     ; $0036
-                andi.w  #$001F, Obj_Control_Var_06(A0)                   ; $0036
+                addq.w  #$01, objoff_36(A0)                     ; $0036
+                andi.w  #$001F, objoff_36(A0)                   ; $0036
 Offset_0x02833A:
                 rts
 Offset_0x02833C:
-                lea     Obj_Control_Var_00(A0), A2                       ; $0030
+                lea     objoff_30(A0), A2                       ; $0030
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 bsr     Offset_0x028358
                 addq.w  #$01, A2
@@ -89,14 +89,14 @@ Offset_0x028358:
                 bcc.s   Offset_0x0283D8
                 cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x0283D8
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x0283D8
                 subi.w  #$0050, D1
                 neg.w   D1
                 cmpi.w  #$0040, D1
                 bcs.s   Offset_0x0283B2
                 move.b  #$01, (A2)
-                move.b  Obj_Control_Var_04(A0), $0002(A2)                ; $0034
+                move.b  objoff_34(A0), $0002(A2)                ; $0034
                 move.w  D0, -(A7)
                 moveq   #Transporter_Sfx, D0                              ; -$7F
                 jsr     (Play_Music)                           ; Offset_0x001176
@@ -114,7 +114,7 @@ Offset_0x0283C4:
 Offset_0x0283C8:
                 bset    #$01, status(A1)                             ; $002A
                 move.b  #$0F, anim(A1)                         ; $0020
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
 Offset_0x0283D8:
                 rts
 Offset_0x0283DA:

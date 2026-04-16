@@ -70,7 +70,7 @@ Offset_0x0290BA:
                 bclr    #$00, status(A1)                             ; $002A
                 neg.w   x_vel(A1)                                  ; $0018
 Offset_0x0290DE:
-                move.w  #$000F, Obj_P_Horiz_Ctrl_Lock(A1)                ; $0032
+                move.w  #$000F, move_lock(A1)                ; $0032
                 move.w  x_vel(A1), inertia(A1)          ; $0018, $001C
                 btst    #$02, status(A1)                             ; $002A
                 bne.s   Offset_0x0290F8
@@ -83,29 +83,29 @@ Offset_0x029104:
                 btst    #$00, D0
                 beq.s   Offset_0x029144
                 move.w  #$0001, inertia(A1)                          ; $001C
-                move.b  #$01, Obj_Flip_Angle(A1)                         ; $0027
+                move.b  #$01, flip_angle(A1)                         ; $0027
                 move.b  #$00, anim(A1)                         ; $0020
-                move.b  #$01, Obj_P_Flips_Remaining(A1)                  ; $0030
-                move.b  #$08, Obj_Player_Flip_Speed(A1)                  ; $0031
+                move.b  #$01, flips_remaining(A1)                  ; $0030
+                move.b  #$08, flip_speed(A1)                  ; $0031
                 btst    #$01, D0
                 bne.s   Offset_0x029134
-                move.b  #$03, Obj_P_Flips_Remaining(A1)                  ; $0030
+                move.b  #$03, flips_remaining(A1)                  ; $0030
 Offset_0x029134:
                 btst    #$00, status(A1)                             ; $002A
                 beq.s   Offset_0x029144
-                neg.b   Obj_Flip_Angle(A1)                               ; $0027
+                neg.b   flip_angle(A1)                               ; $0027
                 neg.w   inertia(A1)                                  ; $001C
 Offset_0x029144:
                 andi.b  #$0C, D0
                 cmpi.b  #$04, D0
                 bne.s   Offset_0x02915A
-                move.b  #$0C, Obj_Player_Top_Solid(A1)                   ; $0046
-                move.b  #$0D, Obj_Player_LRB_Solid(A1)                   ; $0047
+                move.b  #$0C, top_solid_bit(A1)                   ; $0046
+                move.b  #$0D, lrb_solid_bit(A1)                   ; $0047
 Offset_0x02915A:
                 cmpi.b  #$08, D0
                 bne.s   Offset_0x02916C
-                move.b  #$0E, Obj_Player_Top_Solid(A1)                   ; $0046
-                move.b  #$0F, Obj_Player_LRB_Solid(A1)                   ; $0047
+                move.b  #$0E, top_solid_bit(A1)                   ; $0046
+                move.b  #$0F, lrb_solid_bit(A1)                   ; $0047
 Offset_0x02916C:
                 bclr    #$05, status(A0)                             ; $002A
                 bclr    #$06, status(A0)                             ; $002A

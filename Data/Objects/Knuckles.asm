@@ -8,7 +8,7 @@
                 move.b  #$18, width_pixels(A0)                              ; $0007
                 move.b  #$04, render_flags(A0)                              ; $0004
                 move.w  #$26A0, art_tile(A0)                         ; $000A
-                move.b  #$FF, Obj_Player_Control(A0)                     ; $002E
+                move.b  #$FF, obj_control(A0)                     ; $002E
                 move.l  #Offset_0x018EDE, (A0)
                 move.w  #$0001, anim(A0)                       ; $0020
                 move.b  #$00, mapping_frame(A0)                             ; $0022
@@ -60,9 +60,9 @@ Offset_0x018F64:
 Load_Knuckles_Dynamic_PLC:                                     ; Offset_0x018F76
                 moveq   #$00, D0
                 move.b  mapping_frame(A0), D0                               ; $0022
-                cmp.b   Obj_Player_Control(A0), D0                       ; $002E
+                cmp.b   obj_control(A0), D0                       ; $002E
                 beq.s   Offset_0x018FC8
-                move.b  D0, Obj_Player_Control(A0)                       ; $002E
+                move.b  D0, obj_control(A0)                       ; $002E
                 lea     (Knuckles_Dyn_Script), A2              ; Offset_0x019166
                 add.w   D0, D0
                 adda.w  $00(A2, D0), A2

@@ -15,26 +15,26 @@ Offset_0x010FD0:
 ;-------------------------------------------------------------------------------
 Offset_0x010FD6:
                 moveq   #$00, D1
-                move.w  Obj_Control_Var_0C(A0), D1                       ; $003C
+                move.w  objoff_3C(A0), D1                       ; $003C
                 swap.w  D1
-                move.l  Obj_Control_Var_04(A0), D0                       ; $0034
+                move.l  objoff_34(A0), D0                       ; $0034
                 sub.l   D1, D0
                 asr.l   #$04, D0
-                sub.l   D0, Obj_Control_Var_04(A0)                       ; $0034
-                move.w  Obj_Control_Var_04(A0), x_pos(A0)         ; $0034, $0010
+                sub.l   D0, objoff_34(A0)                       ; $0034
+                move.w  objoff_34(A0), x_pos(A0)         ; $0034, $0010
                 moveq   #$00, D1
-                move.w  Obj_Control_Var_0E(A0), D1                       ; $003E
+                move.w  objoff_3E(A0), D1                       ; $003E
                 swap.w  D1
-                move.l  Obj_Control_Var_08(A0), D0                       ; $0038
+                move.l  objoff_38(A0), D0                       ; $0038
                 sub.l   D1, D0
                 asr.l   #$04, D0
-                sub.l   D0, Obj_Control_Var_08(A0)                       ; $0038
-                move.w  Obj_Control_Var_08(A0), y_pos(A0)         ; $0038, $0014
+                sub.l   D0, objoff_38(A0)                       ; $0038
+                move.w  objoff_38(A0), y_pos(A0)         ; $0038, $0014
                 lea     Slot_Machine_Rings_Animate_Data(PC), A1 ; Offset_0x01103A
                 bsr     AnimateSprite                          ; Offset_0x01115E
-                subq.w  #$01, Obj_Control_Var_10(A0)                     ; $0040
+                subq.w  #$01, objoff_40(A0)                     ; $0040
                 bne     DisplaySprite                          ; Offset_0x011148
-                move.l  Obj_Timer(A0), A1                                ; $002E
+                move.l  objoff_2E(A0), A1                                ; $002E
                 subq.w  #$01, (A1)
                 bsr     CollectRing            ; Offset_0x010A20
                 addi.b  #$02, routine(A0)                            ; $0005

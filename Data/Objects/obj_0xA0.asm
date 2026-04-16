@@ -25,7 +25,7 @@ Offset_0x045CA2:
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A       
 ;-------------------------------------------------------------------------------
 Offset_0x045CB2:
-                btst    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                btst    #$00, objoff_38(A0)                     ; $0038
                 bne.s   Offset_0x045CDA
                 jsr     Find_Player(PC)                        ; Offset_0x042634
                 cmpi.w  #$0060, D2
@@ -42,14 +42,14 @@ Offset_0x045CD2:
 Offset_0x045CDA:
                 move.b  #$04, routine(A0)                            ; $0005
                 clr.b   collision_flags(A0)                                ; $0028
-                bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
-                move.l  #Offset_0x045D1C, Obj_Child(A0)                  ; $0034
+                bclr    #$00, objoff_38(A0)                     ; $0038
+                move.l  #Offset_0x045D1C, child(A0)                  ; $0034
                 clr.b   anim_frame(A0)                                ; $0023
                 clr.b   anim_frame_duration(A0)                                 ; $0024
                 rts
 Offset_0x045CFC:
                 move.b  #$06, routine(A0)                            ; $0005
-                move.l  #Offset_0x045D1C, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045D1C, child(A0)                  ; $0034
                 clr.b   anim_frame(A0)                                ; $0023
                 clr.b   anim_frame_duration(A0)                                 ; $0024
 Offset_0x045D12:                
@@ -92,7 +92,7 @@ Offset_0x045D78:
                 jmp     Child_Display_Touch_Or_Delete(PC)      ; Offset_0x042472   
 ;-------------------------------------------------------------------------------
 Offset_0x045D7C:
-                subq.w  #$01, Obj_Timer(A0)                              ; $002E
+                subq.w  #$01, objoff_2E(A0)                              ; $002E
                 bmi.s   Offset_0x045D84
                 rts
 Offset_0x045D84:
@@ -113,7 +113,7 @@ Offset_0x045DA6:
                 addq.w  #$06, y_pos(A1)                                  ; $0014
                 move.b  #$10, anim(A1)                         ; $0020
                 move.b  #$02, routine(A1)                            ; $0005
-                clr.b   Obj_Control_Var_10(A1)                           ; $0040
+                clr.b   objoff_40(A1)                           ; $0040
                 moveq   #Spring_Sfx, D0                                   ; -$2E
                 jmp     (Play_Music)                           ; Offset_0x001176
 ;-------------------------------------------------------------------------------  

@@ -7,19 +7,19 @@
                 move.b  #$10, width_pixels(A0)                              ; $0007
                 move.w  #$0080, priority(A0)                         ; $0008
                 move.b  #$80, height_pixels(A0)                             ; $0006
-                move.w  y_pos(A0), Obj_Control_Var_0C(A0)         ; $0014, $003C
+                move.w  y_pos(A0), objoff_3C(A0)         ; $0014, $003C
                 move.l  #Hook_Mappings, mappings(A0)     ; Offset_0x01FA5E, $000C
                 move.w  #$42EA, art_tile(A0)                         ; $000A
                 move.b  subtype(A0), D0                              ; $002C
                 andi.w  #$007F, D0
                 lsl.w   #$03, D0
-                move.w  D0, Obj_Timer(A0)                                ; $002E
-                move.w  #$0002, Obj_Control_Var_0A(A0)                   ; $003A
+                move.w  D0, objoff_2E(A0)                                ; $002E
+                move.w  #$0002, objoff_3A(A0)                   ; $003A
                 move.b  subtype(A0), D0                              ; $002C
                 bpl.s   Offset_0x01F8F2
-                move.w  Obj_Timer(A0), D0                                ; $002E
-                move.w  D0, Obj_Control_Var_08(A0)                       ; $0038
-                move.b  #$01, Obj_Control_Var_06(A0)                     ; $0036
+                move.w  objoff_2E(A0), D0                                ; $002E
+                move.w  D0, objoff_38(A0)                       ; $0038
+                move.b  #$01, objoff_36(A0)                     ; $0036
                 add.w   D0, y_pos(A0)                                    ; $0014
                 lsr.w   #$04, D0
                 addq.w  #$01, D0
@@ -27,27 +27,27 @@
 Offset_0x01F8F2:
                 move.l  #Offset_0x01F8F8, (A0)
 Offset_0x01F8F8:                
-                tst.b   Obj_Control_Var_06(A0)                           ; $0036
+                tst.b   objoff_36(A0)                           ; $0036
                 beq.s   Offset_0x01F906
-                tst.w   Obj_Control_Var_00(A0)                           ; $0030
+                tst.w   objoff_30(A0)                           ; $0030
                 bne.s   Offset_0x01F91C
                 bra.s   Offset_0x01F90C
 Offset_0x01F906:
-                tst.w   Obj_Control_Var_00(A0)                           ; $0030
+                tst.w   objoff_30(A0)                           ; $0030
                 beq.s   Offset_0x01F91C
 Offset_0x01F90C:
-                move.w  Obj_Control_Var_08(A0), D2                       ; $0038
-                cmp.w   Obj_Timer(A0), D2                                ; $002E
+                move.w  objoff_38(A0), D2                       ; $0038
+                cmp.w   objoff_2E(A0), D2                                ; $002E
                 beq.s   Offset_0x01F940
-                add.w   Obj_Control_Var_0A(A0), D2                       ; $003A
+                add.w   objoff_3A(A0), D2                       ; $003A
                 bra.s   Offset_0x01F926
 Offset_0x01F91C:
-                move.w  Obj_Control_Var_08(A0), D2                       ; $0038
+                move.w  objoff_38(A0), D2                       ; $0038
                 beq.s   Offset_0x01F940
-                sub.w   Obj_Control_Var_0A(A0), D2                       ; $003A
+                sub.w   objoff_3A(A0), D2                       ; $003A
 Offset_0x01F926:
-                move.w  D2, Obj_Control_Var_08(A0)                       ; $0038
-                move.w  Obj_Control_Var_0C(A0), D0                       ; $003C
+                move.w  D2, objoff_38(A0)                       ; $0038
+                move.w  objoff_3C(A0), D0                       ; $003C
                 add.w   D2, D0
                 move.w  D0, y_pos(A0)                                    ; $0014
                 move.w  D2, D0
@@ -57,7 +57,7 @@ Offset_0x01F926:
 Offset_0x01F93C:
                 move.b  D0, mapping_frame(A0)                               ; $0022
 Offset_0x01F940:
-                lea     Obj_Control_Var_00(A0), A2                       ; $0030
+                lea     objoff_30(A0), A2                       ; $0030
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 move.w  (Control_Ports_Buffer_Data).w, D0            ; $FFFFF604
                 bsr     Offset_0x01F964
@@ -75,7 +75,7 @@ Offset_0x01F964:
                 bcc.s   Offset_0x01F9C0
                 andi.b  #$70, D0
                 beq     Offset_0x01F9CE
-                clr.b   Obj_Timer(A1)                                    ; $002E
+                clr.b   objoff_2E(A1)                                    ; $002E
                 clr.b   (A2)
                 move.b  #$12, $0002(A2)
                 andi.w  #$0F00, D0
@@ -94,7 +94,7 @@ Offset_0x01F9B2:
                 bset    #$01, status(A1)                             ; $002A
                 rts
 Offset_0x01F9C0:
-                clr.b   Obj_Timer(A1)                                    ; $002E
+                clr.b   objoff_2E(A1)                                    ; $002E
                 clr.b   (A2)
                 move.b  #$3C, $0002(A2)
                 rts
@@ -118,7 +118,7 @@ Offset_0x01F9EA:
                 subi.w  #$0088, D1
                 cmpi.w  #$0018, D1
                 bcc     Offset_0x01FA5C
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bmi.s   Offset_0x01FA5C
                 cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01FA5C
@@ -131,7 +131,7 @@ Offset_0x01F9EA:
                 move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 addi.w  #$0094, y_pos(A1)                                ; $0014
                 move.b  #$14, anim(A1)                         ; $0020
-                move.b  #$01, Obj_Timer(A1)                              ; $002E
+                move.b  #$01, objoff_2E(A1)                              ; $002E
                 move.b  #$01, (A2)
                 moveq   #Switch_Blip_Sfx, D0                               ; $64
                 jsr     (PlaySound)                           ; Offset_0x001176

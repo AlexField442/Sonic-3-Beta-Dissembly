@@ -14,23 +14,23 @@
                 move.w  #$0180, priority(A1)                         ; $0008
                 move.b  #$20, width_pixels(A1)                              ; $0007
                 move.b  #$10, height_pixels(A1)                             ; $0006
-                move.w  A0, Obj_Control_Var_0E(A1)                       ; $003E
+                move.w  A0, objoff_3E(A1)                       ; $003E
                 move.l  #Offset_0x01C282, (A1)
-                move.w  A1, Obj_Control_Var_0E(A0)                       ; $003E
-                move.b  #$01, Obj_Control_Var_0D(A0)                     ; $003D
+                move.w  A1, objoff_3E(A0)                       ; $003E
+                move.b  #$01, objoff_3D(A0)                     ; $003D
 Offset_0x01C27E:
                 bra     Obj_0x11_LBz_Platform                  ; Offset_0x01BCFC
 ;-------------------------------------------------------------------------------
 Offset_0x01C282:
                 move.w  x_pos(A0), D4                                    ; $0010
-                move.w  Obj_Control_Var_0E(A0), A1                       ; $003E
+                move.w  objoff_3E(A0), A1                       ; $003E
                 move.w  x_pos(A1), x_pos(A0)                      ; $0010, $0010
                 move.w  y_pos(A1), y_pos(A0)                      ; $0014, $0014
                 sub.w   x_pos(A1), D4                                    ; $0010
                 bsr.s   Offset_0x01C2A2
                 jmp     (DisplaySprite)                        ; Offset_0x011148
 Offset_0x01C2A2:
-                lea     Obj_Control_Var_03(A0), A2                       ; $0033
+                lea     objoff_33(A0), A2                       ; $0033
                 lea     (Obj_Player_Two).w, A1                       ; $FFFFB04A
                 move.w  (Control_Ports_Buffer_Data+$02).w, D0        ; $FFFFF606
                 bsr.s   Offset_0x01C2BA
@@ -46,7 +46,7 @@ Offset_0x01C2BA:
                 bcc.s   Offset_0x01C316
                 andi.b  #$70, D0
                 beq     Offset_0x01C324
-                clr.b   Obj_Timer(A1)                                    ; $002E
+                clr.b   objoff_2E(A1)                                    ; $002E
                 clr.b   (A2)
                 move.b  #$12, $0002(A2)
                 andi.w  #$0F00, D0
@@ -65,7 +65,7 @@ Offset_0x01C308:
                 bset    #$01, status(A1)                             ; $002A
                 rts
 Offset_0x01C316:
-                clr.b   Obj_Timer(A1)                                    ; $002E
+                clr.b   objoff_2E(A1)                                    ; $002E
                 clr.b   (A2)
                 move.b  #$3C, $0002(A2)
                 rts
@@ -90,7 +90,7 @@ Offset_0x01C344:
                 subi.w  #$0018, D1
                 cmpi.w  #$0018, D1
                 bcc     Offset_0x01C3A8
-                tst.b   Obj_Timer(A1)                                    ; $002E
+                tst.b   objoff_2E(A1)                                    ; $002E
                 bne.s   Offset_0x01C3A8
                 cmpi.b  #$04, routine(A1)                            ; $0005
                 bcc.s   Offset_0x01C3A8
@@ -102,7 +102,7 @@ Offset_0x01C344:
                 move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
                 addi.w  #$0024, y_pos(A1)                                ; $0014
                 move.b  #$14, anim(A1)                         ; $0020
-                move.b  #$01, Obj_Timer(A1)                              ; $002E
+                move.b  #$01, objoff_2E(A1)                              ; $002E
                 move.b  #$01, (A2)
 Offset_0x01C3A8:
                 rts     

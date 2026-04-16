@@ -36,7 +36,7 @@ Offset_0x045B72:
                 rts
 Offset_0x045B7A:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x045BAE, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045BAE, child(A0)                  ; $0034
                 rts 
 ;-------------------------------------------------------------------------------
 Offset_0x045B8A:
@@ -58,7 +58,7 @@ Offset_0x045BA8:
 Offset_0x045BAE:
                 move.b  #$06, routine(A0)                            ; $0005
                 move.w  #$FA00, y_vel(A0)                          ; $001A
-                move.l  #Offset_0x045BD4, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045BD4, child(A0)                  ; $0034
 Offset_0x045BC2:
                 rts 
 ;-------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ Offset_0x045BC4:
 Offset_0x045BD4:
                 move.b  #$08, routine(A0)                            ; $0005
                 clr.w   y_vel(A0)                                  ; $001A
-                move.l  #Offset_0x045C0E, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045C0E, child(A0)                  ; $0034
                 rts   
 ;-------------------------------------------------------------------------------
 Offset_0x045BE8:

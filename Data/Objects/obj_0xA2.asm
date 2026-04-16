@@ -28,7 +28,7 @@ Offset_0x046032:
                 rts
 Offset_0x04603E:
                 move.b  #$04, routine(A0)                            ; $0005
-                bset    #$03, Obj_Control_Var_08(A0)                     ; $0038
+                bset    #$03, objoff_38(A0)                     ; $0038
                 move.w  #$0200, D0
                 tst.w   D0
                 bne.s   Offset_0x046054
@@ -65,7 +65,7 @@ Offset_0x046092:
 ;-------------------------------------------------------------------------------
 Offset_0x04609A:
                 move.w  parent3(A0), A1                            ; $0046
-                btst    #$03, Obj_Control_Var_08(A1)                     ; $0038
+                btst    #$03, objoff_38(A1)                     ; $0038
                 bne.s   Offset_0x0460A8
                 rts
 Offset_0x0460A8:

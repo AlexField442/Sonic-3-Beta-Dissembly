@@ -15,16 +15,16 @@
                 andi.w  #$000F, D0
                 lsl.w   #$03, D0
                 add.w   y_pos(A0), D0                                    ; $0014
-                move.w  D0, Obj_Timer(A0)                                ; $002E
+                move.w  D0, objoff_2E(A0)                                ; $002E
                 lsr.b   #$01, D1
                 andi.w  #$0078, D1
                 addq.w  #$08, D1
-                move.w  D1, Obj_Control_Var_02(A0)                       ; $0032
+                move.w  D1, objoff_32(A0)                       ; $0032
                 move.l  #Offset_0x01FF76, (A0)
 Offset_0x01FF76:                
-                subq.w  #$01, Obj_Control_Var_00(A0)                     ; $0030
+                subq.w  #$01, objoff_30(A0)                     ; $0030
                 bpl.s   Offset_0x01FFBA
-                move.w  Obj_Control_Var_02(A0), Obj_Control_Var_00(A0) ; $0032, $0030
+                move.w  objoff_32(A0), objoff_30(A0) ; $0032, $0030
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne     Offset_0x01FFBA
                 bsr.s   Offset_0x01FFC0
@@ -43,7 +43,7 @@ Offset_0x01FFC0:
                 move.l  #Offset_0x02000C, (A1)
                 move.w  x_pos(A0), x_pos(A1)                      ; $0010, $0010
                 move.w  y_pos(A0), y_pos(A1)                      ; $0014, $0014
-                move.w  Obj_Timer(A0), Obj_Timer(A1)              ; $002E, $002E
+                move.w  objoff_2E(A0), objoff_2E(A1)              ; $002E, $002E
                 move.l  #Gate_Laser_Mappings, mappings(A1) ; Offset_0x020036, $000C
                 move.w  #$42EA, art_tile(A1)                         ; $000A
                 move.b  #$1C, width_pixels(A1)                              ; $0007
@@ -63,7 +63,7 @@ Offset_0x02000C:
 Offset_0x02001C:
                 move.w  y_pos(A0), D0                                    ; $0014
                 addq.w  #$04, y_pos(A0)                                  ; $0014
-                cmp.w   Obj_Timer(A0), D0                                ; $002E
+                cmp.w   objoff_2E(A0), D0                                ; $002E
                 bcs.s   Offset_0x020030
                 move.w  #$7FF0, x_pos(A0)                                ; $0010
 Offset_0x020030:

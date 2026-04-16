@@ -28,8 +28,8 @@ Offset_0x044700:
                 rts
 Offset_0x04470C:
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x044792, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x04473E, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x044792, child_data(A0)             ; $0030
+                move.l  #Offset_0x04473E, child(A0)                  ; $0034
 Offset_0x044722:
                 rts 
 ;-------------------------------------------------------------------------------

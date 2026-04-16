@@ -30,12 +30,12 @@ Offset_0x045084:
                 beq.s   Offset_0x04509E
                 neg.w   x_vel(A0)                                  ; $0018
 Offset_0x04509E:
-                move.l  #Offset_0x04514F, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x04514F, child_data(A0)             ; $0030
                 move.w  #$0100, D0
-                move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
+                move.w  D0, objoff_3E(A0)                       ; $003E
                 move.w  D0, y_vel(A0)                              ; $001A
-                move.w  #$0002, Obj_Control_Var_10(A0)                   ; $0040
-                bclr    #$00, Obj_Control_Var_08(A0)                     ; $0038
+                move.w  #$0002, objoff_40(A0)                   ; $0040
+                bclr    #$00, objoff_38(A0)                     ; $0038
                 rts  
 ;-------------------------------------------------------------------------------
 Offset_0x0450C0:
@@ -47,8 +47,8 @@ Offset_0x0450C0:
                 tst.w   D4
                 bmi.s   Offset_0x0450F4
                 move.b  #$04, routine(A0)                            ; $0005
-                move.l  #Offset_0x045140, Obj_Child_Data(A0)             ; $0030
-                move.l  #Offset_0x045116, Obj_Child(A0)                  ; $0034
+                move.l  #Offset_0x045140, child_data(A0)             ; $0030
+                move.l  #Offset_0x045116, child(A0)                  ; $0034
                 clr.b   anim_frame(A0)                                ; $0023
                 clr.b   anim_frame_duration(A0)                                 ; $0024
 Offset_0x0450F4:
@@ -66,7 +66,7 @@ Offset_0x045110:
 ;-------------------------------------------------------------------------------
 Offset_0x045116:
                 move.b  #$02, routine(A0)                            ; $0005
-                move.l  #Offset_0x04514F, Obj_Child_Data(A0)             ; $0030
+                move.l  #Offset_0x04514F, child_data(A0)             ; $0030
                 rts      
 ;-------------------------------------------------------------------------------   
 Bubbles_Setup_Data:                                            ; Offset_0x045126
