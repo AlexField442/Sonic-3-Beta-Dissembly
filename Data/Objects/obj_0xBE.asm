@@ -44,7 +44,7 @@ Offset_0x04782C:
                 move.l  #Offset_0x04785A, (A0)
                 clr.b   Obj_Col_Flags(A0)                                ; $0028
                 lea     Offset_0x0478C4(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 moveq   #Floor_Thump_Sfx, D0                               ; $68
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x047856:

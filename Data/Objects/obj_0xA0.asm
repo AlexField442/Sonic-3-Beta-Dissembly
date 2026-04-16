@@ -72,7 +72,7 @@ Offset_0x045D2A:
                 cmpi.b  #$08, Obj_Map_Id(A0)                             ; $0022
                 bne     Offset_0x045D12
                 lea     Offset_0x045E02(PC), A2
-                jmp     Load_Child_Object_Complex_Adjusted_A2(PC) ; Offset_0x041EE0  
+                jmp     SetupChildObject_ComplexAdjusted(PC) ; Offset_0x041EE0  
 ;-------------------------------------------------------------------------------   
 Offset_0x045D4A:
                 lea     Clamer_Setup_Data_2(PC), A1            ; Offset_0x045DE8

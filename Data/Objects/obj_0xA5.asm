@@ -150,7 +150,7 @@ Offset_0x0459D8:
                 cmpi.b  #$04, Obj_Map_Id(A0)                             ; $0022
                 bne.s   Offset_0x0459F4
                 lea     Offset_0x045AF8(PC), A2
-                jsr     Load_Child_Object_Complex_Adjusted_A2(PC) ; Offset_0x041EE0
+                jsr     SetupChildObject_ComplexAdjusted(PC) ; Offset_0x041EE0
 Offset_0x0459F4:
                 rts
 ;------------------------------------------------------------------------------- 

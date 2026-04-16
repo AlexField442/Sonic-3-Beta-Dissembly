@@ -55,7 +55,7 @@ Offset_0x03FF34:
 Offset_0x03FF3A:
                 move.b  #$04, routine(A0)                            ; $0005
                 lea     Offset_0x040670(PC), A2
-                jsr     Load_Child_Object_Link_List_Repeat_A2(PC) ; Offset_0x041EA0
+                jsr     SetupChildObject_LinkedList(PC) ; Offset_0x041EA0
                 lea     Offset_0x040640(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A        
 ;-------------------------------------------------------------------------------
@@ -578,9 +578,9 @@ Offset_0x04053A:
                 move.b  #$04, Obj_Subtype(A1)                            ; $002C
                 move.w  #$0000, (Target_Camera_Min_Y).w              ; $FFFFFA96
                 lea     Level_Resize_Min_Y(PC), A2             ; Offset_0x042628
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 lea     Level_Resize_Max_X(PC), A2             ; Offset_0x04261C
-                jmp     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jmp     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
 Offset_0x04058A:
                 move.w  Obj_Child_Ref(A0), A1                            ; $0046
                 btst    #$07, Obj_Status(A1)                             ; $002A

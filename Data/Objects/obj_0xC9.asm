@@ -63,7 +63,7 @@ Offset_0x035516:
                 move.w  D0, (Target_Camera_Max_Y).w                  ; $FFFFFA98
                 move.w  D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
                 lea     (Level_Resize_Max_Y), A2               ; Offset_0x04262E
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A   
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A   
 ;-------------------------------------------------------------------------------
 Offset_0x035532:
                 st      (Level_Trigger_Array+$08).w                  ; $FFFFF7E8  

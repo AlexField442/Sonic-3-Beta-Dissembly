@@ -149,12 +149,12 @@ Offset_0x022584:
                 move.w  Obj_Control_Var_0C(A0), D0                       ; $003C
                 beq.s   Offset_0x022592
                 move.w  D0, A1
-                jsr     (Delete_A1_Object)                     ; Offset_0x01113A
+                jsr     (DeleteObject2)                     ; Offset_0x01113A
 Offset_0x022592:
                 move.w  Obj_Control_Var_0E(A0), D0                       ; $003E
                 beq.s   Offset_0x0225A0
                 move.w  D0, A1
-                jsr     (Delete_A1_Object)                     ; Offset_0x01113A
+                jsr     (DeleteObject2)                     ; Offset_0x01113A
 Offset_0x0225A0:
                 move.w  Obj_Respaw_Ref(A0), D0                           ; $0048
                 beq.s   Offset_0x0225AC

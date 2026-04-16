@@ -472,7 +472,7 @@ Offset_0x03843C:
                 move.l  #Offset_0x038A8A, Obj_Child_Data(A0)             ; $0030
                 move.l  #Offset_0x038474, Obj_Child(A0)                  ; $0034
                 lea     Offset_0x038A42(PC), A2
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A 
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A 
 ;-------------------------------------------------------------------------------  
 Offset_0x03846A:
                 lea     Offset_0x038A8A(PC), A1

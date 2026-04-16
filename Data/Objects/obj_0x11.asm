@@ -78,7 +78,7 @@ Offset_0x01BDF6:
                 tst.b   Obj_Control_Var_0D(A0)                           ; $003D
                 beq.s   Offset_0x01BE06
                 move.w  Obj_Control_Var_0E(A0), A1                       ; $003E
-                jsr     (Delete_A1_Object)                     ; Offset_0x01113A
+                jsr     (DeleteObject2)                     ; Offset_0x01113A
 Offset_0x01BE06:
                 move.w  Obj_Respaw_Ref(A0), D0                           ; $0048
                 beq.s   Offset_0x01BE12

@@ -146,7 +146,7 @@ Offset_0x03B1DC:
                 moveq   #Volume_Down, D0                                  ; -$20
                 jsr     (PlaySound)                           ; Offset_0x001176
                 lea     Offset_0x03B91A(PC), A2
-                jmp     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A    
+                jmp     SetupChildObject_Simple(PC)        ; Offset_0x041F5A    
 ;-------------------------------------------------------------------------------
 ; Offset_0x03B20A:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2  
@@ -548,7 +548,7 @@ Offset_0x03B704:
                 lea     Offset_0x03B912(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 move.w  #$1000, (Level_Limits_Max_Y).w               ; $FFFFEE12
-                jmp     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jmp     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
 Offset_0x03B73A:
                 lea     Offset_0x03B758(PC), A1
                 lea     Offset_0x03B762(PC, D0), A2

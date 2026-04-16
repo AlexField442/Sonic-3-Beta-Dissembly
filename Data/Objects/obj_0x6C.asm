@@ -136,11 +136,11 @@ Offset_0x02E6A8:
                 rts
 Offset_0x02E6BC:
                 move.l  Obj_Control_Var_00(A0), A1                       ; $0030
-                jsr     (Delete_A1_Object)                     ; Offset_0x01113A
+                jsr     (DeleteObject2)                     ; Offset_0x01113A
                 cmpi.b  #$08, Obj_Subtype(A0)                            ; $002C
                 bls.s   Offset_0x02E6D8
                 move.l  Obj_Control_Var_04(A0), A1                       ; $0034
-                jsr     (Delete_A1_Object)                     ; Offset_0x01113A
+                jsr     (DeleteObject2)                     ; Offset_0x01113A
 Offset_0x02E6D8:
                 move.w  Obj_Respaw_Ref(A0), D0                           ; $0048
                 beq.s   Offset_0x02E6E4

@@ -64,7 +64,7 @@ Offset_0x0469AC:
                 jmp     (MarkObjGone)                          ; Offset_0x011AF2
 Offset_0x0469B2:
                 lea     Offset_0x046AF4(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 jsr     Go_Delete_Object_A0(PC)                ; Offset_0x042D3E
                 moveq   #Smash_Sfx, D0                                     ; $62
                 jsr     (Play_Music)                           ; Offset_0x001176

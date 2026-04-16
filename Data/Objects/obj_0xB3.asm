@@ -62,7 +62,7 @@ Offset_0x03DD50:
                 move.w  #$00BF, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03DD92, Obj_Child(A0)                  ; $0034
                 lea     Offset_0x03E43C(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 lea     Offset_0x03E416(PC), A2
                 jmp     SetupChildObject(PC)               ; Offset_0x041D9A   
 ;-------------------------------------------------------------------------------

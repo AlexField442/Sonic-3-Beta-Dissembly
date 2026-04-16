@@ -103,7 +103,7 @@ Offset_0x03E5D4:
                 cmpi.w  #$0002, Obj_Angle(A0)                            ; $0026
                 bne     Offset_0x03E4F8
                 lea     Offset_0x03EB84(PC), A2
-                jmp     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A  
+                jmp     SetupChildObject_Simple(PC)        ; Offset_0x041F5A  
 ;-------------------------------------------------------------------------------
 Offset_0x03E5F2:
                 bclr    #$01, Obj_Control_Var_08(A0)                     ; $0038
@@ -141,7 +141,7 @@ Offset_0x03E652:
                 jsr     (Restore_LevelMusic)                     ; Offset_0x0432CA
                 move.w  #$44C0, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A  
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A  
 ;-------------------------------------------------------------------------------
 Offset_0x03E678:
                 tst.b   (Control_Ports_Buffer_Data+$03).w            ; $FFFFF607
@@ -155,7 +155,7 @@ Offset_0x03E68C:
                 move.w  (Target_Camera_Max_Y).w, (Level_Limits_Max_Y).w ; $FFFFFA98, $FFFFEE12
                 move.w  #$47C0, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jsr     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+                jsr     (SetupChildObject_Simple)          ; Offset_0x041F5A
                 jmp     (Go_Delete_Object_A0_2)                ; Offset_0x042D4C  
 ;-------------------------------------------------------------------------------
 Offset_0x03E6B2:
@@ -195,7 +195,7 @@ Offset_0x03E704:
                 move.w  #$0017, Obj_Timer(A0)                            ; $002E
                 move.w  #$0006, Obj_Angle(A0)                            ; $0026
                 lea     Offset_0x03EB90(PC), A2
-                jmp     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A 
+                jmp     SetupChildObject_Simple(PC)        ; Offset_0x041F5A 
 ;-------------------------------------------------------------------------------
 Offset_0x03E718:
                 moveq   #$00, D0
@@ -314,7 +314,7 @@ Offset_0x03E834:
                 beq.s   Offset_0x03E85E
                 move.w  D0, Obj_Angle(A0)                                ; $0026
                 lea     Offset_0x03EB8A(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
 Offset_0x03E85E:
                 rts
 Offset_0x03E860:

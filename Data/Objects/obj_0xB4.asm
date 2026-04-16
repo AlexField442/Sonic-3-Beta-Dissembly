@@ -147,7 +147,7 @@ Offset_0x03D6C2:
                 clr.b   (Boss_Flag).w                                ; $FFFFF7AA
                 move.w  #$3170, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A  
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A  
 ;-------------------------------------------------------------------------------  
 Offset_0x03D6DE:
                 tst.b   (Control_Ports_Buffer_Data+$03).w            ; $FFFFF607
@@ -160,7 +160,7 @@ Offset_0x03D6F2:
                 jsr     Restore_PlayerControl(PC)             ; Offset_0x0432EE
                 move.w  #$6000, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jsr     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+                jsr     (SetupChildObject_Simple)          ; Offset_0x041F5A
                 jmp     (Go_Delete_Object_A0_2)                ; Offset_0x042D4C 
 ;-------------------------------------------------------------------------------
 Offset_0x03D712:
@@ -339,7 +339,7 @@ Offset_0x03D8E8:
                 move.w  #$005F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03D8D6, Obj_Child(A0)                  ; $0034
                 lea     Offset_0x03DC16(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
 Offset_0x03D918:
                 jsr     Refresh_Child_Position(PC)             ; Offset_0x042016
                 jmp     (DisplaySprite)                        ; Offset_0x011148

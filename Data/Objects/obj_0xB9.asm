@@ -139,7 +139,7 @@ Offset_0x04679E:
                 tst.b   Obj_Subtype(A0)                                  ; $002C
                 beq     Offset_0x046738
                 lea     Offset_0x046AEE(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 jsr     (AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
                 bne.s   Offset_0x0467D8
                 move.l  #Obj07_Springs, (A1)                ; Offset_0x01921A

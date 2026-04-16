@@ -90,7 +90,7 @@ Offset_0x04621E:
                 lea     Offset_0x04633C(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 lea     Offset_0x046344(PC), A2
-                jmp     Load_Child_Object_Complex_Adjusted_A2(PC) ; Offset_0x041EE0 
+                jmp     SetupChildObject_ComplexAdjusted(PC) ; Offset_0x041EE0 
 ;------------------------------------------------------------------------------- 
 Offset_0x04623C:
                 bsr     Offset_0x0462EE
@@ -101,7 +101,7 @@ Offset_0x04623C:
                 cmpi.b  #$06, Obj_Ani_Frame(A0)                          ; $0023
                 bne.s   Offset_0x04625C
                 lea     Offset_0x04635C(PC), A2
-                jsr     Load_Child_Object_Complex_Adjusted_A2(PC) ; Offset_0x041EE0
+                jsr     SetupChildObject_ComplexAdjusted(PC) ; Offset_0x041EE0
 Offset_0x04625C:
                 rts   
 ;------------------------------------------------------------------------------- 

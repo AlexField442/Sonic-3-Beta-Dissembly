@@ -232,11 +232,11 @@ Offset_0x039BD0:
                 bne.s   Offset_0x039C60
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
                 move.w  #$6000, (Target_Camera_Max_X).w              ; $FFFFFA92
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A
 Offset_0x039C60:
                 lea     (Level_Resize_Min_X), A2               ; Offset_0x042622
                 move.w  #$0000, (Target_Camera_Min_X).w              ; $FFFFFA94
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A 
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A 
 ;-------------------------------------------------------------------------------
 Offset_0x039C72:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E

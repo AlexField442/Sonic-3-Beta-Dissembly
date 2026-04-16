@@ -211,7 +211,7 @@ Drill_Mobile_Defeated:                                         ; Offset_0x0374DA
                 clr.b   (Boss_Flag).w                                ; $FFFFF7AA
                 jsr     (Restore_LevelMusic)                     ; Offset_0x0432CA
                 lea     AIz_MGz_Boss_Load_Egg_Prison(PC), A2   ; Offset_0x037D18
-                jsr     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+                jsr     (SetupChildObject_Simple)          ; Offset_0x041F5A
                 bset    #$01, render_flags(A1)                              ; $0004
                 lea     (PLC_AIz_MGz_Boss_Defeated), A1        ; Offset_0x041BA6
                 jmp     (LoadPLC_Direct)                           ; Offset_0x001502    
@@ -228,7 +228,7 @@ Offset_0x037512:
                 st      (Control_Locked_Flag_P1).w                   ; $FFFFF7CC
                 move.w  #$4A38, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A   
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A   
 ;-------------------------------------------------------------------------------
 Offset_0x037538:
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
@@ -242,7 +242,7 @@ Offset_0x03754C:
                 clr.w   Obj_Speed_Y(A1)                                  ; $001A
                 clr.w   Obj_Inertia(A1)                                  ; $001C
                 lea     Offset_0x037D1E(PC), A2
-                jsr     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+                jsr     (SetupChildObject_Simple)          ; Offset_0x041F5A
                 move.b  #$04, Obj_Subtype(A1)                            ; $002C
                 lea     (PLC_Flame_Mobile_Explosion), A1       ; Offset_0x041BC2
                 jmp     (LoadPLC_Direct)                           ; Offset_0x001502   

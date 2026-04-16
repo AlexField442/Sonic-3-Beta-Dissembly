@@ -82,7 +82,7 @@ Offset_0x03C35C:
 Offset_0x03C36C:
                 jsr     (Obj_Load_End_Level_Art)               ; Offset_0x043302
                 lea     Offset_0x03CE2E(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 lea     Offset_0x03CE34(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 lea     Offset_0x0439B2(PC), A2
@@ -291,7 +291,7 @@ Offset_0x03C59E:
                 move.w  #$001F, Obj_Timer(A0)                            ; $002E
                 move.l  #Offset_0x03C5C6, Obj_Child(A0)                  ; $0034
                 lea     Offset_0x03CE20(PC), A2
-                jmp     (Load_Child_Object_Link_List_Repeat_A2) ; Offset_0x041EA0  
+                jmp     (SetupChildObject_LinkedList) ; Offset_0x041EA0  
 ;-------------------------------------------------------------------------------
 Offset_0x03C5BC:
                 jsr     (SpeedToPos)                           ; Offset_0x01111E

@@ -40,7 +40,7 @@ Offset_0x04187A:
                 andi.b  #$03, D0
                 bne.s   Offset_0x04188C
                 lea     Offset_0x041A9E(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
 Offset_0x04188C:
                 bsr     Offset_0x0419C0
                 addi.w  #$000C, Obj_Speed_Y(A0)                          ; $001A
@@ -168,7 +168,7 @@ Offset_0x041A02:
                 move.w  D0, Obj_Speed_X(A0)                              ; $0018
                 move.w  #$FE00, Obj_Speed_Y(A0)                          ; $001A
                 lea     Offset_0x041AA4(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 moveq   #$0A, D0
                 move.l  A1, A3
                 jmp     (Add_Points)                           ; Offset_0x007AEC

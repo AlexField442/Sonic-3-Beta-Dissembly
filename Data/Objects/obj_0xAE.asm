@@ -92,7 +92,7 @@ Offset_0x0490B4:
                 move.b  #$0A, routine(A0)                            ; $0005
                 move.w  #$3EA0, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A  
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A  
 ;-------------------------------------------------------------------------------
 Offset_0x0490CC:
                 move.w  (Camera_X).w, D0                             ; $FFFFEE78

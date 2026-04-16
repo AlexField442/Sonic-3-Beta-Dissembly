@@ -11,7 +11,7 @@
                 beq.s   Offset_0x0471BA
                 lea     Offset_0x04732E(PC), A2
 Offset_0x0471BA:
-                jmp     Load_Child_Object_Tree_List_Repeated_A2(PC) ; Offset_0x041FD6
+                jmp     SetupChildObject_TreeList(PC) ; Offset_0x041FD6
 ;-------------------------------------------------------------------------------
 Offset_0x0471BE:
                 lea     Offset_0x047320(PC), A1

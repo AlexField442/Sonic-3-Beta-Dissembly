@@ -22,7 +22,7 @@ Offset_0x049B42:
                 lea     Offset_0x049D9E(PC), A2
                 jsr     (SetupChildObject)                 ; Offset_0x041D9A
                 lea     Offset_0x049DA6(PC), A2
-                jsr     (Load_Child_Object_Link_List_Repeat_A2) ; Offset_0x041EA0
+                jsr     (SetupChildObject_LinkedList) ; Offset_0x041EA0
                 move.w  #$0200, D0
                 move.w  D0, Obj_Control_Var_0E(A0)                       ; $003E
                 move.w  D0, Obj_Speed_Y(A0)                              ; $001A

@@ -465,7 +465,7 @@ Offset_0x035176:
 		move.w  #$005F, Obj_Timer(A0)		            ; $002E
 		move.l  #Offset_0x035194, Obj_Child(A0)		  ; $0034
 		lea     Offset_0x035596(PC), A2
-		jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A  
+		jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A  
 ;-------------------------------------------------------------------------------
 Offset_0x035194:
 		move.b  #$0E, routine(A0)		            ; $0005
@@ -486,7 +486,7 @@ Offset_0x0351BE:
 		jsr     (Restore_PlayerControl2)            ; Offset_0x0432F2
 		move.w  #$3B20, (Target_Camera_Max_X).w              ; $FFFFFA92
 		lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-		jsr     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+		jsr     (SetupChildObject_Simple)          ; Offset_0x041F5A
 		move.w  #$0148, (Level_Limits_Max_Y).w               ; $FFFFEE12
 		jsr     (Remove_From_Tracking_Slot)            ; Offset_0x042BFA
 		lea     Knuckles_Palette_LBz(PC), A1           ; Offset_0x03564E

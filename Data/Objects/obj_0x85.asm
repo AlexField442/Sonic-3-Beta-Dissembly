@@ -30,9 +30,9 @@ Offset_0x03EC34:
                 lea     Offset_0x03F0CE(PC), A2
                 jsr     SetupChildObject(PC)               ; Offset_0x041D9A
                 lea     Offset_0x03F0D6(PC), A2
-                jsr     Load_Child_Object_Link_List_Repeat_A2(PC) ; Offset_0x041EA0
+                jsr     SetupChildObject_LinkedList(PC) ; Offset_0x041EA0
                 lea     Offset_0x03F0DC(PC), A2
-                jmp     Load_Child_Object_Link_List_Repeat_A2(PC) ; Offset_0x041EA0   
+                jmp     SetupChildObject_LinkedList(PC) ; Offset_0x041EA0   
 ;-------------------------------------------------------------------------------
 Offset_0x03EC76:
                 jmp     Run_Object_Wait_Timer_A0(PC)           ; Offset_0x0423D2  

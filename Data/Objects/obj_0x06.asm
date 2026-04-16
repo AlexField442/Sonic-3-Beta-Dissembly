@@ -215,7 +215,7 @@ Offset_0x017D72:
 Offset_0x017D7E:
                 move.l  A2, A1
                 move.w  Obj_Control_Var_0E(A1), A2                       ; $003E
-                jsr     (Delete_A1_Object)                     ; Offset_0x01113A
+                jsr     (DeleteObject2)                     ; Offset_0x01113A
                 dbra    D2, Offset_0x017D7E
 Offset_0x017D8E:
                 jmp     (DeleteObject)                         ; Offset_0x011138

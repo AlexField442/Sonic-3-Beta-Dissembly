@@ -26,7 +26,7 @@ Offset_0x047AFE:
                 jsr     (Hurt_Player)                          ; Offset_0x00A3FA
                 move.l  A2, A0
                 lea     Offset_0x047B48(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 jsr     Go_Delete_Object_A0(PC)                ; Offset_0x042D3E
                 moveq   #Ice_Spike_Sfx, D0                     ; -$6E
                 jsr     (Play_Music)                           ; Offset_0x001176

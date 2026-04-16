@@ -41,7 +41,7 @@ Offset_0x044724:
                 cmpi.b  #$01, Obj_Map_Id(A0)                             ; $0022
                 bne.s   Offset_0x044722
                 lea     Offset_0x04477A(PC), A2
-                jmp     Load_Child_Object_Complex_Adjusted_A2(PC) ; Offset_0x041EE0  
+                jmp     SetupChildObject_ComplexAdjusted(PC) ; Offset_0x041EE0  
 ;-------------------------------------------------------------------------------
 Offset_0x04473E:
                 move.b  #$02, routine(A0)                            ; $0005

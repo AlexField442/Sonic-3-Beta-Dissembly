@@ -409,7 +409,7 @@ Offset_0x047746:
                 move.w  Obj_X(A0), Obj_Status(A0)                 ; $0010, $002A
                 move.w  Obj_Y(A0), Obj_Subtype(A0)                ; $0014, $002C
                 lea     Offset_0x0477AA(PC), A2
-                jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+                jsr     SetupChildObject_Simple(PC)        ; Offset_0x041F5A
                 jmp     Go_Delete_Object_A0_2(PC)              ; Offset_0x042D4C  
 ;-------------------------------------------------------------------------------  
 Swinging_Platform_Setup_Data:                                  ; Offset_0x04776A

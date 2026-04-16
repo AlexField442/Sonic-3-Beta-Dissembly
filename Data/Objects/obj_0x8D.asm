@@ -206,7 +206,7 @@ Offset_0x03BC20:
                 jsr     (Restore_LevelMusic)                     ; Offset_0x0432CA
                 move.w  #$48F0, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A   
+                jmp     (SetupChildObject_Simple)          ; Offset_0x041F5A   
 ;-------------------------------------------------------------------------------
 Offset_0x03BC46:
                 tst.b   (Control_Ports_Buffer_Data+$03).w            ; $FFFFF607
@@ -219,10 +219,10 @@ Offset_0x03BC5A:
                 jsr     Restore_PlayerControl(PC)             ; Offset_0x0432EE
                 move.w  #$0000, (Target_Camera_Min_Y).w              ; $FFFFFA96
                 lea     (Level_Resize_Min_Y), A2               ; Offset_0x042628
-                jsr     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+                jsr     (SetupChildObject_Simple)          ; Offset_0x041F5A
                 move.w  #$4A70, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
-                jsr     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A
+                jsr     (SetupChildObject_Simple)          ; Offset_0x041F5A
                 jmp     (Go_Delete_Object_A0_2)                ; Offset_0x042D4C 
 ;-------------------------------------------------------------------------------
 Offset_0x03BC8C:

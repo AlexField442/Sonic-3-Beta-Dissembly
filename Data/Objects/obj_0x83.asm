@@ -30,10 +30,10 @@ Offset_0x043F38:
                 btst    #$00, render_flags(A0)                              ; $0004
                 bne     Offset_0x043F7A
                 lea     Offset_0x044446(PC), A2
-                jmp     Load_Child_Object_Link_List_Repeat_A2(PC) ; Offset_0x041EA0
+                jmp     SetupChildObject_LinkedList(PC) ; Offset_0x041EA0
 Offset_0x043F7A:
                 lea     Offset_0x04444C(PC), A2
-                jmp     Load_Child_Object_Link_List_Repeat_A2(PC) ; Offset_0x041EA0 
+                jmp     SetupChildObject_LinkedList(PC) ; Offset_0x041EA0 
 ;-------------------------------------------------------------------------------
 Offset_0x043F82:
                 jmp     (Animate_Raw_Wait)                     ; Offset_0x042F82  

@@ -3055,12 +3055,12 @@ PalCycle_AIZ1:
                 subq.w	#1,(Palette_Cycle_Count_1).w
 		bpl.s	Offset_0x001FEA
 		move.w	#7,(Palette_Cycle_Count_1).w
-		move.w	(Palette_Cycle_Count_0).w, D0
+		move.w	(Palette_Cycle_Count_0).w,d0
 		addq.w	#8,(Palette_Cycle_Count_0).w
 		andi.w	#$18,d0
 		lea	(Pal_AIz1_Cyc1),a0
-		move.l	(A0,d0.w),(Palette_Row_2_Offset+$16).w
-		move.l	4(A0,d0.w),(Palette_Row_2_Offset+$1A).w
+		move.l	(a0,d0.w),(Palette_Row_2_Offset+$16).w
+		move.l	4(a0,d0.w),(Palette_Row_2_Offset+$1A).w
 		; ocean cycle
 		move.w	(Palette_Cycle_Counters+2).w,d0
 		addq.w	#6,(Palette_Cycle_Counters+2).w
@@ -13738,556 +13738,8 @@ Offset_0x01249C:
 		rts
 ; End of function LoadLevelLayout
 
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Subroutine to run level events including camera resizing and object spawning
-; ---------------------------------------------------------------------------
+		include	"_inc/RunDynamicLevelEvents.asm"
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-; Offset_0x0124A4: Dyn_Screen_Boss_Loader:
-RunDynamicLevelEvents:
-		moveq	#0,d0
-		move.w	(Current_ZoneAndAct).w,d0
-		ror.b	#1,d0
-		lsr.w	#6,d0
-		; This clamps the level index to prevent levels from accessing random data, but does it
-		; way too hard, meaning stages beyond Balloon Park are able to execute early-stage events.
-		andi.w	#$3E,d0       
-		move.w	DynResize_Index(pc,d0.w),d0
-		jsr	DynResize_Index(pc,d0.w)
-		moveq	#2,d1
-		move.w	(Level_Limits_Max_Y).w,d0
-		sub.w	(Sonic_Level_Limits_Max_Y).w,d0
-		beq.s	Offset_0x0124E8
-		bcc.s	Offset_0x0124EA
-		neg.w	d1
-		move.w	(Camera_Y).w,d0
-		cmp.w	(Level_Limits_Max_Y).w,d0
-		bls.s	Offset_0x0124DE
-		move.w	d0,(Sonic_Level_Limits_Max_Y).w 
-		andi.w	#-2,(Sonic_Level_Limits_Max_Y).w
-
-Offset_0x0124DE:
-		add.w	d1,(Sonic_Level_Limits_Max_Y).w
-		move.b	#1,(Level_Limits_Y_Changing).w
-
-Offset_0x0124E8:
-		rts
-; ---------------------------------------------------------------------------
-
-Offset_0x0124EA:
-		move.w	(Camera_Y).w,d0
-		addi.w	#8,d0
-		cmp.w	(Sonic_Level_Limits_Max_Y).w,d0
-		bcs.s	Offset_0x012504
-		btst	#1,(Obj_Player_One+Obj_Status).w
-		beq.s	Offset_0x012504
-		add.w	d1,d1
-		add.w	d1,d1
-
-Offset_0x012504:
-		add.w	d1,(Sonic_Level_Limits_Max_Y).w
-		move.b	#1,(Level_Limits_Y_Changing).w
-		rts
-; End of function RunDynamicLevelEvents
-
-; ===========================================================================
-DynResize_Index:                                               ; Offset_0x012510
-		dc.w	DynResize_AIz_1-DynResize_Index        ; Offset_0x012570
-		dc.w	DynResize_AIz_2-DynResize_Index        ; Offset_0x012696
-		dc.w	DynResize_Hz_1-DynResize_Index         ; Offset_0x012810
-		dc.w	DynResize_Hz_2-DynResize_Index         ; Offset_0x012812
-		dc.w	DynResize_MGz_1-DynResize_Index        ; Offset_0x012838
-		dc.w	DynResize_MGz_2-DynResize_Index        ; Offset_0x012838
-		dc.w	DynResize_CNz_1-DynResize_Index        ; Offset_0x0128E6
-		dc.w	DynResize_CNz_2-DynResize_Index        ; Offset_0x0128E6
-		dc.w	DynResize_FBz_1-DynResize_Index        ; Offset_0x0128E6
-		dc.w	DynResize_FBz_2-DynResize_Index        ; Offset_0x0128E6
-		dc.w	DynResize_Iz_1-DynResize_Index         ; Offset_0x0128E8
-		dc.w	DynResize_Iz_2-DynResize_Index         ; Offset_0x01292A
-		dc.w	DynResize_LBz_1-DynResize_Index        ; Offset_0x01292A
-		dc.w	DynResize_LBz_2-DynResize_Index        ; Offset_0x01292C
-		dc.w	DynResize_MVz_1-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_MVz_2-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_Sz_1-DynResize_Index         ; Offset_0x012986
-		dc.w	DynResize_Sz_2-DynResize_Index         ; Offset_0x012986
-		dc.w	DynResize_LRz_1-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_LRz_2-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_SSz_1-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_SSz_2-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_DEz_1-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_DEz_2-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_TDz_1-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_TDz_2-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_End_Seq_1-DynResize_Index    ; Offset_0x012986
-		dc.w	DynResize_End_Seq_2-DynResize_Index    ; Offset_0x012986
-		dc.w	DynResize_ALz_1-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_ALz_2-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_BPz_1-DynResize_Index        ; Offset_0x012986
-		dc.w	DynResize_BPz_2-DynResize_Index        ; Offset_0x012986	; $3E
-		dc.w	DynResize_DPz_1-DynResize_Index        ; Offset_0x012986	; triggers AIZ1
-		dc.w	DynResize_DPz_2-DynResize_Index        ; Offset_0x012986	; triggers AIZ2
-		dc.w	DynResize_CGz_1-DynResize_Index        ; Offset_0x012986	; triggers HCZ1
-		dc.w	DynResize_CGz_2-DynResize_Index        ; Offset_0x012986	; triggers HCZ2
-		dc.w	DynResize_EMz_1-DynResize_Index        ; Offset_0x012986	; triggers MGZ1
-		dc.w	DynResize_EMz_2-DynResize_Index        ; Offset_0x012986	; triggers MGZ2
-		dc.w	DynResize_BS_GM_1-DynResize_Index      ; Offset_0x012986	; triggers CNZ1
-		dc.w	DynResize_BS_GM_2-DynResize_Index      ; Offset_0x012986	; triggers CNZ2
-		dc.w	DynResize_BS_GS_1-DynResize_Index      ; Offset_0x012986	; triggers FBZ1
-		dc.w	DynResize_BS_GS_2-DynResize_Index      ; Offset_0x012986	; triggers FBZ2
-		dc.w	DynResize_BS_SM_1-DynResize_Index      ; Offset_0x012986	; triggers ICZ1
-		dc.w	DynResize_BS_SM_2-DynResize_Index      ; Offset_0x012986	; triggers ICZ2
-		dc.w	DynResize_LRz_Boss-DynResize_Index     ; Offset_0x012986	; triggers LBZ1
-		dc.w	DynResize_HPz-DynResize_Index          ; Offset_0x012986	; triggers LBZ2
-		dc.w	DynResize_DEz_Boss-DynResize_Index     ; Offset_0x012986	; triggers MVZ1
-		dc.w	DynResize_HPz_Portal-DynResize_Index   ; Offset_0x012986 	; triggers MVZ2
-;===============================================================================    
-DynResize_AIz_1:                                               ; Offset_0x012570
-		moveq	#$00, D0
-		move.b	(Dynamic_Resize_Routine).w, D0               ; $FFFFEE33
-		move.w	Offset_0x01257E(pc,d0.w), D0
-		jmp	Offset_0x01257E(pc,d0.w)
-;-------------------------------------------------------------------------------
-Offset_0x01257E:
-		dc.w	Offset_0x012588-Offset_0x01257E
-		dc.w	Offset_0x0125DA-Offset_0x01257E
-		dc.w	Offset_0x012614-Offset_0x01257E
-		dc.w	Offset_0x01264E-Offset_0x01257E
-		dc.w	Offset_0x01267C-Offset_0x01257E               
-;-------------------------------------------------------------------------------
-Offset_0x012588:
-		move.b	#$00, (Palette_Cycle_Flag).w                 ; $FFFFF72E
-		cmpi.w	#$1000, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0125D8
-		move.b	#$01, (Palette_Cycle_Flag).w                 ; $FFFFF72E
-		cmpi.w	#$1300, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0125D8
-		jsr	(AllocateObject)                     ; Offset_0x011DD8
-		bne.s	Offset_0x0125BE
-		move.l	#Obj_Knuckles, (A1)                    ; Offset_0x018EA0
-		move.w	#$1450, x_pos(A1)                                ; $0010
-		move.w	#$0419, y_pos(A1)                                ; $0014
-Offset_0x0125BE:
-		moveq	#$05, D0
-		jsr	(PalLoad_Now)                             ; Offset_0x002FBA
-		move.w	#$1300, (Sonic_Level_Limits_Min_X).w         ; $FFFFEE14
-		moveq	#$0B, D0
-		jsr	(LoadPLC)                              ; Offset_0x0014D0
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x0125D8:
-		rts                                               
-;-------------------------------------------------------------------------------                
-Offset_0x0125DA:
-		cmpi.w	#$1400, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012612
-		lea	(Angel_Island_1_Blocks_3), A1          ; Offset_0x13C680
-		lea	(Blocks_Mem_Address+$0268).w, A2             ; $FFFF9268
-		jsr	(Queue_Kos)          ; Offset_0x0019AE
-		lea	(Angel_Island_1_Tiles_3), A1           ; Offset_0x141584
-		move.w	#$1760, D2
-		jsr	(Queue_Kos_Module)                 ; Offset_0x0018A8
-		moveq	#$2A, D0
-		jsr	(PalLoad_Now)                             ; Offset_0x002FBA
-		st	(Level_Events_Buffer_5).w                    ; $FFFFEEC6
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x012612:
-		rts   
-;-------------------------------------------------------------------------------                
-Offset_0x012614:
-		lea	(Offset_0x01267E), A1
-		bsr.w	Resize_Max_Y_From_X                    ; Offset_0x012988          
-		move.w	#$020E, (Palette_Row_2_Offset+$1E).w         ; $FFFFED5E
-		cmpi.w	#$2B00, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012632
-		move.w	#$0004, (Palette_Row_2_Offset+$1E).w         ; $FFFFED5E
-Offset_0x012632:
-		cmpi.w	#$2D80, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x01264C
-		move.w	#$0C02, (Palette_Row_2_Offset+$1E).w         ; $FFFFED5E
-		moveq	#$5A, D0
-		jsr	(LoadPLC)                              ; Offset_0x0014D0
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x01264C:
-		rts 
-;-------------------------------------------------------------------------------
-Offset_0x01264E:
-		lea	(Offset_0x01267E), A1
-		bsr.w	Resize_Max_Y_From_X                    ; Offset_0x012988
-		cmpi.w	#$2E00, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x01267A
-		tst.b	(Kos_modules_left).w                    ; $FFFFFF60
-		bne.s	Offset_0x01267A
-		lea	(Angel_Island_1_Flames), A1            ; Offset_0x1476A6
-		move.w	#$A000, D2
-		jsr	(Queue_Kos_Module)                 ; Offset_0x0018A8
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x01267A:
-		rts  
-;-------------------------------------------------------------------------------
-Offset_0x01267C:
-		rts   
-;-------------------------------------------------------------------------------  
-Offset_0x01267E:
-		dc.w	$8390, $1650
-		dc.w	$83B0, $1B00
-		dc.w	$8430, $2000
-		dc.w	$84C0, $2B00
-		dc.w	$83B0, $2D80
-		dc.w	$82E0, $FFFF
-;===============================================================================
-DynResize_AIz_2:                                               ; Offset_0x012696     
-		moveq	#$00, D0
-		move.b	(Dynamic_Resize_Routine).w, D0               ; $FFFFEE33
-		move.w	Offset_0x0126A4(pc,d0.w), D0
-		jmp	Offset_0x0126A4(pc,d0.w)  
-;-------------------------------------------------------------------------------
-Offset_0x0126A4:
-		dc.w	Offset_0x0126B6-Offset_0x0126A4
-		dc.w	Offset_0x0126D0-Offset_0x0126A4
-		dc.w	Offset_0x012750-Offset_0x0126A4
-		dc.w	Offset_0x01276A-Offset_0x0126A4
-		dc.w	Offset_0x0127BA-Offset_0x0126A4
-		dc.w	Offset_0x0127D4-Offset_0x0126A4
-		dc.w	Offset_0x0127EE-Offset_0x0126A4
-		dc.w	Offset_0x012800-Offset_0x0126A4
-		dc.w	Offset_0x01280E-Offset_0x0126A4 
-;-------------------------------------------------------------------------------
-Offset_0x0126B6:
-		cmpi.w	#$0380, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0126CE
-		move.w	#$04F0, D0
-		move.w	D0, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
-		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x0126CE:
-		rts   
-;-------------------------------------------------------------------------------
-Offset_0x0126D0:
-		cmpi.w	#$0300, (Camera_Y).w                         ; $FFFFEE7C
-		bcc.s	Offset_0x012724
-		move.w	#$04F0, D0
-		cmpi.w	#$0ED0, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0126E8
-		move.w	#$02B8, D0
-Offset_0x0126E8:
-		move.w	D0, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
-		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		cmpi.w	#$0F50, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012722
-		move.w	#$0F50, (Sonic_Level_Limits_Min_X).w         ; $FFFFEE14
-		tst.w	(Debug_placement_mode).w                    ; $FFFFFE08
-		bne.s	Offset_0x01271E
-		jsr	(AllocateObject)                     ; Offset_0x011DD8
-		bne.s	Offset_0x01271E
-		move.l	#Obj_0xAC_AIz_Fire_Breath, (A1)        ; Offset_0x036AB4
-		move.w	#$11F0, x_pos(A1)                                ; $0010
-		move.w	#$0289, y_pos(A1)                                ; $0014
-Offset_0x01271E:
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x012722:
-		rts
-Offset_0x012724:
-		move.w	#$04F0, D0
-		cmpi.w	#$0ED0, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012734
-		move.w	#$0450, D0
-Offset_0x012734:
-		cmpi.w	#$11A0, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012746
-		move.w	#$0820, D0
-		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		rts
-Offset_0x012746:
-		move.w	D0, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
-		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		rts       
-;-------------------------------------------------------------------------------
-Offset_0x012750:
-		cmpi.w	#$1500, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012768
-		move.w	#$0630, (Sonic_Level_Limits_Max_Y).w         ; $FFFFEE1A
-		move.w	#$0630, (Level_Limits_Max_Y).w               ; $FFFFEE12
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x012768:
-		rts  
-;-------------------------------------------------------------------------------
-Offset_0x01276A:
-		cmpi.w	#$3C00, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0127B8
-		tst.b	(Kos_modules_left).w                    ; $FFFFFF60
-		bne.s	Offset_0x0127B8
-		lea	(Angel_Island_2_Blocks_3), A1          ; Offset_0x149448
-		lea	(Blocks_Mem_Address+$0AA0).w, A2             ; $FFFF9AA0
-		jsr	(Queue_Kos)          ; Offset_0x0019AE
-		lea	(Angel_Island_2_Tiles_3), A1           ; Offset_0x14CA3C
-		move.w	#$16A0, D2                       
-		jsr	(Queue_Kos_Module)                 ; Offset_0x0018A8
-		lea	(Angel_Island_2_Boss_Ship), A1         ; Offset_0x1397B0
-		move.w	#$A000, D2
-		jsr	(Queue_Kos_Module)                 ; Offset_0x0018A8
-		moveq	#$30, D0
-		jsr	(PalLoad_Now)                             ; Offset_0x002FBA
-		st	(Level_Events_Buffer_5).w                    ; $FFFFEEC6
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x0127B8:
-		rts  
-;-------------------------------------------------------------------------------
-Offset_0x0127BA:
-		cmpi.w	#$3F00, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0127D2
-		move.w	#$015A, D0
-		move.w	D0, (Sonic_Level_Limits_Min_Y).w             ; $FFFFEE18
-		move.w	D0, (Level_Limits_Min_Y).w                   ; $FFFFEE10
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x0127D2:
-		rts   
-;-------------------------------------------------------------------------------
-Offset_0x0127D4:
-		cmpi.w	#$4000, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0127EC
-		move.w	#$015A, D0
-		move.w	D0, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
-		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x0127EC:
-		rts  
-;-------------------------------------------------------------------------------
-Offset_0x0127EE:
-		cmpi.w	#$4160, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0127FE
-		st	(Foreground_Events_Y_Counter).w              ; $FFFFEEC4
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x0127FE:
-		rts     
-;-------------------------------------------------------------------------------
-Offset_0x012800:
-		cmpi.w	#$4780, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x01280C
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x01280C:
-		rts 
-;-------------------------------------------------------------------------------
-Offset_0x01280E:
-		rts
-;===============================================================================
-DynResize_Hz_1:                                                ; Offset_0x012810
-		rts                                                                
-;===============================================================================
-DynResize_Hz_2:                                                ; Offset_0x012812
-		moveq	#$00, D0
-		move.b	(Dynamic_Resize_Routine).w, D0               ; $FFFFEE33
-		move.w	Offset_0x012820(pc,d0.w), D0
-		jmp	Offset_0x012820(pc,d0.w)     
-;-------------------------------------------------------------------------------
-Offset_0x012820:
-		dc.w	Offset_0x012824-Offset_0x012820
-		dc.w	Offset_0x012836-Offset_0x012820   
-;-------------------------------------------------------------------------------  
-Offset_0x012824:
-		cmpi.w	#$0C00, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012834
-		st	(Level_Events_Buffer_5).w                    ; $FFFFEEC6
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x012834:
-		rts 
-;-------------------------------------------------------------------------------  
-Offset_0x012836:
-		rts
-;===============================================================================
-DynResize_MGz_1:                                               ; Offset_0x012838
-DynResize_MGz_2:                                               ; Offset_0x012838  
-		moveq	#$00, D0
-		move.b	(Dynamic_Resize_Routine).w, D0               ; $FFFFEE33
-		move.w	Offset_0x012846(pc,d0.w), D0
-		jmp	Offset_0x012846(pc,d0.w)  
-;-------------------------------------------------------------------------------
-Offset_0x012846:
-		dc.w	Offset_0x01284C-Offset_0x012846
-		dc.w	Offset_0x01288A-Offset_0x012846
-		dc.w	Offset_0x0128E4-Offset_0x012846  
-;-------------------------------------------------------------------------------
-Offset_0x01284C:
-		move.w	(Camera_Y).w, D0                             ; $FFFFEE7C
-		cmpi.w	#$0600, D0
-		bcs.s	Offset_0x012888
-		cmpi.w	#$0700, D0
-		bcc.s	Offset_0x012888
-		cmpi.w	#$3A00, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012888
-		move.w	#$06A0, D0
-		move.w	D0, (Sonic_Level_Limits_Min_Y).w             ; $FFFFEE18
-		move.w	D0, (Level_Limits_Min_Y).w                   ; $FFFFEE10
-		move.w	D0, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
-		move.w	D0, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		move.w	#$3C80, D0
-		move.w	D0, (Sonic_Level_Limits_Max_X).w             ; $FFFFEE16
-		move.w	D0, (Level_Limits_Max_X).w                   ; $FFFFEE0E
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x012888:
-		rts  
-;-------------------------------------------------------------------------------
-Offset_0x01288A:
-		cmpi.w	#$3A00, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x0128C4
-		move.w	#$3C80, D0
-		cmp.w	(Camera_X).w, D0                             ; $FFFFEE78
-		bhi.s	Offset_0x0128E2
-		move.w	D0, (Sonic_Level_Limits_Min_X).w             ; $FFFFEE14
-		move.w	D0, (Level_Limits_Min_X).w                   ; $FFFFEE0C
-		jsr	(AllocateObject)                     ; Offset_0x011DD8
-		bne.s	Offset_0x0128BE
-		move.l	#Obj_0xB0_MGz_Drill_Mobile, (A1)       ; Offset_0x039C7E
-		move.w	#$3D20, x_pos(A1)                                ; $0010
-		move.w	#$0668, y_pos(A1)                                ; $0014
-Offset_0x0128BE:
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-		rts
-Offset_0x0128C4:
-		move.l	#$00001000, D0
-		move.l	D0, (Sonic_Level_Limits_Min_Y).w             ; $FFFFEE18
-		move.l	D0, (Level_Limits_Min_Y).w                   ; $FFFFEE10
-		move.w	#$6000, D0
-		move.w	D0, (Sonic_Level_Limits_Max_X).w             ; $FFFFEE16
-		move.w	D0, (Level_Limits_Max_X).w                   ; $FFFFEE0E
-		subq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x0128E2:
-		rts     
-;-------------------------------------------------------------------------------
-Offset_0x0128E4:
-		rts
-;===============================================================================
-DynResize_CNz_1:                                               ; Offset_0x0128E6
-DynResize_CNz_2:                                               ; Offset_0x0128E6
-DynResize_FBz_1:                                               ; Offset_0x0128E6
-DynResize_FBz_2:                                               ; Offset_0x0128E6   
-		rts
-;===============================================================================
-DynResize_Iz_1:                                                ; Offset_0x0128E8
-		moveq	#$00, D0
-		move.b	(Dynamic_Resize_Routine).w, D0               ; $FFFFEE33
-		move.w	Offset_0x0128F6(pc,d0.w), D0
-		jmp	Offset_0x0128F6(pc,d0.w)    
-;-------------------------------------------------------------------------------
-Offset_0x0128F6:
-		dc.w	Offset_0x0128FC-Offset_0x0128F6
-		dc.w	Offset_0x012916-Offset_0x0128F6
-		dc.w	Offset_0x012928-Offset_0x0128F6     
-;-------------------------------------------------------------------------------
-Offset_0x0128FC:
-		cmpi.w	#$3700, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012914
-		cmpi.w	#$068C, (Camera_Y).w                         ; $FFFFEE7C
-		bcs.s	Offset_0x012914
-		st	(Level_Events_Buffer_5).w                    ; $FFFFEEC6
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x012914:
-		rts     
-;-------------------------------------------------------------------------------
-Offset_0x012916:
-		cmpi.w	#$3940, (Camera_X).w                         ; $FFFFEE78
-		bcs.s	Offset_0x012926
-		st	(Level_Events_Buffer_5).w                    ; $FFFFEEC6
-		addq.b	#$02, (Dynamic_Resize_Routine).w             ; $FFFFEE33
-Offset_0x012926:
-		rts  
-;-------------------------------------------------------------------------------
-Offset_0x012928:
-		rts
-;===============================================================================
-DynResize_Iz_2:                                                ; Offset_0x01292A
-DynResize_LBz_1:                                               ; Offset_0x01292A  
-		rts
-; ===========================================================================
-; Offset_0x01292C:
-DynResize_LBz_2:
-		moveq	#0,d0
-		move.b	(Dynamic_Resize_Routine).w,d0
-		move.w	DynResize_LBZ2_Index(pc,d0.w),d0
-		jmp	DynResize_LBZ2_Index(pc,d0.w)  
-; ===========================================================================
-; Offset_0x01293A:
-DynResize_LBZ2_Index:
-		dc.w Offset_0x01293E-DynResize_LBZ2_Index
-		dc.w Offset_0x012984-DynResize_LBZ2_Index
-; ===========================================================================
-
-Offset_0x01293E:
-		cmpi.w	#$3BC0,(Camera_X).w
-		bcs.s	Offset_0x012982
-		cmpi.w	#$500,(Camera_Y).w
-		; ??? missing branch here, meaning that the Y camera check is pointless
-		;bcs.s	Offset_0x012982
-		addq.b	#2,(Dynamic_Resize_Routine).w
-		lea	(Launch_Base_2_Blocks_3).l,a1
-		lea	(Blocks_Mem_Address).w,a2
-		jsr	(Queue_Kos).l
-		lea	(Launch_Base_2_Chunks_3).l,a1
-		lea	(M68K_RAM_Start).l,a2
-		jsr	(Queue_Kos).l
-		lea	(Launch_Base_2_Tiles_3).l,a1
-		move.w	#0,d2
-		jsr	(Queue_Kos_Module).l
-
-Offset_0x012982:
-		rts
-; ---------------------------------------------------------------------------
-
-Offset_0x012984:
-		rts
-
-;===============================================================================
-DynResize_MVz_1:                                               ; Offset_0x012986
-DynResize_MVz_2:                                               ; Offset_0x012986
-DynResize_Sz_1:                                                ; Offset_0x012986
-DynResize_Sz_2:                                                ; Offset_0x012986
-DynResize_LRz_1:                                               ; Offset_0x012986
-DynResize_LRz_2:                                               ; Offset_0x012986
-DynResize_SSz_1:                                               ; Offset_0x012986
-DynResize_SSz_2:                                               ; Offset_0x012986
-DynResize_DEz_1:                                               ; Offset_0x012986
-DynResize_DEz_2:                                               ; Offset_0x012986
-DynResize_TDz_1:                                               ; Offset_0x012986
-DynResize_TDz_2:                                               ; Offset_0x012986
-DynResize_End_Seq_1:                                           ; Offset_0x012986
-DynResize_End_Seq_2:                                           ; Offset_0x012986
-DynResize_ALz_1:                                               ; Offset_0x012986
-DynResize_ALz_2:                                               ; Offset_0x012986
-DynResize_BPz_1:                                               ; Offset_0x012986
-DynResize_BPz_2:                                               ; Offset_0x012986
-DynResize_DPz_1:                                               ; Offset_0x012986
-DynResize_DPz_2:                                               ; Offset_0x012986
-DynResize_CGz_1:                                               ; Offset_0x012986
-DynResize_CGz_2:                                               ; Offset_0x012986
-DynResize_EMz_1:                                               ; Offset_0x012986
-DynResize_EMz_2:                                               ; Offset_0x012986
-DynResize_BS_GM_1:                                             ; Offset_0x012986
-DynResize_BS_GM_2:                                             ; Offset_0x012986
-DynResize_BS_GS_1:                                             ; Offset_0x012986
-DynResize_BS_GS_2:                                             ; Offset_0x012986
-DynResize_BS_SM_1:                                             ; Offset_0x012986
-DynResize_BS_SM_2:                                             ; Offset_0x012986
-DynResize_LRz_Boss:                                            ; Offset_0x012986
-DynResize_HPz:                                                 ; Offset_0x012986
-DynResize_DEz_Boss:                                            ; Offset_0x012986
-DynResize_HPz_Portal:                                          ; Offset_0x012986  
-		rts
-;===============================================================================                 
-Resize_Max_Y_From_X:                                           ; Offset_0x012988
-		move.w	(Camera_X).w, D0                             ; $FFFFEE78
-Offset_0x01298C:
-		move.l	(A1)+, D1
-		cmp.w	D1, D0
-		bhi.s	Offset_0x01298C
-                swap.w  D1
-		tst.w	D1
-		bpl.s	Offset_0x0129A0
-		andi.w	#$7FFF, D1
-		move.w	D1, (Sonic_Level_Limits_Max_Y).w             ; $FFFFEE1A
-Offset_0x0129A0:
-		move.w	D1, (Level_Limits_Max_Y).w                   ; $FFFFEE12
-		move.w	D1, (Miles_Level_Limits_Max_Y).w             ; $FFFFEE22
-		rts
 ;------------------------------------------------------------------------------- 
 ; Rotinas para redimensionamento autom�tico das fases e gerenciamento dos chefes 
 ; <<<-  de fase
@@ -17355,7 +16807,7 @@ Offset_0x0181DC:
 Offset_0x0181E8:
 		move.l	A2, A1
 		move.w	Obj_Control_Var_0E(A1), A2				; $003E
-		jsr	(Delete_A1_Object)			; Offset_0x01113A
+		jsr	(DeleteObject2)			; Offset_0x01113A
 		dbra	D2, Offset_0x0181E8
 Offset_0x0181F8:
 		jmp	(DeleteObject)				; Offset_0x011138
@@ -20559,7 +20011,7 @@ Offset_0x022932:
 		move.w	Obj_Control_Var_0C(A0), D0				; $003C
 		beq.s	Offset_0x022940
 		move.w	D0, A1
-		jsr	(Delete_A1_Object)			; Offset_0x01113A
+		jsr	(DeleteObject2)			; Offset_0x01113A
 Offset_0x022940:
 		move.w	Obj_Respaw_Ref(A0), D0				 ; $0048
 		beq.s	Offset_0x02294C
@@ -22116,9 +21568,9 @@ Trap_Routines_List:
 		dc.l	SetupChildObject
 		dc.l	SetupChildObject_Complex
 		dc.l	SetupChildObject_Repeat
-		dc.l	Load_Child_Object_Link_List_Repeat_A2
-		dc.l	Load_Child_Object_Complex_Adjusted_A2
-		dc.l	Load_Child_Object_Simple_A2
+		dc.l	SetupChildObject_LinkedList
+		dc.l	SetupChildObject_ComplexAdjusted
+		dc.l	SetupChildObject_Simple
 		dc.l	Set_Indexed_Velocity
 		dc.l	Set_Indexed_Velocity_D0
 		dc.l	Pal_Load_Line_1
@@ -22150,7 +21602,7 @@ Trap_Routines_List:
 		dc.l	Display_Sprite_Wait
 		dc.l	Animate_Raw_Multi_Delay_Touch
 		dc.l	Go_Delete_Slotted_3
-		dc.l	LBz_Robotnik_Ship
+		dc.l	Obj_LBZRobotnikHead
 		dc.l	QueueDMATransfer
 		dc.l	AllocateObjectAfterCurrent
 		dc.l	ObjectFall
@@ -22186,7 +21638,7 @@ Trap_Routines_List:
 		dc.l	Move_0x08_Bytes_A2_A1
 		dc.l	Swing_Setup
 		dc.l	AllocateObject
-		dc.l	Load_Child_Object_A2_2
+		dc.l	SetupChildObject_FindFree
 		dc.l	Animate_Raw_Touch
 		dc.l	Move_0x06_Bytes_A2_A1
 		dc.l	Animate_Raw_Wait_2
@@ -22194,7 +21646,7 @@ Trap_Routines_List:
 		dc.l	Check_Player_In_Range
 		dc.l	Hurt_Player
 		dc.l	Animate_Raw_Delete_Sprite_Check_X_Y
-		dc.l	Load_Child_Object_Tree_List_Repeated_A2
+		dc.l	SetupChildObject_TreeList
 		dc.l	Animate_Raw_Display_Sprite
 		dc.l	ObjectFall_Delete_Sprite_Check_X_Y_2
 		dc.l	Animate_Raw_Delete_Sprite_Check_X_Y_2
@@ -22653,7 +22105,7 @@ AIZPlaneIntro_ReachedShores:
 Offset_0x035D18:
 		move.b	#$18,routine(a0)
 		lea	AIZPlaneIntro_ObjArray4(pc),a2
-		jmp	(Load_Child_Object_Simple_A2).l
+		jmp	(SetupChildObject_Simple).l
 ; ===========================================================================
 ; Offset_0x035D28:
 AIZPlaneIntro_InJungle:
@@ -22932,206 +22384,46 @@ Offset_0x036050:
 		dc.w    $FC08, $0085, $FFE8
 		dc.w    $FC08, $0885, $0000
 
+		include	"_incObj/-- - Robotnik Heads.asm"
+
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Object - Robotnik Head in Hydrocity, Marble Garden, Carnival Night, and IceCap
+; Object - Robotnik's Ship in Angel Island
 ; ---------------------------------------------------------------------------
-; Offset_0x03605E: Robotnik_Head:
-Obj_RobotnikHead:
-		jsr	(Refresh_Child_Position_Adjusted).l
+; Offset_0x0361F0: AIz_Robotnik_Ship:
+Obj_AIZRobotnikShip:
 		moveq	#0,d0
 		move.b	routine(a0),d0
-		move.w	RobotnikHead_Index(pc,d0.w),d1
-		jsr	RobotnikHead_Index(pc,d1.w)
-		jmp	(Child_Display_Or_Delete_2).l
-; ===========================================================================
-; Offset_0x036078:
-RobotnikHead_Index:
-		dc.w RobotnikHead_Init-RobotnikHead_Index
-		dc.w RobotnikHead_Main-RobotnikHead_Index
-		dc.w RobotnikHead_Delete-RobotnikHead_Index
-; ===========================================================================
-; Offset_0x03607E:
-RobotnikHead_Init:
-		lea	Robotnik_Head_Setup_Data(pc),a1
-		jsr	(SetupObjectAttributes).l
-		jsr	(Boss_Test_And_Set_Layer_Flag).l
-		move.w	Obj_Child_Ref(a0),a1
-		move.w	Obj_Child_Ref(a1),Obj_Height_3(a0)
-
-Offset_0x036098:
-		rts
-; ===========================================================================
-; Offset_0x03609A:
-RobotnikHead_Main:
-		lea	RobotnikHead_AnimateData(pc),a1
-		jsr	(Animate_Raw_A1).l
-		move.w	Obj_Height_3(a0),a1
-		btst	#7,Obj_Status(a1)	; has Robotnik been defeated?
-		bne.s	RobotnikHead_Defeated	; if yes, branch
-		btst	#6,Obj_Status(a1)	; has Robotnik been hit?
-		beq.s	Offset_0x0360BE		; if not, branch
-		move.b	#2,Obj_Map_Id(A0)	; use "hit" frame
-
-Offset_0x0360BE:
-		rts
-; ---------------------------------------------------------------------------
-; Offset_0x0360C0:
-RobotnikHead_Defeated:
-		move.b	#4,routine(a0)
-		move.b	#3,Obj_Map_Id(a0)	; use "defeated" frame
-		rts  
-; ===========================================================================
-; Offset_0x0360CE:
-RobotnikHead_Delete:
-		jmp	(Refresh_Child_Position_Adjusted).l
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object - Robotnik Head in Angel Island
-; ---------------------------------------------------------------------------
-; Offset_0x0360D4:
-Obj_AIZRobotnikHead:
-		jsr	(Refresh_Child_Position_Adjusted).l
-		jsr	(Boss_Test_And_Set_Layer_Flag).l
-		moveq	#0,d0
-		move.b	routine(a0),d0
-		move.w	AIZRobotnikHead_Index(pc,d0.w),d1
-		jsr	AIZRobotnikHead_Index(pc,d1.w)
+		move.w	AIZRobotnikShip_Index(pc,d0.w),d1
+		jsr	AIZRobotnikShip_Index(pc,d1.w)
 		btst	#6,Obj_Control_Var_08(a0)
 		bne.w	Offset_0x036098
-		jmp	(Child_Display_Or_Delete_2).l
+		jmp	(DisplaySprite).l
 ; ===========================================================================
-; Offset_0x0360FE:
-AIZRobotnikHead_Index:
-		dc.w RobotnikHead_Init-AIZRobotnikHead_Index
-		dc.w RobotnikHead_Main-AIZRobotnikHead_Index
-		dc.w RobotnikHead_Delete-AIZRobotnikHead_Index
-
+; Offset_0x03620E:
+AIZRobotnikShip_Index:
+		dc.w	Offset_0x036216-AIZRobotnikShip_Index
+		dc.w	Offset_0x036232-AIZRobotnikShip_Index
+		dc.w	Offset_0x036268-AIZRobotnikShip_Index
+		dc.w	Offset_0x03629A-AIZRobotnikShip_Index   
 ; ===========================================================================
-; ---------------------------------------------------------------------------
-; Object - Robotnik Head in Flying Duracell
-; ---------------------------------------------------------------------------
-; Offset_0x036104: FBz_Robotnik_Head:
-Obj_FBZRobotnikHead:
-		jsr	(Refresh_Child_Position_Adjusted).l
-		moveq	#0,d0
-		move.b	routine(a0),d0
-		move.w	FBZRobotnikHead_Index(pc,d0.w),d1
-		jsr	FBZRobotnikHead_Index(pc,d1.w)
-		jsr	(Child_Get_Priority).l
-		jmp	(Child_Display_Or_Delete_2).l
-; ===========================================================================
-; Offset_0x036124:
-FBZRobotnikHead_Index:
-		dc.w FBZRobotnikHead_Init-FBZRobotnikHead_Index
-		dc.w FBZRobotnikHead_Main-FBZRobotnikHead_Index
-		dc.w RobotnikHead_Delete-FBZRobotnikHead_Index
-; ===========================================================================
-; Offset_0x03612A:
-FBZRobotnikHead_Init:
-		lea	FBZRobotnikHead_ObjData(pc),a1
-		jsr	(SetupObjectAttributes).l
-		move.w	Obj_Child_Ref(a0),a1
-		move.w	Obj_Child_Ref(a1),Obj_Height_3(a0)
-		rts      
-; ===========================================================================
-; Offset_0x036140:
-FBZRobotnikHead_Main:
-		move.w	x_pos(a0),d0
-		bclr	#0,render_flags(a0)
-		cmp.w	(Obj_Player_One+x_pos).w,d0	; is player to Robotnik's right?
-		bcc.s	Offset_0x036156			; if not, branch
-		bset	#0,render_flags(a0)		; flip Robotnik's head
 
-Offset_0x036156:
-		clr.b	Obj_Map_Id(a0)
-		move.w	Obj_Height_3(a0),a1
-		; This should be using a1; as a result, the forward-facing
-		; Robotnik head goes unused... OOPS
-		btst	#2,Obj_Control_Var_08(a0)	; is Robotnik swinging round and round?
-		beq.s	Offset_0x03616C			; if yes, branch
-		move.b	#1,Obj_Map_Id(a0)		; use "forward" frame
-
-Offset_0x03616C:
-		btst	#7,Obj_Status(a1)	; has Robotnik been defeated?
-		bne.s	Offset_0x036184		; if yes, branch
-		btst	#6,Obj_Status(a1)	; has Robotnik been hit?
-		beq.s	Offset_0x036182		; if not, branch
-		move.b	#2,Obj_Map_Id(a0)	; use "hit" frame
-
-Offset_0x036182:
-		rts
-; ---------------------------------------------------------------------------
-
-Offset_0x036184:
-		move.b	#4,routine(a0)
-		move.b	#3,Obj_Map_Id(a0)	; use "defeated" frame
-		rts
-
-;===============================================================================  
-LBz_Robotnik_Ship:                                             ; Offset_0x036192
-		jsr	(Refresh_Child_Position_Adjusted)      ; Offset_0x04203C
-		moveq	#$00, D0
-		move.b	routine(A0), D0                              ; $0005
-		move.w	Offset_0x0361AC(pc,d0.w), D1
-		jsr	Offset_0x0361AC(pc,d1.w)
-		jmp	(Child_Display_Or_Delete_2)            ; Offset_0x0424A8 
-;-------------------------------------------------------------------------------    
-Offset_0x0361AC:
-		dc.w Offset_0x0361B2-Offset_0x0361AC
-		dc.w Offset_0x0361BC-Offset_0x0361AC
-		dc.w RobotnikHead_Delete-Offset_0x0361AC
-;-------------------------------------------------------------------------------
-Offset_0x0361B2:
-		lea	Robotnik_Head_Setup_Data(PC), A1       ; Offset_0x03652C
-		jmp	(SetupObjectAttributes)                      ; Offset_0x041D72   
-;-------------------------------------------------------------------------------
-Offset_0x0361BC:
-		lea	RobotnikHead_AnimateData(PC), A1
-		jsr	(Animate_Raw_A1)                       ; Offset_0x042092
-		move.w	Obj_Child_Ref(A0), A1                            ; $0046
-		btst	#$07, Obj_Status(A1)                             ; $002A
-		bne.s	Offset_0x0361E2
-		btst	#$06, Obj_Status(A1)                             ; $002A
-		beq.s	Offset_0x0361E0
-		move.b	#$02, Obj_Map_Id(A0)                             ; $0022
-Offset_0x0361E0:
-		rts
-Offset_0x0361E2:
-		move.b	#$04, routine(A0)                            ; $0005
-		move.b	#$03, Obj_Map_Id(A0)                             ; $0022
-		rts  
-;===============================================================================  
-AIz_Robotnik_Ship:                                             ; Offset_0x0361F0
-		moveq	#$00, D0
-		move.b	routine(A0), D0                              ; $0005
-		move.w	Offset_0x03620E(pc,d0.w), D1
-		jsr	Offset_0x03620E(pc,d1.w)
-		btst	#$06, Obj_Control_Var_08(A0)                     ; $0038
-		bne.w	Offset_0x036098
-		jmp	(DisplaySprite)                        ; Offset_0x011148  
-;-------------------------------------------------------------------------------
-Offset_0x03620E:
-		dc.w	Offset_0x036216-Offset_0x03620E
-		dc.w	Offset_0x036232-Offset_0x03620E
-		dc.w	Offset_0x036268-Offset_0x03620E
-		dc.w	Offset_0x03629A-Offset_0x03620E   
-;-------------------------------------------------------------------------------
 Offset_0x036216:
-		lea	AIz_Flame_Mobile_Setup_Data(PC), A1    ; Offset_0x036544
-		jsr	(SetupObjectAttributes)                      ; Offset_0x041D72
-		move.b	Obj_Subtype(A0), Obj_Map_Id(A0)           ; $002C, $0022
-		lea	(Offset_0x03655E), A2
-		jmp	(SetupChildObject)                 ; Offset_0x041D9A 
-;-------------------------------------------------------------------------------
+		lea	RobotnikShip_ObjData(pc),a1
+		jsr	(SetupObjectAttributes).l
+		move.b	Obj_Subtype(a0),Obj_Map_Id(a0)
+		lea	(Offset_0x03655E).l,a2
+		jmp	(SetupChildObject).l
+; ===========================================================================
+
 Offset_0x036232:
-		jsr	(Refresh_Child_Position_Adjusted)      ; Offset_0x04203C
-		jsr	(Boss_Test_And_Set_Layer_Flag)         ; Offset_0x037A98
-		move.w	Obj_Child_Ref(A0), A1                            ; $0046
-		btst	#$07, Obj_Status(A1)                             ; $002A
+		jsr	(Refresh_Child_Position_Adjusted).l
+		jsr	(Boss_Test_And_Set_Layer_Flag).l
+		move.w	Obj_Child_Ref(a0),a1
+		btst	#7,Obj_Status(a1)
 		bne.s	Offset_0x03624C
 		rts
+
 Offset_0x03624C:
 		move.b	#$04, routine(A0)                            ; $0005
 		lea	(Offset_0x041D62), A2
@@ -23209,7 +22501,7 @@ Offset_0x03631C:
 		jmp	(Go_Delete_Object_A0_2)                ; Offset_0x042D4C  
 ;-------------------------------------------------------------------------------
 Offset_0x036322:
-		lea	Drill_Mobile_Ship_Setup_Data(PC), A1   ; Offset_0x036544
+		lea	RobotnikShip_ObjData(PC), A1   ; Offset_0x036544
 		jsr	(SetupObjectAttributes)                      ; Offset_0x041D72
 		jsr	(Boss_Test_And_Set_Layer_Flag)         ; Offset_0x037A98
 		move.b	Obj_Subtype(A0), Obj_Map_Id(A0)           ; $002C, $0022
@@ -23298,7 +22590,7 @@ Offset_0x03641E:
 		dc.w	Offset_0x0363CE-Offset_0x03641E   
 ;-------------------------------------------------------------------------------
 Offset_0x03642A:
-		lea	FBz_Hang_Mobile_Ship_Setup_Data_2(PC), A1 ; Offset_0x036544
+		lea	RobotnikShip_ObjData(PC), A1 ; Offset_0x036544
 		jsr	(SetupObjectAttributes)                      ; Offset_0x041D72
 		move.b	Obj_Subtype(A0), Obj_Map_Id(A0)           ; $002C, $0022
 		lea	(FBz_Robotnik_Head_Data), A2           ; Offset_0x036566
@@ -23372,18 +22664,16 @@ Offset_0x036504:
 Offset_0x036526:
 		jmp	(DeleteObject)                         ; Offset_0x011138 
 ;-------------------------------------------------------------------------------
-; Offset_0x03652C:
-Robotnik_Head_Setup_Data:
+; Offset_0x03652C: Robotnik_Head_Setup_Data:
+RobotnikHead_ObjData:
 		objdata	$280, $10, 8, 0, 0, $52E, Robotnik_Ship_Mappings
 
 ; Offset_0x036438: FBz_Robotnik_Head_Setup_Data:
 FBZRobotnikHead_ObjData:
 		objdata	$280, $10, 8, 0, 0, $410, FBz_Robotnik_Head_Mappings
 
-; Offset_0x036544:
-AIz_Flame_Mobile_Setup_Data:
-Drill_Mobile_Ship_Setup_Data:
-FBz_Hang_Mobile_Ship_Setup_Data_2:
+; Offset_0x036544: AIz_Flame_Mobile_Setup_Data: Drill_Mobile_Ship_Setup_Data: FBz_Hang_Mobile_Ship_Setup_Data_2:
+RobotnikShip_ObjData:
 		objdata $280, $1C, $20, 8, 0, $52E, Robotnik_Ship_Mappings
 ;-------------------------------------------------------------------------------
 Offset_0x036550:
@@ -23406,12 +22696,12 @@ FBz_Robotnik_Head_Data:                                        ; Offset_0x036566
 ;------------------------------------------------------------------------------- 
 LBz_Robotnik_Ship_Data:                                        ; Offset_0x03656E
 		dc.w	$0000
-		dc.l	LBz_Robotnik_Ship                      ; Offset_0x036192
+		dc.l	Obj_LBZRobotnikHead                      ; Offset_0x036192
 		dc.b	$00, $E4
 ;-------------------------------------------------------------------------------  
 AIz_Robotnik_Ship_Data ; Flame Mobile                          ; Offset_0x036576
 		dc.w	$0000
-		dc.l	AIz_Robotnik_Ship                      ; Offset_0x0361F0
+		dc.l	Obj_AIZRobotnikShip                      ; Offset_0x0361F0
 		dc.b	$00, $EC 
 ;-------------------------------------------------------------------------------  
 ; Offset_0x03657E: ; Left over ???
@@ -23610,7 +22900,7 @@ Offset_0x038D02:
 		jsr	(Restore_LevelMusic)			; Offset_0x0432CA
 		move.w	#$4330, (Target_Camera_Max_X).w			; $FFFFFA92
 		lea	(Level_Resize_Max_X), A2			; Offset_0x04261C
-		jmp	(Load_Child_Object_Simple_A2)		; Offset_0x041F5A	
+		jmp	(SetupChildObject_Simple)		; Offset_0x041F5A	
 ;-------------------------------------------------------------------------------
 Offset_0x038D28:
 		tst.b	(Control_Ports_Buffer_Data+$03).w			; $FFFFF607
@@ -23623,7 +22913,7 @@ Offset_0x038D3C:
 		jsr	(Restore_PlayerControl)			; Offset_0x0432EE
 		move.w	#$0000, (Target_Camera_Min_Y).w			; $FFFFFA96
 		lea	(Level_Resize_Min_Y), A2			; Offset_0x042628
-		jsr	(Load_Child_Object_Simple_A2)		; Offset_0x041F5A
+		jsr	(SetupChildObject_Simple)		; Offset_0x041F5A
 		jmp	(Go_Delete_Object_A0_2)		; Offset_0x042D4C	
 ;-------------------------------------------------------------------------------
 Offset_0x038D5E:
@@ -23721,7 +23011,7 @@ Offset_0x038E52:
 		lea	Offset_0x0397C0(PC), A2
 		jsr	(SetupChildObject)		 ; Offset_0x041D9A
 		lea	Offset_0x0397DC(PC), A2
-		jsr	(Load_Child_Object_Simple_A2)		; Offset_0x041F5A
+		jsr	(SetupChildObject_Simple)		; Offset_0x041F5A
 		move.w	Obj_Child_Ref(A0), A1					; $0046
 		move.w	Obj_Child_Ref(A1), Obj_Height_3(A0)		; $0046, $0044
 		rts	 
@@ -24007,7 +23297,7 @@ Offset_0x03923C:
 		tst.b	Obj_Subtype(A0)					; $002C
 		bne.s	Offset_0x039260
 		lea	Offset_0x0397A0(PC), A2
-		jsr	(Load_Child_Object_A2_2)			; Offset_0x041F86
+		jsr	(SetupChildObject_FindFree)			; Offset_0x041F86
 		bne.s	Offset_0x039260
 		move.w	Obj_Child_Ref(A0), Obj_Child_Ref(A1)	 ; $0046, $0046
 		move.b	#$04, Obj_Subtype(A1)					; $002C
@@ -24053,7 +23343,7 @@ Offset_0x0392DC:
 ;-------------------------------------------------------------------------------
 Offset_0x0392E2:
 		lea	Offset_0x0397D6(PC), A2
-		jsr	(Load_Child_Object_Simple_A2)		; Offset_0x041F5A
+		jsr	(SetupChildObject_Simple)		; Offset_0x041F5A
 		lea	Offset_0x0397A8(PC), A2
 		jsr	(SetupChildObject)		 ; Offset_0x041D9A
 		jmp	(Go_Delete_Object_A0)			; Offset_0x042D3E	
@@ -25322,299 +24612,9 @@ PLC_AB_05_End:
 Obj_Explosions:                                                ; Offset_0x041BCA
                 include 'data\objects\explosns.asm' 
 
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Subroutine to setup an object's graphics, size, and collision using
-; a set of data, rather than individual instructions
-; ---------------------------------------------------------------------------
+		include	"_incObj/sub SetupObjectAttributes.asm"
+		include	"_incObj/sub SetupChildObject.asm"
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-; Offset_0x041D72: Object_Settings:
-SetupObjectAttributes:
-		move.l	(a1)+,mappings(a0)
-; Offset_0x041D76: Object_Settings_2:
-SetupObjectAttributes.UsrMap:
-		move.w	(a1)+,art_tile(a0)
-; Offset_0x041D7A: Object_Settings_3:
-SetupObjectAttributes3:
-		move.w	(a1)+,priority(a0)
-		move.b	(a1)+,width_pixels(a0)
-		move.b	(a1)+,height_pixels(a0)
-		move.b	(a1)+,Obj_Map_Id(a0)
-		move.b	(a1)+,Obj_Col_Flags(a0)
-		bset	#2,render_flags(a0)
-		addq.b	#2,routine(a0)
-; Offset_0x041D98: Exit_Object_Settings:
-SetupObjectAttributes_End:
-		rts
-; End of function SetupObjectAttributes
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Subroutine to setup a child object
-; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-; Offset_0x041D9A: Load_Child_Object_A2:
-SetupChildObject:
-		moveq	#0,d2
-		move.w	(a2)+,d6
-
-Offset_0x041D9E:
-		jsr	(AllocateObjectAfterCurrent).l
-		bne.s	Offset_0x041DE8
-		move.w	a0,Obj_Child_Ref(a1)			; load parent RAM address into $46
-
-		move.l	mappings(a0),mappings(a1)
-		; not sure why this is also a longword, given that VRAM is stored as a word
-		move.l	art_tile(a0),art_tile(a1)	; mappings and VRAM offset copied from parent object
-		move.l	(a2)+,(a1)				; object address
-		move.b	d2,Obj_Subtype(a1)			; index of child object
-		move.w	x_pos(a0),d0
-		move.b	(a2)+,d1				; x positional offset
-		move.b	d1,Obj_Control_Var_12(a1)
-		ext.w	d1
-		add.w	d1,d0
-		move.w	d0,x_pos(a1)				; apply offset to new x position
-		move.w	y_pos(a0),d0
-		move.b	(a2)+,d1				; y positional offset
-		move.b	d1,Obj_Control_Var_13(a1)
-		ext.w	d1
-		add.w	d1,d0
-		move.w	d0,y_pos(a1)				; apply offset to new y position
-		addq.w	#2,d2
-		dbf	d6,Offset_0x041D9E
-		moveq	#0,d0
-
-Offset_0x041DE8:
-		rts
-; End of function SetupChildObject
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Subroutine to setup a child object, now taking into account velocity
-; and other variables
-; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-; Offset_0x041DEA: Load_Child_Object_Complex_A2:
-SetupChildObject_Complex:
-		moveq	#0,d2
-		move.w	(a2)+,d6
-
-Offset_0x041DEE:
-		jsr	(AllocateObjectAfterCurrent).l
-		bne.s	Offset_0x041E4C
-		move.w	a0,Obj_Child_Ref(a1)
-
-		move.l	mappings(a0),mappings(a1)
-		move.l	art_tile(A0),art_tile(a1)
-		move.l	(a2)+,(a1)
-		move.l	(a2)+,Obj_Control_Var_0E(a1)
-		move.l	(a2)+,Obj_Control_Var_00(a1)
-		move.l	(a2)+,Obj_Control_Var_04(a1)
-		move.b	d2,Obj_Subtype(a1)
-		move.w	x_pos(a0),d0
-		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_12(a1)
-		ext.w	d1
-		add.w	d1,d0
-		move.w	d0,x_pos(a1)
-		move.w	y_pos(a0),d0
-		move.b	(a2)+,d1
-		move.b	d1,Obj_Control_Var_13(a1)
-		ext.w	d1
-		add.w	d1,d0
-		move.w	d0,y_pos(a1)
-		move.w	(a2)+,x_vel(a1)
-		move.w	(a2)+,y_vel(a1)
-		addq.w	#2,d2
-		dbf	d6,Offset_0x041DEE
-		moveq	#0,d0
-
-Offset_0x041E4C:
-		rts
-; End of function SetupChildObject_Complex
-
-; ===========================================================================
-; ---------------------------------------------------------------------------
-; Subroutine to setup several identical child objects
-; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-; Offset_0x041E4E: Load_Child_Object_Repeat_A2:
-SetupChildObject_Repeat:
-		moveq	#0,d2
-		move.w	(a2)+,d6
-
-Offset_0x041E52:
-		move.l	a2,a3
-		jsr	(AllocateObjectAfterCurrent).l
-		bne.s	Offset_0x041E9E
-		move.w	a0,Obj_Child_Ref(a1)
-
-		move.l	mappings(a0),mappings(a1)
-		move.l	art_tile(a0),art_tile(a1)
-		move.l	(a3)+,(a1)
-		move.b	d2,Obj_Subtype(a1)
-		move.w	x_pos(a0),d0
-		move.b	(a3)+,d1
-		move.b	d1,Obj_Control_Var_12(a1)
-		ext.w	d1
-		add.w	d1,d0
-		move.w	d0,x_pos(a1)
-		move.w	y_pos(a0),d0
-		move.b	(a3)+,d1
-		move.b	d1,Obj_Control_Var_13(a1)
-		ext.w	d1
-		add.w	d1,d0
-		move.w	d0,y_pos(a1)
-		addq.w	#2,d2
-		dbf	d6,Offset_0x041E52
-		moveq	#0,d0
-
-Offset_0x041E9E:
-		rts
-; End of function SetupChildObject_Repeat
-
-
-;===============================================================================  
-Load_Child_Object_Link_List_Repeat_A2:                         ; Offset_0x041EA0
-		move.l	A0, A3
-		moveq	#$00, D2
-		move.w	(A2)+, D6
-Offset_0x041EA6:
-		jsr	(AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
-		bne.s	Offset_0x041EDE
-		move.w	A3, Obj_Child_Ref(A1)                            ; $0046
-		move.w	A1, Obj_Height_3(A3)                             ; $0044
-		move.l	A1, A3
-		move.l	mappings(A0), mappings(A1)                  ; $000C, $000C
-		move.l	art_tile(A0), art_tile(A1)        ; $000A, $000A
-		move.l	(A2), (A1)
-		move.b	D2, Obj_Subtype(A1)                              ; $002C
-		move.w	x_pos(A0), x_pos(A1)                      ; $0010, $0010
-		move.w	y_pos(A0), y_pos(A1)                      ; $0014, $0014
-		addq.w	#$02, D2
-		dbf	D6, Offset_0x041EA6
-		moveq	#$00, D0
-Offset_0x041EDE:
-		rts
-;===============================================================================   
-Load_Child_Object_Complex_Adjusted_A2:                         ; Offset_0x041EE0
-		moveq	#$00, D2
-		move.w	(A2)+, D6
-Offset_0x041EE4:
-		jsr	(AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
-		bne.s	Offset_0x041F58
-		move.w	A0, Obj_Child_Ref(A1)                            ; $0046
-		move.l	mappings(A0), mappings(A1)                  ; $000C, $000C
-		move.l	art_tile(A0), art_tile(A1)        ; $000A, $000A
-		move.l	(A2)+, (A1)
-		move.l	(A2)+, Obj_Control_Var_0E(A1)                    ; $003E
-		move.l	(A2)+, Obj_Control_Var_00(A1)                    ; $0030
-		move.l	(A2)+, Obj_Control_Var_04(A1)                    ; $0034
-		move.b	D2, Obj_Subtype(A1)                              ; $002C
-		move.w	x_pos(A0), D0                                    ; $0010
-		move.b	(A2)+, D1
-		move.b	D1, Obj_Control_Var_12(A1)                       ; $0042
-		ext.w	D1
-		btst	#$00, render_flags(A0)                              ; $0004
-		beq.s	Offset_0x041F24
-                neg.w   D1
-Offset_0x041F24:
-		add.w	D1, D0
-		move.w	D0, x_pos(A1)                                    ; $0010
-		move.w	y_pos(A0), D0                                    ; $0014
-		move.b	(A2)+, D1
-		move.b	D1, Obj_Control_Var_13(A1)                       ; $0043
-		ext.w	D1
-		add.w	D1, D0
-		move.w	D0, y_pos(A1)                                    ; $0014
-		move.w	(A2)+, D1
-		btst	#$00, render_flags(A0)                              ; $0004
-		beq.s	Offset_0x041F48
-                neg.w   D1
-Offset_0x041F48:
-		move.w	D1, x_vel(A1)                              ; $0018
-		move.w	(A2)+, y_vel(A1)                           ; $001A
-		addq.w	#$02, D2
-		dbf	D6, Offset_0x041EE4
-		moveq	#$00, D0
-Offset_0x041F58:
-		rts    
-;===============================================================================   
-Load_Child_Object_Simple_A2:                                   ; Offset_0x041F5A
-		moveq	#$00, D2
-		move.w	(A2)+, D6
-Offset_0x041F5E:
-		jsr	(AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
-		bne.s	Offset_0x041F84
-		move.w	A0, Obj_Child_Ref(A1)                            ; $0046
-		move.l	(A2), (A1)
-		move.b	D2, Obj_Subtype(A1)                              ; $002C
-		move.w	x_pos(A0), x_pos(A1)                      ; $0010, $0010
-		move.w	y_pos(A0), y_pos(A1)                      ; $0014, $0014
-		addq.w	#$02, D2
-		dbf	D6, Offset_0x041F5E
-		moveq	#$00, D0
-Offset_0x041F84:
-		rts
-;===============================================================================  
-Load_Child_Object_A2_2:                                        ; Offset_0x041F86
-		moveq	#$00, D2
-		move.w	(A2)+, D6
-Offset_0x041F8A:
-		jsr	(AllocateObject)                     ; Offset_0x011DD8
-		bne.s	Offset_0x041FD4
-		move.w	A0, Obj_Child_Ref(A1)                            ; $0046
-		move.l	mappings(A0), mappings(A1)                  ; $000C, $000C
-		move.l	art_tile(A0), art_tile(A1)        ; $000A, $000A
-		move.l	(A2)+, (A1)
-		move.b	D2, Obj_Subtype(A1)                              ; $002C
-		move.w	x_pos(A0), D0                                    ; $0010
-		move.b	(A2)+, D1
-		move.b	D1, Obj_Control_Var_12(A1)                       ; $0042
-		ext.w	D1
-		add.w	D1, D0
-		move.w	D0, x_pos(A1)                                    ; $0010
-		move.w	y_pos(A0), D0                                    ; $0014
-		move.b	(A2)+, D1
-		move.b	D1, Obj_Control_Var_13(A1)                       ; $0043
-		ext.w	D1
-		add.w	D1, D0
-		move.w	D0, y_pos(A1)                                    ; $0014
-		addq.w	#$02, D2
-		dbf	D6, Offset_0x041F8A
-		moveq	#$00, D0
-Offset_0x041FD4:
-		rts
-;===============================================================================  
-Load_Child_Object_Tree_List_Repeated_A2:                       ; Offset_0x041FD6
-		move.l	A0, A3
-		moveq	#$00, D2
-		move.w	(A2)+, D6
-Offset_0x041FDC:
-		jsr	(AllocateObjectAfterCurrent)                  ; Offset_0x011DE0
-		bne.s	Offset_0x042014
-		move.w	A3, Obj_Child_Ref(A1)                            ; $0046
-		move.w	A0, Obj_Height_3(A1)                             ; $0044
-		move.l	A1, A3
-		move.l	mappings(A0), mappings(A1)                  ; $000C, $000C
-		move.l	art_tile(A0), art_tile(A1)        ; $000A, $000A
-		move.l	(A2), (A1)
-		move.b	D2, Obj_Subtype(A1)                              ; $002C
-		move.w	x_pos(A0), x_pos(A1)                      ; $0010, $0010
-		move.w	y_pos(A0), y_pos(A1)                      ; $0014, $0014
-		addq.w	#$02, D2
-		dbf	D6, Offset_0x041FDC
-		moveq	#$00, D0
-Offset_0x042014:
-		rts         
 ;===============================================================================
 Refresh_Child_Position:                                        ; Offset_0x042016
 		move.w	Obj_Child_Ref(A0), A1                            ; $0046
@@ -25667,7 +24667,6 @@ Offset_0x042086:
 ; Offset_0x04208E: Animate_Raw:
 AnimateRaw:
 		move.l	Obj_Control_Var_00(a0),a1	; load referenced animation script
-
 ; Offset_0x042092:
 Animate_Raw_A1:
 		subq.b	#1,Obj_Ani_Time(a0)	; subtract 1 from frame duration
@@ -27629,7 +26628,7 @@ Offset_0x043344:
 		clr.b	(Boss_Flag).w                                ; $FFFFF7AA
 		jsr	Restore_LevelMusic(PC)                   ; Offset_0x0432CA
 		lea	Offset_0x04335E(PC), A2
-		jsr	Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+		jsr	SetupChildObject_Simple(PC)        ; Offset_0x041F5A
 		jmp	After_Boss_Clean_Up(PC)                ; Offset_0x041ACA
 ;-------------------------------------------------------------------------------
 Offset_0x04335E:
